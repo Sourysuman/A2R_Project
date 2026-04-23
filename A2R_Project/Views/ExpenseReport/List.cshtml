@@ -1,0 +1,755 @@
+﻿@using A2R_Project.Models
+@model IEnumerable<A2R_Project.Models.ExpenseReport>
+
+@{
+    ViewData["Title"] = "Expense Reports";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    /* ================= GLOBAL ================= */
+    body {
+        background: linear-gradient(135deg, #eef2ff, #f8fbff);
+        font-family: 'Segoe UI', sans-serif;
+        color: #000;
+    }
+
+    /* ================= CARD ================= */
+    .card {
+        border: none;
+        border-radius: 16px;
+        box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+        transition: 0.3s;
+    }
+
+        .card:hover {
+            transform: translateY(-3px);
+        }
+
+    /* ================= HEADINGS ================= */
+    .card-title {
+        font-size: 20px;
+        font-weight: 700;
+        color: #000;
+    }
+
+    /* ================= LABEL ================= */
+    label {
+        font-weight: 600;
+        font-size: 14px;
+        color: #000;
+    }
+
+    /* ================= INPUT ================= */
+    .form-control {
+        border-radius: 10px;
+        border: 1px solid #dcdcdc;
+        font-size: 14px;
+        padding: 10px;
+        transition: all 0.3s;
+        height: 45px;
+    }
+
+        .form-control:focus {
+            border-color: #4f46e5;
+            box-shadow: 0 0 6px rgba(79,70,229,0.3);
+        }
+
+    /* ================= BUTTON ================= */
+    .btn {
+        border-radius: 10px;
+        font-weight: 600;
+        font-size: 14px;
+        padding: 10px 18px;
+        transition: all 0.3s ease;
+        height: 45px;
+    }
+
+    .btn-primary {
+        background: linear-gradient(135deg, #4f46e5, #6366f1);
+        border: none;
+    }
+
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #4338ca, #4f46e5);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(79,70,229,0.3);
+        }
+
+    /* ================= TABLE ================= */
+    .table {
+        border-radius: 12px;
+        overflow: hidden;
+        background: #fff;
+    }
+
+        .table thead {
+            background: linear-gradient(135deg, #4f46e5, #6366f1);
+        }
+
+            .table thead th {
+                color: #fff;
+                font-weight: 700;
+                font-size: 15px;
+                padding: 12px;
+                text-align: center;
+            }
+
+        .table tbody td {
+            font-size: 15px;
+            font-weight: 600;
+            color: #000;
+            padding: 12px;
+            text-align: center;
+        }
+
+        .table tbody tr {
+            transition: 0.2s;
+        }
+
+            .table tbody tr:hover {
+                background: #eef2ff;
+                transform: scale(1.01);
+            }
+
+    /* ================= BADGES ================= */
+    .badge-success {
+        background-color: #16a34a;
+        font-size: 13px;
+        padding: 6px 10px;
+        border-radius: 8px;
+    }
+
+    .badge-danger {
+        background-color: #dc2626;
+        font-size: 13px;
+        padding: 6px 10px;
+        border-radius: 8px;
+    }
+
+    /* ================= TOTAL TEXT ================= */
+    #totalExpenseAmount {
+        font-size: 20px;
+        font-weight: 800;
+        color: #111;
+    }
+
+    /* ================= PAGINATION ================= */
+    .pagination .page-item .page-link {
+        border-radius: 8px;
+        margin: 0 4px;
+        color: #4f46e5;
+        font-weight: 600;
+        border: none;
+        transition: 0.3s;
+    }
+
+    .pagination .page-item.active .page-link {
+        background: #4f46e5;
+        color: #fff;
+    }
+
+    .pagination .page-item .page-link:hover {
+        background: #6366f1;
+        color: #fff;
+    }
+
+    /* ================= FILTER SECTION ================= */
+    .row.mb-4 {
+        background: #ffffff;
+        padding: 20px;
+        border-radius: 12px;
+        box-shadow: 0 5px 12px rgba(0,0,0,0.05);
+        display: flex;
+        flex-wrap: wrap;
+        gap: 15px;
+        align-items: end;
+    }
+
+        .row.mb-4 .col-md-2 {
+            flex: 1 1 180px;
+            max-width: 200px;
+        }
+
+    /* ================= SHOW ALL BUTTON ================= */
+    #showAllButton {
+        background: linear-gradient(135deg, #059669, #10b981);
+        border: none;
+    }
+
+        #showAllButton:hover {
+            background: linear-gradient(135deg, #047857, #059669);
+            transform: translateY(-2px);
+        }
+
+    #toDateWarning {
+        font-weight: 600;
+        font-size: 12px;
+    }
+    /* ================= FILTER WRAPPER ================= */
+    .row.mb-3 {
+        background: #ffffff;
+        padding: 18px 20px;
+        border-radius: 14px;
+        box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+        display: flex;
+        flex-wrap: wrap;
+        gap: 14px;
+        align-items: flex-end;
+    }
+
+        /* each filter field */
+        .row.mb-3 .col-md-2 {
+            flex: 1 1 180px;
+            max-width: 220px;
+        }
+
+        /* labels spacing */
+        .row.mb-3 label {
+            font-size: 13px;
+            margin-bottom: 6px;
+            color: #374151;
+        }
+
+        /* inputs cleaner look */
+        .row.mb-3 .form-control {
+            border-radius: 10px;
+            border: 1px solid #e5e7eb;
+            transition: 0.3s;
+        }
+
+            .row.mb-3 .form-control:focus {
+                border-color: #4f46e5;
+                box-shadow: 0 0 0 3px rgba(79,70,229,0.15);
+            }
+    /* ================= ACTION AREA (LEFT ALIGN) ================= */
+    .filter-actions {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        gap: 10px;
+        margin-top: 10px;
+    }
+
+    /* Show All Button */
+    #showAllButton {
+        background: linear-gradient(135deg, #10b981, #059669);
+        border: none;
+        padding: 10px 16px;
+        border-radius: 10px;
+        font-weight: 600;
+        font-size: 14px;
+        color: #fff;
+        transition: 0.3s;
+    }
+
+        #showAllButton:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(16,185,129,0.25);
+        }
+    /* keep filters in one line on large screens */
+    @@media (min-width: 992px) {
+        .row.mb-3
+
+    {
+        flex-wrap: nowrap;
+    }
+
+    }
+
+    /* ================= FILTER CARD HEADER ================= */
+    .row.mb-3 {
+        background: linear-gradient(135deg, #ffffff, #f9fafb);
+        padding: 20px;
+        border-radius: 16px;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.06);
+        display: flex;
+        flex-wrap: wrap;
+        gap: 16px;
+        align-items: flex-end;
+    }
+
+        /* ================= FILTER FIELDS ================= */
+        .row.mb-3 .col-md-2 {
+            flex: 1 1 180px;
+            max-width: 220px;
+        }
+
+        /* label style */
+        .row.mb-3 label {
+            font-size: 13px;
+            font-weight: 700;
+            color: #374151;
+            margin-bottom: 6px;
+        }
+
+        /* input style */
+        .row.mb-3 .form-control {
+            border-radius: 12px;
+            border: 1px solid #e5e7eb;
+            height: 42px;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+            .row.mb-3 .form-control:focus {
+                border-color: #6366f1;
+                box-shadow: 0 0 0 4px rgba(99,102,241,0.15);
+            }
+
+    /* ================= SHOW ALL BUTTON ================= */
+    #showAllButton {
+        background: linear-gradient(135deg, #10b981, #059669);
+        border: none;
+        color: white;
+        font-weight: 600;
+        padding: 10px 18px;
+        border-radius: 12px;
+        transition: all 0.3s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+    }
+
+        #showAllButton:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(16,185,129,0.3);
+        }
+
+    /* ================= FILTER ROW RESPONSIVE ================= */
+    @@media (min-width: 992px) {
+        .row.mb-3
+
+    {
+        flex-wrap: nowrap;
+    }
+
+    }
+
+    /* ================= FILTER CONTAINER HEADER EFFECT ================= */
+    .card-body {
+        padding: 1.2rem 1.5rem;
+    }
+
+    /* subtle hover for filter box */
+    .row.mb-3:hover {
+        box-shadow: 0 12px 30px rgba(0,0,0,0.08);
+        transition: 0.3s;
+    }
+
+    /* ================= FILTER ROW ALIGNMENT ================= */
+    .row.mb-3 {
+        background: linear-gradient(135deg, #ffffff, #f9fafb);
+        padding: 20px;
+        border-radius: 16px;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.06);
+        display: flex;
+        flex-wrap: wrap;
+        gap: 16px;
+        align-items: flex-end;
+    }
+
+        /* each filter box */
+        .row.mb-3 .col-md-2 {
+            flex: 1 1 180px;
+            max-width: 220px;
+        }
+
+        /* labels */
+        .row.mb-3 label {
+            font-size: 13px;
+            font-weight: 700;
+            color: #374151;
+            margin-bottom: 6px;
+        }
+
+        /* inputs */
+        .row.mb-3 .form-control {
+            border-radius: 12px;
+            border: 1px solid #e5e7eb;
+            height: 42px;
+            transition: 0.3s;
+        }
+
+            .row.mb-3 .form-control:focus {
+                border-color: #6366f1;
+                box-shadow: 0 0 0 4px rgba(99,102,241,0.15);
+            }
+
+    /* ================= TOP SUMMARY ROW ================= */
+    .summary-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 15px;
+        flex-wrap: wrap;
+    }
+
+    /* ================= TOTAL AMOUNT BIG STYLE ================= */
+    #totalExpenseAmount {
+        font-size: 28px;
+        font-weight: 900;
+        color: #4f46e5;
+        margin-left: 10px;
+    }
+
+    .total-box {
+        font-size: 18px;
+        font-weight: 600;
+        color: #111;
+        display: flex;
+        align-items: center;
+    }
+
+    /* ================= SHOW ALL RIGHT ALIGN ================= */
+    .show-all-wrapper {
+        display: flex;
+        justify-content: flex-end;
+        width: 100%;
+    }
+
+    /* Show All Button */
+    #showAllButton {
+        background: linear-gradient(135deg, #10b981, #059669);
+        border: none;
+        color: white;
+        font-weight: 600;
+        padding: 10px 18px;
+        border-radius: 12px;
+        transition: 0.3s;
+    }
+
+        #showAllButton:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(16,185,129,0.3);
+        }
+
+</style>
+
+<!-- ✅ SINGLE CARD - NO GAP -->
+<div class="col-lg-12 stretch-card">
+    <div class="card">
+        <div class="card-body" style="padding: 1rem 1.5rem;">
+
+            <!-- FILTER ROW - NO EXTRA MARGIN -->
+            <div class="row mb-3" style="margin-bottom: 1rem !important;">
+                <div class="col-md-2">
+                    <label for="expenseCategoryFilter">Category:</label>
+                    <select class="form-control" id="expenseCategoryFilter">
+                        <option value="">-- All Categories --</option>
+                        @if (ViewBag.ExpenseCategories != null)
+                        {
+                            foreach (var category in ViewBag.ExpenseCategories as List<CategoryViewModel>)
+                            {
+                                if (category != null && category.Id != null && category.Name != null)
+                                {
+                                    <option value="@category.Name">@category.Name</option>
+                                }
+                            }
+                        }
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <label for="fromDateFilter">From Date:</label>
+                    <input type="date" class="form-control" id="fromDateFilter">
+                </div>
+                <div class="col-md-2">
+                    <label for="toDateFilter">To Date:</label>
+                    <input type="date" class="form-control" id="toDateFilter">
+                    <div id="toDateWarning" style="color: red;"></div>
+                </div>
+                <div class="col-md-2">
+                    <label for="invoiceNoFilter">Invoice No:</label>
+                    <input type="text" class="form-control" id="invoiceNoFilter" placeholder="Enter Invoice No">
+                </div>
+                <div class="col-md-2">
+                    <label for="expenseTypeFilter">Expense Type:</label>
+                    <input type="text" class="form-control" id="expenseTypeFilter" placeholder="Enter Type">
+                </div>
+              
+            </div>
+
+            <!-- TOTAL & TITLE - TIGHT SPACING -->
+            <div class="row mb-3" style="margin-bottom: 1rem !important;">
+                <div class="col-md-6">
+                    <strong>Total Expense Amount: </strong>
+                    <span id="totalExpenseAmount" style="color: #4f46e5; font-size: 1.4em;"></span>
+                </div>
+                <div class="col-md-6 text-end">
+                   
+                    @if (ViewBag.ShowAllButton != null && (bool)ViewBag.ShowAllButton)
+                    {
+                        <button type="button" id="showAllButton" class="btn btn-success ms-2">
+                            <i class="fas fa-list"></i> Show All
+                        </button>
+                    }
+                </div>
+            </div>
+
+            <!-- TABLE - NO GAP -->
+            <div class="table-responsive" style="margin-top: 0 !important;">
+                <table class="table table-bordered table-striped" id="expense-report-table">
+                    <thead>
+                        <tr>
+                            <th>Category Name</th>
+                            <th>Expense Type</th>
+                            <th>Expense Date</th>
+                            <th>Expense Amount</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model != null && Model.Any())
+                        {
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>@item.Category_Name</td>
+                                    <td>@item.Expense_Type</td>
+                                    <td>@item.Expense_Date?.ToString("dd/MM/yyyy")</td>
+                                    <td>@item.Expense_Amount?.ToString("C")</td>
+                                    <td>
+                                        @if (item.expense_statues == "Paid")
+                                        {
+                                            <span class="badge badge-success">Paid</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="badge badge-danger">Pending</span>
+                                        }
+                                    </td>
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+                                <td colspan="5" class="text-center text-muted py-5">
+                                    <i class="fas fa-inbox fa-3x mb-3 d-block"></i>
+                                    No expense reports found
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- PAGINATION -->
+            @if (ViewBag.TotalCount != null && ViewBag.TotalCount > ViewBag.PageSize)
+            {
+                <nav aria-label="Page navigation" style="margin-top: 1.5rem;">
+                    <ul class="pagination justify-content-center">
+                        <li class="page-item @(ViewBag.CurrentPage == 1 ? "disabled" : "")">
+                            <a class="page-link" href="@Url.Action("List", new { page = ViewBag.CurrentPage - 1, pageSize = ViewBag.PageSize })">Previous</a>
+                        </li>
+                        @for (int i = 1; i <= Math.Ceiling((double)ViewBag.TotalCount / ViewBag.PageSize); i++)
+                        {
+                            <li class="page-item @(i == ViewBag.CurrentPage ? "active" : "")">
+                                <a class="page-link" href="@Url.Action("List", new { page = i, pageSize = ViewBag.PageSize })">@i</a>
+                            </li>
+                        }
+                        <li class="page-item @(ViewBag.CurrentPage == Math.Ceiling((double)ViewBag.TotalCount / ViewBag.PageSize) ? "disabled" : "")">
+                            <a class="page-link" href="@Url.Action("List", new { page = ViewBag.CurrentPage + 1, pageSize = ViewBag.PageSize })">Next</a>
+                        </li>
+                    </ul>
+                </nav>
+            }
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://kit.fontawesome.com/your-fontawesome-kit.js"></script> <!-- Optional for icons -->
+    <script>
+        $(document).ready(function () {
+            // Initialize total on page load
+            updateTotalExpense();
+
+            // Store original table data for client-side filtering
+            window.originalTableHTML = $("#expense-report-table tbody").html();
+
+            // 🔍 SERVER-SIDE FILTER BUTTON
+            $("#filterBtn").click(function () {
+                var fromDate = $("#fromDateFilter").val();
+                var toDate = $("#toDateFilter").val();
+
+                // Date validation
+                if (fromDate && toDate && new Date(toDate) < new Date(fromDate)) {
+                    $("#toDateWarning").text("To Date cannot be earlier than From Date").show();
+                    return false;
+                }
+                $("#toDateWarning").hide();
+
+                // Show loading
+                $("#filterBtn").prop("disabled", true).html('<i class="fas fa-spinner fa-spin"></i> Filtering...');
+
+                $.ajax({
+                    url: '@Url.Action("Filter", "ExpenseReport")',
+                    type: "GET",
+                    data: {
+                        category: $("#expenseCategoryFilter").val(),
+                        expenseType: $("#expenseTypeFilter").val(),
+                        fromDate: fromDate,
+                        toDate: toDate,
+                        invoiceId: $("#invoiceNoFilter").val()
+                    },
+                    success: function (response) {
+                        updateTableFromResponse(response);
+                    },
+                    error: function () {
+                        $('#expense-report-table tbody').html('<tr><td colspan="5" class="text-center text-danger">Error loading data</td></tr>');
+                        updateTotalExpense();
+                    },
+                    complete: function () {
+                        $("#filterBtn").prop("disabled", false).html('<i class="fas fa-search"></i> Filter');
+                    }
+                });
+            });
+
+            // 🎯 SHOW ALL BUTTON
+            $("#showAllButton").click(function () {
+                window.location.href = '@Url.Action("List")';
+            });
+
+            // ⚡ REAL-TIME CLIENT-SIDE FILTERING
+            $("#expenseCategoryFilter, #expenseTypeFilter, #invoiceNoFilter, #fromDateFilter, #toDateFilter").on("change keyup", debounce(function() {
+                clientSideFilter();
+            }, 300));
+
+            // Update table from AJAX response
+            function updateTableFromResponse(response) {
+                var tbody = $('#expense-report-table tbody');
+                tbody.empty();
+
+                if (!response || response.length === 0) {
+                    tbody.html('<tr><td colspan="5" class="text-center text-muted">No data found</td></tr>');
+                } else {
+                    $.each(response, function (index, item) {
+                        var statusBadge = item.expense_statues === "Paid"
+                            ? '<span class="badge badge-success">Paid</span>'
+                            : '<span class="badge badge-danger">Pending</span>';
+
+                        tbody.append(
+                            '<tr>' +
+                            '<td>' + (item.Category_Name || '') + '</td>' +
+                            '<td>' + (item.Expense_Type || '') + '</td>' +
+                            '<td>' + formatDate(item.Expense_Date) + '</td>' +
+                            '<td>' + formatCurrency(item.Expense_Amount) + '</td>' +
+                            '<td>' + statusBadge + '</td>' +
+                            '</tr>'
+                        );
+                    });
+                }
+                updateTotalExpense();
+            }
+                    function clientSideFilter() {
+
+            var categoryVal = $("#expenseCategoryFilter").val();
+            var expenseTypeVal = $("#expenseTypeFilter").val().trim().toLowerCase();
+            var invoiceVal = $("#invoiceNoFilter").val().trim().toLowerCase();
+            var fromDate = $("#fromDateFilter").val();
+            var toDate = $("#toDateFilter").val();
+
+            var tbody = $("#expense-report-table tbody");
+
+            var rows = $("<tbody>" + window.originalTableHTML + "</tbody>").find("tr");
+
+            tbody.empty();
+
+            var found = false;
+
+            rows.each(function () {
+
+                var row = $(this);
+
+                var rowCategory = row.find("td:eq(0)").text().trim().toLowerCase();
+                var rowExpenseType = row.find("td:eq(1)").text().trim().toLowerCase();
+                var rowDateText = row.find("td:eq(2)").text().trim();
+                var rowText = row.text().toLowerCase();
+                var rowDate = parseDate(rowDateText);
+
+                var show = true;
+
+                // ✅ CATEGORY FIX
+                if (categoryVal && categoryVal !== "") {
+                    if (rowCategory !== categoryVal.toLowerCase()) {
+                        show = false;
+                    }
+                }
+
+                // EXPENSE TYPE
+                if (expenseTypeVal && !rowExpenseType.includes(expenseTypeVal)) {
+                    show = false;
+                }
+
+                // INVOICE
+                if (invoiceVal && !rowText.includes(invoiceVal)) {
+                    show = false;
+                }
+
+                // DATE FROM
+                if (fromDate && rowDate < new Date(fromDate)) {
+                    show = false;
+                }
+
+                // DATE TO
+                if (toDate && rowDate > new Date(toDate)) {
+                    show = false;
+                }
+
+                if (show) {
+                    tbody.append(row.clone());
+                    found = true;
+                }
+            });
+
+            if (!found) {
+                tbody.html('<tr><td colspan="5" class="text-center text-muted">No matching data found</td></tr>');
+            }
+
+            updateTotalExpense();
+        }
+            // Helper functions
+            function formatDate(dateStr) {
+                if (!dateStr) return '';
+                return new Date(dateStr).toLocaleDateString('en-GB');
+            }
+
+            function formatCurrency(amount) {
+                if (!amount) return '';
+                return parseFloat(amount).toLocaleString('en-US', { style: 'currency', currency: 'USD' });
+            }
+
+            function parseDate(dateString) {
+                if (!dateString) return new Date(0);
+                var parts = dateString.split('/');
+                return new Date(parts[2], parts[1] - 1, parts[0]);
+            }
+
+            function updateTotalExpense() {
+                var total = 0;
+                $("#expense-report-table tbody tr").each(function () {
+                    var amountText = $(this).find("td:eq(3)").text().replace(/[^\d.-]/g, '');
+                    var amount = parseFloat(amountText);
+                    if (!isNaN(amount)) total += amount;
+                });
+                $("#totalExpenseAmount").text(formatCurrency(total));
+            }
+
+            // Debounce utility
+            function debounce(func, wait) {
+                var timeout;
+                return function executedFunction(...args) {
+                    const later = () => {
+                        clearTimeout(timeout);
+                        func(...args);
+                    };
+                    clearTimeout(timeout);
+                    timeout = setTimeout(later, wait);
+                };
+            }
+
+        });
+    </script>
+    }

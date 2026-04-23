@@ -1,0 +1,970 @@
+﻿
+@model IEnumerable<A2R_Project.Models.Country>
+@{
+    ViewBag.Title = "Countries Management";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    :root {
+        --primary: #2563eb;
+        --primary-dark: #1e40af;
+        --success: #16a34a;
+        --danger: #dc2626;
+        --warning: #f59e0b;
+        --dark: #111827;
+        --light: #f9fafb;
+        --white: #ffffff;
+        --gray: #6b7280;
+    }
+
+    body {
+        background: #f3f4f6;
+        font-family: 'Inter', sans-serif;
+    }
+
+    /* ===== MODAL POSITION TOP CENTER ===== */
+    .modal-dialog {
+        margin-top: 40px;
+        display: flex;
+        align-items: flex-start;
+        justify-content: center;
+    }
+
+    /* ===== MODAL DESIGN ===== */
+    .modal-content {
+        border-radius: 16px;
+        border: none;
+        overflow: hidden;
+        box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+    }
+
+    /* HEADER STYLE */
+    .modal-header {
+        background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+        color: #fff;
+        padding: 16px 20px;
+    }
+
+    .modal-title {
+        font-weight: 600;
+        font-size: 18px;
+    }
+
+    /* CHANGE TITLE COLORS BASED ON MODAL */
+    #addCountry .modal-header {
+        background: linear-gradient(135deg, #10b981, #059669);
+    }
+
+    #editCountry .modal-header {
+        background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+    }
+
+    #deleteCountry .modal-header {
+        background: linear-gradient(135deg, #ef4444, #b91c1c);
+    }
+
+    #viewCountry .modal-header {
+        background: linear-gradient(135deg, #6366f1, #4338ca);
+    }
+
+    /* ===== DELETE MODAL SMALL ===== */
+    #deleteCountry .modal-dialog {
+        max-width: 400px;
+    }
+
+    /* ===== INLINE FORM (LABEL + VALUE SAME LINE) ===== */
+    .form-group {
+        display: flex;
+        align-items: center;
+        margin-bottom: 15px;
+    }
+
+        .form-group label {
+            width: 150px;
+            margin-bottom: 0;
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        .form-group input,
+        .form-group .custom-control {
+            flex: 1;
+        }
+
+    /* ===== INPUT STYLE ===== */
+    .form-control-modern {
+        border-radius: 8px;
+        border: 1px solid #ddd;
+        padding: 8px 12px;
+    }
+
+        .form-control-modern:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 6px rgba(37,99,235,0.3);
+        }
+
+    /* ===== BUTTON COLORS ===== */
+    .btn-primary-modern {
+        background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+        color: #fff;
+    }
+
+    .btn-warning-modern {
+        background: linear-gradient(135deg, #f59e0b, #d97706);
+        color: #fff;
+    }
+
+    .btn-danger-modern {
+        background: linear-gradient(135deg, #ef4444, #b91c1c);
+        color: #fff;
+    }
+
+    .btn-success-modern {
+        background: linear-gradient(135deg, #10b981, #047857);
+        color: #fff;
+    }
+
+    .btn-modern {
+        border-radius: 8px;
+        padding: 6px 14px;
+        border: none;
+        transition: 0.2s;
+    }
+
+        .btn-modern:hover {
+            transform: scale(1.05);
+            opacity: 0.9;
+        }
+
+    /* ===== DELETE ICON CENTER ===== */
+    #deleteCountry .modal-body {
+        text-align: center;
+    }
+
+    /* ===== VIEW MODAL LABEL STYLE ===== */
+    #viewCountry label {
+        font-weight: 600;
+        color: var(--dark);
+    }
+
+    /* ===== BADGE ===== */
+    .status-badge {
+        padding: 5px 12px;
+        border-radius: 20px;
+        font-size: 13px;
+        font-weight: 600;
+    }
+
+    .badge-success-custom {
+        background: var(--success);
+        color: #fff;
+    }
+
+    .badge-danger-custom {
+        background: var(--danger);
+        color: #fff;
+    }
+
+</style>
+<style>
+
+    /* ===== CARD HEADER (TITLE AREA) ===== */
+    .card-header-custom {
+        background: linear-gradient(135deg, #4f46e5, #4338ca);
+        color: #fff;
+        border-radius: 15px 15px 0 0;
+        padding: 18px 20px;
+    }
+
+    .card-title {
+        font-size: 18px;
+        font-weight: 600;
+        letter-spacing: 0.5px;
+    }
+
+    /* ===== TABLE DESIGN ===== */
+    .table-modern {
+        border-collapse: collapse;
+        width: 100%;
+        background: #fff;
+    }
+
+        /* HEADER */
+        .table-modern thead th {
+            background: linear-gradient(135deg, #6366f1, #4f46e5);
+            color: #fff;
+            font-size: 14px;
+            font-weight: 600;
+            padding: 14px;
+            text-align: center;
+            border: none;
+        }
+
+        /* ROW */
+        .table-modern tbody tr {
+            transition: all 0.2s ease;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+            /* STRIPED */
+            .table-modern tbody tr:nth-child(even) {
+                background: #f9fafb;
+            }
+
+            /* HOVER EFFECT */
+            .table-modern tbody tr:hover {
+                background: #eef2ff;
+                transform: scale(1.002);
+                box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+            }
+
+        /* CELLS */
+        .table-modern td {
+            padding: 14px;
+            font-size: 14px;
+            color: #374151;
+            text-align: center;
+        }
+
+            .table-modern td:first-child {
+                text-align: left;
+            }
+
+            .table-modern td:last-child {
+                text-align: right;
+            }
+
+        /* ===== COUNTRY NAME STYLE ===== */
+        .table-modern strong {
+            color: #111827;
+            font-size: 15px;
+        }
+
+        .table-modern small {
+            color: #6b7280;
+        }
+
+    /* ===== BUTTON GROUP ===== */
+    .btn-group .btn {
+        margin-left: 6px;
+    }
+
+    /* ===== ACTION BUTTONS ===== */
+    .btn-sm {
+        border-radius: 8px;
+        padding: 6px 10px;
+    }
+
+    .btn-primary-modern {
+        background: linear-gradient(135deg, #3b82f6, #2563eb);
+    }
+
+    .btn-info-modern {
+        background: linear-gradient(135deg, #06b6d4, #0891b2);
+    }
+
+    .btn-danger-modern {
+        background: linear-gradient(135deg, #ef4444, #dc2626);
+    }
+
+        .btn-primary-modern:hover,
+        .btn-info-modern:hover,
+        .btn-danger-modern:hover {
+            transform: scale(1.08);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+
+    /* ===== MAIN BUTTONS (ADD + SHOW ALL) ===== */
+    .btn-primary-modern.btn-modern {
+        background: linear-gradient(135deg, #6366f1, #4f46e5);
+        font-weight: 600;
+        padding: 8px 18px;
+    }
+
+    .show-all-btn {
+        background: linear-gradient(135deg, #10b981, #059669);
+        color: #fff;
+        font-weight: 600;
+        padding: 8px 20px;
+        border-radius: 10px;
+    }
+
+        .show-all-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(16,185,129,0.4);
+        }
+
+    /* ===== LABEL COLOR (FORM FIELD NAMES) ===== */
+    .form-label {
+        color: #374151;
+        font-weight: 600;
+        font-size: 14px;
+    }
+
+    /* ===== EMPTY STATE ===== */
+    .empty-state {
+        text-align: center;
+        padding: 40px;
+        color: #6b7280;
+    }
+
+        .empty-state i {
+            font-size: 40px;
+            margin-bottom: 10px;
+            color: #9ca3af;
+        }
+
+    /* ===== PAGINATION ===== */
+    .pagination-modern .page-link {
+        border-radius: 8px;
+        margin: 0 4px;
+        color: #4f46e5;
+        font-weight: 500;
+    }
+
+    .pagination-modern .active .page-link {
+        background: linear-gradient(135deg, #6366f1, #4f46e5);
+        color: #fff;
+        border: none;
+    }
+
+</style>
+<div></div>
+<div></div>
+<div></div>
+
+<div class="container-fluid px-4">
+    <div class="row">
+        <div class="col-12">
+            <div class="card card-modern">
+                <div class="card-header-custom">
+                    <div class="d-flex justify-content-between align-items-center flex-wrap">
+                        <div>
+                            <h5 class="card-title mb-1">
+                                <i class="fas fa-list mr-2"></i>
+                                Countries List
+                            </h5>
+                            <small>Total: <strong id="totalCount">@(ViewBag.TotalCount ?? 0)</strong></small>
+                        </div>
+                        <button type="button" class="btn btn-primary-modern btn-modern" data-toggle="modal" data-target="#addCountry">
+                            <i class="fas fa-plus mr-2"></i>Add Country
+                        </button>
+                    </div>
+                </div>
+                <div class="card-body p-0">
+                    <!-- Table -->
+                    <div class="table-responsive">
+                        <table class="table table-modern mb-0" id="countryTable">
+                            <thead>
+                                <tr>
+                                    <th>Country Name</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (Model != null && Model.Any())
+                                {
+                                    foreach (var item in Model)
+                                    {
+                                        <tr class="@(item.IsActive == 1 ? "recently-added" : "")">
+                                            <td>
+                                                <div class="d-flex align-items-center">
+                                                    <div style="width: 45px; height: 45px; border-radius: 12px; background: linear-gradient(135deg, var(--primary), var(--primary-dark)); display: flex; align-items: center; justify-content: center; margin-right: 1rem;">
+                                                        <i class="fas fa-flag text-white" style="font-size: 1.1rem;"></i>
+                                                    </div>
+                                                    <div>
+                                                        <strong style="color: var(--dark);">@item.CountryName</strong>
+                                                        <br><small style="color: var(--gray);">ID: @item.CountryID</small>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                @if (item.IsActive == 1)
+                                                {
+                                                    <span class="status-badge badge-success-custom">
+                                                        <i class="fas fa-check-circle mr-1"></i>Active
+                                                    </span>
+                                                }
+                                                else
+                                                {
+                                                    <span class="status-badge badge-danger-custom">
+                                                        <i class="fas fa-times-circle mr-1"></i>Inactive
+                                                    </span>
+                                                }
+                                            </td>
+                                            <td>
+                                                <div class="btn-group" role="group">
+                                                    <button class="btn btn-primary-modern btn-modern btn-sm mr-1 editByCountryId" 
+                                                            data-edCountryId="@item.CountryID" data-toggle="modal" data-target="#editCountry"
+                                                            title="Edit">
+                                                        <i class="fas fa-edit"></i>
+                                                    </button>
+                                                    <button class="btn btn-info-modern btn-modern btn-sm mr-1 viewByCountryId" 
+                                                            data-vwCountryId="@item.CountryID" data-toggle="modal" data-target="#viewCountry"
+                                                            title="View">
+                                                        <i class="fas fa-eye"></i>
+                                                    </button>
+                                                    <button class="btn btn-danger-modern btn-modern btn-sm deleteCountries" 
+                                                            data-dlCountryId="@item.CountryID" data-toggle="modal" data-target="#deleteCountry"
+                                                            title="Delete">
+                                                        <i class="fas fa-trash-alt"></i>
+                                                    </button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                                else
+                                {
+                                    <tr>
+                                        <td colspan="3" class="empty-state">
+                                            <i class="fas fa-globe-americas"></i>
+                                            <h5>No Countries Found</h5>
+                                            <p class="mb-0">Click "Add Country" to get started</p>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+
+                    @if (ViewBag.ShowAllButton == true)
+                    {
+                        <div class="row mt-4 px-4 pb-4">
+                            <div class="col text-right">
+                                <button type="button" id="showAllButton" class="show-all-btn btn-modern">
+                                    <i class="fas fa-expand-arrows-alt mr-2"></i>Show All Records
+                                </button>
+                            </div>
+                        </div>
+                    }
+
+                    @if (ViewBag.TotalCount != null && ViewBag.TotalCount > ViewBag.PageSize)
+                    {
+                        <div class="row mt-4 px-4 pb-4">
+                            <div class="col">
+                                <nav aria-label="Page navigation">
+                                    <ul class="pagination pagination-modern justify-content-center">
+                                       
+                                        <li class="page-item @(ViewBag.CurrentPage == 1 ? "disabled" : "")">
+                                            <a class="page-link" href="@Url.Action("List", new { page = ViewBag.CurrentPage - 1, pageSize = ViewBag.PageSize })">
+                                                <i class="fas fa-chevron-left"></i> Previous
+                                            </a>
+                                        </li>
+                                        @for (int i = 1; i <= Math.Ceiling((double)ViewBag.TotalCount / ViewBag.PageSize); i++)
+                                        {
+                                            <li class="page-item @(i == ViewBag.CurrentPage ? "active" : "")">
+                                                <a class="page-link" href="@Url.Action("List", new { page = i, pageSize = ViewBag.PageSize })">@i</a>
+                                            </li>
+                                        }
+                                        <li class="page-item @(ViewBag.CurrentPage == Math.Ceiling((double)ViewBag.TotalCount / ViewBag.PageSize) ? "disabled" : "")">
+                                            <a class="page-link" href="@Url.Action("List", new { page = ViewBag.CurrentPage + 1, pageSize = ViewBag.PageSize })">
+                                                Next <i class="fas fa-chevron-right"></i>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </nav>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- MODALS WITH PROFESSIONAL STYLING -->
+<!-- Add Country Modal -->
+<div class="modal fade modal-modern" id="addCountry" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    <i class="fas fa-plus-circle mr-2"></i>Add New Country
+                </h5>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="addCountryForm">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label class="form-label">Country Name <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control form-control-modern" id="txtCountryName" placeholder="Enter country name (letters only)">
+                                <span class="validationMessage text-danger mt-1 d-block" id="msgAddCountryValidation" style="font-size: 0.85rem;"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label class="form-label">Status</label>
+                                <div class="custom-control custom-switch mt-2">
+                                    <input type="checkbox" class="custom-control-input" id="chkActiveStatus" checked>
+                                    <label class="custom-control-label" for="chkActiveStatus">
+                                        <i class="fas fa-toggle-on text-success mr-2"></i>Active
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary btn-modern" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-warning-modern btn-modern btnCountryReset">
+                    <i class="fas fa-undo mr-2"></i>Reset
+                </button>
+                <button type="button" class="btn btn-primary-modern btn-modern" id="btnCountrySave">
+                    <i class="fas fa-save mr-2"></i>Save Country
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Edit Country Modal -->
+<div class="modal fade modal-modern modal-edit" id="editCountry" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    <i class="fas fa-edit mr-2"></i>Edit Country
+                </h5>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="editCountryForm">
+                    <input type="hidden" id="hdnCountryId">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label class="form-label">Country Name <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control form-control-modern" id="txtEditCountryNameInput" placeholder="Enter country name">
+                                <span class="validationMessage text-danger mt-1 d-block" id="msgEditCountryValidation" style="font-size: 0.85rem;"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label class="form-label">Status</label>
+                                <div class="custom-control custom-switch mt-2">
+                                    <input type="checkbox" class="custom-control-input" id="chkActiveStatusEdit">
+                                    <label class="custom-control-label" for="chkActiveStatusEdit">
+                                        <i class="fas fa-toggle-on text-success mr-2"></i>Active
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary btn-modern" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-warning-modern btn-modern btnCountryReset">Reset</button>
+                <button type="button" class="btn btn-primary-modern btn-modern" id="btnEditCountrySave">
+                    <i class="fas fa-save mr-2"></i>Update Country
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- View Country Modal -->
+<div class="modal fade modal-modern modal-view" id="viewCountry" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    <i class="fas fa-eye mr-2"></i>Country Details
+                </h5>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="row form-group mb-4">
+                            <div class="col-md-4">
+                                <label class="form-label fw-bold">Country Name:</label>
+                            </div>
+                            <div class="col-md-8">
+                                <label class="form-control-label h5 mb-0" id="lblvwCountryName" style="color: var(--dark);"></label>
+                            </div>
+                        </div>
+                        <div class="row form-group mb-4">
+                            <div class="col-md-4">
+                                <label class="form-label fw-bold">Country ID:</label>
+                            </div>
+                            <div class="col-md-8">
+                                <label class="form-control-label h6 mb-0" id="lblvwCountryId" style="color: var(--gray);"></label>
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col-md-4">
+                                <label class="form-label fw-bold">Status:</label>
+                            </div>
+                            <div class="col-md-8">
+                                <span class="status-badge" id="lblvwStatus" style="font-size: 1rem;"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary btn-modern" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Delete Country Modal -->
+<div class="modal fade modal-modern modal-delete" id="deleteCountry" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    <i class="fas fa-exclamation-triangle mr-2"></i>Confirm Delete
+                </h5>
+                <button type="button" class="close text-white" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" id="hdnDeCountryId" />
+                <div class="text-center py-4">
+                    <div style="width: 80px; height: 80px; border-radius: 50%; background: rgba(239,68,68,0.1); margin: 0 auto 1.5rem; display: flex; align-items: center; justify-content: center;">
+                        <i class="fas fa-trash-alt" style="font-size: 2.5rem; color: var(--danger);"></i>
+                    </div>
+                    <h5 class="mb-3" style="color: var(--dark);">Delete this country?</h5>
+                    <p class="mb-4" style="color: var(--gray);">This action cannot be undone. Country "<strong id="lblDelCountryName"></strong>" will be permanently deleted.</p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary btn-modern" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-danger-modern btn-modern" id="btnConfirmCountryDelete">
+                    <i class="fas fa-trash mr-2"></i>Delete Country
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+    <script> $(document).ready(function () {
+        console.log('✅ Professional Countries Management Loaded!');
+
+        // GLOBAL EVENT HANDLER
+        function bindEventHandlers() {
+            $(document).off('click', '.editByCountryId').on('click', '.editByCountryId', function () {
+                var countryId = $(this).data('edcountryid');
+                loadCountryData(countryId, 'edit');
+            });
+
+            $(document).off('click', '.viewByCountryId').on('click', '.viewByCountryId', function () {
+                var countryId = $(this).data('vwcountryid');
+                loadCountryData(countryId, 'view');
+            });
+
+            $(document).off('click', '.deleteCountries').on('click', '.deleteCountries', function () {
+                var countryId = $(this).data('dlcountryid');
+                loadCountryData(countryId, 'delete');
+            });
+        }
+
+        // LOAD COUNTRY DATA
+        function loadCountryData(countryId, action) {
+            $.ajax({
+                type: "GET",
+                url: '@Url.Action("GetCountries", "Country")',
+                data: { CountryID: countryId },
+                dataType: "json",
+                success: function (response) {
+                    if (response != null) {
+                        var countryIdResp = response.CountryID || response.countryID;
+                        var countryName = response.CountryName || response.countryName;
+                        var isActive = (response.IsActive || response.isActive) == 1;
+
+                        if (action === 'edit') {
+                            $('#hdnCountryId').val(countryIdResp);
+                            $('#txtEditCountryNameInput').val(countryName);
+                            $('#chkActiveStatusEdit').prop('checked', isActive);
+                            $('#editCountry').modal('show');
+                        } else if (action === 'view') {
+                            $('#lblvwCountryName').text(countryName);
+                            $('#lblvwCountryId').text(countryIdResp);
+                            $('#lblvwStatus').removeClass('badge-success-custom badge-danger-custom')
+                                           .addClass(isActive ? 'badge-success-custom' : 'badge-danger-custom')
+                                           .html(isActive ? '<i class="fas fa-check-circle mr-1"></i>Active' : '<i class="fas fa-times-circle mr-1"></i>Inactive');
+                            $('#viewCountry').modal('show');
+                        } else if (action === 'delete') {
+                            $('#lblDelCountryName').text(countryName);
+                            $('#hdnDeCountryId').val(countryIdResp);
+                            $('#deleteCountry').modal('show');
+                        }
+                    }
+                },
+                error: function (xhr) {
+                    console.error('Load data error:', xhr.responseText);
+                    alert('Error loading country data');
+                }
+            });
+        }
+
+        // INITIAL BINDING
+        bindEventHandlers();
+
+        // SHOW ALL BUTTON - NOW WITH PERFECT STYLING
+        $('#showAllButton').click(function () {
+            $(this).html('<i class="fas fa-spinner fa-spin mr-2"></i>Loading all records...');
+
+            $.ajax({
+                url: '@Url.Action("ShowAll", "Country")',
+                type: 'GET',
+                success: function (data) {
+                    $('#countryTable tbody').empty();
+                    $('.pagination, #showAllButton').hide();
+
+                    $.each(data, function (index, item) {
+                        var countryId = item.CountryID || item.countryID;
+                        var countryName = item.CountryName || item.countryName;
+                        var isActive = (item.IsActive || item.isActive) == 1;
+                        var statusClass = isActive ? 'badge-success-custom' : 'badge-danger-custom';
+                        var statusText = isActive ? 'Active' : 'Inactive';
+                        var rowClass = isActive ? 'recently-added' : '';
+
+                        $('#countryTable tbody').append(
+                            '<tr class="' + rowClass + '">' +
+                            '<td>' +
+                            '<div class="d-flex align-items-center">' +
+                            '<div style="width: 45px; height: 45px; border-radius: 12px; background: linear-gradient(135deg, var(--primary), var(--primary-dark)); display: flex; align-items: center; justify-content: center; margin-right: 1rem;">' +
+                            '<i class="fas fa-flag text-white" style="font-size: 1.1rem;"></i>' +
+                            '</div>' +
+                            '<div>' +
+                            '<strong style="color: var(--dark);">' + countryName + '</strong>' +
+                            '<br><small style="color: var(--gray);">ID: ' + countryId + '</small>' +
+                            '</div>' +
+                            '</div>' +
+                            '</td>' +
+                            '<td>' +
+                            '<span class="status-badge ' + statusClass + '">' +
+                            '<i class="fas fa-' + (isActive ? 'check' : 'times') + '-circle mr-1"></i>' + statusText +
+                            '</span>' +
+                            '</td>' +
+                            '<td>' +
+                            '<div class="btn-group" role="group">' +
+                            '<button class="btn btn-primary-modern btn-modern btn-sm mr-1 editByCountryId" data-edCountryId="' + countryId + '" data-toggle="modal" data-target="#editCountry" title="Edit">' +
+                            '<i class="fas fa-edit"></i>' +
+                            '</button> ' +
+                            '<button class="btn btn-info-modern btn-modern btn-sm mr-1 viewByCountryId" data-vwCountryId="' + countryId + '" data-toggle="modal" data-target="#viewCountry" title="View">' +
+                            '<i class="fas fa-eye"></i>' +
+                            '</button> ' +
+                            '<button class="btn btn-danger-modern btn-modern btn-sm deleteCountries" data-dlCountryId="' + countryId + '" data-toggle="modal" data-target="#deleteCountry" title="Delete">' +
+                            '<i class="fas fa-trash-alt"></i>' +
+                            '</button> ' +
+                            '</div>' +
+                            '</td></tr>'
+                        );
+                    });
+
+                    bindEventHandlers();
+                    console.log('✅ Show All completed with professional styling');
+                },
+                error: function (xhr) {
+                    alert('Error loading all countries');
+                    $('#showAllButton').html('<i class="fas fa-expand-arrows-alt mr-2"></i>Show All Records');
+                }
+            });
+        });
+
+        // ADD COUNTRY
+        $('#btnCountrySave').on('click', function (e) {
+            var countryName = $('#txtCountryName').val().trim();
+            var isValid = validateCountryName(countryName, '#txtCountryName', '#msgAddCountryValidation');
+
+            if (isValid) {
+                var countryData = {
+                    countryName: countryName,
+                    isDeleted: 0,
+                    isActive: $('#chkActiveStatus').is(':checked') ? 1 : 0
+                };
+
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("Save", "Country")',
+                    data: countryData,
+                    dataType: "json",
+                    success: function (response) {
+                        if (response.toLowerCase() === "success") {
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Success!',
+                                text: 'Country added successfully!',
+                                confirmButtonColor: 'var(--primary)'
+                            }).then(() => {
+                                location.reload();
+                            });
+                        } else if (response.toLowerCase() === "duplicate") {
+                            Swal.fire('Error!', 'Country already exists.', 'error');
+                        } else {
+                            Swal.fire('Error!', response, 'error');
+                        }
+                    },
+                    error: function (xhr) {
+                        Swal.fire('Error!', 'Error saving country', 'error');
+                    }
+                });
+            }
+            e.preventDefault();
+        });
+
+        // EDIT COUNTRY
+        $('#btnEditCountrySave').on('click', function (e) {
+            var countryName = $('#txtEditCountryNameInput').val().trim();
+            var isValid = validateCountryName(countryName, '#txtEditCountryNameInput', '#msgEditCountryValidation');
+
+            if (isValid) {
+                var countryData = {
+                    countryID: parseInt($('#hdnCountryId').val()),
+                    countryName: countryName,
+                    isDeleted: 0,
+                    isActive: $('#chkActiveStatusEdit').is(':checked') ? 1 : 0
+                };
+
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("Edit", "Country")',
+                    data: countryData,
+                    dataType: "json",
+                    success: function (response) {
+                        if (response === "success") {
+                                                       Swal.fire({
+                                icon: 'success',
+                                title: 'Updated!',
+                                text: 'Country updated successfully!',
+                                confirmButtonColor: 'var(--primary)'
+                            }).then(() => {
+                                location.reload();
+                            });
+                        } else {
+                            Swal.fire('Error!', response, 'error');
+                        }
+                    },
+                    error: function (xhr) {
+                        Swal.fire('Error!', 'Error updating country', 'error');
+                    }
+                });
+            }
+            e.preventDefault();
+        });
+
+        // DELETE COUNTRY
+        $('#btnConfirmCountryDelete').on('click', function () {
+            var countryId = $('#hdnDeCountryId').val();
+            if (!countryId) {
+                Swal.fire('Error!', 'Country ID not found!', 'error');
+                return;
+            }
+
+            $.ajax({
+                type: "GET",
+                url: '@Url.Action("DeleteCountry", "Country")',
+                data: { countryId: countryId },
+                dataType: "json",
+                success: function (response) {
+                    if (response.toLowerCase() === "success") {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Deleted!',
+                            text: 'Country deleted successfully!',
+                            confirmButtonColor: 'var(--primary)'
+                        }).then(() => {
+                            location.reload();
+                        });
+                    } else {
+                        Swal.fire('Error!', 'Delete failed: ' + response, 'error');
+                    }
+                },
+                error: function (xhr) {
+                    Swal.fire('Error!', 'Error deleting country', 'error');
+                }
+            });
+        });
+
+        // VALIDATION FUNCTION
+        function validateCountryName(name, inputId, msgId) {
+            var regex = /^[a-zA-Z\s]+$/;
+            var isValid = true;
+
+            if (name === "") {
+                $(inputId).addClass('error');
+                $(msgId).html("Please enter Country Name");
+                isValid = false;
+            } else if (!regex.test(name)) {
+                $(inputId).addClass('error');
+                $(msgId).html("Please enter valid Country Name (letters only)");
+                isValid = false;
+            } else {
+                $(inputId).removeClass('error');
+                $(msgId).html("");
+            }
+
+            return isValid;
+        }
+
+        // REAL-TIME VALIDATION
+        $("#txtCountryName, #txtEditCountryNameInput").on('input', function () {
+            var value = $(this).val().trim();
+            var msgId = $(this).attr('id') === 'txtCountryName' ? '#msgAddCountryValidation' : '#msgEditCountryValidation';
+            var regex = /^[a-zA-Z\s]+$/;
+
+            if (value === '' || regex.test(value)) {
+                $(this).removeClass('error');
+                $(msgId).html('');
+            } else {
+                $(this).addClass('error');
+                $(msgId).html('Only letters and spaces allowed');
+            }
+        });
+
+        // PREVENT NON-ALPHABETIC CHARACTERS
+        $("#txtCountryName, #txtEditCountryNameInput").keypress(function (e) {
+            var regex = /^[a-zA-Z\s]+$/;
+            var char = String.fromCharCode(e.which);
+            if (!regex.test(char) && e.which !== 8 && e.which !== 0) {
+                e.preventDefault();
+            }
+        });
+
+        // RESET FUNCTIONS
+        $('.btnCountryReset').on('click', function () {
+            $('#addCountryForm, #editCountryForm')[0].reset();
+            $('.form-control-modern').removeClass('error');
+            $('.validationMessage').html('');
+            $('#chkActiveStatus').prop('checked', true);
+        });
+
+        // MODAL RESET ON CLOSE
+        $('#addCountry, #editCountry, #deleteCountry, #viewCountry').on('hidden.bs.modal', function () {
+            $(this).find('.form-control-modern').val('').removeClass('error');
+            $(this).find('.validationMessage').html('');
+            $('#chkActiveStatus').prop('checked', true);
+            $('#chkActiveStatusEdit').prop('checked', false);
+            $('#hdnDeCountryId, #hdnCountryId').val('');
+            $('#lblDelCountryName, #lblvwCountryName').text('');
+        });
+
+        // POPOVER INIT (OPTIONAL)
+        $('[data-toggle="popover"]').popover();
+
+        console.log('✅ All professional features initialized perfectly!');
+    });
+</script>
+
+<!-- SweetAlert2 for Professional Notifications -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<!-- Google Fonts for Inter -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+}

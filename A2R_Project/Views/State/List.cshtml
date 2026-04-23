@@ -1,0 +1,996 @@
+﻿@model A2R_Project.Models.State
+@{
+    ViewBag.Title = "List";
+}
+<style>
+    /* BODY */
+    body {
+        background: linear-gradient(135deg, #eef2f7, #f8f9fc);
+        font-family: 'Poppins', 'Segoe UI', sans-serif;
+    }
+
+    /* CARD */
+    .card {
+        border: none;
+        border-radius: 16px;
+        box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+        transition: 0.3s ease;
+    }
+
+        .card:hover {
+            transform: translateY(-4px);
+        }
+
+    .card-title {
+        font-size: 22px;
+        font-weight: 600;
+        color: #2c2c2c;
+    }
+
+    /* TABLE */
+    .table {
+        border-radius: 12px;
+        overflow: hidden;
+    }
+
+        .table thead th {
+            background: linear-gradient(45deg, #4e73df, #224abe);
+            color: #fff;
+            font-weight: 600;
+            text-align: center;
+            letter-spacing: 0.5px;
+        }
+
+        .table tbody td {
+            vertical-align: middle;
+            text-align: center;
+            transition: 0.3s;
+        }
+
+    /* ROW HOVER */
+    .table-info {
+        transition: all 0.3s ease;
+    }
+
+        .table-info:hover {
+            background: linear-gradient(45deg, #eef3ff, #ffffff) !important;
+            transform: scale(1.01);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        }
+
+    /* COUNTRY COLUMN - STRONG BLACK STYLISH */
+    .table td:nth-child(3) {
+        color: #000 !important;
+        font-weight: 700;
+        letter-spacing: 0.6px;
+    }
+
+        .table td:nth-child(3):hover {
+            color: #224abe !important;
+            cursor: pointer;
+            text-shadow: 0 1px 5px rgba(0,0,0,0.2);
+        }
+
+    /* BADGES */
+    .badge-success {
+        background: linear-gradient(45deg, #28a745, #20c997);
+        padding: 6px 12px;
+        border-radius: 20px;
+        font-size: 12px;
+    }
+
+    .badge-danger {
+        background: linear-gradient(45deg, #dc3545, #ff6b6b);
+        padding: 6px 12px;
+        border-radius: 20px;
+        font-size: 12px;
+    }
+
+    /* BUTTONS */
+    .btn-course-list {
+        margin: 2px;
+        transition: 0.3s;
+        border-radius: 50%;
+        padding: 6px 10px;
+    }
+
+        .btn-course-list:hover {
+            transform: scale(1.2);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+
+    /* PRIMARY BUTTON */
+    .btn-gradient-primary {
+        background: linear-gradient(45deg, #4e73df, #224abe);
+        color: #fff;
+        border: none;
+    }
+
+        .btn-gradient-primary:hover {
+            background: linear-gradient(45deg, #224abe, #4e73df);
+        }
+
+    /* PAGINATION */
+    .pagination .page-item .page-link {
+        border-radius: 10px;
+        margin: 0 4px;
+        color: #4e73df;
+        font-weight: 500;
+        border: none;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+        transition: 0.3s;
+    }
+
+    .pagination .page-item.active .page-link {
+        background: linear-gradient(45deg, #4e73df, #224abe);
+        color: white;
+    }
+
+    .pagination .page-item .page-link:hover {
+        background: #dbe4ff;
+        transform: translateY(-2px);
+    }
+
+    /* SHOW ALL BUTTON */
+    #showAllButton {
+        border-radius: 25px;
+        padding: 8px 25px;
+        font-weight: 500;
+        background: linear-gradient(45deg, #36d1dc, #5b86e5);
+        border: none;
+        color: #fff;
+        transition: 0.3s;
+    }
+
+        #showAllButton:hover {
+            transform: scale(1.07);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+    /* MODAL */
+    .modal-content {
+        border-radius: 16px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        animation: fadeInUp 0.3s ease;
+    }
+
+    .modal-header {
+        background: linear-gradient(45deg, #4e73df, #224abe);
+        color: #fff;
+        border-top-left-radius: 16px;
+        border-top-right-radius: 16px;
+    }
+
+    .modal-title {
+        font-weight: 600;
+    }
+
+    .modal-body {
+        padding: 25px;
+    }
+
+    .modal-footer {
+        border-top: none;
+    }
+
+    /* INPUT FIELDS */
+    .form-control {
+        border-radius: 10px;
+        transition: 0.3s;
+    }
+
+        .form-control:focus {
+            border-color: #4e73df;
+            box-shadow: 0 0 6px rgba(78,115,223,0.3);
+        }
+
+    /* VALIDATION */
+    .mandatoryfield {
+        color: red;
+    }
+
+    .validationMessage {
+        color: red;
+        font-size: 12px;
+    }
+
+    /* ANIMATION */
+    @@keyframes fadeInUp {
+        from
+
+    {
+        opacity: 0;
+        transform: translateY(15px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    }
+    /* TABLE DATA STRONG BLACK */
+    .table tbody td {
+        color: #000 !important;
+        font-weight: 600;
+        letter-spacing: 0.4px;
+        transition: all 0.3s ease;
+    }
+
+    /* HOVER EFFECT FOR ALL COLUMNS */
+    .table tbody tr:hover td {
+        color: #224abe !important;
+        background: #f1f5ff !important;
+    }
+
+    /* SPECIFIC COLUMN EXTRA STYLE */
+    .table td:nth-child(1),
+    .table td:nth-child(2),
+    .table td:nth-child(3) {
+        font-weight: 700;
+    }
+
+    /* BUTTONS INSIDE TABLE */
+    .btn-course-list {
+        border-radius: 50%;
+        padding: 7px 11px;
+        transition: all 0.3s ease;
+        color: #fff;
+    }
+
+    /* EDIT BUTTON */
+    .btn-gradient-primary {
+        background: linear-gradient(45deg, #4e73df, #224abe);
+        border: none;
+    }
+
+        .btn-gradient-primary:hover {
+            background: linear-gradient(45deg, #224abe, #4e73df);
+            transform: scale(1.15);
+        }
+
+    /* VIEW BUTTON */
+    .btn-gradient-dark {
+        background: linear-gradient(45deg, #343a40, #000);
+        border: none;
+    }
+
+        .btn-gradient-dark:hover {
+            background: linear-gradient(45deg, #000, #343a40);
+            transform: scale(1.15);
+        }
+
+    /* DELETE BUTTON */
+    .btn-gradient-warning {
+        background: linear-gradient(45deg, #ffb347, #ffcc33);
+        border: none;
+        color: #000;
+    }
+
+        .btn-gradient-warning:hover {
+            background: linear-gradient(45deg, #ffcc33, #ffb347);
+            transform: scale(1.15);
+        }
+
+    /* MODAL (POPOFF) TEXT SIZE INCREASE */
+    .modal-body {
+        font-size: 16px;
+    }
+
+    .modal-title {
+        font-size: 20px;
+        font-weight: 700;
+    }
+
+    /* MODAL LABELS */
+    .modal label {
+        font-size: 15px;
+        font-weight: 600;
+        color: #333;
+    }
+
+    /* MODAL INPUTS */
+    .modal .form-control {
+        font-size: 15px;
+        padding: 10px;
+    }
+
+    /* MODAL BUTTONS */
+    .modal-footer .btn {
+        font-size: 14px;
+        padding: 8px 18px;
+        border-radius: 20px;
+        transition: 0.3s;
+    }
+
+    /* SUBMIT BUTTON */
+    .modal-footer .btn-gradient-info {
+        background: linear-gradient(45deg, #36d1dc, #5b86e5);
+        color: #fff;
+    }
+
+        .modal-footer .btn-gradient-info:hover {
+            transform: scale(1.08);
+        }
+
+    /* RESET BUTTON */
+    .modal-footer .btn-gradient-light {
+        background: linear-gradient(45deg, #e0e0e0, #ffffff);
+    }
+
+    /* CLOSE BUTTON */
+    .modal-footer .btn-gradient-warning {
+        background: linear-gradient(45deg, #ff6a6a, #ff3d3d);
+        color: #fff;
+    }
+
+    /* INPUT HOVER EFFECT */
+    .form-control:hover {
+        border-color: #224abe;
+    }
+
+    /* EXTRA SMOOTH TABLE ROW */
+    .table-info:hover {
+        transform: scale(1.01);
+        box-shadow: 0 6px 15px rgba(0,0,0,0.08);
+    }
+
+    .modal-backdrop {
+        z-index: 1040 !important;
+    }
+
+    .modal {
+        z-index: 1050 !important;
+    }
+
+    body.modal-open {
+        overflow: hidden !important;
+    }
+</style>
+
+<div class="col-lg-12 stretch-card">
+    <div class="card">
+        <div class="card-body">
+            <div class="d-flex justify-content-between align-items-center" style="padding: 10px !important">
+                <strong class="card-title">States List</strong>
+                <button type="button" class="btn btn-gradient-primary btn-rounded btn-fw" data-toggle="modal" data-target="#addState">
+                    <i class="fa fa-plus"></i> Add
+                </button>
+            </div>
+            <table class="table table-bordered" id="stateTable">
+                <thead>
+                    <tr>
+                        <th> State name </th>
+                        <th> State Code </th>
+                        <th> Country </th>
+                        <th> Status </th>
+                        <th> Action </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{
+                        var states = ViewData["states"] as List<A2R_Project.Models.State> ?? new List<A2R_Project.Models.State>();
+                    }
+                    @if (states.Any())
+                    {
+                        @foreach (var item in states)
+                        {
+                            <tr class="table-info">
+                                <td class="table-primary">@(item.StateName ?? "")</td>
+                                <td class="table-warning">@(item.StateCode ?? "")</td>
+                                <td class="table-primary">@(item.CountryName ?? "")</td>
+                                <td class="table-warning">
+                                    @if (item.IsActive == 1)
+                                    {
+                                        <span class="badge badge-success">Active</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge badge-danger">Inactive</span>
+                                    }
+                                </td>
+                                <td>
+                                    <button type="button" class="btn btn-sm btn-gradient-primary btn-rounded btn-course-list editByStateId"
+                                            data-edStateId="@item.StateID" title="Edit"
+                                            data-toggle="modal" data-target="#editState">
+                                        <i class="mdi mdi-pencil"></i>
+                                    </button>
+                                    <button type="button" class="btn btn-sm btn-gradient-dark btn-rounded btn-course-list viewByStateId"
+                                            data-vwStateId="@item.StateID" title="View"
+                                            data-toggle="modal" data-target="#viewState">
+                                        <i class="mdi mdi-eye"></i>
+                                    </button>
+                                    <button type="button" class="btn btn-sm btn-gradient-warning btn-rounded btn-course-list deleteStates"
+                                            data-dlStateId="@item.StateID" title="Delete"
+                                            data-toggle="modal" data-target="#deleteState">
+                                        <i class="mdi mdi-delete"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="5" class="text-center">No states found</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+            <!-- Show All Button Row -->
+            @if (ViewBag.ShowAllButton == true)
+            {
+                <div class="row mt-3">
+                    <div class="col text-right">
+                        <button type="button" id="showAllButton" class="btn btn-primary btn-rounded">
+                            <i class="fa fa-list"></i> Show All (@ViewBag.TotalCount records)
+                        </button>
+                    </div>
+                </div>
+            }
+
+            <div class="d-flex justify-content-between align-items-center mt-3">
+
+                <button id="prevPage" class="btn btn-outline-primary btn-sm">◀ Prev</button>
+
+                <span id="pageInfo" class="font-weight-bold"></span>
+
+                <button id="nextPage" class="btn btn-outline-primary btn-sm">Next ▶</button>
+
+                <button id="showAllStatic" class="btn btn-success btn-sm ml-3">
+                    Show All
+                </button>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Add State Modal -->
+<div class="modal fade" id="addState" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Add State</h5>
+                <button type="button" class="close" data-dismiss="modal">
+                    <span>&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="addStateForm" autocomplete="off">
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <label>State Name<span class="mandatoryfield">*</span></label>
+                            <input type="text" class="form-control" id="txtStateName" />
+                            <span class="validationMessage" id="msgAddStateValidation"></span>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label>Country<span class="mandatoryfield">*</span></label>
+                            @Html.DropDownList("CountryID", (SelectList)ViewBag.Countries, "--Select Country Name--", new { @id = "ddlCountryId", @class = "form-control" })
+                            <span class="validationMessage" id="msgAddCountryValidation"></span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <label>State Code<span class="mandatoryfield">*</span></label>
+                            <input type="text" class="form-control" id="txtStateCode" />
+                            <span class="validationMessage" id="msgAddStateCodeValidation"></span>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <div class="d-flex align-items-center" style="height:38px;">
+                                <label class="mb-0 mr-2" style="min-width:70px;">Status :</label>
+                                <input type="checkbox" id="chkActiveStatus" style="margin-right:5px; transform: translateY(2px);">
+                                <label for="chkActiveStatus" class="mb-0">IsActive</label>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-gradient-warning btn-rounded btn-fw" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-gradient-light btn-rounded btn-fw btnStateReset">Reset</button>
+                <button type="button" class="btn btn-gradient-info btn-rounded btn-fw" id="btnStateSave">Submit</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Edit State Modal -->
+<div class="modal fade" id="editState" tabindex="-1" role="dialog" aria-labelledby="editStateModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editStateModalLabel">Edit State</h5>
+                <button type="button" class="close" data-dismiss="modal">
+                    <span>&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="editStateForm" class="form-sample" autocomplete="off">
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <label>State Name<span class="mandatoryfield">*</span></label>
+                            <input type="text" class="form-control" id="txtEditStateName" />
+                            <span class="validationMessage" id="msgEditStateValidation"></span>
+                            <input type="hidden" id="hdnStateId">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label>Country<span class="mandatoryfield">*</span></label>
+                            @Html.DropDownList("CountryID", (SelectList)ViewBag.Countries, "--Select Country Name--", new { @id = "ddlEditCountryId", @class = "form-control" })
+                            <span class="validationMessage" id="msgEditCountryValidation"></span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <label>State Code<span class="mandatoryfield">*</span></label>
+                            <input type="text" class="form-control" id="txtEditStateCodeInput" />
+                            <span class="validationMessage" id="msgEditStateCodeValidation"></span>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <div class="d-flex align-items-center" style="height:38px;">
+                                <label class="mb-0 mr-2" style="min-width:70px;">Status :</label>
+                                <input type="checkbox" id="chkActiveStatusEdit" style="margin-right:5px; transform: translateY(2px);">
+                                <label for="chkActiveStatusEdit" class="mb-0">IsActive</label>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-gradient-warning btn-rounded btn-fw" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-gradient-secondary btn-rounded btn-fw btnStateReset">Reset</button>
+                <button type="button" class="btn btn-gradient-info btn-rounded btn-fw" id="btnEditStateSave">Submit</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- View State Modal -->
+<div class="modal fade" id="viewState" tabindex="-1" role="dialog" aria-labelledby="mediumModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="mediumModalLabel">View State</h5>
+                <button type="button" class="close" data-dismiss="modal">
+                    <span>&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row" style="margin-top: 20px;">
+                    <div class="col-md-10">
+                        <div class="row">
+                            <div class="col-md-8">
+                                <div class="row form-group">
+                                    <div class="col col-md-4"><label class="form-control-label">State Name :</label></div>
+                                    <div class="col-12 col-md-8">
+                                        <label class="form-control-label" id="lblvwStateName"></label>
+                                        <input type="hidden" id="hdnVwStateId">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-gradient-warning btn-rounded btn-fw" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Delete State Modal -->
+<div class="modal fade" id="deleteState" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteModalLabel" style="color:red">Confirm Delete State</h5>
+                <button type="button" class="close" data-dismiss="modal">
+                    <span>&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-10">
+                        <div class="row" style="margin-top: 20px;">
+                            <div class="col-md-8">
+                                <div class="row form-group">
+                                    <div class="col col-md-4"><label class="form-control-label">State Name :</label></div>
+                                    <div class="col-12 col-md-8">
+                                        <label class="form-control-label" id="lblDelStateName"></label>
+                                        <input type="hidden" id="hdnDeStateId">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-gradient-warning btn-rounded btn-fw" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-gradient-danger btn-rounded btn-fw" id="btnConfirmStateDelete">Delete</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<!-- jQuery + Bootstrap + SweetAlert - ALL INLINE -->
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        // ========== SHOW ALL BUTTON ==========
+        $('#showAllButton').click(function () {
+
+            $('.pagination').closest('.row').hide();
+            $(this).closest('.row').hide();
+
+            $('#stateTable tbody').html(
+                '<tr><td colspan="5" class="text-center">' +
+                '<div class="spinner-border"></div></td></tr>'
+            );
+
+            $.ajax({
+                url: '@Url.Action("ShowAll", "State")',
+                type: 'GET',
+                success: function (data) {
+
+                    $('#stateTable tbody').empty();
+
+                    if (data && data.length > 0) {
+
+                        $.each(data, function (index, item) {
+
+                            var row = `
+                            <tr class="table-info">
+                                <td class="table-primary">${item.stateName || ''}</td>
+                                <td class="table-warning">${item.stateCode || ''}</td>
+                                <td class="table-primary">${item.countryName || ''}</td>
+                                <td class="table-warning">
+                                    ${item.isActive == 1
+                                        ? '<span class="badge badge-success">Active</span>'
+                                        : '<span class="badge badge-danger">Inactive</span>'}
+                                </td>
+                                <td>
+                                    <button class="btn btn-sm btn-gradient-primary editByStateId"
+                                        data-edStateId="${item.stateID}" data-toggle="modal" data-target="#editState">
+                                        ✏️
+                                    </button>
+
+                                    <button class="btn btn-sm btn-gradient-dark viewByStateId"
+                                        data-vwStateId="${item.stateID}" data-toggle="modal" data-target="#viewState">
+                                        👁️
+                                    </button>
+
+                                    <button class="btn btn-sm btn-gradient-warning deleteStates"
+                                        data-dlStateId="${item.stateID}" data-toggle="modal" data-target="#deleteState">
+                                        🗑️
+                                    </button>
+                                </td>
+                            </tr>`;
+
+                            $('#stateTable tbody').append(row);
+                        });
+
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'All records loaded!',
+                            text: data.length + ' states displayed',
+                            timer: 1500,
+                            showConfirmButton: false
+                        });
+
+                    } else {
+                        $('#stateTable tbody').html(
+                            '<tr><td colspan="5" class="text-center">No data found</td></tr>'
+                        );
+                    }
+                },
+                error: function () {
+                    Swal.fire('Error!', 'Failed to load data', 'error');
+                }
+            });
+        });
+
+        // ================= PAGINATION =================
+        var rowsPerPage = 5;
+        var currentPage = 1;
+
+        function getRows() {
+            return $('#stateTable tbody tr');
+        }
+
+        function showPage(page) {
+            var rows = getRows();
+            var totalPages = Math.ceil(rows.length / rowsPerPage);
+
+            rows.hide();
+            rows.slice((page - 1) * rowsPerPage, page * rowsPerPage).show();
+
+            $('#pageInfo').text("Page " + page + " of " + totalPages);
+        }
+
+        showPage(currentPage);
+
+        $('#nextPage').click(function () {
+            var totalPages = Math.ceil(getRows().length / rowsPerPage);
+            if (currentPage < totalPages) {
+                currentPage++;
+                showPage(currentPage);
+            }
+        });
+
+        $('#prevPage').click(function () {
+            if (currentPage > 1) {
+                currentPage--;
+                showPage(currentPage);
+            }
+        });
+
+        $('#showAllStatic').click(function () {
+            getRows().show();
+            $('#pageInfo').text("Showing All Records");
+        });
+
+            // ========== ADD STATE ==========
+        $('#btnStateSave').on('click', function (e) {
+            var stateName = $('#txtStateName').val().trim();
+            var countryId = $('#ddlCountryId').val();
+            var stateCode = $('#txtStateCode').val().trim();
+            var isActive = $('#chkActiveStatus').is(':checked') ? 1 : 0;
+
+            var isValid = true;
+
+            // Validation
+            if (stateName === "") {
+                $('#txtStateName').css('border-color', 'red');
+                $('#msgAddStateValidation').html("Please enter State Name");
+                isValid = false;
+            } else {
+                $('#txtStateName').css('border-color', '');
+                $('#msgAddStateValidation').html("");
+            }
+
+            if (countryId === "" || countryId === null) {
+                $('#ddlCountryId').css('border-color', 'red');
+                $('#msgAddCountryValidation').html("Please select Country");
+                isValid = false;
+            } else {
+                $('#ddlCountryId').css('border-color', '');
+                $('#msgAddCountryValidation').html("");
+            }
+
+            if (stateCode === "") {
+                $('#txtStateCode').css('border-color', 'red');
+                $('#msgAddStateCodeValidation').html("Please enter State Code");
+                isValid = false;
+            } else {
+                $('#txtStateCode').css('border-color', '');
+                $('#msgAddStateCodeValidation').html("");
+            }
+
+            if (isValid) {
+                var stateData = {
+                    StateName: stateName,
+                    CountryID: parseInt(countryId),
+                    StateCode: stateCode,
+                    IsActive: isActive,
+                    IsDeleted: 0
+                };
+
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("Save", "State")',
+                    data: stateData,
+                    dataType: "json",
+                    success: function (response) {
+                        var trimmedResponse = response.trim();
+                        if (trimmedResponse.toLowerCase() === "success") {
+                            Swal.fire('Success!', 'State added successfully', 'success').then(() => {
+                                $('#addState').modal('hide');
+                                location.reload();
+                            });
+                        } else if (trimmedResponse.toLowerCase() === "duplicate") {
+                            Swal.fire('Duplicate!', 'State with the same Name already exists.', 'warning');
+                        } else {
+                            Swal.fire('Error!', 'Operation failed: ' + trimmedResponse, 'error');
+                        }
+                    },
+                    error: function() {
+                        Swal.fire('Error!', 'Something went wrong while saving', 'error');
+                    }
+                });
+            }
+            e.preventDefault();
+        });
+
+                // ========== EDIT STATE ==========
+        $('#btnEditStateSave').on('click', function (e) {
+            var stateName = $('#txtEditStateName').val().trim();
+            var countryId = $('#ddlEditCountryId').val();
+            var stateCode = $('#txtEditStateCodeInput').val().trim();
+            var isActive = $('#chkActiveStatusEdit').is(':checked') ? 1 : 0;
+            var stateId = $('#hdnStateId').val();
+
+            var isValid = true;
+
+            // Validation
+            if (stateName === "") {
+                $('#txtEditStateName').css('border-color', 'red');
+                $('#msgEditStateValidation').html("Please enter State Name");
+                isValid = false;
+            } else {
+                $('#txtEditStateName').css('border-color', '');
+                $('#msgEditStateValidation').html("");
+            }
+
+            if (countryId === "" || countryId === null) {
+                $('#ddlEditCountryId').css('border-color', 'red');
+                $('#msgEditCountryValidation').html("Please select Country");
+                isValid = false;
+            } else {
+                $('#ddlEditCountryId').css('border-color', '');
+                $('#msgEditCountryValidation').html("");
+            }
+
+            if (stateCode === "") {
+                $('#txtEditStateCodeInput').css('border-color', 'red');
+                $('#msgEditStateCodeValidation').html("Please enter State Code");
+                isValid = false;
+            } else {
+                $('#txtEditStateCodeInput').css('border-color', '');
+                $('#msgEditStateCodeValidation').html("");
+            }
+
+            if (isValid) {
+                var stateData = {
+                    StateID: parseInt(stateId),
+                    StateName: stateName,
+                    CountryID: parseInt(countryId),
+                    StateCode: stateCode,
+                    IsActive: isActive,
+                    IsDeleted: 0
+                };
+
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("Edit", "State")',
+                    data: stateData,
+                    dataType: "json",
+                    success: function (response) {
+                        if (response != "") {
+                            response = "success";
+                        }
+                        if (response == "success") {
+                            Swal.fire('Success!', 'State updated successfully', 'success').then(() => {
+                                $('#editState').modal('hide');
+                                location.reload();
+                            });
+                        } else {
+                            Swal.fire('Error!', 'Operation failed', 'error');
+                        }
+                    },
+                    error: function() {
+                        Swal.fire('Error!', 'Something went wrong while updating', 'error');
+                    }
+                });
+            }
+            e.preventDefault();
+        });
+
+        // ========== EDIT BUTTON CLICK ==========
+        $(document).on('click', '.editByStateId', function (e) {
+            var stateID = $(this).attr('data-edStateId');
+            $.ajax({
+                type: "GET",
+                url: '@Url.Action("GetState", "State")',
+                data: { stateID: JSON.stringify(stateID) },
+                dataType: "json",
+                success: function (response) {
+                    if (response != null) {
+                        $('#hdnStateId').val(response.stateID);
+                        $('#txtEditStateName').val(response.stateName);
+                        $('#ddlEditCountryId').val(response.countryID);
+                        $('#txtEditStateCodeInput').val(response.stateCode);
+                        $('#chkActiveStatusEdit').prop('checked', response.isActive == 1);
+                    }
+                },
+                error: function() {
+                    Swal.fire('Error!', 'Failed to load state data', 'error');
+                }
+            });
+        });
+            // ========== RESET BUTTON (ADD + EDIT) ==========
+    $(document).on('click', '.btnStateReset', function () {
+
+        // RESET ADD FORM
+        $('#addStateForm')[0].reset();
+
+        // RESET EDIT FORM
+        $('#editStateForm')[0].reset();
+
+        // CLEAR VALIDATION MESSAGES
+        $('.validationMessage').html('');
+
+        // REMOVE RED BORDERS
+        $('.form-control').css('border-color', '');
+
+    });
+         // ========== VIEW BUTTON ==========
+        $(document).on('click', '.viewByStateId', function (e) {
+            var stateID = $(this).attr('data-vwStateId');
+            $.ajax({
+                type: "GET",
+                url: '@Url.Action("GetState", "State")',
+                data: { stateID: JSON.stringify(stateID) },
+                dataType: "json",
+                success: function (response) {
+                    if (response != null) {
+                        $('#hdnVwStateId').val(response.stateID);
+                        $('#lblvwStateName').html(response.stateName || '');
+                        $('#viewState').modal('show');
+                    }
+                }
+            });
+        });
+
+        // ========== DELETE ==========
+           // ========== DELETE BUTTON ==========
+        $(document).on('click', '.deleteStates', function (e) {
+            var stateID = $(this).attr('data-dlStateId');
+            $.ajax({
+                type: "GET",
+                url: '@Url.Action("GetState", "State")',
+                data: { stateID: JSON.stringify(stateID) },
+                dataType: "json",
+                success: function (response) {
+                    if (response != null) {
+                        $('#hdnDeStateId').val(response.stateID);
+                        $('#lblDelStateName').html(response.stateName || '');
+                        $('#deleteState').modal('show');
+                    }
+                }
+            });
+        });
+     
+        // ========== DELETE CONFIRMATION ==========
+        $('#btnConfirmStateDelete').on('click', function (e) {
+            var stateId = $('#hdnDeStateId').val();
+            $.ajax({
+                type: "GET",
+                url: '@Url.Action("DeleteState", "State")',
+                data: { stateId: JSON.stringify(stateId) },
+                dataType: "json",
+                success: function (response) {
+                    if (response == "1") {
+                        Swal.fire('Success!', 'State deleted successfully', 'success').then(() => {
+                            location.reload();
+                        });
+                    } else {
+                        Swal.fire('Error!', 'Something went wrong. Please try again', 'error');
+                    }
+                    $('#deleteState').modal('hide');
+                },
+                error: function() {
+                    Swal.fire('Error!', 'Failed to delete state', 'error');
+                    $('#deleteState').modal('hide');
+                }
+            });
+        });
+            // ========== PERFECT MODAL FIX ==========
+    $(document).on('hidden.bs.modal', '.modal', function () {
+        $('.modal-backdrop').remove();
+        $('body').removeClass('modal-open').css('padding-right', '');
+    });
+
+    $('.close, [data-dismiss="modal"]').click(function() {
+        $(this).closest('.modal').modal('hide');
+    });
+    });
+</script>

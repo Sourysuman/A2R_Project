@@ -1,0 +1,586 @@
+﻿
+@model A2R_Project.Models.StudentInquiries
+
+@{
+    ViewBag.Title = "Student Inquiry";
+}
+
+<style>
+    /* ================= BACKGROUND ================= */
+    body {
+        font-family: 'Segoe UI', sans-serif;
+        background: #f0f4f8; /* clean soft modern background */
+    }
+
+    /* ================= ANIMATED BORDER CARD ================= */
+    .card {
+        position: relative;
+        border-radius: 18px;
+        background: #ffffff;
+        padding: 15px;
+        border: 2px solid transparent;
+        background-clip: padding-box;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+    }
+
+        /* 🔥 MOVING BORDER EFFECT */
+        .card::before {
+            content: "";
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            z-index: -1;
+            border-radius: 20px;
+            background: linear-gradient(270deg, #007bff, #00c6ff, #42a5f5, #00e676);
+            background-size: 400% 400%;
+            animation: borderMove 6s linear infinite;
+        }
+
+    @@keyframes borderMove {
+        0%
+
+    {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+
+    }
+
+    /* ================= TITLE ================= */
+    .card-body h4 {
+        font-weight: 700;
+        color: #1f2d3d;
+        margin-bottom: 18px;
+        border-left: 5px solid #007bff;
+        padding-left: 10px;
+    }
+
+    /* ================= INPUT FIELDS ================= */
+    .form-control {
+        border-radius: 10px;
+        border: 1px solid #d0d7de;
+        padding: 8px 10px; /* 🔥 slightly smaller */
+        font-size: 13.5px;
+        transition: 0.3s ease;
+    }
+
+        /* hover */
+        .form-control:hover {
+            border-color: #42a5f5;
+            box-shadow: 0 0 6px rgba(66,165,245,0.2);
+        }
+
+        /* focus */
+        .form-control:focus {
+            border-color: #007bff;
+            box-shadow: 0 0 10px rgba(0,123,255,0.25);
+        }
+
+    /* ================= LABEL ================= */
+    .form-group label {
+        font-weight: 600;
+        font-size: 13.5px;
+        color: #2c3e50;
+    }
+
+    /* ================= COURSE + BUTTON ALIGNMENT FIX ================= */
+    .row .col-md-6 {
+        padding-top: 5px;
+    }
+
+    /* Course field smaller width feel */
+    #ddlAddCourseId {
+        max-width: 90%;
+    }
+
+    /* buttons alignment better */
+    .text-right {
+        display: flex;
+        justify-content: flex-end;
+        gap: 10px;
+        align-items: center;
+    }
+
+    /* ================= BUTTONS ================= */
+    .btn {
+        border-radius: 10px;
+        font-weight: 600;
+        padding: 7px 16px;
+        transition: 0.3s;
+    }
+
+    #btnAddStudent {
+        background: linear-gradient(135deg, #007bff, #0056d2);
+        color: white;
+        border: none;
+    }
+
+        #btnAddStudent:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0,123,255,0.3);
+        }
+
+    /* reset */
+    #btnInquiryReset {
+        background: #6c757d;
+        color: white;
+        border: none;
+    }
+
+    /* cancel */
+    #btnCancel {
+        background: #f1f3f5;
+        border: 1px solid #ddd;
+    }
+
+    /* ================= VALIDATION ================= */
+    .validationMessage {
+        font-size: 12px;
+        color: #ff4d4f;
+    }
+
+    /* invalid shake */
+    .form-control.is-invalid {
+        border-color: #ff4d4f;
+        animation: shake 0.25s linear 1;
+    }
+
+    @@keyframes shake {
+        0%
+
+    {
+        transform: translateX(0);
+    }
+
+    25% {
+        transform: translateX(-3px);
+    }
+
+    50% {
+        transform: translateX(3px);
+    }
+
+    75% {
+        transform: translateX(-3px);
+    }
+
+    100% {
+        transform: translateX(0);
+    }
+
+    }
+
+    /* ================= RESPONSIVE ================= */
+    @@media (max-width: 768px) {
+        .text-right
+
+    {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .btn {
+        width: 100%;
+    }
+
+    #ddlAddCourseId {
+        max-width: 100%;
+    }
+
+    }
+
+    #ddlAddCourseId {
+        max-width: 70%;
+    }
+    /* Fix dropdown alignment */
+    select.form-control {
+        height: 38px;
+        padding-top: 6px;
+        padding-bottom: 6px;
+    }
+</style>
+
+<div class="col-12">
+    <div class="card">
+        <div class="card-body">
+            <h4>Student Inquiry Form</h4>
+            <form id="studentInquiryForm">
+                <div id="successMessage"
+                     style="display:none;
+     padding:12px 15px;
+     margin-bottom:10px;
+     border-radius:8px;
+     background:#d1e7dd;
+     color:#0f5132;
+     border:1px solid #badbcc;
+     font-weight:600;">
+                    🎉 Student Inquiry submitted successfully!
+                </div>
+                <!-- Row 1: Name, Father, Company -->
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>Name <span class="mandatoryfield">*</span></label>
+                            <input type="text" class="form-control" id="addStudentName" name="NameOfStudent" />
+                            <span class="validationMessage" id="msgStudentNamevalidation"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>Father's Name <span class="mandatoryfield">*</span></label>
+                            <input type="text" class="form-control" id="addFatherName" name="FathersName" />
+                            <span class="validationMessage" id="msgFatherNamevalidation"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>Company Name</label>
+                            <input type="text" class="form-control" id="addCompanyName" name="CompanyName" />
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Row 2: Education, Contact, Designation -->
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>Education <span class="mandatoryfield">*</span></label>
+                            <input type="text" class="form-control" id="addEducation" name="Education" />
+                            <span class="validationMessage" id="msgEducationvalidation"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>Contact No. <span class="mandatoryfield">*</span></label>
+                            <input type="text" class="form-control" id="addContactNo" name="ContactNo" maxlength="15" />
+                            <span class="validationMessage" id="msgContactNovalidation"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>Designation</label>
+                            <input type="text" class="form-control" id="addDesignation" name="Designation" />
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Row 3: Address1, State, Country -->
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>Address 1</label>
+                            <input type="text" class="form-control" id="addAddress1" name="Address1" />
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>State <span class="mandatoryfield">*</span></label>
+                            <select class="form-control" id="ddlEditStateId" name="StateID">
+                                <option value="">-- Select State --</option>
+                                @if (Model?.state != null)
+                                {
+                                    foreach (var state in Model.state)
+                                    {
+                                        <option value="@state.StateID">@state.StateName</option>
+                                    }
+                                }
+                            </select>
+                            <span class="validationMessage" id="msgStateIdvalidation"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>Country <span class="mandatoryfield">*</span></label>
+                            <select class="form-control" id="ddlEditCountryId" name="CountryID">
+                                <option value="">-- Select Country --</option>
+                                @if (Model?.country != null)
+                                {
+                                    foreach (var country in Model.country)
+                                    {
+                                        <option value="@country.CountryID">@country.CountryName</option>
+                                    }
+                                }
+                            </select>
+                            <span class="validationMessage" id="msgCountryIdvalidation"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Row 4: Address2, City, Postcode -->
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>Address 2</label>
+                            <input type="text" class="form-control" id="addAddress2" name="Address2" />
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>City <span class="mandatoryfield">*</span></label>
+                            <input type="text" class="form-control" id="addCity" name="City" />
+                            <span class="validationMessage" id="msgCityvalidation"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>Postcode <span class="mandatoryfield">*</span></label>
+                            <input type="text" class="form-control" id="addPostcode" name="Postcode" />
+                            <span class="validationMessage" id="msgPostcodevalidation"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Row 5: EnrolledDate, CompletionDate, Email -->
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>Enrolled Date <span class="mandatoryfield">*</span></label>
+                            <input type="date" class="form-control" id="addEnrolledDate" name="EnrolledDate" />
+                            <span class="validationMessage" id="msgEnrolledDatevalidation"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>Completion Date <span class="mandatoryfield">*</span></label>
+                            <input type="date" class="form-control" id="addCompletionDate" name="CompletionDate" />
+                            <span class="validationMessage" id="msgCompletionDatevalidation"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>Email <span class="mandatoryfield">*</span></label>
+                            <input type="email" class="form-control" id="addEmail" name="Email" />
+                            <span class="validationMessage" id="msgEmailvalidation"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Row 6: Course + Buttons -->
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Course <span class="mandatoryfield">*</span></label>
+                            <select class="form-control" id="ddlAddCourseId" name="CourseID">
+                                <option value="">-- Select Course --</option>
+                                @if (Model?.course != null)
+                                {
+                                    foreach (var course in Model.course)
+                                    {
+                                        <option value="@course.CourseID">@course.CourseName</option>
+                                    }
+                                }
+                            </select>
+                            <span class="validationMessage" id="msgCoursevalidation"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-6 text-right">
+                        <button type="button" class="btn btn-primary mr-2" id="btnAddStudent">Submit</button>
+                        <button type="button" class="btn btn-secondary mr-2" id="btnInquiryReset">Reset</button>
+                        <button type="button" class="btn btn-light" id="btnCancel">Cancel</button>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<!-- SCRIPTS - ALL CDN -->
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<!-- CDN - ALL DEPENDENCIES -->
+
+
+<script>
+$(document).ready(function () {
+
+    // Submit
+    $('#btnAddStudent').click(function (e) {
+        e.preventDefault();
+        if (validateForm()) {
+            submitForm();
+        }
+    });
+
+    // Reset
+    $('#btnInquiryReset, #btnCancel').click(function (e) {
+        e.preventDefault();
+        $('#studentInquiryForm')[0].reset();
+        clearValidation();
+        $('#successMessage').hide();
+    });
+
+    $('#studentInquiryForm').submit(function (e) {
+        e.preventDefault();
+    });
+
+});
+
+
+    // ================= VALIDATION (FINAL) =================
+    function validateForm() {
+        let isValid = true;
+        clearValidation();
+
+        // TEXT REQUIRED
+        if (!checkRequired('#addStudentName', '#msgStudentNamevalidation')) isValid = false;
+        if (!checkRequired('#addFatherName', '#msgFatherNamevalidation')) isValid = false;
+        if (!checkRequired('#addEducation', '#msgEducationvalidation')) isValid = false;
+        if (!checkRequired('#addContactNo', '#msgContactNovalidation')) isValid = false;
+        if (!checkRequired('#addCity', '#msgCityvalidation')) isValid = false;
+        if (!checkRequired('#addPostcode', '#msgPostcodevalidation')) isValid = false;
+        if (!checkRequired('#addEmail', '#msgEmailvalidation')) isValid = false;
+        if (!checkRequired('#addEnrolledDate', '#msgEnrolledDatevalidation')) isValid = false;
+        if (!checkRequired('#addCompletionDate', '#msgCompletionDatevalidation')) isValid = false;
+
+        // ================= DATE VALIDATION (NEW) =================
+        const enrolledDate = $('#addEnrolledDate').val();
+        const completionDate = $('#addCompletionDate').val();
+
+        if (enrolledDate && completionDate) {
+            const start = new Date(enrolledDate);
+            const end = new Date(completionDate);
+
+            if (end < start) {
+                setError('#addCompletionDate', '#msgCompletionDatevalidation',
+                    'Completion date cannot be before enrolled date');
+                isValid = false;
+            }
+        }
+
+        // PHONE VALIDATION
+        const phone = ($('#addContactNo').val() || '').trim();
+        const phoneRegex = /^[0-9]{10,15}$/;
+
+        if (phone) {
+            if (!phoneRegex.test(phone)) {
+                setError('#addContactNo', '#msgContactNovalidation', 'Enter valid phone (10–15 digits)');
+                isValid = false;
+            }
+        }
+
+        // EMAIL VALIDATION
+        const email = ($('#addEmail').val() || '').trim();
+        const emailRegex = /^[^\s@@]+@@[^\s@@]+\.[^\s@@]+$/;
+
+        if (email) {
+            if (!emailRegex.test(email)) {
+                setError('#addEmail', '#msgEmailvalidation', 'Enter valid email');
+                isValid = false;
+            }
+        }
+
+        // POSTCODE
+        const postcode = ($('#addPostcode').val() || '').trim();
+        const pinRegex = /^[0-9]{6}$/;
+
+        if (postcode) {
+            if (!pinRegex.test(postcode)) {
+                setError('#addPostcode', '#msgPostcodevalidation', 'Must be exactly 6 digits');
+                isValid = false;
+            }
+        }
+
+        // DROPDOWNS
+        if (!$('#ddlEditStateId').val()) {
+            setError('#ddlEditStateId', '#msgStateIdvalidation', 'State required!');
+            isValid = false;
+        }
+
+        if (!$('#ddlEditCountryId').val()) {
+            setError('#ddlEditCountryId', '#msgCountryIdvalidation', 'Country required!');
+            isValid = false;
+        }
+
+        if (!$('#ddlAddCourseId').val()) {
+            setError('#ddlAddCourseId', '#msgCoursevalidation', 'Course required!');
+            isValid = false;
+        }
+
+        return isValid;
+    }
+
+
+// ================= HELPERS =================
+function checkRequired(field, msg) {
+    const val = ($(field).val() || '').trim();
+
+    if (!val) {
+        setError(field, msg, 'Required!');
+        return false;
+    }
+    return true;
+}
+
+function setError(field, msg, text) {
+    $(field).addClass('is-invalid');
+    $(msg).text(text).show();
+}
+
+function clearValidation() {
+    $('.form-control').removeClass('is-invalid');
+    $('.validationMessage').text('').hide();
+}
+
+
+// ================= SUBMIT =================
+function submitForm() {
+
+    const data = {
+        NameOfStudent: $('#addStudentName').val().trim(),
+        FathersName: $('#addFatherName').val().trim(),
+        CompanyName: $('#addCompanyName').val().trim(),
+        Education: $('#addEducation').val().trim(),
+        ContactNo: $('#addContactNo').val().trim(),
+        Designation: $('#addDesignation').val().trim(),
+        Email: $('#addEmail').val().trim(),
+        StateID: parseInt($('#ddlEditStateId').val()),
+        CountryID: parseInt($('#ddlEditCountryId').val()),
+        Address1: $('#addAddress1').val().trim(),
+        Address2: $('#addAddress2').val().trim(),
+        City: $('#addCity').val().trim(),
+        Postcode: $('#addPostcode').val().trim(),
+        EnrolledDate: $('#addEnrolledDate').val(),
+        CompletionDate: $('#addCompletionDate').val(),
+        CourseID: parseInt($('#ddlAddCourseId').val()),
+        IsActive: 1,
+        IsDeleted: 0
+    };
+
+    console.log("Sending:", data);
+
+    $('#btnAddStudent').prop('disabled', true).text('Submitting...');
+
+    $.post('@Url.Action("SaveSaveInquiry", "StudentInquiry")', data)
+        .done(function (response) {
+
+            // ✅ BEAUTIFUL SUCCESS MESSAGE
+            $('#successMessage')
+                .stop(true, true)
+                .fadeIn()
+                .delay(3000)
+                .fadeOut();
+
+            $('#studentInquiryForm')[0].reset();
+            clearValidation();
+        })
+        .fail(function (xhr) {
+            alert('❌ ERROR: ' + xhr.responseText);
+        })
+        .always(function () {
+            $('#btnAddStudent').prop('disabled', false).text('Submit');
+        });
+}
+</script>

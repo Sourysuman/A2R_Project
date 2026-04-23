@@ -1,0 +1,466 @@
+﻿
+@model List<A2R_Project.Models.Admission>
+@{
+    ViewBag.Title = "Fees Collection - List";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    /* Table Slider & Responsive */
+    .custom-table-container {
+        overflow-x: auto;
+        white-space: nowrap;
+        -webkit-overflow-scrolling: touch;
+    }
+    
+    .table-wrapper {
+        min-width: 2000px; /* Ensures horizontal scroll */
+    }
+    
+    /* Enhanced Table Styles */
+    .table-warning {
+        background-color: #fff3cd !important;
+        font-weight: 500;
+    }
+    
+    .table-info {
+        background-color: #d1ecf1 !important;
+    }
+    
+    .table thead th {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        font-weight: 600;
+        position: sticky;
+        top: 0;
+        z-index: 10;
+        border: none;
+        padding: 12px 8px;
+        font-size: 0.9rem;
+    }
+    
+    .table tbody td {
+        padding: 12px 8px;
+        vertical-align: middle;
+        border-color: #e9ecef;
+    }
+    
+    /* Filter Styles */
+    .filter-row {
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        transition: all 0.3s ease;
+    }
+    
+    .filter-row:hover {
+        box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+        transform: translateY(-2px);
+    }
+    
+    .form-control:focus {
+        border-color: #667eea;
+        box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+    }
+    
+    /* Loading Spinner */
+    .spinner-border-sm {
+        width: 1rem;
+        height: 1rem;
+    }
+    
+    /* Badge Styles */
+    .badge-success {
+        background-color: #28a745 !important;
+    }
+    
+    .badge-danger {
+        background-color: #dc3545 !important;
+    }
+    
+    /* Responsive */
+    @@media (max-width: 768px) {
+        .filter-row .col-md-4 {
+            margin-bottom: 10px;
+        }
+    }
+    
+    /* Scroll Indicator */
+    .table-scroll-indicator {
+        position: sticky;
+        right: 0;
+        background: white;
+        padding: 10px;
+        border-left: 3px solid #667eea;
+        z-index: 5;
+    }
+    /* ================= TABLE SCROLL FIX ================= */
+    .custom-table-container {
+        max-height: 500px; /* keep scroll inside */
+        overflow-y: auto;
+        overflow-x: auto;
+        position: relative;
+    }
+
+    /* ================= HEADER STICK INSIDE ================= */
+    .table thead th {
+        position: sticky;
+        top: 0;
+        z-index: 5;
+        background: linear-gradient(135deg, #667eea, #764ba2);
+    }
+
+    .custom-table-container {
+        max-height: 500px;
+        overflow-y: auto;
+        overflow-x: auto;
+        position: relative;
+    }
+
+    .table thead th {
+        position: sticky;
+        top: 0; /* stays inside container */
+        z-index: 2; /* LOWER than navbar */
+        background: linear-gradient(135deg, #667eea, #764ba2);
+    }
+
+    .table thead th {
+        position: sticky;
+        top: 0; /* stays inside container */
+        z-index: 2; /* LOWER than navbar */
+        background: linear-gradient(135deg, #667eea, #764ba2);
+    }
+
+    .custom-table-container {
+        z-index: 1;
+    }
+
+    .table thead th {
+        z-index: 2;
+    }
+</style>
+
+<div class="col-lg-12 stretch-card">
+    <div class="card shadow-lg border-0">
+        <div class="card-body p-3">
+            <!-- Filter Row 1 -->
+            <div class="row mb-3 filter-row">
+                <div class="col-md-4">
+                    <label for="studentNameFilter" class="form-label fw-bold text-dark mb-1">👤 Student Name</label>
+                    <input type="text" class="form-control form-control-lg" id="studentNameFilter" placeholder="Type name (real-time search)" autocomplete="off">
+                </div>
+                <div class="col-md-4">
+                    <label for="fromDateFilter" class="form-label fw-bold text-dark mb-1">📅 From Date</label>
+                    <input type="date" class="form-control form-control-lg" id="fromDateFilter">
+                </div>
+                <div class="col-md-4">
+                    <label for="toDateFilter" class="form-label fw-bold text-dark mb-1">📅 To Date</label>
+                    <input type="date" class="form-control form-control-lg" id="toDateFilter">
+                    <div id="toDateWarning" class="mt-1 small"></div>
+                </div>
+            </div>
+            
+            <!-- Filter Row 2 -->
+            <div class="row mb-4 filter-row">
+                <div class="col-md-4">
+                    <label for="phoneNoFilter" class="form-label fw-bold text-dark mb-1">📱 Phone No</label>
+                    <input type="text" class="form-control form-control-lg" id="phoneNoFilter" placeholder="Phone number (real-time)">
+                </div>
+                <div class="col-md-4">
+                    <label for="sequenceNoFilter" class="form-label fw-bold text-dark mb-1">🔢 Sequence No</label>
+                    <input type="text" class="form-control form-control-lg" id="sequenceNoFilter" placeholder="Sequence (real-time)">
+                </div>
+                <div class="col-md-4 d-flex align-items-end">
+                    <button type="button" class="btn btn-primary btn-lg mr-2 px-4" id="filterBtn" style="height: 56px;">
+                        <i class="mdi mdi-magnify mr-1"></i>🔍 Filter Now
+                    </button>
+                    <button type="button" class="btn btn-outline-secondary btn-lg px-4" id="resetBtn" style="height: 56px;">
+                        <i class="mdi mdi-refresh mr-1"></i>Reset
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Header with Record Count -->
+            <div class="d-flex justify-content-between align-items-center mb-4 pb-2 border-bottom">
+                <h4 class="card-title mb-0 fw-bold text-primary">
+                    <i class="mdi mdi-account-group mr-2"></i>Fees Collection Dashboard
+                </h4>
+                <span class="badge badge-info fs-6 px-3 py-2" id="recordCount">@Model.Count() Records</span>
+            </div>
+            
+            <!-- Enhanced Table with Slider -->
+            <div class="table-responsive custom-table-container">
+                <div class="table-wrapper">
+                    <table class="table table-hover custom-tablee mb-0" id="admission-table">
+                        <thead>
+                            <tr>
+                                <th style="min-width: 150px;">👤 Student Name</th>
+                                <th style="min-width: 180px;">📧 Email</th>
+                                <th style="min-width: 140px;">📱 Phone</th>
+                                <th style="min-width: 120px;">📅 Admit Date</th>
+                                <th style="min-width: 160px;">🎓 Courses</th>
+                                <th style="min-width: 110px;" class="text-right">💰 Course Fee</th>
+                                <th style="min-width: 120px;" class="text-right">💸 Discount</th>
+                                <th style="min-width: 120px;" class="text-right">💳 Paid</th>
+                                <th style="min-width: 110px;" class="text-right">⚠️ Fine</th>
+                                <th style="min-width: 110px;" class="text-right">📊 Net</th>
+                                <th style="min-width: 130px;" class="text-right">⏳ Pending</th>
+                                <th style="min-width: 130px;">💳 Payment</th>
+                                <th style="min-width: 110px;">👨 Created By</th>
+                                <th style="min-width: 140px;">📅 Created</th>
+                                <th style="min-width: 110px;">👨 Updated By</th>
+                                <th style="min-width: 140px;">📅 Updated</th>
+                                <th style="min-width: 90px;">✅ Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (Model != null && Model.Count() > 0)
+                            {
+                                foreach (var item in Model)
+                                {
+                                    <tr class="table-info hover-effect">
+                                        <td class="table-warning font-weight-bold">@item.StudentName</td>
+                                        <td>@item.StudentEmail</td>
+                                        <td class="table-warning">@item.StudentNo</td>
+                                        <td>@item.Admission_Date?.ToString("dd/MM/yyyy")</td>
+                                        <td class="table-warning">
+                                            @if (!string.IsNullOrEmpty(item.CourseNames))
+                                            {
+                                                @item.CourseNames
+                                            }
+                                            else
+                                            {
+                                                <span class="text-muted">No courses</span>
+                                            }
+                                        </td>
+                                        <td class="text-right fw-bold">₹@item.Actual_Amount?.ToString("N0")</td>
+                                        <td class="table-warning text-right">₹@item.Discount_Amount?.ToString("N0")</td>
+                                        <td class="text-right font-weight-bold text-success">₹@item.Paid_Amount?.ToString("N0")</td>
+                                        <td class="table-warning text-right text-danger">₹@item.Fine_Amount?.ToString("N0")</td>
+                                        <td class="text-right fw-bold">₹@item.Net_Amount?.ToString("N0")</td>
+                                        <td class="table-warning text-right font-weight-bold @(item.Pending_Amount > 0 ? "text-warning" : "text-success")">
+                                            ₹@item.Pending_Amount?.ToString("N0")
+                                        </td>
+                                        <td>@item.Payment_Method</td>
+                                        <td class="table-warning">@item.Created_By</td>
+                                        <td>@item.Created_Date?.ToString("dd/MM/yyyy HH:mm")</td>
+                                        <td class="table-warning">@item.Updated_By</td>
+                                        <td>@item.Updated_Date?.ToString("dd/MM/yyyy HH:mm")</td>
+                                        <td class="table-warning">
+                                            @if (item.IsActive == 1)
+                                            {
+                                                <span class="badge badge-success px-2 py-1">Active</span>
+                                            }
+                                            else
+                                            {
+                                                <span class="badge badge-danger px-2 py-1">Inactive</span>
+                                            }
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                            else
+                            {
+                                <tr>
+                                    <td colspan="17" class="text-center text-muted py-5">
+                                        <i class="mdi mdi-database fs-1 text-muted mb-3 d-block"></i>
+                                        No data available
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="d-flex justify-content-between align-items-center mt-3 mb-2">
+                <div>
+                    <button class="btn btn-sm btn-dark" id="showAllBtn">Show All</button>
+                
+                </div>
+
+                <div id="pageInfo" class="text-primary font-weight-bold"></div>
+            </div>
+
+            <div class="d-flex justify-content-center mt-2">
+                <button class="btn btn-outline-primary btn-sm mr-2" id="prevPage">Previous</button>
+                <div id="pageNumbers"></div>
+                <button class="btn btn-outline-primary btn-sm ml-2" id="nextPage">Next</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    
+
+
+<script>
+$(document).ready(function () {
+
+    const rowsPerPage = 10;
+    let currentPage = 1;
+    let allRows = [];
+
+    const filterInputs = [
+        '#studentNameFilter',
+        '#fromDateFilter',
+        '#toDateFilter',
+        '#phoneNoFilter',
+        '#sequenceNoFilter'
+    ];
+
+    // =========================
+    // INIT
+    // =========================
+    function initTable() {
+        allRows = $('#admission-table tbody tr').toArray();
+        renderPage(1);
+    }
+
+    // =========================
+    // RENDER PAGE
+    // =========================
+    function renderPage(page) {
+
+        const visibleRows = getVisibleRows();
+
+        const totalPages = Math.ceil(visibleRows.length / rowsPerPage);
+
+        if (page < 1) page = 1;
+        if (page > totalPages) page = totalPages;
+
+        currentPage = page;
+
+        // hide all first
+        $('#admission-table tbody tr').hide();
+
+        // show only page rows
+        const start = (page - 1) * rowsPerPage;
+        const end = start + rowsPerPage;
+
+        $(visibleRows).slice(start, end).each(function () {
+            $(this).show();
+        });
+
+        $('#pageInfo').text(`Page ${currentPage} of ${totalPages || 1}`);
+        renderPageNumbers(totalPages);
+    }
+
+    // =========================
+    // GET VISIBLE ROWS (FILTER SUPPORT)
+    // =========================
+    function getVisibleRows() {
+        return $('#admission-table tbody tr').filter(function () {
+            return $(this).data('visible') !== false;
+        });
+    }
+
+    // =========================
+    // APPLY FILTER + PAGINATION RESET
+    // =========================
+    function applyFilter() {
+
+        const name = $('#studentNameFilter').val().toLowerCase();
+        const phone = $('#phoneNoFilter').val().toLowerCase();
+        const seq = $('#sequenceNoFilter').val().toLowerCase();
+        const fromDate = $('#fromDateFilter').val();
+        const toDate = $('#toDateFilter').val();
+
+        $('#admission-table tbody tr').each(function () {
+
+            const $row = $(this);
+
+            const studentName = ($row.find('td:eq(0)').text() || "").toLowerCase();
+            const email = ($row.find('td:eq(1)').text() || "").toLowerCase();
+            const phoneNo = ($row.find('td:eq(2)').text() || "").toLowerCase();
+            const admitDateText = $row.find('td:eq(3)').text().trim();
+
+            let show = true;
+
+            if (name && !studentName.includes(name) && !email.includes(name)) show = false;
+            if (phone && !phoneNo.includes(phone)) show = false;
+
+            if (fromDate || toDate) {
+                const rowDate = parseDate(admitDateText);
+
+                if (fromDate && rowDate < new Date(fromDate)) show = false;
+                if (toDate && rowDate > new Date(toDate)) show = false;
+            }
+
+            $row.data('visible', show);
+        });
+
+        renderPage(1);
+    }
+
+    // =========================
+    // PAGINATION NUMBERS
+    // =========================
+    function renderPageNumbers(totalPages) {
+
+        let html = '';
+
+        for (let i = 1; i <= totalPages; i++) {
+            html += `<button class="btn btn-sm ${i === currentPage ? 'btn-primary' : 'btn-outline-primary'} mx-1 pageBtn" data-page="${i}">${i}</button>`;
+        }
+
+        $('#pageNumbers').html(html);
+    }
+
+    // =========================
+    // DATE PARSER
+    // =========================
+    function parseDate(dateStr) {
+        if (!dateStr) return new Date(0);
+
+        const parts = dateStr.split('/');
+        return new Date(parts[2] + "-" + parts[1] + "-" + parts[0]);
+    }
+
+    // =========================
+    // EVENTS
+    // =========================
+
+    $('#studentNameFilter, #phoneNoFilter, #sequenceNoFilter').on('keyup', function () {
+        applyFilter();
+    });
+
+    $('#fromDateFilter, #toDateFilter').on('change', function () {
+        applyFilter();
+    });
+
+    $(document).on('click', '.pageBtn', function () {
+        renderPage(parseInt($(this).data('page')));
+    });
+
+    $('#nextPage').on('click', function () {
+        renderPage(currentPage + 1);
+    });
+
+    $('#prevPage').on('click', function () {
+        renderPage(currentPage - 1);
+    });
+
+    $('#showAllBtn').on('click', function () {
+        $('#admission-table tbody tr').show();
+        $('#pageNumbers').html('');
+        $('#pageInfo').text("Showing All Records");
+    });
+
+    $('#resetBtn').on('click', function () {
+        filterInputs.forEach(id => $(id).val(''));
+        $('#admission-table tbody tr').data('visible', true);
+        renderPage(1);
+    });
+
+    // =========================
+    // START
+    // =========================
+    $('#admission-table tbody tr').data('visible', true);
+    initTable();
+
+});
+</script>
+}

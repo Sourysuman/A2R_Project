@@ -1,0 +1,676 @@
+﻿@model List<A2R_Project.Models.Admission>
+@{
+    ViewBag.Title = "Admission List";
+}
+<style>
+    /* ================= GLOBAL ================= */
+    body {
+        background: #f4f7fb;
+        font-family: 'Segoe UI', sans-serif;
+    }
+
+    /* ================= CARD ================= */
+    .card {
+        border: none;
+        border-radius: 18px;
+        overflow: hidden;
+        box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+    }
+
+    /* ================= TABLE WRAPPER ================= */
+    .table-responsive {
+        max-width: 100%;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        border-radius: 14px;
+        background: #fff;
+    }
+
+        /* ================= SCROLLBAR (SLIDER STYLE) ================= */
+        .table-responsive::-webkit-scrollbar {
+            height: 10px;
+        }
+
+        .table-responsive::-webkit-scrollbar-track {
+            background: #eaeaea;
+            border-radius: 10px;
+        }
+
+        .table-responsive::-webkit-scrollbar-thumb {
+            background: linear-gradient(45deg, #6a11cb, #2575fc);
+            border-radius: 10px;
+        }
+
+            .table-responsive::-webkit-scrollbar-thumb:hover {
+                background: #444;
+            }
+
+    /* ================= TABLE ================= */
+    #admissionTable {
+        min-width: 1600px;
+        white-space: nowrap;
+        border-collapse: separate;
+        border-spacing: 0;
+    }
+
+        /* ================= HEADER ================= */
+        #admissionTable thead th {
+            position: sticky;
+            top: 0;
+            z-index: 2;
+            background: linear-gradient(45deg, #1d2671, #c33764);
+            color: #fff;
+            font-weight: 700;
+            font-size: 14px;
+            text-align: center;
+            padding: 14px 10px;
+            border: none;
+        }
+
+        /* ================= BODY ================= */
+        #admissionTable tbody td {
+            padding: 12px 10px;
+            font-size: 14px;
+            color: #2c3e50;
+            border-bottom: 1px solid #eef1f5;
+            vertical-align: middle;
+        }
+
+            /* First column highlight */
+            #admissionTable tbody td:first-child {
+                font-weight: 700;
+                color: #1d2671;
+            }
+
+        /* ================= ROW EFFECT ================= */
+        #admissionTable tbody tr {
+            transition: all 0.25s ease;
+        }
+
+            #admissionTable tbody tr:hover {
+                background: linear-gradient(to right, #eef2ff, #f8fbff);
+                transform: scale(1.002);
+                box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+            }
+
+            /* Zebra */
+            #admissionTable tbody tr:nth-child(even) {
+                background: #fafbff;
+            }
+
+    /* ================= AMOUNT COLORS ================= */
+    .text-success {
+        color: #16a34a !important;
+        font-weight: 600;
+    }
+
+    .text-danger {
+        color: #dc2626 !important;
+        font-weight: 600;
+    }
+
+    .text-primary {
+        color: #2563eb !important;
+        font-weight: 600;
+    }
+
+    /* ================= BADGE ================= */
+    .badge {
+        font-size: 12px;
+        padding: 6px 10px;
+        border-radius: 20px;
+        font-weight: 600;
+    }
+
+    /* ================= EMPTY STATE ================= */
+    #admissionTable tbody tr td[colspan] {
+        background: #f9fafc;
+    }
+
+    /* ================= FOOTER (BOTTOM BAR) ================= */
+    .data-footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        padding: 12px 10px;
+        border-top: 1px solid #e5e7eb;
+        background: #fafbff;
+    }
+
+    /* ================= PAGE SIZE ================= */
+    #pageSize {
+        border-radius: 8px;
+        border: 1px solid #d1d5db;
+        padding: 5px 10px;
+        background: #fff;
+        font-weight: 600;
+        color: #1d2671;
+    }
+
+        #pageSize:focus {
+            border-color: #6a11cb;
+            box-shadow: 0 0 0 2px rgba(106,17,203,0.15);
+        }
+
+    /* ================= PAGINATION ================= */
+    #pagination {
+        display: flex;
+        gap: 5px;
+    }
+
+        /* Default */
+        #pagination .page-link {
+            border: none !important;
+            border-radius: 10px !important;
+            padding: 6px 14px !important;
+            background: #eef2ff !important;
+            color: #1d2671 !important;
+            font-weight: 600;
+            transition: all 0.25s ease;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+        }
+
+            /* Hover */
+            #pagination .page-link:hover {
+                background: linear-gradient(45deg, #6a11cb, #2575fc) !important;
+                color: #fff !important;
+                transform: translateY(-2px);
+            }
+
+        /* Active */
+        #pagination .page-item.active .page-link {
+            background: linear-gradient(45deg, #1d2671, #c33764) !important;
+            color: #fff !important;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+
+        /* Disabled */
+        #pagination .page-item.disabled .page-link {
+            background: #e5e7eb !important;
+            color: #9ca3af !important;
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+
+    /* ================= RESPONSIVE ================= */
+    @@media (max-width: 768px) {
+        #admissionTable thead th
+
+    {
+        font-size: 12px;
+    }
+
+    #admissionTable tbody td {
+        font-size: 12px;
+        padding: 8px;
+    }
+
+    }
+
+    .page-size-list {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+    }
+
+    .page-size-btn {
+        border: none;
+        padding: 6px 12px;
+        border-radius: 8px;
+        background: #eef2ff;
+        color: #1d2671;
+        font-weight: 600;
+        cursor: pointer;
+        transition: 0.2s;
+    }
+
+        .page-size-btn:hover {
+            background: linear-gradient(45deg, #6a11cb, #2575fc);
+            color: #fff;
+        }
+
+        .page-size-btn.active {
+            background: linear-gradient(45deg, #1d2671, #c33764);
+            color: #fff;
+        }
+    /* ================= FIX ALL IN ONE ================= */
+
+    /* Card body fix */
+    .card-body {
+        overflow: hidden;
+    }
+
+    /* Table container (SCROLL INSIDE ONLY) */
+    .table-responsive {
+        width: 100%;
+        max-width: 100%;
+        overflow-x: auto;
+        overflow-y: auto;
+        max-height: 450px; /* adjust height if needed */
+        border-radius: 12px;
+        background: #fff;
+        position: relative;
+    }
+
+    /* Sticky header (INSIDE CONTAINER ONLY) */
+    #admissionTable thead th {
+        position: sticky;
+        top: 0;
+        z-index: 3;
+        background: linear-gradient(45deg, #1d2671, #c33764);
+    }
+
+    /* Footer stays inside */
+    .data-footer {
+        position: sticky;
+        bottom: 0;
+        z-index: 3;
+        background: #fafbff;
+        border-top: 1px solid #e5e7eb;
+        padding: 10px;
+    }
+
+    /* Page size buttons */
+    .page-size-list {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+    }
+
+    .page-size-btn {
+        border: none;
+        padding: 6px 12px;
+        border-radius: 20px;
+        background: #eef2ff;
+        color: #1d2671;
+        font-weight: 600;
+        cursor: pointer;
+        transition: 0.2s;
+    }
+
+        .page-size-btn:hover {
+            background: linear-gradient(45deg, #6a11cb, #2575fc);
+            color: #fff;
+        }
+
+        .page-size-btn.active {
+            background: linear-gradient(45deg, #1d2671, #c33764);
+            color: #fff;
+        }
+
+    .page-size-list span {
+        font-weight: 700;
+        color: #1d2671;
+    }
+
+    .page-size-btn {
+        border: none;
+        padding: 6px 14px;
+        border-radius: 20px;
+        background: #e0e7ff;
+        color: #1d2671;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.25s ease;
+    }
+
+        .page-size-btn:hover {
+            background: linear-gradient(45deg, #6a11cb, #2575fc);
+            color: #fff;
+        }
+
+        .page-size-btn.active {
+            background: linear-gradient(45deg, #1d2671, #c33764);
+            color: #fff;
+        }
+
+    .table-slider-wrapper {
+        position: relative;
+    }
+
+    /* Arrows */
+    .table-arrow {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 38px;
+        height: 38px;
+        border-radius: 50%;
+        border: none;
+        background: #e0e7ff;
+        color: #1d2671;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: 0.3s;
+        z-index: 5;
+    }
+
+        /* Left */
+        .table-arrow.left {
+            left: 5px;
+        }
+
+        /* Right */
+        .table-arrow.right {
+            right: 5px;
+        }
+
+        /* Hover */
+        .table-arrow:hover {
+            background: linear-gradient(45deg, #6a11cb, #2575fc);
+            color: #fff;
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        /* Disabled state */
+        .table-arrow.disabled {
+            opacity: 0.3;
+            pointer-events: none;
+        }
+</style>
+
+<div class="row">
+    <div class="col-12">
+        <div class="card shadow-sm">
+            <div class="card-header bg-primary text-white">
+                <div class="d-flex justify-content-between align-items-center">
+                    <h4 class="mb-0">
+                        <i class="mdi mdi-account-multiple"></i> Admission List
+                        <span class="badge bg-light text-dark ms-2" id="recordCount">(@Model.Count records)</span>
+                    </h4>
+                    <a href="@Url.Action("List")" class="btn btn-light btn-sm">
+                        <i class="mdi mdi-refresh"></i> Reset Filters
+                    </a>
+                </div>
+            </div>
+            <div class="card-body p-3">
+                <!-- Filters Row 1 -->
+                <div class="row g-2 mb-3">
+                    <div class="col-md-3">
+                        <label class="form-label fw-bold small">Student Name</label>
+                        <input type="text" class="form-control form-control-sm" id="studentNameFilter" placeholder="Search by name...">
+                    </div>
+                    <div class="col-md-2">
+                        <label class="form-label fw-bold small">From Date</label>
+                        <input type="date" class="form-control form-control-sm" id="fromDateFilter">
+                    </div>
+                    <div class="col-md-2">
+                        <label class="form-label fw-bold small">To Date</label>
+                        <input type="date" class="form-control form-control-sm" id="toDateFilter">
+                        <div id="dateWarning" class="text-danger small mt-1"></div>
+                    </div>
+                    <div class="col-md-2">
+                        <label class="form-label fw-bold small">Phone No</label>
+                        <input type="text" class="form-control form-control-sm" id="phoneNoFilter" placeholder="Phone number">
+                    </div>
+                    <div class="col-md-2">
+                        <label class="form-label fw-bold small">Sequence No</label>
+                        <input type="text" class="form-control form-control-sm" id="sequenceNoFilter">
+                    </div>
+                    
+                </div>
+
+                <!-- Table -->
+                <div class="table-responsive">
+                    <table class="table table-hover mb-0" id="admissionTable">
+                        <thead class="table-dark sticky-top">
+                            <tr>
+                                <th style="width: 180px;">Student Name</th>
+                                <th style="width: 150px;">Student Email</th>
+                                <th style="width: 120px;">Phone Number</th>
+                                <th style="width: 110px;">Admission Date</th>
+                                <th style="width: 120px;">Courses</th>
+                                <th style="width: 90px;">Course Fee</th>
+                                <th style="width: 80px;">Discount Amount</th>
+                                <th style="width: 80px;">Paid Amount</th>
+                                <th style="width: 70px;">Fine Amount</th>
+                                <th style="width: 90px;">Net Amount</th>
+                                <th style="width: 90px;">Pending Amount</th>
+                                <th style="width: 110px;">Payment Method</th>
+
+
+                 
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (Model.Any())
+                            {
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td class="fw-semibold text-dark">@item.StudentName</td>
+                                        <td class="text-muted small">@item.StudentEmail</td>
+                                        <td>@item.StudentNo</td>
+                                        <td class="text-center">@item.Admission_Date?.ToString("dd/MM/yy")</td>
+                                        <td>@item.CourseNames</td>
+                                        <td class="fw-bold text-success small">₹@item.Actual_Amount?.ToString("N0")</td>
+                                        <td class="text-success small">₹@item.Discount_Amount</td>
+                                        <td class="fw-bold text-primary small">₹@item.Paid_Amount</td>
+                                        <td class="text-danger small">₹@item.Fine_Amount</td>
+                                        <td class="fw-bold small">₹@item.Net_Amount</td>
+                                        <td class="@(item.Pending_Amount > 0 ? "text-danger fw-bold" : "text-success") small">
+                                            ₹@item.Pending_Amount
+                                        </td>
+                                        <td>
+                                            @if (!string.IsNullOrEmpty(item.Payment_Method))
+                                            {
+                                                <span class="badge badge-sm @(item.Payment_Method switch
+                                                      {
+                                                          "UPI" or "PhonePe" or "GooglePay" => "bg-success",
+                                                          "Cash" => "bg-warning text-dark",
+                                                          "Card" or "Bank" => "bg-info",
+                                                          _ => "bg-secondary"
+                                                      })">
+                                        @item.Payment_Method
+                                    </span>
+                                                                        }
+                                        </td>
+                                      
+                                    </tr>
+                                }
+                            }
+                            else
+                            {
+                                <tr>
+                                    <td colspan="13" class="text-center text-muted py-5">
+                                        <i class="mdi mdi-account-group-outline mdi-4x mb-3 opacity-50 d-block"></i>
+                                        <h5>No Admissions Found</h5>
+                                        <small class="text-muted">Add your first admission from Students List</small>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                        <div class="table-slider-wrapper">
+
+                            <!-- LEFT ARROW -->
+                            <button class="table-arrow left" id="scrollLeft">
+                                <i class="mdi mdi-chevron-left"></i>
+                            </button>
+
+                            <div class="table-responsive" id="tableContainer">
+                                <!-- YOUR TABLE HERE -->
+                            </div>
+
+                            <!-- RIGHT ARROW -->
+                            <button class="table-arrow right" id="scrollRight">
+                                <i class="mdi mdi-chevron-right"></i>
+                            </button>
+
+                        </div>
+                    </table>
+                    
+                    <div class="data-footer">
+
+                        <!-- Page Size LIST -->
+                        <div class="page-size-list">
+                            <span class="fw-bold small me-2">Show:</span>
+
+                            <button class="page-size-btn active" data-size="5">5</button>
+                            <button class="page-size-btn" data-size="10">10</button>
+                            <button class="page-size-btn" data-size="20">20</button>
+                            <button class="page-size-btn" data-size="all">All</button>
+                        </div>
+
+                        <!-- Pagination -->
+                        <ul class="pagination mb-0" id="pagination"></ul>
+
+                    </div>
+                  
+                </div>
+                <div class="data-footer">
+
+
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+
+            console.log('✅ Admission List Ready');
+
+            // ✅ STORE ORIGINAL ROWS
+            let allRows = $('#admissionTable tbody tr').clone();
+            let filteredRows = allRows;
+
+            let currentPage = 1;
+            let pageSize = 10;
+
+            // ================= FILTER =================
+            function applyFilter() {
+
+                const name = $('#studentNameFilter').val().toLowerCase();
+                const phone = $('#phoneNoFilter').val().toLowerCase();
+                const seq = $('#sequenceNoFilter').val().toLowerCase();
+                const fromDate = $('#fromDateFilter').val();
+                const toDate = $('#toDateFilter').val();
+
+                // ✅ Date validation
+                if (fromDate && toDate && new Date(fromDate) > new Date(toDate)) {
+                    $('#dateWarning').text('To Date must be after From Date').show();
+                    return;
+                } else {
+                    $('#dateWarning').hide();
+                }
+
+                filteredRows = allRows.filter(function () {
+                    const row = $(this);
+                    const text = row.text().toLowerCase();
+
+                    let match = true;
+
+                    if (name && !text.includes(name)) match = false;
+                    if (phone && !text.includes(phone)) match = false;
+                    if (seq && !text.includes(seq)) match = false;
+
+                    // Date filter
+                    if (fromDate || toDate) {
+                        const dateText = row.find('td:eq(3)').text().trim(); // Admission Date column
+                        if (dateText) {
+                            let parts = dateText.split('/');
+                            let formatted = `20${parts[2]}-${parts[1]}-${parts[0]}`;
+                            let rowDate = new Date(formatted);
+
+                            if (fromDate && rowDate < new Date(fromDate)) match = false;
+                            if (toDate && rowDate > new Date(toDate)) match = false;
+                        }
+                    }
+
+                    return match;
+                });
+
+                currentPage = 1;
+                renderTable();
+            }
+
+            // ================= RENDER TABLE =================
+            function renderTable() {
+
+                const tbody = $('#admissionTable tbody');
+                tbody.empty();
+
+                let rowsToShow;
+
+                if (pageSize === 'all') {
+                    rowsToShow = filteredRows;
+                } else {
+                    const start = (currentPage - 1) * pageSize;
+                    const end = start + parseInt(pageSize);
+                    rowsToShow = filteredRows.slice(start, end);
+                }
+
+                if (rowsToShow.length === 0) {
+                    tbody.html(`
+                        <tr>
+                            <td colspan="13" class="text-center p-5 text-muted">
+                                No matching records
+                            </td>
+                        </tr>
+                    `);
+                } else {
+                    rowsToShow.each(function () {
+                        tbody.append($(this));
+                    });
+                }
+
+                $('#recordCount').text(`(${filteredRows.length} records)`);
+
+                renderPagination();
+            }
+
+           
+            // ================= REAL-TIME FILTER =================
+            $('#studentNameFilter, #phoneNoFilter, #sequenceNoFilter')
+                .on('input', applyFilter);
+
+            $('#fromDateFilter, #toDateFilter')
+                .on('change', applyFilter);
+
+            // ================= BUTTON FILTER =================
+            $('#filterBtn').click(function (e) {
+                e.preventDefault();
+                applyFilter();
+            });
+
+            // ================= RESET =================
+            $('a[href="@Url.Action("List")]').click(function () {
+                $('.form-control').val('');
+                $('#dateWarning').hide();
+                filteredRows = allRows;
+                currentPage = 1;
+                renderTable();
+            });
+            // ================= PAGE SIZE BUTTON CLICK =================
+$(document).on('click', '.page-size-btn', function () {
+
+    $('.page-size-btn').removeClass('active');
+    $(this).addClass('active');
+
+    const size = $(this).data('size');
+
+    if (size === 'all') {
+        pageSize = 'all';
+    } else {
+        pageSize = parseInt(size);
+    }
+
+    currentPage = 1;
+    renderTable();
+});
+
+
+            // ================= INITIAL LOAD =================
+            renderTable();
+
+        });
+
+    </script>
+}
