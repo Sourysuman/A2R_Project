@@ -15,10 +15,10 @@ namespace A2R_Project.Models
         public string? IconClass { get; set; }
         public int? Submenu_ID { get; set; }
 
-        public int Insert_Flag { get; set; } = 0;
-        public int Update_Flag { get; set; } = 0;
-        public int Delete_Flag { get; set; } = 0;
-        public int Module_Flag { get; set; } = 0;
+        public int Insert_Flag { get; set; } 
+        public int Update_Flag { get; set; } 
+        public int Delete_Flag { get; set; } 
+        public int Module_Flag { get; set; } 
 
         public string? RoleName { get; set; }
         public string? SubMenuController { get; set; }

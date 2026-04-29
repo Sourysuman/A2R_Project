@@ -1,227 +1,426 @@
-﻿
-@model List<A2R_Project.Models.Admission>
+﻿@model List<A2R_Project.Models.Admission>
 @{
-    ViewBag.Title = "Fees Collection - List";
+    ViewBag.Title = "Fees Collection List";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <style>
-    /* Table Slider & Responsive */
-    .custom-table-container {
+    /* ================= BODY ================= */
+    body {
+        background: linear-gradient(135deg, #eef2ff, #f8fbff);
+        font-family: 'Segoe UI', sans-serif;
+    }
+
+    /* ================= CARD ================= */
+    .card {
+        border-radius: 18px;
+        border: none;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+    }
+
+    .card-header {
+        background: linear-gradient(135deg, #4e73df, #224abe) !important;
+        color: #fff !important;
+        border: none !important;
+        border-radius: 18px 18px 0 0 !important;
+        padding: 16px 20px !important;
+    }
+
+        .card-header h4 {
+            color: #fff !important;
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 0;
+        }
+
+    #recordCount {
+        background: rgba(255,255,255,0.2) !important;
+        color: #fff !important;
+        border-radius: 15px;
+        padding: 4px 10px;
+        font-size: 14px;
+        font-weight: 600;
+        backdrop-filter: blur(10px);
+    }
+
+    /* ================= TABLE RESPONSIVE ================= */
+    .table-responsive {
+        width: 100%;
+        max-width: 100%;
         overflow-x: auto;
-        white-space: nowrap;
+        overflow-y: auto;
+        max-height: 450px;
+        border-radius: 12px;
+        background: #fff;
+        position: relative;
         -webkit-overflow-scrolling: touch;
     }
-    
-    .table-wrapper {
-        min-width: 2000px; /* Ensures horizontal scroll */
+
+        .table-responsive::-webkit-scrollbar {
+            height: 10px;
+        }
+
+        .table-responsive::-webkit-scrollbar-track {
+            background: #eaeaea;
+            border-radius: 10px;
+        }
+
+        .table-responsive::-webkit-scrollbar-thumb {
+            background: linear-gradient(45deg, #6a11cb, #2575fc);
+            border-radius: 10px;
+        }
+
+            .table-responsive::-webkit-scrollbar-thumb:hover {
+                background: #444;
+            }
+
+    /* ================= TABLE ================= */
+    #feesTable {
+        min-width: 2200px;
+        white-space: nowrap;
+        border-collapse: separate;
+        border-spacing: 0;
     }
-    
-    /* Enhanced Table Styles */
-    .table-warning {
-        background-color: #fff3cd !important;
-        font-weight: 500;
-    }
-    
-    .table-info {
-        background-color: #d1ecf1 !important;
-    }
-    
-    .table thead th {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        color: white;
+
+        /* ================= HEADER ================= */
+        #feesTable thead th {
+            position: sticky;
+            top: 0;
+            z-index: 3;
+            background: #3f454c;
+            color: #fff !important;
+            font-weight: 700;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 0.6px;
+            text-align: center;
+            padding: 14px 10px;
+            border: none !important;
+        }
+
+        /* ================= BODY CELLS ================= */
+        #feesTable tbody td {
+            padding: 12px 10px;
+            font-size: 14px;
+            font-weight: 600;
+            color: #34495e !important;
+            border-bottom: 1px solid #eef1f5;
+            vertical-align: middle;
+            text-align: center !important;
+            background-color:white!important;
+        }
+
+            #feesTable tbody td:first-child {
+                font-weight: 700;
+                color: #1d2671 !important;
+                text-align: left !important;
+            }
+
+        /* ================= ROW HOVER ================= */
+        #feesTable tbody tr {
+            transition: all 0.25s ease;
+        }
+
+           
+
+         
+
+    /* ================= AMOUNT COLORS ================= */
+    .text-success {
+        color: #16a34a !important;
         font-weight: 600;
+    }
+
+    .text-danger {
+        color: #dc2626 !important;
+        font-weight: 600;
+    }
+
+    .text-primary {
+        color: #2563eb !important;
+        font-weight: 600;
+    }
+
+    /* ================= BADGES ================= */
+    .badge {
+        font-size: 12px;
+        padding: 6px 10px;
+        border-radius: 20px;
+        font-weight: 600;
+        color: #fff !important;
+    }
+
+    /* ================= FILTER INPUTS ================= */
+    .form-control,
+    .form-control-sm {
+        height: 42px;
+        border-radius: 10px;
+        border: 1px solid #dce3f0;
+        font-size: 15px;
+        font-weight: 600;
+        padding: 8px 12px;
+        transition: all 0.25s ease;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    }
+
+        .form-control:focus,
+        .form-control-sm:focus {
+            border-color: #4e73df;
+            box-shadow: 0 0 0 3px rgba(78,115,223,0.15);
+            background: #fff;
+            transform: translateY(-1px);
+        }
+
+    .form-label {
+        font-size: 14px;
+        font-weight: 700;
+        color: #2c3e50;
+        margin-bottom: 6px;
+    }
+
+    /* ================= RESET BUTTON ================= */
+    .btn-reset {
+        height: 42px;
+        border-radius: 10px;
+        font-size: 14px;
+        font-weight: 700;
+        padding: 0 18px;
+        background: #f1f5f9;
+        color: #475569;
+        border: 1px solid #cbd5e1;
+        transition: all 0.25s ease;
+        cursor: pointer;
+    }
+
+        .btn-reset:hover {
+            background: #e2e8f0;
+            color: #1e293b;
+            transform: translateY(-1px);
+        }
+
+    /* ================= FOOTER ================= */
+    .data-footer {
         position: sticky;
-        top: 0;
-        z-index: 10;
+        bottom: 0;
+        z-index: 3;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        padding: 10px 12px;
+        border-top: 1px solid #e5e7eb;
+        background: #fafbff;
+    }
+
+    /* ================= PAGE SIZE BUTTONS ================= */
+    .page-size-list {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+    }
+
+        .page-size-list span {
+            font-weight: 700;
+            color: #1d2671;
+        }
+
+    .page-size-btn {
         border: none;
-        padding: 12px 8px;
-        font-size: 0.9rem;
+        padding: 6px 14px;
+        border-radius: 20px;
+        background: #e0e7ff;
+        color: #1d2671;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.25s ease;
     }
-    
-    .table tbody td {
-        padding: 12px 8px;
-        vertical-align: middle;
-        border-color: #e9ecef;
+
+        .page-size-btn:hover {
+            background: linear-gradient(135deg, #4e73df, #224abe);
+            color: #fff;
+        }
+
+        .page-size-btn.active {
+            background: linear-gradient(135deg, #4e73df, #224abe);
+            color: #fff;
+        }
+
+    /* ================= PAGINATION ================= */
+    #pagination {
+        display: flex;
+        gap: 5px;
     }
-    
-    /* Filter Styles */
-    .filter-row {
-        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        transition: all 0.3s ease;
-    }
-    
-    .filter-row:hover {
-        box-shadow: 0 4px 20px rgba(0,0,0,0.15);
-        transform: translateY(-2px);
-    }
-    
-    .form-control:focus {
-        border-color: #667eea;
-        box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
-    }
-    
-    /* Loading Spinner */
-    .spinner-border-sm {
-        width: 1rem;
-        height: 1rem;
-    }
-    
-    /* Badge Styles */
-    .badge-success {
-        background-color: #28a745 !important;
-    }
-    
-    .badge-danger {
-        background-color: #dc3545 !important;
-    }
-    
-    /* Responsive */
+
+        #pagination .page-link {
+            border: none !important;
+            border-radius: 10px !important;
+            padding: 6px 14px !important;
+            background: #eef2ff !important;
+            color: #1d2671 !important;
+            font-weight: 600;
+            transition: all 0.25s ease;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+        }
+
+            #pagination .page-link:hover {
+                background: linear-gradient(135deg, #4e73df, #224abe) !important;
+                color: #fff !important;
+                transform: translateY(-2px);
+            }
+
+        #pagination .page-item.active .page-link {
+            background: linear-gradient(135deg, #4e73df, #224abe) !important;
+            color: #fff !important;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+
+        #pagination .page-item.disabled .page-link {
+            background: #e5e7eb !important;
+            color: #9ca3af !important;
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+
     @@media (max-width: 768px) {
-        .filter-row .col-md-4 {
-            margin-bottom: 10px;
+        #feesTable thead th,
+        #feesTable tbody td {
+            font-size: 12px;
+            padding: 8px;
         }
     }
-    
-    /* Scroll Indicator */
-    .table-scroll-indicator {
-        position: sticky;
-        right: 0;
-        background: white;
-        padding: 10px;
-        border-left: 3px solid #667eea;
-        z-index: 5;
-    }
-    /* ================= TABLE SCROLL FIX ================= */
-    .custom-table-container {
-        max-height: 500px; /* keep scroll inside */
-        overflow-y: auto;
-        overflow-x: auto;
-        position: relative;
-    }
-
-    /* ================= HEADER STICK INSIDE ================= */
-    .table thead th {
-        position: sticky;
-        top: 0;
-        z-index: 5;
-        background: linear-gradient(135deg, #667eea, #764ba2);
+    /* ================= RESET BUTTON (MODERN STYLE) ================= */
+    .btn-reset {
+        height: 42px;
+        border-radius: 12px;
+        font-size: 14px;
+        font-weight: 700;
+        padding: 0 18px;
+        border: none;
+        color: #fff;
+        background-color: blue;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+        transition: all 0.3s ease;
     }
 
-    .custom-table-container {
-        max-height: 500px;
-        overflow-y: auto;
-        overflow-x: auto;
-        position: relative;
-    }
+        /* Icon inside button */
+        .btn-reset i {
+            font-size: 16px;
+        }
 
-    .table thead th {
-        position: sticky;
-        top: 0; /* stays inside container */
-        z-index: 2; /* LOWER than navbar */
-        background: linear-gradient(135deg, #667eea, #764ba2);
-    }
+        /* Hover Effect */
+        .btn-reset:hover {
+         
+            transform: translateY(-2px) scale(1.02);
+            box-shadow: 0 6px 16px rgba(0,0,0,0.25);
+        }
 
-    .table thead th {
-        position: sticky;
-        top: 0; /* stays inside container */
-        z-index: 2; /* LOWER than navbar */
-        background: linear-gradient(135deg, #667eea, #764ba2);
-    }
+        /* Click Effect */
+        .btn-reset:active {
+            transform: scale(0.96);
+            box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+        }
 
-    .custom-table-container {
-        z-index: 1;
-    }
+        /* Optional: Glow effect */
+        .btn-reset::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 12px;
+            opacity: 0;
+            transition: 0.3s;
+        }
 
-    .table thead th {
-        z-index: 2;
-    }
+        .btn-reset:hover::after {
+            opacity: 0.1;
+            background: #fff;
+        }
 </style>
 
-<div class="col-lg-12 stretch-card">
-    <div class="card shadow-lg border-0">
-        <div class="card-body p-3">
-            <!-- Filter Row 1 -->
-            <div class="row mb-3 filter-row">
-                <div class="col-md-4">
-                    <label for="studentNameFilter" class="form-label fw-bold text-dark mb-1">👤 Student Name</label>
-                    <input type="text" class="form-control form-control-lg" id="studentNameFilter" placeholder="Type name (real-time search)" autocomplete="off">
-                </div>
-                <div class="col-md-4">
-                    <label for="fromDateFilter" class="form-label fw-bold text-dark mb-1">📅 From Date</label>
-                    <input type="date" class="form-control form-control-lg" id="fromDateFilter">
-                </div>
-                <div class="col-md-4">
-                    <label for="toDateFilter" class="form-label fw-bold text-dark mb-1">📅 To Date</label>
-                    <input type="date" class="form-control form-control-lg" id="toDateFilter">
-                    <div id="toDateWarning" class="mt-1 small"></div>
+<div class="row">
+    <div class="col-12">
+        <div class="card shadow-sm">
+            <div class="card-header bg-primary text-white">
+                <div class="d-flex justify-content-between align-items-center">
+                    <h4 class="mb-0">
+                        <i class="mdi mdi-cash-multiple"></i> Fees Collection List
+                        <span class="badge bg-light text-dark ms-2" id="recordCount">(@Model.Count records)</span>
+                    </h4>
                 </div>
             </div>
-            
-            <!-- Filter Row 2 -->
-            <div class="row mb-4 filter-row">
-                <div class="col-md-4">
-                    <label for="phoneNoFilter" class="form-label fw-bold text-dark mb-1">📱 Phone No</label>
-                    <input type="text" class="form-control form-control-lg" id="phoneNoFilter" placeholder="Phone number (real-time)">
+
+            <div class="card-body p-3">
+
+                <!-- ===== FILTERS ===== -->
+                <div class="row g-2 mb-3">
+                    <div class="col-md-2">
+                        <label class="form-label fw-bold small">Student Name</label>
+                        <input type="text" class="form-control form-control-sm" id="studentNameFilter" placeholder="Search by name...">
+                    </div>
+                    <div class="col-md-2">
+                        <label class="form-label fw-bold small">From Date</label>
+                        <input type="date" class="form-control form-control-sm" id="fromDateFilter">
+                    </div>
+                    <div class="col-md-2">
+                        <label class="form-label fw-bold small">To Date</label>
+                        <input type="date" class="form-control form-control-sm" id="toDateFilter">
+                        <div id="dateWarning" class="text-danger small mt-1" style="display:none;"></div>
+                    </div>
+                    <div class="col-md-2">
+                        <label class="form-label fw-bold small">Phone No</label>
+                        <input type="text" class="form-control form-control-sm" id="phoneNoFilter" placeholder="Phone number">
+                    </div>
+                    <div class="col-md-2">
+                        <label class="form-label fw-bold small">Sequence No</label>
+                        <input type="text" class="form-control form-control-sm" id="sequenceNoFilter">
+                    </div>
+                    <div class="col-md-2 d-flex align-items-end">
+                        <button class="btn-reset" id="resetBtn">
+                            <i class="mdi mdi-refresh"></i> Reset Filters
+                        </button>
+                    </div>
                 </div>
-                <div class="col-md-4">
-                    <label for="sequenceNoFilter" class="form-label fw-bold text-dark mb-1">🔢 Sequence No</label>
-                    <input type="text" class="form-control form-control-lg" id="sequenceNoFilter" placeholder="Sequence (real-time)">
-                </div>
-                <div class="col-md-4 d-flex align-items-end">
-                    <button type="button" class="btn btn-primary btn-lg mr-2 px-4" id="filterBtn" style="height: 56px;">
-                        <i class="mdi mdi-magnify mr-1"></i>🔍 Filter Now
-                    </button>
-                    <button type="button" class="btn btn-outline-secondary btn-lg px-4" id="resetBtn" style="height: 56px;">
-                        <i class="mdi mdi-refresh mr-1"></i>Reset
-                    </button>
-                </div>
-            </div>
-            
-            <!-- Header with Record Count -->
-            <div class="d-flex justify-content-between align-items-center mb-4 pb-2 border-bottom">
-                <h4 class="card-title mb-0 fw-bold text-primary">
-                    <i class="mdi mdi-account-group mr-2"></i>Fees Collection Dashboard
-                </h4>
-                <span class="badge badge-info fs-6 px-3 py-2" id="recordCount">@Model.Count() Records</span>
-            </div>
-            
-            <!-- Enhanced Table with Slider -->
-            <div class="table-responsive custom-table-container">
-                <div class="table-wrapper">
-                    <table class="table table-hover custom-tablee mb-0" id="admission-table">
+
+                <!-- ===== TABLE ===== -->
+                <div class="table-responsive">
+                    <table class="table table-hover mb-0" id="feesTable">
                         <thead>
                             <tr>
-                                <th style="min-width: 150px;">👤 Student Name</th>
-                                <th style="min-width: 180px;">📧 Email</th>
-                                <th style="min-width: 140px;">📱 Phone</th>
-                                <th style="min-width: 120px;">📅 Admit Date</th>
-                                <th style="min-width: 160px;">🎓 Courses</th>
-                                <th style="min-width: 110px;" class="text-right">💰 Course Fee</th>
-                                <th style="min-width: 120px;" class="text-right">💸 Discount</th>
-                                <th style="min-width: 120px;" class="text-right">💳 Paid</th>
-                                <th style="min-width: 110px;" class="text-right">⚠️ Fine</th>
-                                <th style="min-width: 110px;" class="text-right">📊 Net</th>
-                                <th style="min-width: 130px;" class="text-right">⏳ Pending</th>
-                                <th style="min-width: 130px;">💳 Payment</th>
-                                <th style="min-width: 110px;">👨 Created By</th>
-                                <th style="min-width: 140px;">📅 Created</th>
-                                <th style="min-width: 110px;">👨 Updated By</th>
-                                <th style="min-width: 140px;">📅 Updated</th>
-                                <th style="min-width: 90px;">✅ Status</th>
+                                <th style="width:180px;">Student Name</th>
+                                <th style="width:180px;">Student Email</th>
+                                <th style="width:130px;">Phone Number</th>
+                                <th style="width:120px;">Admission Date</th>
+                                <th style="width:160px;">Courses</th>
+                                <th style="width:100px;">Course Fee</th>
+                                <th style="width:110px;">Discount Amount</th>
+                                <th style="width:100px;">Paid Amount</th>
+                                <th style="width:90px;">Fine Amount</th>
+                                <th style="width:100px;">Net Amount</th>
+                                <th style="width:110px;">Pending Amount</th>
+                                <th style="width:120px;">Payment Method</th>
+                                <th style="width:110px;">Created By</th>
+                                <th style="width:140px;">Created Date</th>
+                                <th style="width:110px;">Updated By</th>
+                                <th style="width:140px;">Updated Date</th>
+                                <th style="width:90px;">Status</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @if (Model != null && Model.Count() > 0)
+                            @if (Model.Any())
                             {
-                                foreach (var item in Model)
+                                @foreach (var item in Model)
                                 {
-                                    <tr class="table-info hover-effect">
-                                        <td class="table-warning font-weight-bold">@item.StudentName</td>
-                                        <td>@item.StudentEmail</td>
-                                        <td class="table-warning">@item.StudentNo</td>
-                                        <td>@item.Admission_Date?.ToString("dd/MM/yyyy")</td>
-                                        <td class="table-warning">
+                                    <tr>
+                                        <td class="fw-semibold text-dark">@item.StudentName</td>
+                                        <td class="text-muted small">@item.StudentEmail</td>
+                                        <td>@item.StudentNo</td>
+                                        <td data-date="@item.Admission_Date?.ToString("yyyy-MM-dd")">
+                                            @item.Admission_Date?.ToString("dd-MM-yyyy")
+                                        </td>
+                                        <td>
                                             @if (!string.IsNullOrEmpty(item.CourseNames))
                                             {
                                                 @item.CourseNames
@@ -231,27 +430,40 @@
                                                 <span class="text-muted">No courses</span>
                                             }
                                         </td>
-                                        <td class="text-right fw-bold">₹@item.Actual_Amount?.ToString("N0")</td>
-                                        <td class="table-warning text-right">₹@item.Discount_Amount?.ToString("N0")</td>
-                                        <td class="text-right font-weight-bold text-success">₹@item.Paid_Amount?.ToString("N0")</td>
-                                        <td class="table-warning text-right text-danger">₹@item.Fine_Amount?.ToString("N0")</td>
-                                        <td class="text-right fw-bold">₹@item.Net_Amount?.ToString("N0")</td>
-                                        <td class="table-warning text-right font-weight-bold @(item.Pending_Amount > 0 ? "text-warning" : "text-success")">
+                                        <td class="fw-bold text-success small">₹@item.Actual_Amount?.ToString("N0")</td>
+                                        <td class="text-success small">₹@item.Discount_Amount?.ToString("N0")</td>
+                                        <td class="fw-bold text-primary small">₹@item.Paid_Amount?.ToString("N0")</td>
+                                        <td class="text-danger small">₹@item.Fine_Amount?.ToString("N0")</td>
+                                        <td class="fw-bold small">₹@item.Net_Amount?.ToString("N0")</td>
+                                        <td class="@(item.Pending_Amount > 0 ? "text-danger fw-bold" : "text-success") small">
                                             ₹@item.Pending_Amount?.ToString("N0")
                                         </td>
-                                        <td>@item.Payment_Method</td>
-                                        <td class="table-warning">@item.Created_By</td>
-                                        <td>@item.Created_Date?.ToString("dd/MM/yyyy HH:mm")</td>
-                                        <td class="table-warning">@item.Updated_By</td>
-                                        <td>@item.Updated_Date?.ToString("dd/MM/yyyy HH:mm")</td>
-                                        <td class="table-warning">
+                                        <td>
+                                            @if (!string.IsNullOrEmpty(item.Payment_Method))
+                                            {
+                                                <span class="badge badge-sm @(item.Payment_Method switch
+                                                      {
+                                                          "UPI" or "PhonePe" or "GooglePay" => "bg-success",
+                                                          "Cash" => "bg-warning text-dark",
+                                                          "Card" or "Bank" => "bg-info",
+                                                          _ => "bg-secondary"
+                                                      })">
+                                        @item.Payment_Method
+                                    </span>
+                                                                        }
+                                        </td>
+                                        <td>@item.Created_By</td>
+                                        <td>@item.Created_Date?.ToString("dd-MM-yyyy HH:mm")</td>
+                                        <td>@item.Updated_By</td>
+                                        <td>@item.Updated_Date?.ToString("dd-MM-yyyy HH:mm")</td>
+                                        <td>
                                             @if (item.IsActive == 1)
                                             {
-                                                <span class="badge badge-success px-2 py-1">Active</span>
+                                                <span class="badge bg-success">Active</span>
                                             }
                                             else
                                             {
-                                                <span class="badge badge-danger px-2 py-1">Inactive</span>
+                                                <span class="badge bg-danger">Inactive</span>
                                             }
                                         </td>
                                     </tr>
@@ -261,206 +473,216 @@
                             {
                                 <tr>
                                     <td colspan="17" class="text-center text-muted py-5">
-                                        <i class="mdi mdi-database fs-1 text-muted mb-3 d-block"></i>
-                                        No data available
+                                        <i class="mdi mdi-cash-remove mdi-4x mb-3 opacity-50 d-block"></i>
+                                        <h5>No Fees Records Found</h5>
+                                        <small class="text-muted">No fee collection data available</small>
                                     </td>
                                 </tr>
                             }
                         </tbody>
                     </table>
+
+                    <!-- ===== FOOTER ===== -->
+                    <div class="data-footer">
+                        <div class="page-size-list">
+                            <span class="fw-bold small me-2">Show:</span>
+                            <button class="page-size-btn active" data-size="5">5</button>
+                            <button class="page-size-btn" data-size="10">10</button>
+                            <button class="page-size-btn" data-size="20">20</button>
+                            <button class="page-size-btn" data-size="all">All</button>
+                        </div>
+               
+                    </div>
                 </div>
-            </div>
 
-            <div class="d-flex justify-content-between align-items-center mt-3 mb-2">
-                <div>
-                    <button class="btn btn-sm btn-dark" id="showAllBtn">Show All</button>
-                
-                </div>
-
-                <div id="pageInfo" class="text-primary font-weight-bold"></div>
-            </div>
-
-            <div class="d-flex justify-content-center mt-2">
-                <button class="btn btn-outline-primary btn-sm mr-2" id="prevPage">Previous</button>
-                <div id="pageNumbers"></div>
-                <button class="btn btn-outline-primary btn-sm ml-2" id="nextPage">Next</button>
             </div>
         </div>
     </div>
 </div>
 
 @section Scripts {
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        $(document).ready(function () {
 
-    
+            // ── Clone all rows once on load ──────────────────────────
+            var allRows      = $('#feesTable tbody tr').clone(true, true);
+            var filteredRows = allRows;
+            var currentPage  = 1;
+            var pageSize     = 5;
 
+            // ── APPLY FILTER ─────────────────────────────────────────
+            function applyFilter() {
 
-<script>
-$(document).ready(function () {
+                var name     = $('#studentNameFilter').val().trim().toLowerCase();
+                var phone    = $('#phoneNoFilter').val().trim().toLowerCase();
+                var seq      = $('#sequenceNoFilter').val().trim().toLowerCase();
+                var fromDate = $('#fromDateFilter').val();   // yyyy-MM-dd
+                var toDate   = $('#toDateFilter').val();     // yyyy-MM-dd
 
-    const rowsPerPage = 10;
-    let currentPage = 1;
-    let allRows = [];
+                // Validate dates
+                if (fromDate && toDate && new Date(fromDate) > new Date(toDate)) {
+                    $('#dateWarning').text('To Date must be after From Date').show();
+                    return;
+                }
+                $('#dateWarning').hide().text('');
 
-    const filterInputs = [
-        '#studentNameFilter',
-        '#fromDateFilter',
-        '#toDateFilter',
-        '#phoneNoFilter',
-        '#sequenceNoFilter'
-    ];
+                filteredRows = allRows.filter(function () {
 
-    // =========================
-    // INIT
-    // =========================
-    function initTable() {
-        allRows = $('#admission-table tbody tr').toArray();
-        renderPage(1);
-    }
+                    var $row = $(this);
 
-    // =========================
-    // RENDER PAGE
-    // =========================
-    function renderPage(page) {
+                    var studentName = $row.find('td:eq(0)').text().toLowerCase();
+                    var email       = $row.find('td:eq(1)').text().toLowerCase();
+                    var phoneNo     = $row.find('td:eq(2)').text().toLowerCase();
+                    var fullText    = $row.text().toLowerCase();
 
-        const visibleRows = getVisibleRows();
+                    // Name filter
+                    if (name && !studentName.includes(name) && !email.includes(name)) return false;
 
-        const totalPages = Math.ceil(visibleRows.length / rowsPerPage);
+                    // Phone filter
+                    if (phone && !phoneNo.includes(phone)) return false;
 
-        if (page < 1) page = 1;
-        if (page > totalPages) page = totalPages;
+                    // Sequence filter
+                    if (seq && !fullText.includes(seq)) return false;
 
-        currentPage = page;
+                    // Date filter — reads data-date="yyyy-MM-dd"
+                    if (fromDate || toDate) {
+                        var rawDate = $row.find('td:eq(3)').data('date'); // "yyyy-MM-dd"
 
-        // hide all first
-        $('#admission-table tbody tr').hide();
+                        if (!rawDate) return false;
 
-        // show only page rows
-        const start = (page - 1) * rowsPerPage;
-        const end = start + rowsPerPage;
+                        if (fromDate && toDate) {
+                            var rowD = new Date(rawDate);
+                            var from = new Date(fromDate); from.setHours(0,0,0,0);
+                            var to   = new Date(toDate);   to.setHours(23,59,59,999);
+                            if (rowD < from || rowD > to) return false;
+                        } else if (fromDate) {
+                            if (rawDate !== fromDate) return false;
+                        } else if (toDate) {
+                            if (rawDate !== toDate) return false;
+                        }
+                    }
 
-        $(visibleRows).slice(start, end).each(function () {
-            $(this).show();
-        });
+                    return true;
+                });
 
-        $('#pageInfo').text(`Page ${currentPage} of ${totalPages || 1}`);
-        renderPageNumbers(totalPages);
-    }
-
-    // =========================
-    // GET VISIBLE ROWS (FILTER SUPPORT)
-    // =========================
-    function getVisibleRows() {
-        return $('#admission-table tbody tr').filter(function () {
-            return $(this).data('visible') !== false;
-        });
-    }
-
-    // =========================
-    // APPLY FILTER + PAGINATION RESET
-    // =========================
-    function applyFilter() {
-
-        const name = $('#studentNameFilter').val().toLowerCase();
-        const phone = $('#phoneNoFilter').val().toLowerCase();
-        const seq = $('#sequenceNoFilter').val().toLowerCase();
-        const fromDate = $('#fromDateFilter').val();
-        const toDate = $('#toDateFilter').val();
-
-        $('#admission-table tbody tr').each(function () {
-
-            const $row = $(this);
-
-            const studentName = ($row.find('td:eq(0)').text() || "").toLowerCase();
-            const email = ($row.find('td:eq(1)').text() || "").toLowerCase();
-            const phoneNo = ($row.find('td:eq(2)').text() || "").toLowerCase();
-            const admitDateText = $row.find('td:eq(3)').text().trim();
-
-            let show = true;
-
-            if (name && !studentName.includes(name) && !email.includes(name)) show = false;
-            if (phone && !phoneNo.includes(phone)) show = false;
-
-            if (fromDate || toDate) {
-                const rowDate = parseDate(admitDateText);
-
-                if (fromDate && rowDate < new Date(fromDate)) show = false;
-                if (toDate && rowDate > new Date(toDate)) show = false;
+                currentPage = 1;
+                renderTable();
             }
 
-            $row.data('visible', show);
+            // ── RENDER TABLE ─────────────────────────────────────────
+            function renderTable() {
+
+                var tbody = $('#feesTable tbody');
+                tbody.empty();
+
+                var rows;
+                if (pageSize === 'all') {
+                    rows = filteredRows;
+                } else {
+                    var start = (currentPage - 1) * parseInt(pageSize);
+                    rows = filteredRows.slice(start, start + parseInt(pageSize));
+                }
+
+                if (rows.length === 0) {
+                    tbody.html('<tr><td colspan="17" class="text-center p-5 text-muted">No matching records found</td></tr>');
+                } else {
+                    rows.each(function () { tbody.append($(this)); });
+                }
+
+                $('#recordCount').text('(' + filteredRows.length + ' records)');
+                renderPagination();
+            }
+
+            // ── PAGINATION ───────────────────────────────────────────
+            function renderPagination() {
+
+                var $pag = $('#pagination');
+                $pag.empty();
+
+                if (pageSize === 'all') return;
+
+                var total      = filteredRows.length;
+                var ps         = parseInt(pageSize);
+                var totalPages = Math.ceil(total / ps) || 1;
+
+                // Prev button
+                $pag.append(
+                    '<li class="page-item ' + (currentPage === 1 ? 'disabled' : '') + '">' +
+                    '<a class="page-link" href="#" data-page="' + (currentPage - 1) + '">&#8249;</a></li>'
+                );
+
+                // Page numbers
+                var range = buildPageRange(currentPage, totalPages);
+                $.each(range, function (i, p) {
+                    if (p === '...') {
+                        $pag.append('<li class="page-item disabled"><a class="page-link">…</a></li>');
+                    } else {
+                        $pag.append(
+                            '<li class="page-item ' + (p === currentPage ? 'active' : '') + '">' +
+                            '<a class="page-link" href="#" data-page="' + p + '">' + p + '</a></li>'
+                        );
+                    }
+                });
+
+                // Next button
+                $pag.append(
+                    '<li class="page-item ' + (currentPage === totalPages ? 'disabled' : '') + '">' +
+                    '<a class="page-link" href="#" data-page="' + (currentPage + 1) + '">&#8250;</a></li>'
+                );
+            }
+
+            function buildPageRange(cur, total) {
+                if (total <= 7) {
+                    var arr = [];
+                    for (var i = 1; i <= total; i++) arr.push(i);
+                    return arr;
+                }
+                var pages = [1];
+                if (cur > 3) pages.push('...');
+                for (var i = Math.max(2, cur - 1); i <= Math.min(total - 1, cur + 1); i++) pages.push(i);
+                if (cur < total - 2) pages.push('...');
+                pages.push(total);
+                return pages;
+            }
+
+            // ── PAGINATION CLICK ─────────────────────────────────────
+            $(document).on('click', '#pagination .page-link', function (e) {
+                e.preventDefault();
+                var p = parseInt($(this).data('page'));
+                var totalPages = Math.ceil(filteredRows.length / parseInt(pageSize)) || 1;
+                if (!isNaN(p) && p >= 1 && p <= totalPages) {
+                    currentPage = p;
+                    renderTable();
+                }
+            });
+
+            // ── PAGE SIZE BUTTONS ────────────────────────────────────
+            $(document).on('click', '.page-size-btn', function () {
+                $('.page-size-btn').removeClass('active');
+                $(this).addClass('active');
+                var size = $(this).data('size');
+                pageSize = (size === 'all') ? 'all' : parseInt(size);
+                currentPage = 1;
+                renderTable();
+            });
+
+            // ── REAL-TIME FILTER EVENTS ──────────────────────────────
+            $('#studentNameFilter, #phoneNoFilter, #sequenceNoFilter').on('input', applyFilter);
+            $('#fromDateFilter, #toDateFilter').on('change', applyFilter);
+
+            // ── RESET ────────────────────────────────────────────────
+            $('#resetBtn').on('click', function () {
+                $('#studentNameFilter, #phoneNoFilter, #sequenceNoFilter').val('');
+                $('#fromDateFilter, #toDateFilter').val('');
+                $('#dateWarning').hide().text('');
+                filteredRows = allRows;
+                currentPage  = 1;
+                renderTable();
+            });
+
+            // ── INIT ─────────────────────────────────────────────────
+            renderTable();
+
         });
-
-        renderPage(1);
-    }
-
-    // =========================
-    // PAGINATION NUMBERS
-    // =========================
-    function renderPageNumbers(totalPages) {
-
-        let html = '';
-
-        for (let i = 1; i <= totalPages; i++) {
-            html += `<button class="btn btn-sm ${i === currentPage ? 'btn-primary' : 'btn-outline-primary'} mx-1 pageBtn" data-page="${i}">${i}</button>`;
-        }
-
-        $('#pageNumbers').html(html);
-    }
-
-    // =========================
-    // DATE PARSER
-    // =========================
-    function parseDate(dateStr) {
-        if (!dateStr) return new Date(0);
-
-        const parts = dateStr.split('/');
-        return new Date(parts[2] + "-" + parts[1] + "-" + parts[0]);
-    }
-
-    // =========================
-    // EVENTS
-    // =========================
-
-    $('#studentNameFilter, #phoneNoFilter, #sequenceNoFilter').on('keyup', function () {
-        applyFilter();
-    });
-
-    $('#fromDateFilter, #toDateFilter').on('change', function () {
-        applyFilter();
-    });
-
-    $(document).on('click', '.pageBtn', function () {
-        renderPage(parseInt($(this).data('page')));
-    });
-
-    $('#nextPage').on('click', function () {
-        renderPage(currentPage + 1);
-    });
-
-    $('#prevPage').on('click', function () {
-        renderPage(currentPage - 1);
-    });
-
-    $('#showAllBtn').on('click', function () {
-        $('#admission-table tbody tr').show();
-        $('#pageNumbers').html('');
-        $('#pageInfo').text("Showing All Records");
-    });
-
-    $('#resetBtn').on('click', function () {
-        filterInputs.forEach(id => $(id).val(''));
-        $('#admission-table tbody tr').data('visible', true);
-        renderPage(1);
-    });
-
-    // =========================
-    // START
-    // =========================
-    $('#admission-table tbody tr').data('visible', true);
-    initTable();
-
-});
-</script>
+    </script>
 }

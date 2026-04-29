@@ -42,7 +42,7 @@ namespace A2R_Project.Repositories
             parameters.Add("City", studentInquiry.City ?? "");
             parameters.Add("Postcode", studentInquiry.Postcode ?? "");
 
-            // ✅ FIX: DATETIME NULL HANDLING
+            parameters.Add("LeadType", studentInquiry.LeadType ?? "");
             parameters.Add("EnrolledDate", studentInquiry.EnrolledDate ?? (DateTime?)null);
             parameters.Add("CompletionDate", studentInquiry.CompletionDate ?? (DateTime?)null);
 

@@ -43,7 +43,7 @@ namespace A2R_Project.Controllers
             model.companies = pagedCompanies;
             model.states = await _stateRepository.GetAllStates();     // ✅ Working dropdown
             model.country = await _countryRepository.GetAllCountries(); // ✅ Working dropdown
-
+            await SetPagePermissions("Company");
             ViewBag.TotalCount = totalCount;
             ViewBag.CurrentPage = page;
             ViewBag.PageSize = pageSize;

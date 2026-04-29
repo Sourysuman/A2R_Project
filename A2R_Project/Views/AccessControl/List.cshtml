@@ -2,391 +2,255 @@
 @{
     ViewData["Title"] = "Access Controls - List";
 }
+@using Microsoft.AspNetCore.Mvc.Rendering
+
 <style>
-    /* 🔥 MODERN MOBILE-FRIENDLY DESIGN */
-    * {
-        box-sizing: border-box;
+    /* ===== ROOT VARIABLES ===== */
+    :root {
+        --primary: #2563eb;
+        --primary-dark: #1e40af;
+        --success: #16a34a;
+        --danger: #dc2626;
+        --warning: #f59e0b;
+        --dark: #111827;
+        --light: #f9fafb;
+        --white: #ffffff;
+        --gray: #6b7280;
     }
 
     body {
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background: #f3f4f6;
+        font-family: 'Inter', 'Poppins', 'Segoe UI', sans-serif;
     }
 
-    /* Card Styling */
+    /* ===== CARD ===== */
     .card {
-        box-shadow: 0 0.5rem 2rem rgba(0,0,0,.1) !important;
         border: none;
-        border-radius: 20px;
-        overflow: hidden;
-        background: linear-gradient(145deg, #ffffff 0%, #f8f9fa 100%);
-        margin-bottom: 2rem;
+        border-radius: 16px;
+        box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+        transition: 0.3s ease;
     }
 
-    .card-body {
-        padding: 1.5rem !important;
-        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    .card-title {
+        font-size: 18px;
+        font-weight: 600;
+        letter-spacing: 0.5px;
+        color: #2c2c2c;
     }
 
-    /* Table Styling */
+    /* ===== TABLE ===== */
     .table {
-        background: white;
-        border-radius: 15px;
+        border-radius: 14px;
         overflow: hidden;
-        box-shadow: 0 0.25rem 1rem rgba(0,0,0,.08);
-        margin-bottom: 1.5rem;
+        background: #fff;
+        border-collapse: collapse;
+        border-spacing: 0;
     }
 
-        .table thead th {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
-            color: white;
-            font-weight: 600;
-            border: none;
-            padding: 1rem 0.75rem;
-            font-size: 0.95rem;
+        .table thead {
+            background: #3f454c;
         }
 
-        .table tbody tr:hover {
-            transform: scale(1.01);
-            transition: all 0.2s ease;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            .table thead th {
+                color: #fff !important;
+                border: none !important;
+                font-size: 14px;
+                font-weight: 700;
+                text-transform: uppercase;
+                letter-spacing: 0.6px;
+                padding: 14px;
+                text-align: center !important;
+            }
+
+        .table tbody td {
+            font-size: 15px;
+            font-weight: 600;
+            color: #34495e !important;
+            padding: 14px;
+            vertical-align: middle !important;
+            text-align: center !important;
+            background-color:white !important;
+            letter-spacing: 0.4px;
+            transition: all 0.3s ease;
         }
+
+            .table tbody td:first-child {
+                font-weight: 700 !important;
+                color: #2c3e50 !important;
+                font-size: 15px !important;
+            }
 
         .table tbody tr {
-            transition: all 0.2s ease;
+            transition: all 0.25s ease;
         }
 
-    /* Table Colors */
-    .table-info {
-        background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%) !important;
+            
+
+    .table-primary-row td {
+        background: #eef2ff !important;
     }
 
-    .table-primary {
-        background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%) !important;
+    .table-warning-col {
+        background: #fff7ed !important;
     }
 
-    .table-warning {
-        background: linear-gradient(135deg, #fff3e0 0%, #ffcc80 100%) !important;
+    .table-primary-col {
+        background: #eef2ff !important;
     }
 
-    /* Form Styling */
-    .form-control {
-        border-radius: 12px;
-        border: 2px solid #e9ecef;
-        padding: 0.75rem 1rem;
-        transition: all 0.3s ease;
-        font-size: 0.95rem;
-        height: calc(2.25rem + 2px);
+    /* ===== TABLE ACTION BUTTONS ===== */
+    .table .btn-sm {
+        width: 36px !important;
+        height: 36px !important;
+        border-radius: 10px !important;
+        padding: 0 !important;
+        margin-right: 4px !important;
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        border: none !important;
+        transition: all 0.25s ease !important;
     }
 
-        .form-control:focus {
-            border-color: #667eea;
-            box-shadow: 0 0 0 0.25rem rgba(102, 126, 234, 0.25);
-            transform: translateY(-1px);
+        .table .btn-sm i {
+            font-size: 16px !important;
+            line-height: 1 !important;
         }
 
-    /* Checkboxes */
-    .form-check {
-        padding-left: 1.5rem;
-        margin-bottom: 0;
-    }
-
-    .form-check-input {
-        width: 1.25rem;
-        height: 1.25rem;
-        border-radius: 0.375rem;
-    }
-
-        .form-check-input:checked {
-            background-color: #667eea;
-            border-color: #667eea;
-            box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+        .table .btn-sm:hover {
+            transform: translateY(-2px) !important;
+            box-shadow: 0 6px 15px rgba(0,0,0,0.15) !important;
         }
 
-    /* Buttons */
-    .btn {
-        border-radius: 25px;
-        padding: 0.6rem 1.5rem;
-        font-weight: 500;
+    .table .btn-gradient-primary {
+        background: linear-gradient(135deg, #3b82f6, #1d4ed8) !important;
+        color: #fff !important;
+        border: none !important;
+    }
+
+    .table .btn-gradient-dark {
+        background: linear-gradient(135deg, #06b6d4, #0891b2) !important;
+        color: #fff !important;
+        border: none !important;
+    }
+
+    .table .btn-gradient-warning {
+        background: linear-gradient(135deg, #ef4444, #b91c1c) !important;
+        color: #fff !important;
+        border: none !important;
+    }
+
+    /* ===== BUTTONS ===== */
+    .btn-modern {
+        border-radius: 8px;
+        padding: 6px 14px;
         border: none;
-        transition: all 0.3s ease;
-        font-size: 0.9rem;
-        box-shadow: 0 0.25rem 0.75rem rgba(0,0,0,0.1);
+        transition: 0.2s;
     }
 
-    .btn-primary {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    }
-
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 0.5rem 1.5rem rgba(102, 126, 234, 0.4);
+        .btn-modern:hover {
+            transform: scale(1.05);
+            opacity: 0.9;
         }
 
-    .btn-success {
-        background: linear-gradient(135deg, #56ab2f 0%, #a8e6cf 100%);
+    .btn-danger-modern {
+        background: linear-gradient(135deg, #ef4444, #b91c1c) !important;
+        color: #fff !important;
+        border: none !important;
     }
 
-        .btn-success:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 0.5rem 1.5rem rgba(86, 171, 47, 0.4);
+    /* ADD BUTTON */
+    [data-target="#addRoleBtn"].btn, .btn-add-access {
+        background: linear-gradient(135deg, #10b981, #059669) !important;
+        color: #fff !important;
+        font-weight: 600 !important;
+        padding: 8px 20px !important;
+        border-radius: 10px !important;
+        border: none !important;
+        transition: 0.2s !important;
+    }
+
+        [data-target="#addRoleBtn"].btn:hover, .btn-add-access:hover {
+            transform: scale(1.05) !important;
+            box-shadow: 0 5px 15px rgba(16,185,129,0.4) !important;
+            color: #fff !important;
         }
 
-    .btn-warning {
-        background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-        color: white;
+    /* UPDATE BUTTON */
+    #updateBtn {
+        background: linear-gradient(135deg, #4facfe, #00f2fe) !important;
+        color: #fff !important;
+        border: none !important;
+        border-radius: 10px !important;
+        font-weight: 600 !important;
+        padding: 8px 22px !important;
+        transition: 0.2s !important;
     }
 
-        .btn-warning:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 0.5rem 1.5rem rgba(245, 87, 108, 0.4);
+        #updateBtn:hover {
+            box-shadow: 0 5px 15px rgba(79,172,254,0.4) !important;
+            transform: scale(1.04) !important;
         }
 
-    .btn-secondary {
-        background: linear-gradient(135deg, #6c757d 0%, #495057 100%);
-    }
-
-    /* Modal Styling */
-    .modal-content {
-        border-radius: 20px;
-        box-shadow: 0 1rem 3rem rgba(0,0,0,.175) !important;
-        border: none;
-    }
-
-    .modal-header {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
-        color: white;
-        border-radius: 20px 20px 0 0 !important;
-    }
-
-    .modal-footer {
-        border-top: 1px solid #dee2e6;
-        border-radius: 0 0 20px 20px;
-        padding: 1rem 1.5rem;
-    }
-
-    /* Labels */
-    label {
-        font-weight: 600;
-        color: #495057;
-        margin-bottom: 0.5rem;
-        font-size: 0.95rem;
-    }
-
-    /* Error Messages */
-    .text-danger {
-        font-size: 0.85rem;
-        font-weight: 500;
-    }
-
-    .is-invalid {
-        border-color: #f5576c !important;
-        box-shadow: 0 0 0 0.25rem rgba(245, 87, 108, 0.25) !important;
-    }
-
-    /* Badge */
-    .badge {
-        padding: 0.5rem 1rem;
-        border-radius: 20px;
-        font-weight: 500;
-    }
-
-    /* Loading */
-    .spinner-border {
-        width: 2rem;
-        height: 2rem;
-    }
-
-    /* Pagination */
-    .pagination .page-link {
-        border-radius: 50%;
-        margin: 0 0.25rem;
-        border: none;
-    }
-
-    .pagination .page-item.active .page-link {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    }
-
-    /* Custom Table Container */
-    .custom-table-container {
-        display: flex;
-        text-align: center;
-    }
-
-    /* MOBILE RESPONSIVE */
-    @@media (max-width: 768px) {
-        .card-body
-
-    {
-        padding: 1rem !important;
-    }
-
-    .table-responsive {
-        font-size: 0.85rem;
-    }
-
-    .table thead th {
-        padding: 0.75rem 0.5rem;
-        font-size: 0.85rem;
-    }
-
-    .btn {
-        padding: 0.5rem 1rem;
-        font-size: 0.85rem;
-    }
-
-    .modal-dialog {
-        margin: 1rem;
-        max-width: 95%;
-    }
-
-    .col-md-6, .col-md-4, .col-md-3 {
-        margin-bottom: 1rem;
-    }
-
-    .form-check-label {
-        font-size: 0.9rem;
-    }
-
-    }
-
-    @@media (max-width: 576px) {
-        .table
-
-    {
-        font-size: 0.8rem;
-    }
-
-    .btn-group {
-        flex-direction: column;
-    }
-
-    .btn {
-        margin-bottom: 0.5rem;
-        width: 100%;
-    }
-
-    }
-    /* ================= FILTER SECTION UPGRADE ================= */
-    .row.mb-4 {
+    /* ===== FILTER SECTION ===== */
+    .filter-section {
         background: linear-gradient(135deg, #ffffff, #f1f4ff);
         padding: 20px;
         border-radius: 15px;
         box-shadow: 0 10px 25px rgba(0,0,0,0.08);
-        margin-bottom: 25px !important;
+        margin-bottom: 20px;
     }
+
+        .filter-section label {
+            font-weight: 600;
+            color: #374151;
+            font-size: 14px;
+            margin-bottom: 6px;
+            display: block;
+        }
 
     #filterBtn {
-        height: 45px;
-        font-size: 15px;
-        font-weight: 600;
-        border-radius: 30px;
-        padding: 0 25px;
+        background: linear-gradient(135deg, #667eea, #4f46e5) !important;
+        color: #fff !important;
+        border: none !important;
+        border-radius: 10px !important;
+        font-weight: 600 !important;
+        padding: 9px 22px !important;
+        font-size: 14px !important;
+        transition: 0.2s !important;
+        height: 42px;
     }
 
-    /* ================= TABLE HOVER EFFECT ================= */
-    .table tbody tr {
-        transition: all 0.3s ease;
-        cursor: pointer;
-    }
-
-        .table tbody tr:hover {
-            transform: scale(1.02);
-            background: linear-gradient(135deg, #eef2ff, #dbeafe) !important;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+        #filterBtn:hover {
+            box-shadow: 0 5px 15px rgba(99,102,241,0.4) !important;
+            transform: scale(1.04) !important;
+            color: #fff !important;
         }
 
-    /* Checkbox Hover */
-    .form-check-input {
-        cursor: pointer;
-        transition: all 0.2s ease;
+    /* ===== FORM CONTROLS ===== */
+    .form-control {
+        border-radius: 8px;
+        border: 1px solid #ddd;
+        padding: 8px 12px;
+        font-size: 15px;
+        transition: 0.3s;
     }
 
-        .form-check-input:hover {
-            transform: scale(1.2);
+        .form-control:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 6px rgba(37,99,235,0.3);
+            outline: none;
         }
 
-    /* ================= HEADER BADGE ================= */
-    #recordCount {
-        font-size: 14px;
-        padding: 6px 14px;
-        border-radius: 25px;
-    }
+        .form-control:hover {
+            border-color: #224abe;
+        }
 
-    /* ================= BUTTON HOVER ENHANCE ================= */
-    .btn:hover {
-        transform: translateY(-3px) scale(1.03);
-    }
-
-    /* ================= MODAL (POPOFF) UPGRADE ================= */
-    .modal-dialog.modal-xl {
-        max-width: 90%;
-    }
-
-    .modal-content {
-        border-radius: 25px;
-        overflow: hidden;
-        animation: popupZoom 0.3s ease;
-    }
-
-    /* Smooth Popup Animation */
-    @@keyframes popupZoom {
-        from
-
-    {
-        transform: scale(0.85);
-        opacity: 0;
-    }
-
-    to {
-        transform: scale(1);
-        opacity: 1;
-    }
-
-    }
-
-    /* Modal Body Better Spacing */
-    .modal-body {
-        padding: 30px !important;
-        background: linear-gradient(135deg, #f9fbff, #eef2ff);
-    }
-
-    /* Modal Header Style */
-    .modal-header {
-        padding: 18px 25px;
-        font-size: 18px;
-    }
-
-    /* Modal Inputs Improve */
-    .modal-body .form-control {
-        height: 45px;
-        font-size: 15px;
-    }
-
-    /* Modal Labels */
-    .modal-body label {
-        font-size: 14px;
-        margin-bottom: 6px;
-    }
-
-    /* Checkbox Row in Modal */
-    .modal-body .form-check {
-        padding: 10px 0;
-    }
-
-    /* ================= INPUT HOVER ================= */
-    .form-control:hover {
-        border-color: #764ba2;
-    }
-
-    /* ================= ADD BUTTON SPECIAL ================= */
-    .btn-success {
-        font-size: 15px;
-        padding: 10px 20px;
-    }
-
-    /* ================= PAGINATION STYLE ================= */
+    /* ===== PAGINATION — OLD APP STYLE ===== */
     .pagination .page-link {
+        border-radius: 50%;
+        margin: 0 0.25rem;
+        border: none;
         padding: 10px 15px;
         font-weight: 600;
         transition: all 0.3s ease;
@@ -398,212 +262,303 @@
             transform: scale(1.1);
         }
 
-    /* ================= EMPTY STATE ================= */
-    .text-muted i {
-        color: #667eea;
+    .pagination .page-item.active .page-link {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        border: none;
     }
 
-    /* ================= RESPONSIVE MODAL ================= */
-    @@media (max-width: 768px) {
-        .modal-dialog.modal-xl
-
-    {
-        max-width: 95%;
-    }
-
-    .modal-body {
-        padding: 20px !important;
-    }
-
-    }
-    /* ================= TABLE TEXT IMPROVEMENT ================= */
-    .table td, .table th {
-        font-size: 15px;
+    /* ===== STATUS BADGE ===== */
+    .badge-success {
+        background: #16a34a;
+        color: #fff;
+        padding: 5px 12px;
+        border-radius: 20px;
+        font-size: 13px;
         font-weight: 600;
-        color: #000 !important;
-        vertical-align: middle;
     }
 
-    /* Strong Header */
-    .table thead th {
-        font-size: 16px;
-        letter-spacing: 0.5px;
+    .badge-danger {
+        background: #dc2626;
+        color: #fff;
+        padding: 5px 12px;
+        border-radius: 20px;
+        font-size: 13px;
+        font-weight: 600;
     }
 
-    /* ================= TABLE ROW COLORS (MODERN) ================= */
-    .table-info {
-        background: linear-gradient(135deg, #f0f4ff, #dbeafe) !important;
-    }
-
-    .table-primary {
-        background: linear-gradient(135deg, #eef2ff, #c7d2fe) !important;
-    }
-
-    .table-warning {
-        background: linear-gradient(135deg, #fff7ed, #fed7aa) !important;
-    }
-
-    /* Hover Premium Effect */
-    .table tbody tr:hover {
-        transform: scale(1.015);
-        background: linear-gradient(135deg, #e0e7ff, #c7d2fe) !important;
-        box-shadow: 0 10px 25px rgba(0,0,0,0.15);
-    }
-
-    /* ================= CHECKBOX (MODERN SWITCH STYLE) ================= */
+    /* ===== TOGGLE SWITCH ===== */
     .form-check {
         display: flex;
         align-items: center;
         justify-content: center;
+        padding: 0;
+        margin: 0;
     }
 
-    /* Hide default checkbox */
     .form-check-input {
         appearance: none;
         -webkit-appearance: none;
-        width: 40px;
-        height: 22px;
+        width: 42px;
+        height: 23px;
         background: #dee2e6;
         border-radius: 50px;
         position: relative;
         cursor: pointer;
         transition: all 0.3s ease;
-        border: none;
+        border: none !important;
+        outline: none;
+        flex-shrink: 0;
+        transform: none !important;
+        box-shadow: none !important;
     }
 
-        /* Circle inside */
         .form-check-input::before {
             content: "";
-            width: 18px;
-            height: 18px;
+            width: 17px;
+            height: 17px;
             background: #fff;
             position: absolute;
-            top: 2px;
-            left: 2px;
+            top: 3px;
+            left: 3px;
             border-radius: 50%;
             transition: 0.3s ease;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
         }
 
-        /* Checked State */
         .form-check-input:checked {
-            background: linear-gradient(135deg, #667eea, #764ba2);
+            background: linear-gradient(135deg, #667eea, #764ba2) !important;
         }
 
             .form-check-input:checked::before {
-                transform: translateX(18px);
+                transform: translateX(19px);
             }
 
-        /* Hover Effect */
-        .form-check-input:hover {
-            transform: scale(1.1);
-            box-shadow: 0 0 10px rgba(102, 126, 234, 0.5);
+    /* ===== EMPTY STATE ===== */
+    .empty-state {
+        text-align: center;
+        padding: 40px;
+        color: #6b7280;
+    }
+
+        .empty-state i {
+            font-size: 40px;
+            margin-bottom: 10px;
+            color: #9ca3af;
         }
 
-    /* ================= POPUP CHECKBOX ALIGNMENT ================= */
-    .modal-body .row .form-check {
+    /* ===== MODAL ===== */
+    .modal-content {
+        border-radius: 16px;
+        border: none;
+        overflow: hidden;
+        box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+        animation: fadeInUp 0.3s ease;
+    }
+
+    @@keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(15px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .modal-header {
+        background: linear-gradient(135deg, #2563eb, #1e40af) !important;
+        color: #fff !important;
+        padding: 16px 20px;
+    }
+
+        .modal-header * {
+            color: #fff !important;
+        }
+
+        .modal-header .close {
+            color: #fff !important;
+            opacity: 1 !important;
+            text-shadow: none !important;
+        }
+
+    .modal-title {
+        font-weight: 600;
+        font-size: 18px;
+        color: #fff !important;
+    }
+
+    .modal-body {
+        padding: 25px;
+        font-size: 15px;
+    }
+
+    .modal-footer {
+        border-top: none;
+        padding: 12px 25px;
+    }
+
+        .modal-footer .btn {
+            font-size: 14px;
+            padding: 8px 18px;
+            border-radius: 8px;
+            transition: 0.3s;
+        }
+
+    .modal-backdrop {
+        z-index: 1040 !important;
+    }
+
+    .modal {
+        z-index: 1050 !important;
+    }
+
+    body.modal-open {
+        overflow: hidden !important;
+    }
+
+    /* CHECKBOX CARDS in modal */
+    .checkbox-card {
+      
+     
+        padding: 10px 16px;
         display: flex;
         align-items: center;
         gap: 10px;
-        justify-content: flex-start;
+        transition: 0.2s;
+      
+        margin-bottom: 8px;
     }
 
-    /* Label Styling in Modal */
-    .modal-body .form-check-label {
-        font-size: 15px;
-        font-weight: 600;
-        color: #000;
-        margin-left: 5px;
-    }
-
-    /* Make checkbox section look like card */
-    .modal-body .col-md-3 {
-        background: #f8f9ff;
-        padding: 12px;
-        border-radius: 12px;
-        transition: 0.3s;
-        text-align: left;
-    }
-
-        /* Hover effect for checkbox blocks */
-        .modal-body .col-md-3:hover {
-            background: linear-gradient(135deg, #eef2ff, #dbeafe);
-            transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+        .checkbox-card:hover {
+            background: linear-gradient(135deg,#eef2ff,#dbeafe);
+            border-color: #6366f1;
         }
 
-    /* ================= TABLE BORDER CLEAN ================= */
-    .table td {
-        border-top: 1px solid #e9ecef;
+        .checkbox-card label {
+            font-size: 13px;
+            font-weight: 700;
+            color: #374151;
+            cursor: pointer;
+            margin: 0;
+        }
+
+    .mandatoryfield {
+        color: red;
     }
 
-    /* ================= HEADER BADGE IMPROVE ================= */
-    #recordCount {
-        font-size: 15px;
-        font-weight: 600;
-        background: linear-gradient(135deg, #667eea, #764ba2);
-        color: white;
+    .validationMessage {
+        color: red;
+        font-size: 12px;
+        display: block;
+        margin-top: 3px;
     }
 
-    /* ================= BUTTON IMPROVEMENT ================= */
-    #updateBtn {
-        background: linear-gradient(135deg, #4facfe, #00f2fe);
+    .text-danger-small {
+        color: red;
+        font-size: 12px;
     }
 
-    #clearBtn {
-        background: linear-gradient(135deg, #ff758c, #ff7eb3);
-        color: #fff;
+    /* user dropdown loading */
+    #userNameFilter:disabled {
+        background-color: #f3f4f6;
+        cursor: wait;
+    }
+
+    @@media (max-width: 768px) {
+        .filter-section {
+            flex-direction: column;
+        }
+    }
+    @@media (min-width: 576px) {
+        .modal-dialog
+
+    {
+        max-width: 1000px;
+        margin: 1.75rem auto;
+    }
+
+    }
+    /* ===== MODAL FOOTER BUTTONS ===== */
+    #addRoleBtn .modal-footer .btn-gradient-warning {
+        background: #6c757d !important;
+        color: #fff !important;
+        border: none !important;
+    }
+
+    #addRoleBtn .modal-footer .btn-gradient-secondary {
+        background: linear-gradient(135deg, #f6c23e, #e0a800) !important;
+        color: #000 !important;
+        border: none !important;
+    }
+
+    #addRoleBtn .modal-footer #btnAccessControlSave {
+        background: linear-gradient(135deg, #4e73df, #224abe) !important;
+        color: #fff !important;
+        border: none !important;
+    }
+
+    .modal-backdrop {
+        opacity: 0.25 !important;
     }
 </style>
 
 <div class="col-lg-12 stretch-card">
     <div class="card">
-        <div class="card-body" style="padding: 0.5rem 1.5rem;">
-            <!-- Filters -->
-            <div class="row mb-4">
-                <div class="col-md-4">
-                    <label for="roleNameFilter" style="color: black;">Role Name:</label>
-                    <select class="form-control" id="roleNameFilter">
-                        <option value="">--All Roles--</option>
-                        @if (ViewBag.Roles != null)
-                        {
-                            @foreach (var role in ViewBag.Roles as List<Microsoft.AspNetCore.Mvc.Rendering.SelectListItem>)
+        <div class="card-body">
+
+            <!-- ===== FILTER SECTION ===== -->
+            <div class="filter-section">
+                <div class="row align-items-end">
+                    <div class="col-md-4">
+                        <label for="roleNameFilter">Role Name:</label>
+                        <select class="form-control" id="roleNameFilter">
+                            <option value="">-- All Roles --</option>
+                            @if (ViewBag.Roles != null)
                             {
-                                <option value="@role.Value">@role.Text</option>
+                                @foreach (var role in ViewBag.Roles as List<SelectListItem>)
+                                {
+                                    <option value="@role.Value">@role.Text</option>
+                                }
                             }
-                        }
-                    </select>
-                </div>
-                <div class="col-md-4">
-                    <label for="userNameFilter" style="color: black;">User Name:</label>
-                    <select class="form-control" id="userNameFilter">
-                        <option value="">--All Users--</option>
-                    </select>
-                </div>
-                <div class="col-md-4 d-flex justify-content-end align-items-end">
-                    <button type="button" class="btn btn-primary" id="filterBtn">
-                        <i class="mdi mdi-filter"></i> Filter
-                    </button>
+                        </select>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="userNameFilter">User Name: <span class="mandatoryfield">*</span></label>
+                        <select class="form-control" id="userNameFilter">
+                            <option value="">-- Select User Name --</option>
+                        </select>
+                    </div>
+                    <div class="col-md-4 d-flex align-items-end">
+                        <button type="button" class="btn" id="filterBtn">
+                            <i class="mdi mdi-filter"></i> Filter
+                        </button>
+                    </div>
                 </div>
             </div>
 
-            <!-- Header -->
-            <div class="d-flex justify-content-between align-items-center mb-3">
+            <!-- ===== HEADER ===== -->
+            <div class="d-flex justify-content-between align-items-center" style="padding: 10px 0 14px 0;">
                 <strong class="card-title">
                     Access Controls List
-                    <span id="recordCount" class="badge badge-info ml-2">(@(Model?.accessControl?.Count ?? 0) records)</span>
+                    <span id="recordCount" style="background:linear-gradient(135deg,#667eea,#764ba2);color:#fff;
+                          font-size:13px;font-weight:600;padding:4px 12px;border-radius:20px;margin-left:8px;">
+                        (@(Model?.accessControl?.Count ?? 0) records)
+                    </span>
                 </strong>
-                <button type="button" class="btn btn-success btn-rounded" data-toggle="modal" data-target="#addRoleBtn">
+                <button type="button" class="btn btn-gradient-primary btn-rounded btn-fw"
+                        data-toggle="modal" data-target="#addRoleBtn">
                     <i class="fa fa-plus"></i> Add Access
                 </button>
             </div>
 
-            <!-- Table -->
+            <!-- ===== TABLE ===== -->
             <div class="table-responsive">
-                <table class="table" id="roles-table">
+                <table class="table table-bordered" id="roles-table">
                     <thead>
                         <tr>
-                            <th><input type="checkbox" id="selectAll"></th>
+                            <th><input type="checkbox" id="selectAll" style="width:16px;height:16px;cursor:pointer;"></th>
                             <th>Module</th>
                             <th>Page</th>
                             <th>Action Page</th>
@@ -618,7 +573,7 @@
                             @foreach (var item in Model.accessControl)
                             {
                                 <tr class="table-info">
-                                    <td>
+                                    <td class="table-primary">
                                         <input type="hidden" class="access-id" value="@item.AccessID" />
                                         <div class="form-check">
                                             <input class="form-check-input module-check" type="checkbox"
@@ -654,9 +609,9 @@
                         }
                         else
                         {
-                            <tr>
-                                <td colspan="7" class="text-center text-muted p-5">
-                                    <i class="mdi mdi-database-off fa-3x mb-3 d-block"></i>
+                            <tr class="empty-row">
+                                <td colspan="7" class="empty-state">
+                                    <i class="mdi mdi-database-off d-block"></i>
                                     No data found
                                 </td>
                             </tr>
@@ -664,422 +619,513 @@
                     </tbody>
                 </table>
             </div>
-            <!-- Replace your pagination with this -->
-            <nav aria-label="Page navigation">
-                <ul class="pagination justify-content-center">
-                    <li class="page-item @(ViewBag.CurrentPage <= 1 ? "disabled" : "")">
-                        <a class="page-link" href="@Url.Action("List", new { page = ViewBag.CurrentPage - 1, pageSize = ViewBag.PageSize })">Previous</a>
-                    </li>
-                    @for (int i = Math.Max(1, (int)ViewBag.CurrentPage - 2); i <= Math.Min((int)Math.Ceiling((double)(int)ViewBag.TotalCount / (int)ViewBag.PageSize), (int)ViewBag.CurrentPage + 2); i++)
-                    {
-                        <li class="page-item @(i == ViewBag.CurrentPage ? "active" : "")">
-                            <a class="page-link" href="@Url.Action("List", new { page = i, pageSize = ViewBag.PageSize })">@i</a>
-                        </li>
-                    }
-                    <li class="page-item @(((int)ViewBag.CurrentPage >= Math.Ceiling((double)(int)ViewBag.TotalCount / (int)ViewBag.PageSize) ? "disabled" : ""))">
-                        <a class="page-link" href="@Url.Action("List", new { page = ViewBag.CurrentPage + 1, pageSize = ViewBag.PageSize })">Next</a>
-                    </li>
-                </ul>
-            </nav>
 
-            <!-- Action Buttons -->
+            @if (ViewBag.TotalCount != null && ViewBag.CurrentPage != null && ViewBag.PageSize != null)
+            {
+                int totalPages = (int)Math.Ceiling((double)(int)ViewBag.TotalCount / (int)ViewBag.PageSize);
+                int curPage = (int)ViewBag.CurrentPage;
+                int start = Math.Max(1, curPage - 2);
+                int end = Math.Min(totalPages, curPage + 2);
+
+                <nav aria-label="Page navigation">
+                    <ul class="pagination justify-content-center" id="accessPagination">
+                        <li class="page-item @(curPage <= 1 ? "disabled" : "")">
+                            <a class="page-link" href="#" data-page="@(curPage - 1)">Previous</a>
+                        </li>
+                        @for (int i = start; i <= end; i++)
+                        {
+                            <li class="page-item @(i == curPage ? "active" : "")">
+                                <a class="page-link" href="#" data-page="@i">@i</a>
+                            </li>
+                        }
+                        <li class="page-item @(curPage >= totalPages ? "disabled" : "")">
+                            <a class="page-link" href="#" data-page="@(curPage + 1)">Next</a>
+                        </li>
+                    </ul>
+                </nav>
+            }
+
+            <!-- ===== UPDATE BUTTON ===== -->
             <div class="d-flex justify-content-end mt-3">
-                <button type="button" class="btn btn-primary mr-2" id="updateBtn">Update</button>
-                <button type="button" class="btn btn-warning mr-2" id="clearBtn">Clear</button>
+                <button type="button" id="updateBtn">
+                    <i class="fa fa-save"></i> Update
+                </button>
             </div>
+
         </div>
     </div>
 </div>
 
-<!-- Add Access Modal - PERFECT FIELDS -->
+<!-- ===== ADD MODAL ===== -->
 <div class="modal fade" id="addRoleBtn" tabindex="-1" role="dialog">
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
-            <div class="modal-header bg-primary text-white">
-                <h5 class="modal-title">Add Access Control</h5>
-                <button type="button" class="close text-white" data-dismiss="modal">&times;</button>
+            <div class="modal-header">
+                <h5 class="modal-title"><i class="fa fa-plus-circle mr-2"></i>Add Access Control</h5>
+                <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
             </div>
             <div class="modal-body">
-                <form id="addAccessForm">
+                <form id="addAccessForm" autocomplete="off">
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label><strong>Role Name <span class="text-danger">*</span></strong></label>
+                                <label>Role Name <span class="mandatoryfield">*</span></label>
                                 <select class="form-control" id="ddlAddRoleId">
-                                    <option value="">--Select Role Name--</option>
+                                    <option value="">-- Select Role Name --</option>
                                     @foreach (var role in ViewBag.Roles as List<SelectListItem>)
                                     {
                                         <option value="@role.Value">@role.Text</option>
                                     }
                                 </select>
-                                <span class="text-danger" id="roleError"></span>
+                                <span class="validationMessage" id="roleError"></span>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label><strong>User Name</strong></label>
+                                <label>User Name</label>
                                 <select class="form-control" id="ddlAddUserId">
-                                    <option value="">--Select User Name--</option>
+                                    <option value="">-- Select User Name --</option>
                                 </select>
                             </div>
                         </div>
                     </div>
-
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label><strong>Menu Name <span class="text-danger">*</span></strong></label>
-                                <input type="text" class="form-control" id="menuNameInput" list="menuOptions" placeholder="Type or select menu">
+                                <label>Menu Name <span class="mandatoryfield">*</span></label>
+                                <input type="text" class="form-control" id="menuNameInput"
+                                       list="menuOptions" placeholder="Type or select menu">
                                 <datalist id="menuOptions"></datalist>
-                                <span class="text-danger" id="menuError"></span>
+                                <span class="validationMessage" id="menuError"></span>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label><strong>Submenu Name <span class="text-danger">*</span></strong></label>
-                                <input type="text" class="form-control" id="subMenuNameInput" list="subMenuOptions" placeholder="Type or select submenu">
+                                <label>Submenu Name <span class="mandatoryfield">*</span></label>
+                                <input type="text" class="form-control" id="subMenuNameInput"
+                                       list="subMenuOptions" placeholder="Type or select submenu">
                                 <datalist id="subMenuOptions"></datalist>
-                                <span class="text-danger" id="submenuError"></span>
+                                <span class="validationMessage" id="submenuError"></span>
                             </div>
                         </div>
                     </div>
-
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label><strong>SubMenu Controller Name</strong></label>
+                                <label>SubMenu Controller Name</label>
                                 <input type="text" class="form-control" id="controllerName" placeholder="Controller name">
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label><strong>SubMenu Action Name</strong></label>
+                                <label>SubMenu Action Name</label>
                                 <input type="text" class="form-control" id="actionName" placeholder="Action name">
                             </div>
                         </div>
                     </div>
-
                     <div class="row">
                         <div class="col-md-4">
                             <div class="form-group">
-                                <label><strong>Menu Icon</strong></label>
+                                <label>Menu Icon</label>
                                 <input type="text" class="form-control" id="addMenuIcon" placeholder="mdi-home">
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
-                                <label><strong>SubMenu Icon</strong></label>
+                                <label>SubMenu Icon</label>
                                 <input type="text" class="form-control" id="addSubmenuIcon" placeholder="mdi-account">
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
-                                <label><strong>SubMenuChild Action</strong></label>
+                                <label>SubMenuChild Action</label>
                                 <input type="text" class="form-control" id="addActionSubMenuChildName" placeholder="Child action">
                             </div>
                         </div>
                     </div>
-
-                    <div class="row">
+                    <div class="row mt-2">
                         <div class="col-md-3">
-                            <div class="form-check">
+                            <div class="checkbox-card">
                                 <input type="checkbox" class="form-check-input" id="insertFlag">
-                                <label class="form-check-label font-weight-bold">Insert Flag</label>
+                                <label for="insertFlag">Insert Flag</label>
                             </div>
                         </div>
                         <div class="col-md-3">
-                            <div class="form-check">
+                            <div class="checkbox-card">
                                 <input type="checkbox" class="form-check-input" id="updateFlag">
-                                <label class="form-check-label font-weight-bold">Update Flag</label>
+                                <label for="updateFlag">Update Flag</label>
                             </div>
                         </div>
                         <div class="col-md-3">
-                            <div class="form-check">
+                            <div class="checkbox-card">
                                 <input type="checkbox" class="form-check-input" id="deleteFlag">
-                                <label class="form-check-label font-weight-bold">Delete Flag</label>
+                                <label for="deleteFlag">Delete Flag</label>
                             </div>
                         </div>
                         <div class="col-md-3">
-                            <div class="form-check">
+                            <div class="checkbox-card">
                                 <input type="checkbox" class="form-check-input" id="moduleFlag">
-                                <label class="form-check-label font-weight-bold">Module Flag</label>
+                                <label for="moduleFlag">Module Flag</label>
                             </div>
                         </div>
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="reset" class="btn btn-warning" onclick="resetForm()">Reset</button>
-                <button type="button" class="btn btn-primary" id="btnAccessControlSave">
+                <button type="button" class="btn btn-gradient-warning btn-rounded btn-fw" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-gradient-secondary btn-rounded btn-fw" onclick="resetForm()">Reset</button>
+                <button type="button" class="btn btn-gradient-info btn-rounded btn-fw" id="btnAccessControlSave">
                     <i class="fa fa-save"></i> Save Access
                 </button>
             </div>
         </div>
     </div>
 </div>
+
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 @section Scripts {
-   
-
     <script>
-        $(document).ready(function() {
-            const recordCountEl = $('#recordCount');
-            recordCountEl.text(`(${@Model?.accessControl?.Count ?? 0} records)`);
+        $(document).ready(function () {
+                    /* ============================================================
+           REAL-TIME AJAX PAGINATION — ACCESS CONTROL
+        ============================================================ */
+        var _acPageSize = @(ViewBag.PageSize ?? 10);
 
-            // Role → User Cascade
-            $('#roleNameFilter, #ddlAddRoleId').change(function() {
-                const roleName = $(this).find('option:selected').text();
-                const targetId = $(this).attr('id') === 'roleNameFilter' ? '#userNameFilter' : '#ddlAddUserId';
-                loadUsers(roleName, targetId);
-            });
+        $(document).on('click', '#accessPagination .page-link', function (e) {
+            e.preventDefault();
 
-            function loadUsers(roleName, targetId) {
-                $(targetId).html('<option>Loading users...</option>');
-                if (roleName && roleName !== '--All Roles--' && roleName !== '--Select Role Name--') {
-                    $.get(`/AccessControl/GetUsersByRole?roleName=${encodeURIComponent(roleName)}`)
-                        .done(users => {
-                            $(targetId).html('<option value="">--All Users--</option>');
-                            users.forEach(user => $(targetId).append(`<option value="${user.value}">${user.text}</option>`));
-                        })
-                        .fail(() => $(targetId).html('<option value="">--All Users--</option>'));
-                } else {
-                    $(targetId).html('<option value="">--All Users--</option>');
-                }
-            }
+            var $item = $(this).closest('.page-item');
+            if ($item.hasClass('disabled') || $item.hasClass('active')) return;
 
-            // Filter Button
-            $('#filterBtn').click(function() {
-                const roleName = $('#roleNameFilter option:selected').text();
-                const userName = $('#userNameFilter option:selected').text();
+            var page = parseInt($(this).data('page'));
+            if (!page || isNaN(page)) return;
 
-                if (!roleName || roleName === '--All Roles--') {
-                    alert('Please select Role first');
-                    $('#roleNameFilter').focus();
+            // Subtle fade while loading
+            $('#roles-table tbody').css('opacity', '0.4');
+
+            $.get('@Url.Action("List", "AccessControl")', { page: page, pageSize: _acPageSize })
+                .done(function (html) {
+                    var $doc = $('<div>').append($.parseHTML(html, document, true));
+
+                    // Swap only the table rows
+                    var $newTbody = $doc.find('#roles-table tbody');
+                    if ($newTbody.length) {
+                        $('#roles-table tbody').html($newTbody.html());
+                    }
+
+                    // Swap the pagination bar
+                    var $newPagination = $doc.find('#accessPagination');
+                    if ($newPagination.length) {
+                        $('#accessPagination').replaceWith($newPagination);
+                    }
+
+                    // Update record count badge
+                    var $newCount = $doc.find('#recordCount');
+                    if ($newCount.length) {
+                        $('#recordCount').text($newCount.text());
+                    }
+                })
+                .fail(function () {
+                    Swal.fire('Error', 'Failed to load page.', 'error');
+                })
+                .always(function () {
+                    $('#roles-table tbody').css('opacity', '1');
+                });
+        });
+            /* ============================================================
+               USER NAME DROPDOWN
+            ============================================================ */
+            var activeXhr = null;
+
+            function loadUsers(roleName, $target, defaultLabel) {
+                if (activeXhr) { activeXhr.abort(); activeXhr = null; }
+
+                var clean = (roleName || '').trim();
+                if (!clean || clean === '-- All Roles --' || clean === '-- Select Role Name --') {
+                    $target.html('<option value="">' + defaultLabel + '</option>').prop('disabled', false);
                     return;
                 }
 
-                const tbody = $('#roles-table tbody');
-                tbody.html(`
-                    <tr><td colspan="7" class="text-center p-4">
-                        <div class="spinner-border text-primary mb-3" style="width: 3rem; height: 3rem;"></div>
-                        <strong>Filtering by: ${roleName} ${userName ? '| ' + userName : ''}</strong>
-                    </td></tr>
-                `);
+                $target.html('<option>Loading\u2026</option>').prop('disabled', true);
 
-                $.post('/AccessControl/Filter', { roleName, userName })
-                    .done(updateTable)
-                    .fail(() => {
-                        alert('Filter error');
+                activeXhr = $.ajax({
+                    type: 'GET',
+                    url: '/AccessControl/GetUsersByRole',
+                    data: { roleName: clean },
+                    cache: false,
+                    success: function (users) {
+                        $target.html('<option value="">' + defaultLabel + '</option>').prop('disabled', false);
+                        if (users && users.length > 0) {
+                            $.each(users, function (i, u) {
+                                $target.append('<option value="' + u.value + '">' + u.text + '</option>');
+                            });
+                        } else {
+                            $target.append('<option value="" disabled>No users found</option>');
+                        }
+                    },
+                    error: function (xhr) {
+                        if (xhr.statusText === 'abort') return;
+                        $target.html('<option value="">' + defaultLabel + '</option>').prop('disabled', false);
+                    },
+                    complete: function () { activeXhr = null; }
+                });
+            }
+
+            $('#roleNameFilter').on('change', function () {
+                var roleName = $(this).find('option:selected').text();
+                loadUsers(roleName, $('#userNameFilter'), '-- Select User Name --');
+            });
+
+            $('#ddlAddRoleId').on('change', function () {
+                var roleName = $(this).find('option:selected').text();
+                loadUsers(roleName, $('#ddlAddUserId'), '-- Select User Name --');
+            });
+
+            /* ============================================================
+               FILTER BUTTON
+            ============================================================ */
+            $('#filterBtn').on('click', function () {
+                var $role    = $('#roleNameFilter');
+                var $user    = $('#userNameFilter');
+                var roleName = $role.find('option:selected').text().trim();
+                var userName = $user.find('option:selected').text().trim();
+
+                if (!$role.val() || roleName === '-- All Roles --') {
+                    Swal.fire({ icon: 'warning', title: 'Required', text: 'Please select a Role Name first', confirmButtonColor: '#6366f1' });
+                    $role.focus(); return;
+                }
+
+                if (!$user.val() || userName === '-- Select User Name --') {
+                    Swal.fire({ icon: 'warning', title: 'Required', text: 'Please select a User Name', confirmButtonColor: '#6366f1' });
+                    $user.focus(); return;
+                }
+
+                var $tbody = $('#roles-table tbody');
+                $tbody.html(
+                    '<tr class="empty-row"><td colspan="7" class="text-center p-4">' +
+                    '<div class="spinner-border text-primary mb-2"></div>' +
+                    '<br><strong>Filtering\u2026</strong></td></tr>'
+                );
+
+                $.post('/AccessControl/Filter', { roleName: roleName, userName: userName })
+                    .done(function (data) {
+                        updateTable(data);
+                        $role.val('');
+                        $user.html('<option value="">-- Select User Name --</option>');
+                    })
+                    .fail(function () {
+                        Swal.fire({ icon: 'error', title: 'Error', text: 'Filter failed. Please try again.', confirmButtonColor: '#6366f1' });
                         location.reload();
                     });
             });
 
-            // MAIN TABLE UPDATE FUNCTION (No Edit)
+            /* ============================================================
+               UPDATE TABLE after filter
+            ============================================================ */
             function updateTable(data) {
-                const tbody = $('#roles-table tbody');
-                tbody.empty();
+                var $tbody = $('#roles-table tbody');
+                $tbody.empty();
 
-                if (data?.length > 0) {
-                    recordCountEl.removeClass('badge-secondary').addClass('badge-success').text(`(${data.length} records)`);
+                if (data && data.length > 0) {
+                    $('#recordCount').text('(' + data.length + ' records)');
 
-                    data.forEach(item => {
-                        const accessId = item.accessID || item.AccessID || '';
-                        const menuName = item.menuName || item.MenuName || '';
-                        const subMenuName = item.subMenuName || item.SubMenuName || '';
-                        const action = item.action || item.Action || '';
-                        const moduleFlag = (item.module_Flag || item.Module_Flag || 0) == 1;
-                        const insertFlag = (item.insert_Flag || item.Insert_Flag || 0) == 1;
-                        const updateFlag = (item.update_Flag || item.Update_Flag || 0) == 1;
-                        const deleteFlag = (item.delete_Flag || item.Delete_Flag || 0) == 1;
+                    $.each(data, function (i, item) {
+                        var accessId = item.accessID     || item.AccessID     || '';
+                        var menuName = item.menuName     || item.MenuName     || '';
+                        var subMenu  = item.subMenuName  || item.SubMenuName  || '';
+                        var action   = item.action       || item.Action       || '';
+                        var modFlag  = (item.module_Flag || item.Module_Flag  || 0) == 1;
+                        var insFlag  = (item.insert_Flag || item.Insert_Flag  || 0) == 1;
+                        var updFlag  = (item.update_Flag || item.Update_Flag  || 0) == 1;
+                        var delFlag  = (item.delete_Flag || item.Delete_Flag  || 0) == 1;
 
-                        tbody.append(`
-                            <tr class="table-info">
-                                <td>
-                                    <input type="hidden" class="access-id" value="${accessId}">
-                                    <div class="form-check">
-                                        <input class="form-check-input module-check" type="checkbox" ${moduleFlag ? 'checked' : ''}>
-                                    </div>
-                                </td>
-                                <td class="table-warning font-weight-bold">${menuName}</td>
-                                <td class="table-primary">${subMenuName}</td>
-                                <td class="table-warning">${action}</td>
-                                <td class="table-primary">
-                                    <input type="hidden" class="access-id" value="${accessId}">
-                                    <div class="form-check">
-                                        <input class="form-check-input insert-check" type="checkbox" ${insertFlag ? 'checked' : ''}>
-                                    </div>
-                                </td>
-                                <td class="table-warning">
-                                    <input type="hidden" class="access-id" value="${accessId}">
-                                    <div class="form-check">
-                                        <input class="form-check-input update-check" type="checkbox" ${updateFlag ? 'checked' : ''}>
-                                    </div>
-                                </td>
-                                <td class="table-primary">
-                                    <input type="hidden" class="access-id" value="${accessId}">
-                                    <div class="form-check">
-                                        <input class="form-check-input delete-check" type="checkbox" ${deleteFlag ? 'checked' : ''}>
-                                    </div>
-                                </td>
-                            </tr>`);
+                        function esc(v) { return $('<span>').text(v).html(); }
+
+                        $tbody.append(
+                            '<tr class="table-info">' +
+                              '<td class="table-primary">' +
+                                '<input type="hidden" class="access-id" value="' + esc(accessId) + '">' +
+                                '<div class="form-check"><input class="form-check-input module-check" type="checkbox"' + (modFlag ? ' checked' : '') + '></div>' +
+                              '</td>' +
+                              '<td class="table-warning" style="font-weight:700;">' + esc(menuName) + '</td>' +
+                              '<td class="table-primary">' + esc(subMenu) + '</td>' +
+                              '<td class="table-warning">' + esc(action) + '</td>' +
+                              '<td class="table-primary">' +
+                                '<input type="hidden" class="access-id" value="' + esc(accessId) + '">' +
+                                '<div class="form-check"><input class="form-check-input insert-check" type="checkbox"' + (insFlag ? ' checked' : '') + '></div>' +
+                              '</td>' +
+                              '<td class="table-warning">' +
+                                '<input type="hidden" class="access-id" value="' + esc(accessId) + '">' +
+                                '<div class="form-check"><input class="form-check-input update-check" type="checkbox"' + (updFlag ? ' checked' : '') + '></div>' +
+                              '</td>' +
+                              '<td class="table-primary">' +
+                                '<input type="hidden" class="access-id" value="' + esc(accessId) + '">' +
+                                '<div class="form-check"><input class="form-check-input delete-check" type="checkbox"' + (delFlag ? ' checked' : '') + '></div>' +
+                              '</td>' +
+                            '</tr>'
+                        );
                     });
                 } else {
-                    recordCountEl.removeClass('badge-success').addClass('badge-secondary').text('(0 records)');
-                    tbody.html(`
-                        <tr>
-                            <td colspan="7" class="text-center p-5 text-muted">
-                                <i class="mdi mdi-filter-remove-outline fa-3x mb-3 d-block"></i>
-                                <strong>No records found</strong>
-                            </td>
-                        </tr>
-                    `);
+                    $('#recordCount').text('(0 records)');
+                    $tbody.html(
+                        '<tr class="empty-row"><td colspan="7" class="empty-state">' +
+                        '<i class="mdi mdi-filter-remove-outline d-block"></i>' +
+                        '<strong>No records found</strong></td></tr>'
+                    );
                 }
             }
 
-            // Bulk Update Button
-            $('#updateBtn').click(function() {
-                const accessControls = [];
-                $('#roles-table tbody tr').each(function() {
-                    const $row = $(this);
-                    const accessId = $row.find('.access-id').first().val();
-                    if (accessId) {
-                        accessControls.push({
-                            AccessID: parseInt(accessId),
-                            Module_Flag: $row.find('.module-check').prop('checked') ? 1 : 0,
-                            Insert_Flag: $row.find('.insert-check').prop('checked') ? 1 : 0,
-                            Update_Flag: $row.find('.update-check').prop('checked') ? 1 : 0,
-                            Delete_Flag: $row.find('.delete-check').prop('checked') ? 1 : 0
-                        });
-                    }
+            /* ============================================================
+               SELECT ALL
+            ============================================================ */
+            $('#selectAll').on('change', function () {
+                $('.module-check, .insert-check, .update-check, .delete-check').prop('checked', this.checked);
+            });
+
+            /* ============================================================
+               UPDATE BUTTON
+            ============================================================ */
+            $('#updateBtn').on('click', function () {
+                var accessControls = [];
+
+                $('#roles-table tbody tr').not('.empty-row').each(function () {
+                    var $row     = $(this);
+                    var accessId = parseInt($row.find('.access-id').first().val());
+                    if (!accessId || isNaN(accessId)) return true;
+
+                    accessControls.push({
+                        AccessID:    accessId,
+                        Module_Flag: $row.find('.module-check').prop('checked') ? 1 : 0,
+                        Insert_Flag: $row.find('.insert-check').prop('checked') ? 1 : 0,
+                        Update_Flag: $row.find('.update-check').prop('checked') ? 1 : 0,
+                        Delete_Flag: $row.find('.delete-check').prop('checked') ? 1 : 0
+                    });
                 });
 
                 if (!accessControls.length) {
-                    alert('No data to update');
+                    Swal.fire({ icon: 'warning', title: 'No Data', text: 'No data to update', confirmButtonColor: '#6366f1' });
                     return;
                 }
 
                 $.ajax({
-                    type: 'POST',
-                    url: '/AccessControl/Edit',
-                    contentType: 'application/json',
-                    data: JSON.stringify(accessControls),
-                    success: response => {
+                    type: 'POST', url: '/AccessControl/Edit',
+                    contentType: 'application/json', data: JSON.stringify(accessControls),
+                    success: function (response) {
                         if (response === 'success') {
-                            alert('✅ Bulk Update Successful!');
-                            location.reload();
+                            Swal.fire({ icon: 'success', title: 'Success!', text: 'Updated successfully', confirmButtonColor: '#6366f1' })
+                                .then(function () { location.reload(); });
                         } else {
-                            alert('❌ Update failed: ' + response);
+                            Swal.fire({ icon: 'error', title: 'Failed', text: 'Update failed: ' + response });
                         }
                     },
-                    error: () => alert('Update error')
+                    error: function () {
+                        Swal.fire({ icon: 'error', title: 'Error', text: 'Network error. Please try again.' });
+                    }
                 });
             });
 
-            // Clear Filters
-            $('#clearBtn').click(() => location.reload());
-
-            // Select All Checkboxes
-            $('#selectAll').change(function() {
-                $('.module-check, .insert-check, .update-check, .delete-check').prop('checked', this.checked);
-            });
-
-            // Modal Validation & Save (ADD ONLY)
+            /* ============================================================
+               MODAL SAVE
+            ============================================================ */
             function clearErrors() {
                 $('#roleError, #menuError, #submenuError').text('');
-                $('.form-control').removeClass('is-invalid');
+                $('#ddlAddRoleId, #menuNameInput, #subMenuNameInput').removeClass('is-invalid').css('border-color', '');
             }
 
-            $('#btnAccessControlSave').click(function(e) {
+            $('#btnAccessControlSave').on('click', function (e) {
                 e.preventDefault();
                 clearErrors();
 
-                const roleName = $('#ddlAddRoleId option:selected').text();
-                const menuName = $('#menuNameInput').val().trim();
-                const subMenuName = $('#subMenuNameInput').val().trim();
+                var roleName = $('#ddlAddRoleId option:selected').text().trim();
+                var menuName = $('#menuNameInput').val().trim();
+                var subMenu  = $('#subMenuNameInput').val().trim();
+                var isValid  = true;
 
-                let isValid = true;
-                if (!roleName || roleName === '--Select Role Name--') {
+                if (!$('#ddlAddRoleId').val() || roleName === '-- Select Role Name --') {
                     $('#roleError').text('Role Name is required');
-                    $('#ddlAddRoleId').addClass('is-invalid');
-                    isValid = false;
+                    $('#ddlAddRoleId').css('border-color', 'red'); isValid = false;
                 }
                 if (!menuName) {
                     $('#menuError').text('Menu Name is required');
-                    $('#menuNameInput').addClass('is-invalid');
-                    isValid = false;
+                    $('#menuNameInput').css('border-color', 'red'); isValid = false;
                 }
-                if (!subMenuName) {
+                if (!subMenu) {
                     $('#submenuError').text('Submenu Name is required');
-                    $('#subMenuNameInput').addClass('is-invalid');
-                    isValid = false;
+                    $('#subMenuNameInput').css('border-color', 'red'); isValid = false;
                 }
-
                 if (!isValid) return;
 
-                const data = {
-                    RoleName: roleName,
-                    UserName: $('#ddlAddUserId option:selected').text() || '',
-                    MenuName: menuName,
-                    SubMenuName: subMenuName,
-                    SubMenuController: $('#controllerName').val() || '',
-                    SubMenuAction: $('#actionName').val() || '',
-                    MenuIcon: $('#addMenuIcon').val() || '',
-                    IconClass: $('#addSubmenuIcon').val() || '',
+                var data = {
+                    RoleName:           roleName,
+                    UserName:           $('#ddlAddUserId option:selected').text() || '',
+                    MenuName:           menuName,
+                    SubMenuName:        subMenu,
+                    SubMenuController:  $('#controllerName').val() || '',
+                    SubMenuAction:      $('#actionName').val() || '',
+                    MenuIcon:           $('#addMenuIcon').val() || '',
+                    IconClass:          $('#addSubmenuIcon').val() || '',
                     SubMenuChildAction: $('#addActionSubMenuChildName').val() || '',
-                    Insert_Flag: $('#insertFlag').is(':checked') ? 1 : 0,
-                    Update_Flag: $('#updateFlag').is(':checked') ? 1 : 0,
-                    Delete_Flag: $('#deleteFlag').is(':checked') ? 1 : 0,
-                    Module_Flag: $('#moduleFlag').is(':checked') ? 1 : 0
+                    Insert_Flag:        $('#insertFlag').is(':checked') ? 1 : 0,
+                    Update_Flag:        $('#updateFlag').is(':checked') ? 1 : 0,
+                    Delete_Flag:        $('#deleteFlag').is(':checked') ? 1 : 0,
+                    Module_Flag:        $('#moduleFlag').is(':checked') ? 1 : 0
                 };
 
                 $.ajax({
-                    type: 'POST',
-                    url: '/AccessControl/Save',
-                    contentType: 'application/json',
-                    data: JSON.stringify(data),
-                    success: response => {
-                        const trimmed = response.trim().toLowerCase();
+                    type: 'POST', url: '/AccessControl/Save',
+                    contentType: 'application/json', data: JSON.stringify(data),
+                    success: function (response) {
+                        var trimmed = (response || '').trim().toLowerCase();
                         if (trimmed === 'success' || trimmed.includes('successfully')) {
-                            alert('✅ Added successfully!');
-                            $('#addRoleBtn').modal('hide');
-                            location.reload();
+                            Swal.fire({ icon: 'success', title: 'Added!', text: 'Access added successfully', confirmButtonColor: '#6366f1' })
+                                .then(function () { $('#addRoleBtn').modal('hide'); location.reload(); });
                         } else {
-                            alert('❌ Failed: ' + response);
+                            Swal.fire({ icon: 'error', title: 'Failed', text: response });
                         }
                     },
-                    error: xhr => alert('Error: ' + xhr.responseText)
+                    error: function (xhr) {
+                        Swal.fire({ icon: 'error', title: 'Error', text: xhr.responseText });
+                    }
                 });
             });
 
-            // Reset Modal
-            window.resetForm = function() {
+            window.resetForm = function () {
                 $('#addAccessForm')[0].reset();
                 clearErrors();
+                $('#ddlAddUserId').html('<option value="">-- Select User Name --</option>');
             };
-
             $('#addRoleBtn').on('hidden.bs.modal', window.resetForm);
+            $(document).on('hidden.bs.modal', '.modal', function () {
+                $('.modal-backdrop').remove();
+                $('body').removeClass('modal-open').css('padding-right', '');
+            });
 
-            // Menu/Submenu Autocomplete
-            function loadMenus() {
-                $.get('https://localhost:7059/GetAllMainMenus')
-                    .done(menus => {
-                        $('#menuOptions').empty();
-                        menus.forEach(menu => $('#menuOptions').append(`<option value="${menu.menuName}">`));
-                    }).fail(() => {});
-            }
+            /* ============================================================
+               MENU AUTOCOMPLETE
+            ============================================================ */
+            $.get('/AccessControl/GetAllMainMenus')
+                .done(function (menus) {
+                    $.each(menus, function (i, menu) {
+                        $('#menuOptions').append('<option value="' + menu.menuName + '">');
+                    });
+                });
 
-            $('#menuNameInput').on('input', function() {
-                const menuName = $(this).val();
+            $('#menuNameInput').on('input', function () {
+                var menuName = $(this).val();
                 if (menuName.length > 2) {
-                    $.get(`https://localhost:7059/GetSubMenuByMainMenu?menuName=${menuName}`)
-                        .done(submenus => {
+                    $.get('/AccessControl/GetSubMenuByMainMenu', { menuName: menuName })
+                        .done(function (submenus) {
                             $('#subMenuOptions').empty();
-                            submenus.forEach(submenu => $('#subMenuOptions').append(`<option value="${submenu.subMenuName}">`));
+                            $.each(submenus, function (i, s) {
+                                $('#subMenuOptions').append('<option value="' + s.subMenuName + '">');
+                            });
                         });
                 }
             });
 
-            loadMenus();
         });
     </script>
 }

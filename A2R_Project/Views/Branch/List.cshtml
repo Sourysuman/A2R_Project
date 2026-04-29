@@ -2,205 +2,12 @@
 
 @{
     ViewBag.Title = "Branch List";
-    Layout = "~/Views/Shared/_Layout.cshtml"; // Adjust as per your layout
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
 <style>
-    /* ================= GLOBAL ================= */
-    body {
-        background: linear-gradient(135deg, #eef2ff, #f8fbff);
-        font-family: 'Segoe UI', sans-serif;
-    }
-
-    /* ================= CARD ================= */
-    .card {
-        border-radius: 18px;
-        border: none;
-        box-shadow: 0 12px 30px rgba(0,0,0,0.08);
-    }
-
-    .card-title {
-        font-size: 20px;
-        font-weight: 600;
-        color: #4b49ac;
-    }
-
-    /* ================= TABLE ================= */
-    #branchTable {
-        border-radius: 12px;
-        overflow: hidden;
-        background: #ffffff;
-    }
-
-        #branchTable thead {
-            background: linear-gradient(135deg, #4b49ac, #6c63ff);
-            color: #fff;
-            text-transform: uppercase;
-            font-size: 13px;
-            letter-spacing: 0.5px;
-        }
-
-            #branchTable thead th {
-                border: none;
-                padding: 12px;
-                text-align: center;
-            }
-
-        #branchTable tbody td {
-            font-size: 14px;
-            font-weight: 600;
-            color: #333;
-            padding: 12px;
-            vertical-align: middle;
-        }
-
-        /* Row Colors */
-        #branchTable tbody tr {
-            transition: all 0.3s ease;
-            background: #f9fbff;
-        }
-
-            #branchTable tbody tr:nth-child(even) {
-                background: #f1f4ff;
-            }
-
-            /* Hover Effect */
-            #branchTable tbody tr:hover {
-                background: #e0e7ff !important;
-                transform: scale(1.01);
-                box-shadow: 0 6px 15px rgba(0,0,0,0.08);
-                cursor: pointer;
-            }
-
-    /* Highlight cells */
-    .table-primary {
-        color: #4b49ac !important;
-        font-weight: 600;
-    }
-
-    .table-warning {
-        color: #ff9800 !important;
-        font-weight: 600;
-    }
-
-    /* ================= BADGE ================= */
-    .badge-success {
-        background: linear-gradient(135deg, #28a745, #5dd39e);
-        padding: 6px 10px;
-        font-size: 12px;
-        border-radius: 8px;
-    }
-
-    .badge-danger {
-        background: linear-gradient(135deg, #dc3545, #ff6b6b);
-        padding: 6px 10px;
-        font-size: 12px;
-        border-radius: 8px;
-    }
-
-    /* ================= BUTTONS ================= */
-    .btn {
-        border-radius: 25px !important;
-        font-size: 13px;
-        padding: 6px 14px;
-        transition: all 0.3s ease;
-    }
-
-        .btn i {
-            font-size: 14px;
-        }
-
-    /* Gradient Buttons */
-    .btn-gradient-primary {
-        background: linear-gradient(135deg, #4b49ac, #6c63ff);
-        color: #fff;
-        border: none;
-    }
-
-        .btn-gradient-primary:hover {
-            background: linear-gradient(135deg, #3a38a0, #5a52ff);
-            transform: translateY(-2px);
-            box-shadow: 0 6px 15px rgba(75, 73, 172, 0.3);
-        }
-
-    .btn-gradient-dark {
-        background: linear-gradient(135deg, #343a40, #6c757d);
-        color: #fff;
-        border: none;
-    }
-
-        .btn-gradient-dark:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 15px rgba(0,0,0,0.2);
-        }
-
-    .btn-gradient-warning {
-        background: linear-gradient(135deg, #ff9800, #ffc107);
-        color: #fff;
-        border: none;
-    }
-
-        .btn-gradient-warning:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 15px rgba(255,152,0,0.3);
-        }
-
-    /* ================= ACTION BUTTON GROUP ================= */
-    td .btn {
-        margin-right: 5px;
-    }
-
-    /* ================= PAGINATION ================= */
-    .pagination .page-link {
-        border-radius: 8px;
-        margin: 0 3px;
-        color: #4b49ac;
-        font-weight: 600;
-    }
-
-    .pagination .page-item.active .page-link {
-        background: #4b49ac;
-        color: #fff;
-        border: none;
-    }
-
-    .pagination .page-link:hover {
-        background: #e0e7ff;
-    }
-
-    /* ================= MODAL ================= */
-    .modal-content {
-        border-radius: 18px;
-        box-shadow: 0 15px 40px rgba(0,0,0,0.2);
-    }
-
-    .modal-header {
-        border-radius: 18px 18px 0 0;
-    }
-
-    .form-control {
-        border-radius: 10px;
-        font-size: 13px;
-        padding: 8px 10px;
-    }
-
-        .form-control:focus {
-            border-color: #6c63ff;
-            box-shadow: 0 0 5px rgba(108,99,255,0.3);
-        }
-
-    /* ================= CHECKBOX ================= */
-    .rounded-checkbox {
-        transform: scale(1.2);
-        margin-right: 5px;
-    }
-
-</style>
-<style>
-
     /* ================= ONLY ADD + EDIT MODAL ================= */
-
-    /* ADD MODAL */
     #addBranch .modal-dialog {
         max-width: 95%;
         width: 95%;
@@ -210,7 +17,6 @@
         min-height: 100vh;
     }
 
-    /* EDIT MODAL */
     #editBranch .modal-dialog {
         max-width: 95%;
         width: 95%;
@@ -220,9 +26,7 @@
         min-height: 100vh;
     }
 
-    /* CENTER + STYLE ONLY ADD/EDIT CONTENT */
-    #addBranch .modal-content,
-    #editBranch .modal-content {
+    #addBranch .modal-content, #editBranch .modal-content {
         min-height: 80vh;
         border-radius: 22px;
         border: none;
@@ -231,7 +35,6 @@
         animation: modalPop 0.3s ease;
     }
 
-    /* ANIMATION */
     @@keyframes modalPop {
         from {
             transform: scale(0.92);
@@ -244,61 +47,47 @@
         }
     }
 
-    /* HEADER STYLE ONLY ADD/EDIT */
-    #addBranch .modal-header,
-    #editBranch .modal-header {
+    #addBranch .modal-header, #editBranch .modal-header {
         background: linear-gradient(135deg, #4b49ac, #6c63ff, #00bcd4);
         color: #fff;
         border-bottom: none;
         padding: 18px 22px;
     }
 
-    /* BODY STYLE ONLY ADD/EDIT */
-    #addBranch .modal-body,
-    #editBranch .modal-body {
+    #addBranch .modal-body, #editBranch .modal-body {
         background: linear-gradient(135deg, #f8faff, #eef2ff);
         padding: 25px;
         max-height: 70vh;
         overflow-y: auto;
     }
 
-    /* INPUT STYLE ONLY ADD/EDIT */
-    #addBranch .form-control,
-    #editBranch .form-control {
+    #addBranch .form-control, #editBranch .form-control {
         height: 44px;
         border-radius: 12px;
         font-size: 14px;
     }
 
-        /* FOCUS EFFECT */
-        #addBranch .form-control:focus,
-        #editBranch .form-control:focus {
+        #addBranch .form-control:focus, #editBranch .form-control:focus {
             border-color: #6c63ff;
             box-shadow: 0 0 10px rgba(108,99,255,0.25);
         }
 
-    /* FOOTER */
-    #addBranch .modal-footer,
-    #editBranch .modal-footer {
+    #addBranch .modal-footer, #editBranch .modal-footer {
         background: #fff;
         border-top: 1px solid #eee;
     }
 
-    /* SCROLLBAR ONLY ADD/EDIT */
-    #addBranch .modal-body::-webkit-scrollbar,
-    #editBranch .modal-body::-webkit-scrollbar {
+    #addBranch .modal-body::-webkit-scrollbar, #editBranch .modal-body::-webkit-scrollbar {
         width: 6px;
     }
 
-    #addBranch .modal-body::-webkit-scrollbar-thumb,
-    #editBranch .modal-body::-webkit-scrollbar-thumb {
+    #addBranch .modal-body::-webkit-scrollbar-thumb, #editBranch .modal-body::-webkit-scrollbar-thumb {
         background: #6c63ff;
         border-radius: 10px;
     }
 
-    /* ================= FIXED MODAL CENTERING - PERFECT CENTER ================= */
-    #addBranch .modal-dialog,
-    #editBranch .modal-dialog {
+    /* ================= FIXED MODAL CENTERING ================= */
+    #addBranch .modal-dialog, #editBranch .modal-dialog {
         max-width: 95vw !important;
         width: 95vw !important;
         max-width: 1200px !important;
@@ -310,11 +99,9 @@
         transform: translate(0, 0) !important;
     }
 
-    /* MODAL CONTENT - AUTO HEIGHT */
-    #addBranch .modal-content,
-    #editBranch .modal-content {
-        height: auto !important; /* ✅ FIX: Auto height */
-        width: 100% !important; /* ✅ FIX: Full width */
+    #addBranch .modal-content, #editBranch .modal-content {
+        height: auto !important;
+        width: 100% !important;
         max-height: 90vh !important;
         max-width: 1200px !important;
         margin: auto !important;
@@ -325,17 +112,13 @@
         animation: modalPop 0.3s ease !important;
     }
 
-    /* SHOW STATE - PERFECT CENTER */
-    #addBranch.show .modal-dialog,
-    #editBranch.show .modal-dialog {
+    #addBranch.show .modal-dialog, #editBranch.show .modal-dialog {
         display: flex !important;
         align-items: center !important;
         justify-content: center !important;
     }
 
-    /* HEADER STYLE */
-    #addBranch .modal-header,
-    #editBranch .modal-header {
+    #addBranch .modal-header, #editBranch .modal-header {
         background: linear-gradient(135deg, #4b49ac, #6c63ff, #00bcd4) !important;
         color: #fff !important;
         border-bottom: none !important;
@@ -343,76 +126,136 @@
         border-radius: 22px 22px 0 0 !important;
     }
 
-    /* BODY STYLE */
-    #addBranch .modal-body,
-    #editBranch .modal-body {
+    #addBranch .modal-body, #editBranch .modal-body {
         background: linear-gradient(135deg, #f8faff, #eef2ff) !important;
         padding: 25px !important;
         max-height: 70vh !important;
         overflow-y: auto !important;
     }
 
-    /* INPUT FIELDS */
-    #addBranch .form-control,
-    #editBranch .form-control {
+        #addBranch .modal-body::-webkit-scrollbar, #editBranch .modal-body::-webkit-scrollbar {
+            width: 6px !important;
+        }
+
+        #addBranch .modal-body::-webkit-scrollbar-thumb, #editBranch .modal-body::-webkit-scrollbar-thumb {
+            background: #6c63ff !important;
+            border-radius: 10px !important;
+        }
+
+    #addBranch .modal-footer, #editBranch .modal-footer {
+        background: #fff !important;
+        border-top: 1px solid #eee !important;
+        padding: 15px 25px !important;
+    }
+
+    #addBranch .form-control, #editBranch .form-control {
         height: 44px !important;
         border-radius: 12px !important;
         font-size: 14px !important;
         border: 2px solid #e1e5e9 !important;
     }
 
-        #addBranch .form-control:focus,
-        #editBranch .form-control:focus {
+        #addBranch .form-control:focus, #editBranch .form-control:focus {
             border-color: #6c63ff !important;
             box-shadow: 0 0 10px rgba(108,99,255,0.25) !important;
         }
 
-    /* FOOTER */
-    #addBranch .modal-footer,
-    #editBranch .modal-footer {
-        background: #fff !important;
-        border-top: 1px solid #eee !important;
-        padding: 15px 25px !important;
-    }
-
-    /* SCROLLBAR */
-    #addBranch .modal-body::-webkit-scrollbar,
-    #editBranch .modal-body::-webkit-scrollbar {
-        width: 6px !important;
-    }
-
-    #addBranch .modal-body::-webkit-scrollbar-thumb,
-    #editBranch .modal-body::-webkit-scrollbar-thumb {
-        background: #6c63ff !important;
-        border-radius: 10px !important;
-    }
-
-    /* ANIMATION */
-    @@keyframes modalPop {
-        from {
-            transform: scale(0.92) !important;
-            opacity: 0 !important;
-        }
-
-        to {
-            transform: scale(1) !important;
-            opacity: 1 !important;
-        }
-    }
-
-    /* RESPONSIVE MOBILE FIX */
     @@media (max-width: 768px) {
         #addBranch .modal-dialog, #editBranch .modal-dialog {
             margin: 10px !important;
             max-width: calc(100vw - 20px) !important;
         }
 
-        #addBranch .modal-content,
-        #editBranch .modal-content {
+        #addBranch .modal-content, #editBranch .modal-content {
             margin: 10px !important;
             border-radius: 15px !important;
         }
     }
+
+    /* ================= VIEW MODAL - SAME AS EDIT ================= */
+    #viewBranch .modal-dialog {
+        max-width: 95vw !important;
+        width: 95vw !important;
+        max-width: 1200px !important;
+        margin: 0 auto !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        min-height: calc(100vh - 3.5rem) !important;
+        transform: translate(0, 0) !important;
+    }
+
+    #viewBranch .modal-content {
+        height: auto !important;
+        width: 100% !important;
+        max-height: 90vh !important;
+        max-width: 1200px !important;
+        margin: auto !important;
+        border-radius: 22px !important;
+        border: none !important;
+        overflow: hidden !important;
+        box-shadow: 0 25px 60px rgba(0,0,0,0.25) !important;
+        animation: modalPop 0.3s ease !important;
+    }
+
+    #viewBranch.show .modal-dialog {
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+    }
+
+    #viewBranch .modal-header {
+        background: linear-gradient(135deg, #4b49ac, #6c63ff, #00bcd4) !important;
+        color: #fff !important;
+        border-bottom: none !important;
+        padding: 18px 22px !important;
+        border-radius: 22px 22px 0 0 !important;
+    }
+
+    #viewBranch .modal-body {
+        background: linear-gradient(135deg, #f8faff, #eef2ff) !important;
+        padding: 25px !important;
+        max-height: 70vh !important;
+        overflow-y: auto !important;
+    }
+
+        #viewBranch .modal-body::-webkit-scrollbar {
+            width: 6px !important;
+        }
+
+        #viewBranch .modal-body::-webkit-scrollbar-thumb {
+            background: #6c63ff !important;
+            border-radius: 10px !important;
+        }
+
+    #viewBranch .modal-footer {
+        background: #fff !important;
+        border-top: 1px solid #eee !important;
+        padding: 15px 25px !important;
+    }
+
+    #viewBranch .form-control {
+        height: 44px !important;
+        border-radius: 12px !important;
+        font-size: 14px !important;
+        border: 2px solid #e1e5e9 !important;
+        background-color: #f4f6fb !important;
+        color: #444 !important;
+        cursor: default !important;
+    }
+
+    @@media (max-width: 768px) {
+        #viewBranch .modal-dialog {
+            margin: 10px !important;
+            max-width: calc(100vw - 20px) !important;
+        }
+
+        #viewBranch .modal-content {
+            margin: 10px !important;
+            border-radius: 15px !important;
+        }
+    }
+
     /* ================= FORM GLOBAL ================= */
     .form-control, .custom-select, select.form-control {
         border-radius: 10px !important;
@@ -423,196 +266,12 @@
         font-size: 14px;
     }
 
-        /* ================= INPUT HOVER EFFECT ================= */
-        .form-control:hover, .custom-select:hover {
-            border-color: #7b74ff;
-            box-shadow: 0 3px 10px rgba(123, 116, 255, 0.15);
-        }
-
-        /* ================= INPUT FOCUS EFFECT ================= */
         .form-control:focus, .custom-select:focus {
             border-color: #5b55e6 !important;
             box-shadow: 0 0 0 0.2rem rgba(91, 85, 230, 0.25) !important;
             outline: none;
         }
 
-    /* ================= DROPDOWN CLEAN UI ================= */
-    .input-group .input-group-append {
-        display: none !important;
-    }
-
-    /* CUSTOM DROPDOWN ARROW */
-    .custom-select, select.form-control {
-        appearance: none;
-        background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg fill='%235b55e6' viewBox='0 0 20 20'%3E%3Cpath d='M5 7l5 5 5-5'/%3E%3C/svg%3E");
-        background-repeat: no-repeat;
-        background-position: right 12px center;
-        background-size: 14px;
-        padding-right: 35px !important;
-    }
-
-    /* ================= LABEL STYLE ================= */
-    label {
-        font-weight: 600;
-        color: #333;
-        margin-bottom: 6px;
-    }
-
-    /* ================= ERROR VALIDATION ================= */
-    .field-validation-error {
-        color: #e74c3c;
-        font-size: 12px;
-        margin-top: 4px;
-        display: block;
-    }
-
-    .input-validation-error {
-        border-color: #e74c3c !important;
-        background-color: #fff5f5;
-    }
-
-    /* ================= SUCCESS INPUT ================= */
-    .input-success {
-        border-color: #2ecc71 !important;
-    }
-
-    /* ================= MODAL / POPUP CENTER (IMPORTANT) ================= */
-    .modal-dialog {
-        display: flex;
-        align-items: center;
-        min-height: 100vh;
-        justify-content: center;
-    }
-
-    .modal-content {
-        border-radius: 16px;
-        box-shadow: 0 15px 40px rgba(0,0,0,0.2);
-        padding: 10px;
-        width: 100%;
-    }
-
-    /* ================= BUTTON STYLE ================= */
-    .btn {
-        border-radius: 10px;
-        transition: 0.3s ease-in-out;
-    }
-
-        .btn:hover {
-            transform: translateY(-2px);
-        }
-
-    /* SAVE BUTTON */
-    .btn-primary {
-        background: linear-gradient(135deg, #5b55e6, #7b74ff);
-        border: none;
-    }
-
-        .btn-primary:hover {
-            background: linear-gradient(135deg, #4a45d4, #6a63ff);
-        }
-
-    /* CANCEL BUTTON */
-    .btn-secondary {
-        background: #f1f3f9;
-        color: #333;
-        border: none;
-    }
-
-        .btn-secondary:hover {
-            background: #e2e6f3;
-        }
-    /* ================= GLOBAL BACKGROUND ================= */
-    body {
-        background: linear-gradient(135deg, #eef2ff, #f7f9ff);
-        font-family: 'Segoe UI', sans-serif;
-    }
-
-    /* ================= MODAL BACKDROP ================= */
-    .modal {
-        backdrop-filter: blur(6px);
-        background: rgba(0,0,0,0.35);
-    }
-
-    /* ================= MODAL CENTER ================= */
-    .modal-dialog {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        min-height: 100vh;
-    }
-
-    /* ================= MODAL BOX ================= */
-    .modal-content {
-        border-radius: 18px;
-        border: none;
-        overflow: hidden;
-        box-shadow: 0 20px 60px rgba(0,0,0,0.25);
-        animation: popIn 0.25s ease-in-out;
-    }
-
-    /* POPUP ANIMATION */
-    @@keyframes popIn {
-        from {
-            transform: scale(0.8);
-            opacity: 0;
-        }
-
-        to {
-            transform: scale(1);
-            opacity: 1;
-        }
-    }
-
-    /* ================= MODAL HEADER ================= */
-    .modal-header {
-        background: linear-gradient(135deg, #5b55e6, #7b74ff);
-        color: white;
-        padding: 14px 18px;
-        border-bottom: none;
-    }
-
-    .modal-title {
-        font-weight: 600;
-        font-size: 16px;
-    }
-
-    .modal-header .close {
-        color: white;
-        opacity: 0.9;
-        font-size: 22px;
-    }
-
-        .modal-header .close:hover {
-            opacity: 1;
-        }
-
-    /* ================= MODAL BODY ================= */
-    .modal-body {
-        padding: 20px;
-        background: #f9faff;
-    }
-
-    /* ================= INPUT & DROPDOWN ================= */
-    .form-control, .custom-select, select.form-control {
-        border-radius: 10px !important;
-        border: 1px solid #d6d9e6;
-        padding: 10px;
-        transition: all 0.25s ease;
-        font-size: 14px;
-    }
-
-        .form-control:hover, .custom-select:hover {
-            border-color: #7b74ff;
-            box-shadow: 0 3px 10px rgba(123, 116, 255, 0.15);
-        }
-
-        .form-control:focus, .custom-select:focus {
-            border-color: #5b55e6 !important;
-            box-shadow: 0 0 0 0.2rem rgba(91,85,230,0.2) !important;
-            outline: none;
-        }
-
-    /* Dropdown arrow clean */
     .input-group .input-group-append {
         display: none !important;
     }
@@ -626,68 +285,12 @@
         padding-right: 35px !important;
     }
 
-    /* ================= LABEL ================= */
     label {
         font-weight: 600;
         color: #333;
         margin-bottom: 6px;
     }
 
-    /* ================= VALIDATION ================= */
-    .field-validation-error {
-        color: #e74c3c;
-        font-size: 12px;
-        margin-top: 4px;
-        display: block;
-    }
-
-    .input-validation-error {
-        border-color: #e74c3c !important;
-        background-color: #fff5f5;
-    }
-
-    /* ================= BUTTON BASE ================= */
-    .btn {
-        border-radius: 10px;
-        transition: all 0.3s ease;
-        padding: 10px 18px;
-        font-weight: 500;
-    }
-
-    /* PRIMARY BUTTON */
-    .btn-primary {
-        background: linear-gradient(135deg, #5b55e6, #7b74ff);
-        border: none;
-    }
-
-        .btn-primary:hover {
-            background: linear-gradient(135deg, #4a45d4, #6a63ff);
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(91, 85, 230, 0.25);
-        }
-
-    /* SECONDARY BUTTON */
-    .btn-secondary {
-        background: #eef1f7;
-        color: #333;
-        border: none;
-    }
-
-        .btn-secondary:hover {
-            background: #dde3f0;
-            transform: translateY(-2px);
-        }
-
-    /* DANGER BUTTON */
-    .btn-danger {
-        background: linear-gradient(135deg, #ff4d4d, #ff6b6b);
-        border: none;
-    }
-
-        .btn-danger:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(255, 77, 77, 0.25);
-        }
     /* ================= VALIDATION STYLES ================= */
     .validationMessage {
         color: #e74c3c !important;
@@ -714,197 +317,154 @@
         font-weight: bold;
     }
 
-    /* Phone input specific */
-    .phone-input {
-        position: relative;
+    /* ================= MODAL / POPUP ================= */
+    .modal-dialog {
+        display: flex;
+        align-items: center;
+        min-height: 100vh;
+        justify-content: center;
     }
 
-        .phone-input.valid {
-            border-color: #28a745 !important;
-        }
-
-        .phone-input.invalid {
-            border-color: #e74c3c !important;
-        }
-    /* MODAL BACKDROP */
     .modal-content {
-        border-radius: 20px;
-        border: none;
-        box-shadow: 0 20px 60px rgba(0,0,0,0.25);
-        overflow: hidden;
+        border-radius: 16px;
+        box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+        padding: 10px;
+        width: 100%;
     }
 
-    /* MODAL HEADER */
+    .btn {
+        border-radius: 10px;
+        transition: 0.3s ease-in-out;
+    }
+
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+
+    .btn-primary {
+        background: linear-gradient(135deg, #5b55e6, #7b74ff);
+        border: none;
+    }
+
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #4a45d4, #6a63ff);
+        }
+
+    .btn-secondary {
+        background: #f1f3f9;
+        color: #333;
+        border: none;
+    }
+
+        .btn-secondary:hover {
+            background: #e2e6f3;
+        }
+
+    body {
+        background: linear-gradient(135deg, #eef2ff, #f7f9ff);
+        font-family: 'Segoe UI', sans-serif;
+    }
+
+    .modal-backdrop {
+        background-color: #000 !important;
+        opacity: 0.2 !important;
+    }
+
+        .modal-backdrop.show {
+            backdrop-filter: blur(3px);
+        }
+
+    .modal-content {
+        border-radius: 18px;
+        border: none;
+        overflow: hidden;
+        box-shadow: 0 20px 60px rgba(0,0,0,0.25);
+        animation: popIn 0.25s ease-in-out;
+    }
+
+    @@keyframes popIn {
+        from {
+            transform: scale(0.8);
+            opacity: 0;
+        }
+
+        to {
+            transform: scale(1);
+            opacity: 1;
+        }
+    }
+
     .modal-header {
-        background: linear-gradient(135deg, #6366f1, #4f46e5);
-        color: #fff;
+        background: linear-gradient(135deg, #5b55e6, #7b74ff);
+        color: white;
+        padding: 14px 18px;
         border-bottom: none;
-        padding: 18px 25px;
     }
 
     .modal-title {
-        font-weight: 700;
-        font-size: 18px;
-    }
-
-    /* CLOSE BUTTON */
-    .modal-header .btn-close {
-        filter: invert(1);
-        opacity: 0.8;
-    }
-
-    /* MODAL BODY */
-    .modal-body {
-        padding: 25px;
-        background: #f9fafc;
-    }
-
-    /* MODAL FOOTER */
-    .modal-footer {
-        border-top: none;
-        padding: 20px;
-        background: #fff;
-    }
-    /* BASE BUTTON */
-    .btn-modern {
-        border: none;
-        border-radius: 12px;
-        padding: 10px 18px;
         font-weight: 600;
-        font-size: 14px;
-        transition: all 0.3s ease;
-        position: relative;
-        overflow: hidden;
+        font-size: 16px;
     }
 
-        /* ICON SPACE */
-        .btn-modern i {
-            margin-right: 6px;
+    .modal-header .close {
+        color: white;
+        opacity: 0.9;
+        font-size: 22px;
+    }
+
+        .modal-header .close:hover {
+            opacity: 1;
         }
 
-    /* PRIMARY (SAVE / ADD) */
+    .modal-body {
+        padding: 20px;
+        background: #f9faff;
+    }
+
+    .form-control:hover, .custom-select:hover {
+        border-color: #7b74ff;
+        box-shadow: 0 3px 10px rgba(123, 116, 255, 0.15);
+    }
+
+    /* BUTTON STYLES */
+    .btn-modern {
+        border-radius: 8px;
+        padding: 6px 14px;
+        border: none;
+        transition: 0.2s;
+    }
+
+        .btn-modern:hover {
+            transform: scale(1.05);
+            opacity: 0.9;
+        }
+
     .btn-primary-modern {
-        background: linear-gradient(135deg, #6366f1, #4f46e5);
-        color: #fff;
+        background: linear-gradient(135deg, #4e73df, #224abe) !important;
+        color: #fff !important;
     }
 
-        .btn-primary-modern:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(99,102,241,0.4);
-        }
-
-    /* SUCCESS (UPDATE) */
-    .btn-success-modern {
-        background: linear-gradient(135deg, #10b981, #059669);
-        color: #fff;
+    .btn-info-modern {
+        background: linear-gradient(135deg, #36b9cc, #1f8ea3) !important;
+        color: #fff !important;
     }
 
-        .btn-success-modern:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(16,185,129,0.4);
-        }
+    .btn-danger-modern {
+        background: linear-gradient(135deg, #ef4444, #b91c1c) !important;
+        color: #fff !important;
+    }
 
-    /* WARNING (EDIT) */
     .btn-warning-modern {
         background: linear-gradient(135deg, #f59e0b, #d97706);
         color: #fff;
     }
 
-        .btn-warning-modern:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(245,158,11,0.4);
-        }
-
-    /* DANGER (DELETE) */
-    .btn-danger-modern {
-        background: linear-gradient(135deg, #ef4444, #dc2626);
+    .btn-success-modern {
+        background: linear-gradient(135deg, #10b981, #047857);
         color: #fff;
     }
 
-        .btn-danger-modern:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(239,68,68,0.4);
-        }
-
-    /* SECONDARY (CANCEL) */
-    .btn-cancel-modern {
-        background: #e2e8f0;
-        color: #334155;
-    }
-
-        .btn-cancel-modern:hover {
-            background: #cbd5f5;
-        }
-    /* 🔥 FORCE BUTTON STYLE INSIDE MODAL */
-    .modal .btn-modern {
-        border: none !important;
-        border-radius: 12px !important;
-        font-weight: 600;
-    }
-
-    /* ADD BUTTON */
-    .modal .btn-primary-modern {
-        background: linear-gradient(135deg, #6366f1, #4f46e5) !important;
-        color: #fff !important;
-    }
-
-    /* EDIT BUTTON */
-    .modal .btn-warning-modern {
-        background: linear-gradient(135deg, #f59e0b, #d97706) !important;
-        color: #fff !important;
-    }
-
-    /* SAVE BUTTON */
-    .modal .btn-success-modern {
-        background: linear-gradient(135deg, #10b981, #059669) !important;
-        color: #fff !important;
-    }
-
-    /* DELETE BUTTON */
-    .modal .btn-danger-modern {
-        background: linear-gradient(135deg, #ef4444, #dc2626) !important;
-        color: #fff !important;
-    }
-
-    /* CANCEL BUTTON */
-    .modal .btn-cancel-modern {
-        background: #e2e8f0 !important;
-        color: #334155 !important;
-    }
-    /* CLEAN MODAL FOOTER */
-    .custom-footer {
-        background: linear-gradient(135deg, #f8faff, #eef2ff);
-        border-top: none !important;
-        padding: 15px 20px;
-        display: flex;
-        justify-content: flex-end;
-        gap: 10px;
-    }
-
-    /* REMOVE WHITE BORDER LINE */
-    .modal-footer {
-        border-top: none !important;
-    }
-    /* REMOVE INNER WHITE BLOCK EFFECT */
-    #addBranch .modal-body,
-    #editBranch .modal-body {
-        background: linear-gradient(135deg, #f8faff, #eef2ff) !important;
-        border-radius: 0 0 20px 20px;
-    }
-
-    /* SMOOTH FORM GRID LOOK */
-    #addBranch form,
-    #editBranch form {
-        background: transparent;
-    }
-
-    /* FIX INPUT ALIGNMENT */
-    #addBranch .form-control,
-    #editBranch .form-control {
-        width: 100%;
-    }
-    /* ================= TOGGLE SWITCH ================= */
-
+    /* TOGGLE SWITCH */
     .toggle-wrapper {
         display: flex;
         align-items: center;
@@ -912,7 +472,6 @@
         margin-top: 10px;
     }
 
-    /* SWITCH BASE */
     .switch {
         position: relative;
         display: inline-block;
@@ -920,14 +479,12 @@
         height: 26px;
     }
 
-        /* HIDE DEFAULT CHECKBOX */
         .switch input {
             opacity: 0;
             width: 0;
             height: 0;
         }
 
-    /* SLIDER */
     .slider {
         position: absolute;
         cursor: pointer;
@@ -940,7 +497,6 @@
         border-radius: 34px;
     }
 
-        /* CIRCLE */
         .slider:before {
             position: absolute;
             content: "";
@@ -953,261 +509,38 @@
             border-radius: 50%;
         }
 
-    /* ACTIVE STATE */
     .switch input:checked + .slider {
         background: linear-gradient(135deg, #10b981, #059669);
         box-shadow: 0 0 10px rgba(16,185,129,0.5);
     }
 
-        /* MOVE CIRCLE */
         .switch input:checked + .slider:before {
             transform: translateX(24px);
         }
 
-    /* LABEL TEXT */
+    .switch input:disabled + .slider {
+        opacity: 0.75;
+        cursor: not-allowed;
+    }
+
     .toggle-label {
         font-weight: 600;
         color: #333;
     }
 
-    /* OPTIONAL HOVER */
-    .switch:hover .slider {
-        box-shadow: 0 0 5px rgba(0,0,0,0.2);
-    }
-    /* ===== VIEW MODAL ===== */
-    .view-modal {
-        border-radius: 20px;
-        overflow: hidden;
-        box-shadow: 0 20px 60px rgba(0,0,0,0.25);
-    }
-
-        /* HEADER */
-        .view-modal .modal-header {
-            background: linear-gradient(135deg, #4b49ac, #6c63ff);
-            color: white;
-            border: none;
-        }
-
-    /* TOP HEADER */
-    .view-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        border-bottom: 1px solid #eee;
-        padding-bottom: 10px;
-    }
-
-        .view-header h3 {
-            margin: 0;
-            font-weight: 700;
-            color: #4b49ac;
-        }
-
-    /* COMPANY */
-    .company-name {
-        color: #666;
-        font-weight: 500;
-    }
-
-        .company-name i {
-            margin-right: 5px;
-            color: #6c63ff;
-        }
-
-    /* STATUS */
-    .status-badge {
-        padding: 6px 14px;
-        border-radius: 20px;
-        font-size: 13px;
-        background: linear-gradient(135deg, #28a745, #5dd39e);
-        color: white;
-    }
-
-    /* INFO BOX */
-    .info-box {
-        background: #f9fbff;
-        border-radius: 14px;
-        padding: 18px;
-        box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-    }
-
-        .info-box h6 {
-            font-weight: 600;
-            margin-bottom: 15px;
-            color: #4b49ac;
-        }
-
-    /* ROW */
-    .info-row {
-        display: flex;
-        justify-content: space-between;
-        border-bottom: 1px dashed #ddd;
-        padding: 6px 0;
-    }
-
-        .info-row span {
-            color: #888;
-            font-weight: 500;
-        }
-
-        .info-row p {
-            margin: 0;
-            font-weight: 600;
-            color: #333;
-        }
-
-    .company-name {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        color: #555;
-        font-weight: 500;
-        font-size: 15px;
-    }
-
-    /* ICON STYLE */
-    .company-icon {
-        font-size: 18px;
-        color: #6c63ff;
-        background: #eef2ff;
-        padding: 8px;
-        border-radius: 50%;
-        box-shadow: 0 4px 10px rgba(108,99,255,0.2);
-        transition: 0.3s ease;
-    }
-
-        /* HOVER EFFECT 🔥 */
-        .company-icon:hover {
-            transform: scale(1.1);
-            background: #6c63ff;
-            color: #fff;
-        }
-    /* VIEW MODAL */
-    .view-modal {
-        border-radius: 20px;
-        overflow: hidden;
-        box-shadow: 0 20px 60px rgba(0,0,0,0.25);
-    }
-
-        /* HEADER */
-        .view-modal .modal-header {
-            background: linear-gradient(135deg, #4b49ac, #6c63ff);
-            color: white;
-            border: none;
-        }
-
-    /* TOP HEADER */
-    .view-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        border-bottom: 1px solid #eee;
-        padding-bottom: 10px;
-    }
-
-        .view-header h3 {
-            margin: 0;
-            font-weight: 700;
-            color: #4b49ac;
-        }
-
-    /* COMPANY */
-    .company-name {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        color: #555;
-        font-weight: 500;
-    }
-
-    /* ICON */
-    .company-icon {
-        font-size: 16px;
-        color: #6c63ff;
-        background: #eef2ff;
-        padding: 7px;
-        border-radius: 50%;
-    }
-
-    /* STATUS */
-    .status-badge {
-        padding: 6px 14px;
-        border-radius: 20px;
-        font-size: 13px;
-        background: linear-gradient(135deg, #28a745, #5dd39e);
-        color: white;
-    }
-
-    /* INFO BOX */
-    .info-box {
-        background: #f9fbff;
-        border-radius: 14px;
-        padding: 18px;
-        box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-    }
-
-        .info-box h6 {
-            font-weight: 600;
-            margin-bottom: 15px;
-            color: #4b49ac;
-        }
-
-    /* ROW */
-    .info-row {
-        display: flex;
-        justify-content: space-between;
-        border-bottom: 1px dashed #ddd;
-        padding: 6px 0;
-    }
-
-        .info-row span {
-            color: #888;
-            font-weight: 500;
-        }
-
-        .info-row p {
-            margin: 0;
-            font-weight: 600;
-            color: #333;
-        }
-
-        /* COLUMN (FOR EMAIL & PHONE) */
-        .info-row.column {
-            flex-direction: column;
-            align-items: flex-start;
-        }
-
-    /* LONG TEXT FIX */
-    .break-text {
-        word-break: break-word;
-        overflow-wrap: break-word;
-        white-space: normal;
-    }
-    /* Hide if element has N/A text using attribute trick */
-    p, span {
-        position: relative;
-    }
-
-        /* VISUAL HACK (works in most browsers) */
-        p:contains("N/A"),
-        span:contains("N/A") {
-            display: none;
-        }
-    /* MODAL */
+    /* DELETE MODAL */
     .delete-modal {
         border-radius: 18px;
         overflow: hidden;
         box-shadow: 0 25px 70px rgba(0,0,0,0.25);
     }
 
-    /* HEADER */
     .delete-header {
         background: linear-gradient(135deg, #ff4d4d, #dc2626);
         color: #fff;
         border: none;
     }
 
-    /* ICON */
     .delete-icon {
         font-size: 60px;
         color: #ff4d4d;
@@ -1215,7 +548,6 @@
         animation: pulse 1.2s infinite;
     }
 
-    /* INFO BOX */
     .delete-info-box {
         background: #f9fafc;
         border-radius: 12px;
@@ -1223,7 +555,6 @@
         text-align: left;
     }
 
-    /* ROW STYLE */
     .info-line {
         display: flex;
         justify-content: space-between;
@@ -1242,61 +573,58 @@
             color: #333;
         }
 
-    /* BUTTONS */
     .btn-delete {
         background: linear-gradient(135deg, #ef4444, #dc2626);
         color: #fff;
         border-radius: 10px;
         padding: 8px 18px;
         font-weight: 600;
+        border: none;
     }
 
         .btn-delete:hover {
             transform: translateY(-2px);
             box-shadow: 0 10px 25px rgba(239,68,68,0.3);
+            color: #fff;
         }
 
     .btn-cancel {
         background: #e5e7eb;
         color: #333;
         border-radius: 10px;
+        border: none;
+        padding: 8px 18px;
     }
 
-    /* ANIMATION */
     @@keyframes pulse {
-        0%
+        0% {
+            transform: scale(1);
+        }
 
-    {
-        transform: scale(1);
+        50% {
+            transform: scale(1.1);
+        }
+
+        100% {
+            transform: scale(1);
+        }
     }
 
-    50% {
-        transform: scale(1.1);
-    }
-
-    100% {
-        transform: scale(1);
-    }
-
-    }
-    /* ================= STATIC PAGINATION WRAPPER ================= */
+    /* PAGINATION */
     .static-pagination-wrapper {
         padding: 10px 0;
     }
 
-    /* pagination */
     .modern-pagination {
         display: flex;
         gap: 6px;
         list-style: none;
     }
 
-        /* page item */
         .modern-pagination li {
             cursor: pointer;
         }
 
-            /* page button */
             .modern-pagination li a {
                 display: inline-block;
                 padding: 6px 12px;
@@ -1318,22 +646,495 @@
                 color: white;
             }
 
-    /* SHOW ALL BUTTON */
     .btn-showall-modern {
-        background: linear-gradient(135deg, #ff9800, #ff5722);
-        color: white;
-        border: none;
-        padding: 8px 16px;
-        border-radius: 25px;
-        font-weight: 600;
-        transition: 0.3s;
+        background: linear-gradient(135deg, #10b981, #059669) !important;
+        color: #fff !important;
+        font-weight: 600 !important;
+        padding: 8px 20px !important;
+        border-radius: 10px !important;
+        border: none !important;
+        transition: 0.2s !important;
+        cursor: pointer !important;
     }
 
         .btn-showall-modern:hover {
-            transform: translateY(-2px);
+            transform: scale(1.05) !important;
+            box-shadow: 0 5px 15px rgba(16,185,129,0.4) !important;
         }
-</style>
 
+    /* TABLE */
+    :root {
+        --primary: #2563eb;
+        --primary-dark: #1e40af;
+        --success: #16a34a;
+        --danger: #dc2626;
+        --warning: #f59e0b;
+        --dark: #111827;
+        --light: #f9fafb;
+        --white: #ffffff;
+        --gray: #6b7280;
+    }
+
+    .card-header-custom {
+        background-color: white;
+        color: black;
+        border-radius: 15px 15px 0 0;
+        padding: 18px 20px;
+    }
+
+        .card-title, .card-header-custom .card-title, strong.card-title {
+            font-size: 20px !important;
+            font-weight: 800 !important;
+            color: #111827 !important;
+            letter-spacing: 0.5px !important;
+        }
+
+    .table {
+        border-radius: 14px;
+        overflow: hidden;
+        background: #fff;
+        border-collapse: collapse;
+        border-spacing: 0;
+    }
+
+        .table thead {
+            background: #3f454c;
+        }
+
+            .table thead th {
+                color: #fff !important;
+                border: none !important;
+                font-size: 14px;
+                font-weight: 700;
+                text-transform: uppercase;
+                letter-spacing: 0.6px;
+                padding: 14px;
+                text-align: center !important;
+            }
+
+        .table tbody td {
+            font-size: 15px;
+            font-weight: 600;
+            color: #34495e;
+            padding: 14px;
+            vertical-align: middle !important;
+            text-align: center !important;
+            background-color: white !important;
+        }
+
+            .table tbody td:first-child {
+                text-align: center !important;
+                font-weight: 700 !important;
+                color: #2c3e50 !important;
+                font-size: 15px !important;
+            }
+
+        .table tbody tr {
+            transition: all 0.25s ease;
+            background: #fff;
+        }
+
+        .table .btn-sm {
+            width: 36px !important;
+            height: 36px !important;
+            border-radius: 10px !important;
+            padding: 0 !important;
+            margin-right: 4px;
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            border: none !important;
+            transition: all 0.25s ease;
+        }
+
+            .table .btn-sm i {
+                font-size: 16px !important;
+                line-height: 1;
+            }
+
+            .table .btn-sm:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 6px 15px rgba(0,0,0,0.15);
+            }
+
+    .add-branch-btn, button[data-target="#addBranch"] {
+        background: linear-gradient(135deg, #10b981, #059669) !important;
+        color: #fff !important;
+        font-weight: 600 !important;
+        padding: 8px 20px !important;
+        border-radius: 10px !important;
+        border: none !important;
+        transition: 0.2s !important;
+    }
+
+        .add-branch-btn:hover, button[data-target="#addBranch"]:hover {
+            transform: scale(1.05) !important;
+            box-shadow: 0 5px 15px rgba(16,185,129,0.4) !important;
+            color: #fff !important;
+        }
+
+    .badge-success-custom, span.badge.badge-success {
+        background: #16a34a !important;
+        color: #fff !important;
+        padding: 5px 12px !important;
+        border-radius: 20px !important;
+        font-size: 13px !important;
+        font-weight: 600 !important;
+        display: inline-flex !important;
+        align-items: center !important;
+    }
+
+    .badge-danger-custom, span.badge.badge-danger {
+        background: #dc2626 !important;
+        color: #fff !important;
+        padding: 5px 12px !important;
+        border-radius: 20px !important;
+        font-size: 13px !important;
+        font-weight: 600 !important;
+        display: inline-flex !important;
+        align-items: center !important;
+    }
+
+    .editByBranchId, .viewByBranchId, .deleteBranches {
+        width: 36px !important;
+        height: 36px !important;
+        border-radius: 10px !important;
+        padding: 0 !important;
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        border: none !important;
+        transition: all 0.25s ease !important;
+        margin-right: 4px !important;
+    }
+
+    .editByBranchId {
+        background: linear-gradient(135deg, #4e73df, #224abe) !important;
+        color: #fff !important;
+    }
+
+        .editByBranchId:hover {
+            transform: translateY(-2px) !important;
+            box-shadow: 0 6px 15px rgba(78,115,223,0.5) !important;
+            color: #fff !important;
+        }
+
+    .viewByBranchId {
+        background: linear-gradient(135deg, #36b9cc, #1f8ea3) !important;
+        color: #fff !important;
+    }
+
+        .viewByBranchId:hover {
+            transform: translateY(-2px) !important;
+            box-shadow: 0 6px 15px rgba(54,185,204,0.5) !important;
+            color: #fff !important;
+        }
+
+    .deleteBranches {
+        background: linear-gradient(135deg, #ef4444, #b91c1c) !important;
+        color: #fff !important;
+    }
+
+        .deleteBranches:hover {
+            transform: translateY(-2px) !important;
+            box-shadow: 0 6px 15px rgba(239,68,68,0.5) !important;
+            color: #fff !important;
+        }
+
+    .btn-group {
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        gap: 5px !important;
+    }
+
+    .table tbody td:last-child {
+        text-align: center !important;
+        vertical-align: middle !important;
+    }
+
+    #branchTable tbody tr {
+        height: 60px !important;
+    }
+
+    #branchTable tbody td {
+        vertical-align: middle !important;
+        text-align: center !important;
+        padding: 0 14px !important;
+        line-height: 60px !important;
+    }
+
+        #branchTable tbody td .status-badge, #branchTable tbody td .badge {
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            vertical-align: middle !important;
+            line-height: 1 !important;
+        }
+
+        #branchTable tbody td:last-child {
+            vertical-align: middle !important;
+            text-align: center !important;
+            line-height: normal !important;
+            padding: 0 14px !important;
+        }
+
+            #branchTable tbody td:last-child .btn-group {
+                display: inline-flex !important;
+                align-items: center !important;
+                justify-content: center !important;
+                gap: 5px !important;
+                height: 100% !important;
+                vertical-align: middle !important;
+                margin: 0 !important;
+                padding: 0 !important;
+                line-height: normal !important;
+            }
+
+    #branchTable .editByBranchId, #branchTable .viewByBranchId, #branchTable .deleteBranches {
+        width: 36px !important;
+        height: 36px !important;
+        border-radius: 10px !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        border: none !important;
+        vertical-align: middle !important;
+        line-height: 1 !important;
+        position: relative !important;
+        top: 0 !important;
+    }
+
+        #branchTable .editByBranchId i, #branchTable .viewByBranchId i, #branchTable .deleteBranches i {
+            font-size: 16px !important;
+            line-height: 1 !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            margin: 0 !important;
+            padding: 0 !important;
+        }
+
+    /* MODAL HEADER COLORS */
+    #addBranch .modal-header {
+        background: linear-gradient(135deg, #2563eb, #1e40af) !important;
+        color: #fff !important;
+    }
+
+    #editBranch .modal-header {
+        background: linear-gradient(135deg, #2563eb, #1e40af) !important;
+        color: #fff !important;
+    }
+
+    #viewBranch .modal-header {
+        background: linear-gradient(135deg, #2563eb, #1e40af) !important;
+        color: #fff !important;
+    }
+
+    #deleteBranch .modal-header {
+        background: linear-gradient(135deg, #2563eb, #1e40af) !important;
+        color: #fff !important;
+    }
+
+    #addBranch .modal-title, #editBranch .modal-title, #viewBranch .modal-title, #deleteBranch .modal-title {
+        color: #fff !important;
+        font-weight: 600 !important;
+    }
+
+    #addBranch .modal-header .close, #editBranch .modal-header .close, #viewBranch .modal-header .close, #deleteBranch .modal-header .close {
+        color: #fff !important;
+        opacity: 0.9 !important;
+    }
+
+    .custom-footer {
+        background: linear-gradient(135deg, #f8faff, #eef2ff);
+        border-top: none !important;
+        padding: 15px 20px;
+        display: flex;
+        justify-content: flex-end;
+        gap: 10px;
+    }
+
+    .modal-footer {
+        border-top: none !important;
+    }
+
+    #addBranch .modal-body, #editBranch .modal-body, #viewBranch .modal-body {
+        background: linear-gradient(135deg, #f8faff, #eef2ff) !important;
+        border-radius: 0 0 20px 20px;
+    }
+
+    #addBranch form, #editBranch form {
+        background: transparent;
+    }
+
+    #addBranch .form-control, #editBranch .form-control {
+        width: 100%;
+    }
+
+    .btn-cancel-modern {
+        background: #e2e8f0;
+        color: #334155;
+        border: none;
+        border-radius: 12px;
+        padding: 10px 18px;
+        font-weight: 600;
+    }
+
+        .btn-cancel-modern:hover {
+            background: #cbd5f5;
+        }
+
+    .btn-gradient-primary {
+        background: linear-gradient(135deg, #4b49ac, #6c63ff);
+        color: #fff;
+        border: none;
+        border-radius: 10px;
+        padding: 8px 18px;
+        font-weight: 600;
+    }
+
+        .btn-gradient-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(75,73,172,0.3);
+            color: #fff;
+        }
+
+    @@media (min-width: 576px) {
+        .modal-dialog {
+            max-width: 650px;
+            margin: 1.75rem auto;
+        }
+    }
+
+    .modal-content {
+        padding: 0 !important;
+        margin-top: 0 !important;
+    }
+
+    .modal-dialog {
+        margin-top: 30px !important;
+    }
+
+    #addBranch .modal-dialog, #editBranch .modal-dialog, #viewBranch .modal-dialog {
+        margin-top: 30px !important;
+        min-height: auto !important;
+    }
+
+    /* VIEW READONLY FIELD STYLE */
+    #viewBranch .form-control[readonly] {
+        background-color: #f0f2f8 !important;
+        color: #444 !important;
+        cursor: default !important;
+        border: 2px solid #e1e5e9 !important;
+    }
+
+    #viewBranch label {
+        color: #555 !important;
+    }
+
+    .view-status-badge {
+        display: inline-flex;
+        align-items: center;
+        padding: 6px 16px;
+        border-radius: 20px;
+        font-size: 13px;
+        font-weight: 700;
+        margin-top: 8px;
+    }
+
+    #addBranch .modal-footer,
+    #editBranch .modal-footer,
+    #viewBranch .modal-footer,
+    .custom-footer {
+        background: transparent !important;
+        border-top: 1px solid rgba(0,0,0,0.08) !important;
+        padding: 14px 24px !important;
+        display: flex !important;
+        justify-content: flex-end !important;
+        gap: 10px !important;
+        flex-shrink: 0 !important;
+    }
+
+        /* Larger buttons for all three modals */
+        #addBranch .modal-footer .btn,
+        #editBranch .modal-footer .btn,
+        #viewBranch .modal-footer .btn,
+        .custom-footer .btn {
+            padding: 10px 24px !important;
+            font-size: 14px !important;
+            font-weight: 600 !important;
+            border-radius: 10px !important;
+            min-width: 90px !important;
+        }
+
+    /* ================= UNIFIED MODAL FOOTER - ADD/EDIT/VIEW ONLY ================= */
+    #addBranch .modal-footer,
+    #editBranch .modal-footer,
+    #viewBranch .modal-footer,
+    .custom-footer {
+        background: transparent !important;
+        border-top: 1px solid rgba(0,0,0,0.08) !important;
+        padding: 14px 24px !important; /* SAME HEIGHT FOR ALL 3 */
+        display: flex !important;
+        justify-content: flex-end !important;
+        gap: 12px !important;
+        flex-shrink: 0 !important;
+        margin: 0 !important; /* NO EXTRA SPACE */
+        min-height: 54px !important; /* FIXED SAME HEIGHT */
+        align-items: center !important;
+    }
+
+        /* UNIFIED BUTTON STYLES FOR ADD/EDIT/VIEW */
+        #addBranch .modal-footer .btn,
+        #editBranch .modal-footer .btn,
+        #viewBranch .modal-footer .btn,
+        .custom-footer .btn {
+            padding: 10px 22px !important; /* SAME SIZE */
+            font-size: 14px !important;
+            font-weight: 600 !important;
+            border-radius: 10px !important;
+            height: 42px !important; /* SAME HEIGHT */
+            min-width: 90px !important;
+            line-height: 1.4 !important;
+            margin: 0 !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+        }
+
+    /* MODAL BODY - NO EXTRA BOTTOM SPACE */
+    #addBranch .modal-body,
+    #editBranch .modal-body,
+    #viewBranch .modal-body {
+        padding-bottom: 20px !important; /* CONSISTENT */
+        margin-bottom: 0 !important;
+    }
+
+    /* MODAL CONTENT - PERFECT HEIGHT */
+    #addBranch .modal-content,
+    #editBranch .modal-content,
+    #viewBranch .modal-content {
+        display: flex !important;
+        flex-direction: column !important;
+        height: auto !important;
+        max-height: 90vh !important;
+    }
+
+    #addBranch .modal-content,
+    #editBranch .modal-content {
+        min-height: 80vh !important;
+    }
+
+    #addBranch .modal-content,
+    #editBranch .modal-content,
+    #viewBranch .modal-content {
+        min-height: unset !important;
+        height: auto !important;
+    }
+</style>
 
 
 
@@ -1342,9 +1143,20 @@
         <div class="card-body">
             <div class="d-flex justify-content-between align-items-center" style="padding: 10px !important">
                 <strong class="card-title">Branch List</strong>
-                <button type="button" class="btn btn-gradient-primary btn-rounded btn-fw" data-toggle="modal" data-target="#addBranch">
-                    <i class="fa fa-plus"></i> Add
-                </button>
+                @if (ViewBag.CanInsert == true)
+                {
+                    <button type="button" class="btn btn-gradient-primary btn-rounded btn-fw"
+                            data-toggle="modal" data-target="#addBranch">
+                        <i class="fa fa-plus"></i> Add
+                    </button>
+                }
+                else
+                {
+                    <button type="button" class="btn btn-secondary btn-rounded btn-fw"
+                            onclick="noAccess('Insert')">
+                        <i class="fa fa-plus"></i> Add
+                    </button>
+                }
             </div>
             <table class="table table-bordered" id="branchTable">
                 <thead>
@@ -1382,23 +1194,51 @@
                                     }
                                 </td>
                                 <td>
-                                    <!-- Edit button -->
-                                    <button type="button" class="btn btn-sm btn-custom btn-gradient-primary btn-rounded btn-course-list editByBranchId"
-                                            data-edbranchId='@branch.BranchId' title="Edit" data-toggle="modal" data-target="#editBranch">
-                                        <i class="mdi mdi-pencil"></i>
-                                    </button>
+                                    @* EDIT *@
+                                    @if (ViewBag.CanUpdate == true)
+                                    {
+                                        <button type="button" class="btn btn-sm editByBranchId"
+                                                data-edbranchId="@branch.BranchId"
+                                                data-toggle="modal" data-target="#editBranch"
+                                                title="Edit">
+                                            <i class="mdi mdi-pencil"></i>
+                                        </button>
+                                    }
+                                    else
+                                    {
+                                        <button type="button" class="btn btn-sm btn-secondary"
+                                                title="No Edit Permission"
+                                                onclick="noAccess('Update')">
+                                            <i class="mdi mdi-pencil"></i>
+                                        </button>
+                                    }
 
-                                    <!-- View button -->
-                                    <button type="button" class="btn btn-sm btn-custom btn-gradient-dark btn-rounded btn-course-list viewByBranchId"
-                                            data-vwBranchId='@branch.BranchId' title="View" data-toggle="modal" data-target="#viewBranch">
+                                    @* VIEW — always visible *@
+                                    <button type="button" class="btn btn-sm viewByBranchId"
+                                            data-vwBranchId="@branch.BranchId"
+                                            data-toggle="modal" data-target="#viewBranch"
+                                            title="View">
                                         <i class="mdi mdi-eye"></i>
                                     </button>
 
-                                    <!-- Delete button -->
-                                    <button type="button" class="btn btn-sm btn-custom btn-gradient-warning btn-rounded btn-course-list deleteBranches"
-                                            data-dlbranchId='@branch.BranchId' title="Delete" data-toggle="modal" data-target="#deleteBranch">
-                                        <i class="mdi mdi-delete"></i>
-                                    </button>
+                                    @* DELETE *@
+                                    @if (ViewBag.CanDelete == true)
+                                    {
+                                        <button type="button" class="btn btn-sm deleteBranches"
+                                                data-dlbranchId="@branch.BranchId"
+                                                data-toggle="modal" data-target="#deleteBranch"
+                                                title="Delete">
+                                            <i class="mdi mdi-delete"></i>
+                                        </button>
+                                    }
+                                    else
+                                    {
+                                        <button type="button" class="btn btn-sm btn-secondary"
+                                                title="No Delete Permission"
+                                                onclick="noAccess('Delete')">
+                                            <i class="mdi mdi-delete"></i>
+                                        </button>
+                                    }
                                 </td>
                             </tr>
                         }
@@ -1412,28 +1252,19 @@
                 </tbody>
             </table>
 
-            <!-- STATIC PAGINATION CONTROLS -->
             <div class="static-pagination-wrapper">
-
                 <div class="d-flex justify-content-between align-items-center mt-3">
-
-                    <!-- SHOW ALL -->
                     <button class="btn-showall-modern" id="btnShowAll">
                         <i class="mdi mdi-view-grid"></i> Show All
                     </button>
-
-                    <!-- PAGINATION -->
                     <ul class="pagination modern-pagination mb-0" id="pagination"></ul>
-
                 </div>
             </div>
-
-           
         </div>
     </div>
 </div>
 
-<!-- Add Branch Modal -->
+<!-- ==================== ADD BRANCH MODAL ==================== -->
 <div class="modal fade" id="addBranch" tabindex="-1" role="dialog" aria-labelledby="addBranchModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-xl" role="document">
         <div class="modal-content">
@@ -1445,126 +1276,130 @@
             </div>
             <div class="modal-body">
                 <form id="addBranchForm" class="form-sample">
+                    <!-- ROW 1 -->
                     <div class="row">
                         <div class="col-md-3">
                             <div class="form-group">
-                                <label for="txtBranchName">Branch Name<span class="mandatoryfield">*</span></label>
-                                <input type="text" class="form-control" id="txtBranchName" name="txtBranchName" required />
+                                <label for="txtBranchName">Branch Name <span class="mandatoryfield">*</span></label>
+                                <input type="text" class="form-control" id="txtBranchName" name="txtBranchName" placeholder="Enter branch name" />
                             </div>
                             <span class="validationMessage" id="msgAddBranchNameValidation"></span>
                         </div>
                         <div class="col-md-3">
                             <div class="form-group">
-                                <label for="txtBranchAddress1">Branch Address1<span class="mandatoryfield">*</span></label>
-                                <input type="text" class="form-control" id="txtBranchAddress1" name="txtBranchAddress1" value="123 Main St " required />
+                                <label for="txtBranchAddress1">Branch Address <span class="mandatoryfield">*</span></label>
+                                <input type="text" class="form-control" id="txtBranchAddress1" name="txtBranchAddress1" placeholder="Enter address" />
                             </div>
                             <span class="validationMessage" id="msgAddress1Validation"></span>
                         </div>
                         <div class="col-md-3">
                             <div class="form-group">
-                                <label for="ddlState">State<span class="mandatoryfield">*</span></label>
+                                <label for="ddlStateId">State <span class="mandatoryfield">*</span></label>
                                 <div class="input-group">
                                     @Html.DropDownList("StateId", new SelectList(Model.states, "StateID", "StateName"), "--Select State--",
-                                    new { @id = "ddlStateId", @class = "form-control form-control-sm", @required = "required" })
+                                    new { @id = "ddlStateId", @class = "form-control form-control-sm" })
                                     <div class="input-group-append">
                                         <span class="input-group-text" style="height: 35px;"><i class="mdi mdi-menu-down"></i></span>
                                     </div>
-                                    <span class="validationMessage" id="msgAddStateValidation"></span>
                                 </div>
+                                <span class="validationMessage" id="msgAddStateValidation"></span>
                             </div>
                         </div>
                         <div class="col-md-3">
                             <div class="form-group">
-                                <label for="ddlCountry">Country<span class="mandatoryfield">*</span></label>
+                                <label for="ddlCountryId">Country <span class="mandatoryfield">*</span></label>
                                 <div class="input-group">
                                     @Html.DropDownList("CountryId", new SelectList(Model.country, "CountryID", "CountryName"), "--Select Country--",
-                                                                        new { @id = "ddlCountryId", @class = "form-control form-control-sm", @required = "required" })
+                                                                        new { @id = "ddlCountryId", @class = "form-control form-control-sm" })
                                     <div class="input-group-append">
                                         <span class="input-group-text" style="height: 35px;"><i class="mdi mdi-menu-down"></i></span>
                                     </div>
-                                    <span class="validationMessage" id="msgAddCountryValidation"></span>
                                 </div>
+                                <span class="validationMessage" id="msgAddCountryValidation"></span>
                             </div>
                         </div>
                     </div>
+                    <!-- ROW 2 -->
                     <div class="row">
                         <div class="col-md-3">
                             <div class="form-group">
-                                <label for="txtCity">City<span class="mandatoryfield">*</span></label>
-                                <input type="text" class="form-control" id="txtCity" name="txtCity" required />
+                                <label for="txtCity">City <span class="mandatoryfield">*</span></label>
+                                <input type="text" class="form-control" id="txtCity" name="txtCity" placeholder="Enter city" />
                             </div>
                             <span class="validationMessage" id="msgAddCityValidation"></span>
                         </div>
                         <div class="col-md-3">
                             <div class="form-group">
-                                <label for="txtPincode">Pin Code<span class="mandatoryfield">*</span></label>
-                                <input type="text" class="form-control" id="txtPincode" name="txtPincode" required />
+                                <label for="txtPincode">Pin Code <span class="mandatoryfield">*</span></label>
+                                <input type="text" class="form-control" id="txtPincode" name="txtPincode" placeholder="6-digit pincode" maxlength="6" />
                             </div>
                             <span class="validationMessage" id="msgAddPinCodeValidation"></span>
                         </div>
                         <div class="col-md-3">
                             <div class="form-group">
-                                <label for="ddlCompany">Company<span class="mandatoryfield">*</span></label>
+                                <label for="ddlCompanyId">Company <span class="mandatoryfield">*</span></label>
                                 <div class="input-group">
                                     @Html.DropDownList("CompanyID", new SelectList(Model.companies, "CompanyID", "CompanyName"), "--Select Company--",
-                                                                        new { @id = "ddlCompanyId", @class = "form-control form-control-sm", @required = "required" })
+                                                                        new { @id = "ddlCompanyId", @class = "form-control form-control-sm" })
                                     <div class="input-group-append">
                                         <span class="input-group-text" style="height: 35px;"><i class="mdi mdi-menu-down"></i></span>
                                     </div>
-                                    <span class="validationMessage" id="msgAddCompanyValidation"></span>
                                 </div>
+                                <span class="validationMessage" id="msgAddCompanyValidation"></span>
                             </div>
                         </div>
                         <div class="col-md-3">
                             <div class="form-group">
-                                <label for="txtVAT">VAT</label>
-                                <input type="text" class="form-control" id="txtVAT" name="txtVAT" />
+                                <label for="txtVAT">VAT <span class="mandatoryfield">*</span></label>
+                                <input type="text" class="form-control" id="txtVAT" name="txtVAT" placeholder="Enter VAT number" />
                             </div>
                             <span class="validationMessage" id="msgAddVatValidation"></span>
                         </div>
                     </div>
+                    <!-- ROW 3 -->
                     <div class="row">
                         <div class="col-md-3">
                             <div class="form-group">
-                                <label for="txtContactNo">Contact No.</label>
-                                <input type="text" class="form-control" id="txtContactNo" name="txtContactNo" />
+                                <label for="txtContactNo">Contact No. <span class="mandatoryfield">*</span></label>
+                                <input type="text" class="form-control" id="txtContactNo" name="txtContactNo" placeholder="10-digit mobile number" maxlength="10" />
                             </div>
                             <span class="validationMessage" id="msgAddContactNoValidation"></span>
                         </div>
                         <div class="col-md-3">
                             <div class="form-group">
-                                <label for="txtEmail">Email</label>
-                                <input type="email" class="form-control" id="txtEmail" name="txtEmail" />
+                                <label for="txtEmail">Email <span class="mandatoryfield">*</span></label>
+                                <input type="email" class="form-control" id="txtEmail" name="txtEmail" placeholder="example@email.com" />
                             </div>
                             <span class="validationMessage" id="msgAddEmailValidation"></span>
                         </div>
                         <div class="col-md-3">
                             <div class="form-group">
-                                <label for="txtPAN">PAN</label>
-                                <input type="text" class="form-control" id="txtPAN" name="txtPAN" />
+                                <label for="txtPAN">PAN <span class="mandatoryfield">*</span></label>
+                                <input type="text" class="form-control" id="txtPAN" name="txtPAN" placeholder="ABCDE1234F" maxlength="10" style="text-transform:uppercase;" />
                             </div>
                             <span class="validationMessage" id="msgAddPanValidation"></span>
                         </div>
                         <div class="col-md-3">
                             <div class="form-group">
-                                <label for="txtTAN">TAN</label>
-                                <input type="text" class="form-control" id="txtTAN" name="txtTAN" />
+                                <label for="txtTAN">TAN <span class="mandatoryfield">*</span></label>
+                                <input type="text" class="form-control" id="txtTAN" name="txtTAN" placeholder="ABCD12345E" maxlength="10" style="text-transform:uppercase;" />
                             </div>
                             <span class="validationMessage" id="msgAddTanValidation"></span>
                         </div>
                     </div>
+                    <!-- ROW 4 -->
                     <div class="row">
                         <div class="col-md-3">
                             <div class="form-group">
-                                <label for="txtGST">GST</label>
-                                <input type="text" class="form-control" id="txtGST" name="txtGST" />
+                                <label for="txtGST">GST <span class="mandatoryfield">*</span></label>
+                                <input type="text" class="form-control" id="txtGST" name="txtGST" placeholder="22AAAAA0000A1Z5" maxlength="15" style="text-transform:uppercase;" />
                             </div>
                             <span class="validationMessage" id="msgAddGstValidation"></span>
                         </div>
                         <div class="col-md-3">
                             <div class="form-group">
-                                <label for="txtPT">PT</label>
-                                <input type="text" class="form-control" id="txtPT" name="txtPT" />
+                                <label for="txtPT">PT <span class="mandatoryfield">*</span></label>
+                                <input type="text" class="form-control" id="txtPT" name="txtPT" placeholder="Enter PT number" />
                             </div>
                             <span class="validationMessage" id="msgAddPtValidation"></span>
                         </div>
@@ -1582,24 +1417,16 @@
                     </div>
                 </form>
                 <div class="modal-footer custom-footer">
-                    <button type="button" class="btn btn-cancel-modern" data-dismiss="modal">
-                        ❌ Close
-                    </button>
-
-                    <button type="button" class="btn btn-warning-modern btnBranchReset">
-                        🔄 Reset
-                    </button>
-
-                    <button type="button" class="btn btn-success-modern" id="btnBranchSave">
-                        ✅ Submit
-                    </button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-warning btnBranchReset">Reset</button>
+                    <button type="button" class="btn btn-success" id="btnBranchSave">Submit</button>
                 </div>
             </div>
         </div>
     </div>
 </div>
 
-<!-- Edit Branch Modal - IDENTICAL TO ADD MODAL -->
+<!-- ==================== EDIT BRANCH MODAL ==================== -->
 <div class="modal fade" id="editBranch" tabindex="-1" role="dialog" aria-labelledby="editBranchModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-xl" role="document">
         <div class="modal-content">
@@ -1612,29 +1439,28 @@
             <div class="modal-body">
                 <form id="editBranchForm" class="form-sample">
                     <input type="hidden" id="hdnBranchId" name="BranchId">
-
-                    <!-- ROW 1 - SAME AS ADD -->
+                    <!-- ROW 1 -->
                     <div class="row">
                         <div class="col-md-3">
                             <div class="form-group">
-                                <label for="txtEditBranchName">Branch Name<span class="mandatoryfield">*</span></label>
-                                <input type="text" class="form-control" id="txtEditBranchName" name="BranchName" required />
+                                <label for="txtEditBranchName">Branch Name <span class="mandatoryfield">*</span></label>
+                                <input type="text" class="form-control" id="txtEditBranchName" name="BranchName" placeholder="Enter branch name" />
                             </div>
                             <span class="validationMessage" id="msgEditBranchNameValidation"></span>
                         </div>
                         <div class="col-md-3">
                             <div class="form-group">
-                                <label for="txtEditBranchAddress1">Branch Address1<span class="mandatoryfield">*</span></label>
-                                <input type="text" class="form-control" id="txtEditBranchAddress1" name="BranchAddress1" required />
+                                <label for="txtEditBranchAddress1">Branch Address <span class="mandatoryfield">*</span></label>
+                                <input type="text" class="form-control" id="txtEditBranchAddress1" name="BranchAddress1" placeholder="Enter address" />
                             </div>
                             <span class="validationMessage" id="msgEditAddress1Validation"></span>
                         </div>
                         <div class="col-md-3">
                             <div class="form-group">
-                                <label for="ddlEditState">State<span class="mandatoryfield">*</span></label>
+                                <label for="ddlEditStateId">State <span class="mandatoryfield">*</span></label>
                                 <div class="input-group">
                                     @Html.DropDownList("BranchStateId", new SelectList(Model.states, "StateID", "StateName"), "--Select State--",
-                                                                        new { @id = "ddlEditStateId", @class = "form-control form-control-sm", @required = "required" })
+                                                                        new { @id = "ddlEditStateId", @class = "form-control form-control-sm" })
                                     <div class="input-group-append">
                                         <span class="input-group-text" style="height: 35px;"><i class="mdi mdi-menu-down"></i></span>
                                     </div>
@@ -1644,10 +1470,10 @@
                         </div>
                         <div class="col-md-3">
                             <div class="form-group">
-                                <label for="ddlEditCountry">Country<span class="mandatoryfield">*</span></label>
+                                <label for="ddlEditCountryId">Country <span class="mandatoryfield">*</span></label>
                                 <div class="input-group">
                                     @Html.DropDownList("BranchCountryId", new SelectList(Model.country, "CountryID", "CountryName"), "--Select Country--",
-                                                                        new { @id = "ddlEditCountryId", @class = "form-control form-control-sm", @required = "required" })
+                                                                        new { @id = "ddlEditCountryId", @class = "form-control form-control-sm" })
                                     <div class="input-group-append">
                                         <span class="input-group-text" style="height: 35px;"><i class="mdi mdi-menu-down"></i></span>
                                     </div>
@@ -1656,29 +1482,28 @@
                             </div>
                         </div>
                     </div>
-
-                    <!-- ROW 2 - SAME AS ADD -->
+                    <!-- ROW 2 -->
                     <div class="row">
                         <div class="col-md-3">
                             <div class="form-group">
-                                <label for="txtEditCity">City<span class="mandatoryfield">*</span></label>
-                                <input type="text" class="form-control" id="txtEditCity" name="City" required />
+                                <label for="txtEditCity">City <span class="mandatoryfield">*</span></label>
+                                <input type="text" class="form-control" id="txtEditCity" name="City" placeholder="Enter city" />
                             </div>
                             <span class="validationMessage" id="msgEditCityValidation"></span>
                         </div>
                         <div class="col-md-3">
                             <div class="form-group">
-                                <label for="txtEditPincode">Pin Code<span class="mandatoryfield">*</span></label>
-                                <input type="text" class="form-control" id="txtEditPincode" name="Pincode" required />
+                                <label for="txtEditPincode">Pin Code <span class="mandatoryfield">*</span></label>
+                                <input type="text" class="form-control" id="txtEditPincode" name="Pincode" placeholder="6-digit pincode" maxlength="6" />
                             </div>
                             <span class="validationMessage" id="msgEditPinCodeValidation"></span>
                         </div>
                         <div class="col-md-3">
                             <div class="form-group">
-                                <label for="ddlEditCompany">Company<span class="mandatoryfield">*</span></label>
+                                <label for="ddlEditCompanyId">Company <span class="mandatoryfield">*</span></label>
                                 <div class="input-group">
                                     @Html.DropDownList("CompanyID", new SelectList(Model.companies, "CompanyID", "CompanyName"), "--Select Company--",
-                                                                        new { @id = "ddlEditCompanyId", @class = "form-control form-control-sm", @required = "required" })
+                                                                        new { @id = "ddlEditCompanyId", @class = "form-control form-control-sm" })
                                     <div class="input-group-append">
                                         <span class="input-group-text" style="height: 35px;"><i class="mdi mdi-menu-down"></i></span>
                                     </div>
@@ -1688,58 +1513,56 @@
                         </div>
                         <div class="col-md-3">
                             <div class="form-group">
-                                <label for="txtEditVAT">VAT</label>
-                                <input type="text" class="form-control" id="txtEditVAT" name="VATNo" />
+                                <label for="txtEditVAT">VAT <span class="mandatoryfield">*</span></label>
+                                <input type="text" class="form-control" id="txtEditVAT" name="VATNo" placeholder="Enter VAT number" />
                             </div>
                             <span class="validationMessage" id="msgEditVatValidation"></span>
                         </div>
                     </div>
-
-                    <!-- ROW 3 - SAME AS ADD -->
+                    <!-- ROW 3 -->
                     <div class="row">
                         <div class="col-md-3">
                             <div class="form-group">
-                                <label for="txtEditContactNo">Contact No.</label>
-                                <input type="text" class="form-control" id="txtEditContactNo" name="ContactNo" />
+                                <label for="txtEditContactNo">Contact No. <span class="mandatoryfield">*</span></label>
+                                <input type="text" class="form-control" id="txtEditContactNo" name="ContactNo" placeholder="10-digit mobile number" maxlength="10" />
                             </div>
                             <span class="validationMessage" id="msgEditContactNoValidation"></span>
                         </div>
                         <div class="col-md-3">
                             <div class="form-group">
-                                <label for="txtEditEmail">Email</label>
-                                <input type="email" class="form-control" id="txtEditEmail" name="Email" />
+                                <label for="txtEditEmail">Email <span class="mandatoryfield">*</span></label>
+                                <input type="email" class="form-control" id="txtEditEmail" name="Email" placeholder="example@email.com" />
                             </div>
                             <span class="validationMessage" id="msgEditEmailValidation"></span>
                         </div>
                         <div class="col-md-3">
                             <div class="form-group">
-                                <label for="txtEditPAN">PAN</label>
-                                <input type="text" class="form-control" id="txtEditPAN" name="PANNo" />
+                                <label for="txtEditPAN">PAN <span class="mandatoryfield">*</span></label>
+                                <input type="text" class="form-control" id="txtEditPAN" name="PANNo" placeholder="ABCDE1234F" maxlength="10" style="text-transform:uppercase;" />
                             </div>
                             <span class="validationMessage" id="msgEditPanValidation"></span>
                         </div>
                         <div class="col-md-3">
                             <div class="form-group">
-                                <label for="txtEditTAN">TAN</label>
-                                <input type="text" class="form-control" id="txtEditTAN" name="TANNo" />
+                                <label for="txtEditTAN">TAN <span class="mandatoryfield">*</span></label>
+                                <input type="text" class="form-control" id="txtEditTAN" name="TANNo" placeholder="ABCD12345E" maxlength="10" style="text-transform:uppercase;" />
                             </div>
                             <span class="validationMessage" id="msgEditTanValidation"></span>
                         </div>
                     </div>
-
-                    <!-- ROW 4 - SAME AS ADD -->
+                    <!-- ROW 4 -->
                     <div class="row">
                         <div class="col-md-3">
                             <div class="form-group">
-                                <label for="txtEditGST">GST</label>
-                                <input type="text" class="form-control" id="txtEditGST" name="GSTNo" />
+                                <label for="txtEditGST">GST <span class="mandatoryfield">*</span></label>
+                                <input type="text" class="form-control" id="txtEditGST" name="GSTNo" placeholder="22AAAAA0000A1Z5" maxlength="15" style="text-transform:uppercase;" />
                             </div>
                             <span class="validationMessage" id="msgEditGstValidation"></span>
                         </div>
                         <div class="col-md-3">
                             <div class="form-group">
-                                <label for="txtEditPT">PT</label>
-                                <input type="text" class="form-control" id="txtEditPT" name="PTTaxNo" />
+                                <label for="txtEditPT">PT <span class="mandatoryfield">*</span></label>
+                                <input type="text" class="form-control" id="txtEditPT" name="PTTaxNo" placeholder="Enter PT number" />
                             </div>
                             <span class="validationMessage" id="msgEditPtValidation"></span>
                         </div>
@@ -1747,7 +1570,7 @@
                             <div class="form-check">
                                 <div class="toggle-wrapper">
                                     <label class="switch">
-                                        <input type="checkbox" id="chkActiveStatusAdd">
+                                        <input type="checkbox" id="chkEditActiveStatus">
                                         <span class="slider round"></span>
                                     </label>
                                     <span class="toggle-label">Active Status</span>
@@ -1757,238 +1580,882 @@
                     </div>
                 </form>
                 <div class="modal-footer custom-footer">
-                    <button type="button" class="btn btn-cancel-modern" data-dismiss="modal">
-                        ❌ Close
-                    </button>
-
-                    <button type="button" class="btn btn-warning-modern btnBranchReset">
-                        🔄 Reset
-                    </button>
-
-                    <button type="button" class="btn btn-success-modern" id="btnEditBranchSave">
-                        ✅ Update
-                    </button>
+                    <button type="button" class="btn btn-cancel-modern" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-warning-modern btnBranchReset">Reset</button>
+                    <button type="button" class="btn btn-success-modern" id="btnEditBranchSave">Update</button>
                 </div>
             </div>
         </div>
     </div>
 </div>
-<!-- VIEW BRANCH MODAL - FINAL CLEAN -->
-<div class="modal fade" id="viewBranch" tabindex="-1">
-    <div class="modal-dialog modal-xl">
-        <div class="modal-content view-modal">
 
-            <!-- HEADER -->
+<!-- ==================== VIEW BRANCH MODAL ==================== -->
+<div class="modal fade" id="viewBranch" tabindex="-1" role="dialog" aria-labelledby="viewBranchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">
-                    <i class="mdi mdi-office-building mr-2"></i> Branch Details
-                </h5>
-                <button type="button" class="close" data-dismiss="modal">
-                    <span>&times;</span>
+                <h5 class="modal-title" id="viewBranchModalLabel"><i class="mdi mdi-office-building mr-2"></i> Branch Details</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-
-            <!-- BODY -->
             <div class="modal-body">
-
-                <!-- TOP HEADER -->
-                <div class="view-header">
-                    <div>
-                        <h3 id="lblvwBranchName">Branch Name</h3>
-
-                        <!-- COMPANY WITH ICON -->
-                        <p class="company-name">
-                            <i class="fas fa-building company-icon"></i>
-                            <span id="lblvwCompanyName"></span>
-                        </p>
+                <!-- ROW 1 -->
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label>Branch Name</label>
+                            <input type="text" class="form-control" id="lblvwBranchName" readonly />
+                        </div>
                     </div>
-
-                    <!-- STATUS -->
-                    <span class="status-badge" id="lblvwStatus">Active</span>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label>Branch Address</label>
+                            <input type="text" class="form-control" id="lblvwBranchAddress1" readonly />
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label>State</label>
+                            <input type="text" class="form-control" id="lblvwBranchState" readonly />
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label>Country</label>
+                            <input type="text" class="form-control" id="lblvwBranchCountry" readonly />
+                        </div>
+                    </div>
                 </div>
-
-                <!-- DETAILS -->
-                <div class="row mt-4">
-
-                    <!-- BASIC -->
-                    <div class="col-md-6">
-                        <div class="info-box">
-                            <h6><i class="mdi mdi-information-outline"></i> Basic Information</h6>
-
-                            <div class="info-row">
-                                <span>Address</span>
-                                <p id="lblvwBranchAddress1"></p>
-                            </div>
-
-                            <div class="info-row">
-                                <span>City</span>
-                                <p id="lblvwBranchCity"></p>
-                            </div>
-
-                            <div class="info-row">
-                                <span>Pincode</span>
-                                <p id="lblvwPincode"></p>
+                <!-- ROW 2 -->
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label>City</label>
+                            <input type="text" class="form-control" id="lblvwBranchCity" readonly />
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label>Pin Code</label>
+                            <input type="text" class="form-control" id="lblvwPincode" readonly />
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label>Company</label>
+                            <input type="text" class="form-control" id="lblvwCompanyName" readonly />
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label>VAT</label>
+                            <input type="text" class="form-control" id="lblvwVAT" readonly />
+                        </div>
+                    </div>
+                </div>
+                <!-- ROW 3 -->
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label>Contact No.</label>
+                            <input type="text" class="form-control" id="lblvwContactNo" readonly />
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label>Email</label>
+                            <input type="text" class="form-control" id="lblvwBranchEmail" readonly />
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label>PAN</label>
+                            <input type="text" class="form-control" id="lblvwPAN" readonly />
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label>TAN</label>
+                            <input type="text" class="form-control" id="lblvwTAN" readonly />
+                        </div>
+                    </div>
+                </div>
+                <!-- ROW 4 -->
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label>GST</label>
+                            <input type="text" class="form-control" id="lblvwGST" readonly />
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label>PT</label>
+                            <input type="text" class="form-control" id="lblvwPT" readonly />
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <div class="toggle-wrapper" style="margin-top: 32px;">
+                                <label class="switch">
+                                    <input type="checkbox" id="lblvwActiveStatus" disabled>
+                                    <span class="slider round"></span>
+                                </label>
+                                <span class="toggle-label">Active Status</span>
                             </div>
                         </div>
                     </div>
-
-                    <!-- LOCATION -->
-                    <div class="col-md-6">
-                        <div class="info-box">
-                            <h6><i class="mdi mdi-map-marker"></i> Location & Contact</h6>
-
-                            <div class="info-row">
-                                <span>State</span>
-                                <p id="lblvwBranchState"></p>
-                            </div>
-
-                            <div class="info-row">
-                                <span>Country</span>
-                                <p id="lblvwBranchCountry"></p>
-                            </div>
-
-                            <!-- PHONE BELOW -->
-                            <div class="info-row column">
-                                <span>Phone</span>
-                                <p id="lblvwContactNo"></p>
-                            </div>
-
-                            <!-- EMAIL BELOW -->
-                            <div class="info-row column">
-                                <span>Email</span>
-                                <p id="lblvwBranchEmail" class="break-text"></p>
-                            </div>
-
+                    <div class="col-md-3">
+                        <div class="form-group" style="margin-top: 32px;">
+                            <span class="badge view-status-badge" id="lblvwStatus"></span>
                         </div>
                     </div>
-
                 </div>
-
             </div>
-
-            <!-- FOOTER -->
-            <div class="modal-footer">
-                <button class="btn btn-gradient-primary" data-dismiss="modal">
-                    <i class="mdi mdi-close"></i> Close
-                </button>
+            <div class="modal-footer custom-footer">
+                <button type="button" class="btn btn-cancel-modern" data-dismiss="modal">Close</button>
             </div>
-
         </div>
     </div>
 </div>
-<!-- DELETE BRANCH MODAL - MODERN UI -->
+
+<!-- ==================== DELETE BRANCH MODAL ==================== -->
 <div class="modal fade" id="deleteBranch" tabindex="-1">
     <div class="modal-dialog modal-md">
         <div class="modal-content delete-modal">
-
-            <!-- HEADER -->
             <div class="modal-header delete-header">
-                <h5 class="modal-title">
-                    <i class="mdi mdi-delete-circle mr-2"></i>
-                    Delete Branch
-                </h5>
-                <button type="button" class="close text-white" data-dismiss="modal">
-                    <span>&times;</span>
-                </button>
+                <h5 class="modal-title"><i class="mdi mdi-delete-circle mr-2"></i> Delete Branch</h5>
+                <button type="button" class="close text-white" data-dismiss="modal"><span>&times;</span></button>
             </div>
-
-            <!-- BODY -->
             <div class="modal-body text-center">
-
-                <!-- WARNING ICON -->
-                <div class="delete-icon">
-                    <i class="mdi mdi-alert-circle-outline"></i>
-                </div>
-
-                <h4 class="text-danger font-weight-bold mb-2" id="lblDelBranchName">
-                    Branch Name
-                </h4>
-
-                <p class="text-muted mb-4">
-                    This branch will be permanently deleted and cannot be recovered.
-                </p>
-
-                <!-- DETAILS CARD -->
+                <div class="delete-icon"><i class="mdi mdi-alert-circle-outline"></i></div>
+                <h4 class="text-danger font-weight-bold mb-2" id="lblDelBranchName">Branch Name</h4>
+                <p class="text-muted mb-4">This branch will be permanently deleted and cannot be recovered.</p>
                 <div class="delete-info-box">
-
-
-                    <div class="info-line">
-                        <span>Address</span>
-                        <p id="lblDelBranchAddress1"></p>
-                    </div>
-
-                    <div class="info-line">
-                        <span>City</span>
-                        <p id="lblDelBranchCity"></p>
-                    </div>
-
-                    <div class="info-line">
-                        <span>State</span>
-                        <p id="lblDelBranchState"></p>
-                    </div>
-
-                    <div class="info-line">
-                        <span>Country</span>
-                        <p id="lblDelBranchCountry"></p>
-                    </div>
-
-                    <div class="info-line">
-                        <span>Phone</span>
-                        <p id="lblDelContactNo"></p>
-                    </div>
-
+                    <div class="info-line"><span>Address</span><p id="lblDelBranchAddress1"></p></div>
+                    <div class="info-line"><span>City</span><p id="lblDelBranchCity"></p></div>
+                    <div class="info-line"><span>State</span><p id="lblDelBranchState"></p></div>
+                    <div class="info-line"><span>Country</span><p id="lblDelBranchCountry"></p></div>
+                    <div class="info-line"><span>Phone</span><p id="lblDelContactNo"></p></div>
                 </div>
-
                 <input type="hidden" id="hdnDelBranchId">
-
             </div>
-
-            <!-- FOOTER -->
             <div class="modal-footer">
-                <button class="btn btn-cancel" data-dismiss="modal">
-                    Cancel
-                </button>
-
-                <button class="btn btn-delete" id="btnConfirmBranchDelete">
-                    <i class="mdi mdi-delete"></i> Delete
-                </button>
+                <button class="btn btn-cancel" data-dismiss="modal">Cancel</button>
+                <button class="btn btn-delete" id="btnConfirmBranchDelete"><i class="mdi mdi-delete"></i> Delete</button>
             </div>
-
         </div>
     </div>
 </div>
-<!-- ✅ KEEP THESE - REQUIRED FOR MODALS -->
-<!-- SCRIPTS - ALL CDN -->
+
+<!-- SCRIPTS -->
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<!-- CDN - ALL DEPENDENCIES -->
 
 <script>
-    
-    $(document).ready(function() {
-        console.log('✅ Branch Page Loaded - jQuery Ready');
+    // ✅ OUTSIDE $(document).ready — global scope
+    function noAccess(type) {
+        Swal.fire({
+            icon: 'error',
+            title: 'Access Denied',
+            text: 'You do not have ' + type + ' permission for Branch module.',
+            confirmButtonColor: '#dc2626'
+        });
+    }
+    $(document).ready(function () {
 
-
-
-
-        // ✅ FIXED: Check if jQuery exists
-        if (typeof $ === 'undefined') {
-            console.error('❌ jQuery not loaded!');
-            return;
+        // =============================================
+        // COMMON VALIDATION HELPERS
+        // =============================================
+        function setError(inputId, messageId, message) {
+            $(inputId).addClass("input-validation-error").removeClass("input-success");
+            $("#" + messageId).text(message);
         }
 
+        function setSuccess(inputId, messageId) {
+            $(inputId).removeClass("input-validation-error").addClass("input-success");
+            $("#" + messageId).text("");
+        }
+
+        function clearField(inputId, messageId) {
+            $(inputId).removeClass("input-validation-error input-success");
+            $("#" + messageId).text("");
+        }
+
+        // =============================================
+        // REGEX PATTERNS
+        // =============================================
+        function isValidEmail(email) {
+            return /^[^\s@@]+@@[^\s@@]+\.[^\s@@Z]+$/.test(email);
+        }
+
+        function isValidPhone(phone) {
+            return /^[6-9]\d{9}$/.test(phone);
+        }
+
+        function isValidPincode(pin) {
+            return /^\d{6}$/.test(pin);
+        }
+
+        function isValidPAN(pan) {
+            return /^[A-Z]{5}[0-9]{4}[A-Z]{1}$/.test(pan.toUpperCase());
+        }
+
+        function isValidTAN(tan) {
+            return /^[A-Z]{4}[0-9]{5}[A-Z]{1}$/.test(tan.toUpperCase());
+        }
+
+        function isValidGST(gst) {
+            return /^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}Z[0-9A-Z]{1}$/.test(gst.toUpperCase());
+        }
+
+        function isValidVAT(vat) {
+            return vat.trim().length >= 3;
+        }
+
+        function isValidPT(pt) {
+            return pt.trim().length >= 3;
+        }
+
+        // =============================================
+        // ADD FORM - LIVE VALIDATION
+        // =============================================
+        $("#txtBranchName").on("blur input", function () {
+            var val = $(this).val().trim();
+            if (val === "") setError("#txtBranchName", "msgAddBranchNameValidation", "Branch name is required.");
+            else if (val.length < 2) setError("#txtBranchName", "msgAddBranchNameValidation", "Minimum 2 characters required.");
+            else setSuccess("#txtBranchName", "msgAddBranchNameValidation");
+        });
+
+        $("#txtBranchAddress1").on("blur input", function () {
+            var val = $(this).val().trim();
+            if (val === "") setError("#txtBranchAddress1", "msgAddress1Validation", "Address is required.");
+            else if (val.length < 5) setError("#txtBranchAddress1", "msgAddress1Validation", "Enter a valid address (min 5 chars).");
+            else setSuccess("#txtBranchAddress1", "msgAddress1Validation");
+        });
+
+        $("#txtCity").on("blur input", function () {
+            var val = $(this).val().trim();
+            if (val === "") setError("#txtCity", "msgAddCityValidation", "City is required.");
+            else if (!/^[a-zA-Z\s]+$/.test(val)) setError("#txtCity", "msgAddCityValidation", "City must contain letters only.");
+            else setSuccess("#txtCity", "msgAddCityValidation");
+        });
+
+        $("#txtPincode").on("blur input", function () {
+            var val = $(this).val().trim();
+            if (val === "") setError("#txtPincode", "msgAddPinCodeValidation", "Pin code is required.");
+            else if (!isValidPincode(val)) setError("#txtPincode", "msgAddPinCodeValidation", "Enter a valid 6-digit pin code.");
+            else setSuccess("#txtPincode", "msgAddPinCodeValidation");
+        });
+
+        $("#ddlStateId").on("change", function () {
+            if (!$(this).val()) setError("#ddlStateId", "msgAddStateValidation", "Please select a state.");
+            else setSuccess("#ddlStateId", "msgAddStateValidation");
+        });
+
+        $("#ddlCountryId").on("change", function () {
+            if (!$(this).val()) setError("#ddlCountryId", "msgAddCountryValidation", "Please select a country.");
+            else setSuccess("#ddlCountryId", "msgAddCountryValidation");
+        });
+
+        $("#ddlCompanyId").on("change", function () {
+            if (!$(this).val()) setError("#ddlCompanyId", "msgAddCompanyValidation", "Please select a company.");
+            else setSuccess("#ddlCompanyId", "msgAddCompanyValidation");
+        });
+
+        $("#txtVAT").on("blur input", function () {
+            var val = $(this).val().trim();
+            if (val === "") setError("#txtVAT", "msgAddVatValidation", "VAT number is required.");
+            else if (!isValidVAT(val)) setError("#txtVAT", "msgAddVatValidation", "Enter a valid VAT number (min 3 chars).");
+            else setSuccess("#txtVAT", "msgAddVatValidation");
+        });
+
+        $("#txtContactNo").on("blur input", function () {
+            var val = $(this).val().trim();
+            if (val === "") setError("#txtContactNo", "msgAddContactNoValidation", "Contact number is required.");
+            else if (!isValidPhone(val)) setError("#txtContactNo", "msgAddContactNoValidation", "Enter a valid 10-digit mobile number (starts with 6-9).");
+            else setSuccess("#txtContactNo", "msgAddContactNoValidation");
+        });
+
+        $("#txtEmail").on("blur input", function () {
+            var val = $(this).val().trim();
+            if (val === "") setError("#txtEmail", "msgAddEmailValidation", "Email is required.");
+            else if (!isValidEmail(val)) setError("#txtEmail", "msgAddEmailValidation", "Enter a valid email address.");
+            else setSuccess("#txtEmail", "msgAddEmailValidation");
+        });
+
+        $("#txtPAN").on("blur input", function () {
+            var val = $(this).val().trim().toUpperCase();
+            $(this).val(val);
+            if (val === "") setError("#txtPAN", "msgAddPanValidation", "PAN is required.");
+            else if (!isValidPAN(val)) setError("#txtPAN", "msgAddPanValidation", "Invalid PAN. Format: ABCDE1234F");
+            else setSuccess("#txtPAN", "msgAddPanValidation");
+        });
+
+        $("#txtTAN").on("blur input", function () {
+            var val = $(this).val().trim().toUpperCase();
+            $(this).val(val);
+            if (val === "") setError("#txtTAN", "msgAddTanValidation", "TAN is required.");
+            else if (!isValidTAN(val)) setError("#txtTAN", "msgAddTanValidation", "Invalid TAN. Format: ABCD12345E");
+            else setSuccess("#txtTAN", "msgAddTanValidation");
+        });
+
+        $("#txtGST").on("blur input", function () {
+            var val = $(this).val().trim().toUpperCase();
+            $(this).val(val);
+            if (val === "") setError("#txtGST", "msgAddGstValidation", "GST number is required.");
+            else if (!isValidGST(val)) setError("#txtGST", "msgAddGstValidation", "Invalid GST. Format: 22AAAAA0000A1Z5");
+            else setSuccess("#txtGST", "msgAddGstValidation");
+        });
+
+        $("#txtPT").on("blur input", function () {
+            var val = $(this).val().trim();
+            if (val === "") setError("#txtPT", "msgAddPtValidation", "PT number is required.");
+            else if (!isValidPT(val)) setError("#txtPT", "msgAddPtValidation", "Enter a valid PT number (min 3 chars).");
+            else setSuccess("#txtPT", "msgAddPtValidation");
+        });
+
+        // =============================================
+        // EDIT FORM - LIVE VALIDATION
+        // =============================================
+        $("#txtEditBranchName").on("blur input", function () {
+            var val = $(this).val().trim();
+            if (val === "") setError("#txtEditBranchName", "msgEditBranchNameValidation", "Branch name is required.");
+            else if (val.length < 2) setError("#txtEditBranchName", "msgEditBranchNameValidation", "Minimum 2 characters required.");
+            else setSuccess("#txtEditBranchName", "msgEditBranchNameValidation");
+        });
+
+        $("#txtEditBranchAddress1").on("blur input", function () {
+            var val = $(this).val().trim();
+            if (val === "") setError("#txtEditBranchAddress1", "msgEditAddress1Validation", "Address is required.");
+            else if (val.length < 5) setError("#txtEditBranchAddress1", "msgEditAddress1Validation", "Enter a valid address (min 5 chars).");
+            else setSuccess("#txtEditBranchAddress1", "msgEditAddress1Validation");
+        });
+
+        $("#txtEditCity").on("blur input", function () {
+            var val = $(this).val().trim();
+            if (val === "") setError("#txtEditCity", "msgEditCityValidation", "City is required.");
+            else if (!/^[a-zA-Z\s]+$/.test(val)) setError("#txtEditCity", "msgEditCityValidation", "City must contain letters only.");
+            else setSuccess("#txtEditCity", "msgEditCityValidation");
+        });
+
+        $("#txtEditPincode").on("blur input", function () {
+            var val = $(this).val().trim();
+            if (val === "") setError("#txtEditPincode", "msgEditPinCodeValidation", "Pin code is required.");
+            else if (!isValidPincode(val)) setError("#txtEditPincode", "msgEditPinCodeValidation", "Enter a valid 6-digit pin code.");
+            else setSuccess("#txtEditPincode", "msgEditPinCodeValidation");
+        });
+
+        $("#ddlEditStateId").on("change", function () {
+            if (!$(this).val()) setError("#ddlEditStateId", "msgEditStateValidation", "Please select a state.");
+            else setSuccess("#ddlEditStateId", "msgEditStateValidation");
+        });
+
+        $("#ddlEditCountryId").on("change", function () {
+            if (!$(this).val()) setError("#ddlEditCountryId", "msgEditCountryValidation", "Please select a country.");
+            else setSuccess("#ddlEditCountryId", "msgEditCountryValidation");
+        });
+
+        $("#ddlEditCompanyId").on("change", function () {
+            if (!$(this).val()) setError("#ddlEditCompanyId", "msgEditCompanyValidation", "Please select a company.");
+            else setSuccess("#ddlEditCompanyId", "msgEditCompanyValidation");
+        });
+
+        $("#txtEditVAT").on("blur input", function () {
+            var val = $(this).val().trim();
+            if (val === "") setError("#txtEditVAT", "msgEditVatValidation", "VAT number is required.");
+            else if (!isValidVAT(val)) setError("#txtEditVAT", "msgEditVatValidation", "Enter a valid VAT number (min 3 chars).");
+            else setSuccess("#txtEditVAT", "msgEditVatValidation");
+        });
+
+        $("#txtEditContactNo").on("blur input", function () {
+            var val = $(this).val().trim();
+            if (val === "") setError("#txtEditContactNo", "msgEditContactNoValidation", "Contact number is required.");
+            else if (!isValidPhone(val)) setError("#txtEditContactNo", "msgEditContactNoValidation", "Enter a valid 10-digit mobile number (starts with 6-9).");
+            else setSuccess("#txtEditContactNo", "msgEditContactNoValidation");
+        });
+
+        $("#txtEditEmail").on("blur input", function () {
+            var val = $(this).val().trim();
+            if (val === "") setError("#txtEditEmail", "msgEditEmailValidation", "Email is required.");
+            else if (!isValidEmail(val)) setError("#txtEditEmail", "msgEditEmailValidation", "Enter a valid email address.");
+            else setSuccess("#txtEditEmail", "msgEditEmailValidation");
+        });
+
+        $("#txtEditPAN").on("blur input", function () {
+            var val = $(this).val().trim().toUpperCase();
+            $(this).val(val);
+            if (val === "") setError("#txtEditPAN", "msgEditPanValidation", "PAN is required.");
+            else if (!isValidPAN(val)) setError("#txtEditPAN", "msgEditPanValidation", "Invalid PAN. Format: ABCDE1234F");
+            else setSuccess("#txtEditPAN", "msgEditPanValidation");
+        });
+
+        $("#txtEditTAN").on("blur input", function () {
+            var val = $(this).val().trim().toUpperCase();
+            $(this).val(val);
+            if (val === "") setError("#txtEditTAN", "msgEditTanValidation", "TAN is required.");
+            else if (!isValidTAN(val)) setError("#txtEditTAN", "msgEditTanValidation", "Invalid TAN. Format: ABCD12345E");
+            else setSuccess("#txtEditTAN", "msgEditTanValidation");
+        });
+
+        $("#txtEditGST").on("blur input", function () {
+            var val = $(this).val().trim().toUpperCase();
+            $(this).val(val);
+            if (val === "") setError("#txtEditGST", "msgEditGstValidation", "GST number is required.");
+            else if (!isValidGST(val)) setError("#txtEditGST", "msgEditGstValidation", "Invalid GST. Format: 22AAAAA0000A1Z5");
+            else setSuccess("#txtEditGST", "msgEditGstValidation");
+        });
+
+        $("#txtEditPT").on("blur input", function () {
+            var val = $(this).val().trim();
+            if (val === "") setError("#txtEditPT", "msgEditPtValidation", "PT number is required.");
+            else if (!isValidPT(val)) setError("#txtEditPT", "msgEditPtValidation", "Enter a valid PT number (min 3 chars).");
+            else setSuccess("#txtEditPT", "msgEditPtValidation");
+        });
+
+        // =============================================
+        // FULL ADD FORM VALIDATION (on Submit)
+        // =============================================
+        function validateAddForm() {
+            var isValid = true;
+
+            var name = $("#txtBranchName").val().trim();
+            if (name === "") { setError("#txtBranchName", "msgAddBranchNameValidation", "Branch name is required."); isValid = false; }
+            else if (name.length < 2) { setError("#txtBranchName", "msgAddBranchNameValidation", "Minimum 2 characters required."); isValid = false; }
+            else setSuccess("#txtBranchName", "msgAddBranchNameValidation");
+
+            var address = $("#txtBranchAddress1").val().trim();
+            if (address === "") { setError("#txtBranchAddress1", "msgAddress1Validation", "Address is required."); isValid = false; }
+            else if (address.length < 5) { setError("#txtBranchAddress1", "msgAddress1Validation", "Enter a valid address (min 5 chars)."); isValid = false; }
+            else setSuccess("#txtBranchAddress1", "msgAddress1Validation");
+
+            var city = $("#txtCity").val().trim();
+            if (city === "") { setError("#txtCity", "msgAddCityValidation", "City is required."); isValid = false; }
+            else if (!/^[a-zA-Z\s]+$/.test(city)) { setError("#txtCity", "msgAddCityValidation", "City must contain letters only."); isValid = false; }
+            else setSuccess("#txtCity", "msgAddCityValidation");
+
+            var pincode = $("#txtPincode").val().trim();
+            if (pincode === "") { setError("#txtPincode", "msgAddPinCodeValidation", "Pin code is required."); isValid = false; }
+            else if (!isValidPincode(pincode)) { setError("#txtPincode", "msgAddPinCodeValidation", "Enter a valid 6-digit pin code."); isValid = false; }
+            else setSuccess("#txtPincode", "msgAddPinCodeValidation");
+
+            if (!$("#ddlStateId").val()) { setError("#ddlStateId", "msgAddStateValidation", "Please select a state."); isValid = false; }
+            else setSuccess("#ddlStateId", "msgAddStateValidation");
+
+            if (!$("#ddlCountryId").val()) { setError("#ddlCountryId", "msgAddCountryValidation", "Please select a country."); isValid = false; }
+            else setSuccess("#ddlCountryId", "msgAddCountryValidation");
+
+            if (!$("#ddlCompanyId").val()) { setError("#ddlCompanyId", "msgAddCompanyValidation", "Please select a company."); isValid = false; }
+            else setSuccess("#ddlCompanyId", "msgAddCompanyValidation");
+
+            var vat = $("#txtVAT").val().trim();
+            if (vat === "") { setError("#txtVAT", "msgAddVatValidation", "VAT number is required."); isValid = false; }
+            else if (!isValidVAT(vat)) { setError("#txtVAT", "msgAddVatValidation", "Enter a valid VAT number (min 3 chars)."); isValid = false; }
+            else setSuccess("#txtVAT", "msgAddVatValidation");
+
+            var phone = $("#txtContactNo").val().trim();
+            if (phone === "") { setError("#txtContactNo", "msgAddContactNoValidation", "Contact number is required."); isValid = false; }
+            else if (!isValidPhone(phone)) { setError("#txtContactNo", "msgAddContactNoValidation", "Enter a valid 10-digit mobile number (starts with 6-9)."); isValid = false; }
+            else setSuccess("#txtContactNo", "msgAddContactNoValidation");
+
+            var email = $("#txtEmail").val().trim();
+            if (email === "") { setError("#txtEmail", "msgAddEmailValidation", "Email is required."); isValid = false; }
+            else if (!isValidEmail(email)) { setError("#txtEmail", "msgAddEmailValidation", "Enter a valid email address."); isValid = false; }
+            else setSuccess("#txtEmail", "msgAddEmailValidation");
+
+            var pan = $("#txtPAN").val().trim().toUpperCase();
+            if (pan === "") { setError("#txtPAN", "msgAddPanValidation", "PAN is required."); isValid = false; }
+            else if (!isValidPAN(pan)) { setError("#txtPAN", "msgAddPanValidation", "Invalid PAN. Format: ABCDE1234F"); isValid = false; }
+            else setSuccess("#txtPAN", "msgAddPanValidation");
+
+            var tan = $("#txtTAN").val().trim().toUpperCase();
+            if (tan === "") { setError("#txtTAN", "msgAddTanValidation", "TAN is required."); isValid = false; }
+            else if (!isValidTAN(tan)) { setError("#txtTAN", "msgAddTanValidation", "Invalid TAN. Format: ABCD12345E"); isValid = false; }
+            else setSuccess("#txtTAN", "msgAddTanValidation");
+
+            var gst = $("#txtGST").val().trim().toUpperCase();
+            if (gst === "") { setError("#txtGST", "msgAddGstValidation", "GST number is required."); isValid = false; }
+            else if (!isValidGST(gst)) { setError("#txtGST", "msgAddGstValidation", "Invalid GST. Format: 22AAAAA0000A1Z5"); isValid = false; }
+            else setSuccess("#txtGST", "msgAddGstValidation");
+
+            var pt = $("#txtPT").val().trim();
+            if (pt === "") { setError("#txtPT", "msgAddPtValidation", "PT number is required."); isValid = false; }
+            else if (!isValidPT(pt)) { setError("#txtPT", "msgAddPtValidation", "Enter a valid PT number (min 3 chars)."); isValid = false; }
+            else setSuccess("#txtPT", "msgAddPtValidation");
+
+            return isValid;
+        }
+
+        // =============================================
+        // FULL EDIT FORM VALIDATION (on Submit)
+        // =============================================
+        function validateEditForm() {
+            var isValid = true;
+
+            var name = $("#txtEditBranchName").val().trim();
+            if (name === "") { setError("#txtEditBranchName", "msgEditBranchNameValidation", "Branch name is required."); isValid = false; }
+            else if (name.length < 2) { setError("#txtEditBranchName", "msgEditBranchNameValidation", "Minimum 2 characters required."); isValid = false; }
+            else setSuccess("#txtEditBranchName", "msgEditBranchNameValidation");
+
+            var address = $("#txtEditBranchAddress1").val().trim();
+            if (address === "") { setError("#txtEditBranchAddress1", "msgEditAddress1Validation", "Address is required."); isValid = false; }
+            else if (address.length < 5) { setError("#txtEditBranchAddress1", "msgEditAddress1Validation", "Enter a valid address (min 5 chars)."); isValid = false; }
+            else setSuccess("#txtEditBranchAddress1", "msgEditAddress1Validation");
+
+            var city = $("#txtEditCity").val().trim();
+            if (city === "") { setError("#txtEditCity", "msgEditCityValidation", "City is required."); isValid = false; }
+            else if (!/^[a-zA-Z\s]+$/.test(city)) { setError("#txtEditCity", "msgEditCityValidation", "City must contain letters only."); isValid = false; }
+            else setSuccess("#txtEditCity", "msgEditCityValidation");
+
+            var pincode = $("#txtEditPincode").val().trim();
+            if (pincode === "") { setError("#txtEditPincode", "msgEditPinCodeValidation", "Pin code is required."); isValid = false; }
+            else if (!isValidPincode(pincode)) { setError("#txtEditPincode", "msgEditPinCodeValidation", "Enter a valid 6-digit pin code."); isValid = false; }
+            else setSuccess("#txtEditPincode", "msgEditPinCodeValidation");
+
+            if (!$("#ddlEditStateId").val()) { setError("#ddlEditStateId", "msgEditStateValidation", "Please select a state."); isValid = false; }
+            else setSuccess("#ddlEditStateId", "msgEditStateValidation");
+
+            if (!$("#ddlEditCountryId").val()) { setError("#ddlEditCountryId", "msgEditCountryValidation", "Please select a country."); isValid = false; }
+            else setSuccess("#ddlEditCountryId", "msgEditCountryValidation");
+
+            if (!$("#ddlEditCompanyId").val()) { setError("#ddlEditCompanyId", "msgEditCompanyValidation", "Please select a company."); isValid = false; }
+            else setSuccess("#ddlEditCompanyId", "msgEditCompanyValidation");
+
+            var vat = $("#txtEditVAT").val().trim();
+            if (vat === "") { setError("#txtEditVAT", "msgEditVatValidation", "VAT number is required."); isValid = false; }
+            else if (!isValidVAT(vat)) { setError("#txtEditVAT", "msgEditVatValidation", "Enter a valid VAT number (min 3 chars)."); isValid = false; }
+            else setSuccess("#txtEditVAT", "msgEditVatValidation");
+
+            var phone = $("#txtEditContactNo").val().trim();
+            if (phone === "") { setError("#txtEditContactNo", "msgEditContactNoValidation", "Contact number is required."); isValid = false; }
+            else if (!isValidPhone(phone)) { setError("#txtEditContactNo", "msgEditContactNoValidation", "Enter a valid 10-digit mobile number (starts with 6-9)."); isValid = false; }
+            else setSuccess("#txtEditContactNo", "msgEditContactNoValidation");
+
+            var email = $("#txtEditEmail").val().trim();
+            if (email === "") { setError("#txtEditEmail", "msgEditEmailValidation", "Email is required."); isValid = false; }
+            else if (!isValidEmail(email)) { setError("#txtEditEmail", "msgEditEmailValidation", "Enter a valid email address."); isValid = false; }
+            else setSuccess("#txtEditEmail", "msgEditEmailValidation");
+
+            var pan = $("#txtEditPAN").val().trim().toUpperCase();
+            if (pan === "") { setError("#txtEditPAN", "msgEditPanValidation", "PAN is required."); isValid = false; }
+            else if (!isValidPAN(pan)) { setError("#txtEditPAN", "msgEditPanValidation", "Invalid PAN. Format: ABCDE1234F"); isValid = false; }
+            else setSuccess("#txtEditPAN", "msgEditPanValidation");
+
+            var tan = $("#txtEditTAN").val().trim().toUpperCase();
+            if (tan === "") { setError("#txtEditTAN", "msgEditTanValidation", "TAN is required."); isValid = false; }
+            else if (!isValidTAN(tan)) { setError("#txtEditTAN", "msgEditTanValidation", "Invalid TAN. Format: ABCD12345E"); isValid = false; }
+            else setSuccess("#txtEditTAN", "msgEditTanValidation");
+
+            var gst = $("#txtEditGST").val().trim().toUpperCase();
+            if (gst === "") { setError("#txtEditGST", "msgEditGstValidation", "GST number is required."); isValid = false; }
+            else if (!isValidGST(gst)) { setError("#txtEditGST", "msgEditGstValidation", "Invalid GST. Format: 22AAAAA0000A1Z5"); isValid = false; }
+            else setSuccess("#txtEditGST", "msgEditGstValidation");
+
+            var pt = $("#txtEditPT").val().trim();
+            if (pt === "") { setError("#txtEditPT", "msgEditPtValidation", "PT number is required."); isValid = false; }
+            else if (!isValidPT(pt)) { setError("#txtEditPT", "msgEditPtValidation", "Enter a valid PT number (min 3 chars)."); isValid = false; }
+            else setSuccess("#txtEditPT", "msgEditPtValidation");
+
+            return isValid;
+        }
+
+        // =============================================
+        // ADD BRANCH SAVE
+        // =============================================
+        $(document).on('click', '#btnBranchSave', function (e) {
+            e.preventDefault();
+            if (!validateAddForm()) return false;
+
+            var branchData = {
+                BranchId: 0,
+                CompanyID: parseInt($('#ddlCompanyId').val()) || 0,
+                BranchName: $('#txtBranchName').val().trim(),
+                BranchAddress1: $('#txtBranchAddress1').val().trim(),
+                City: $('#txtCity').val().trim(),
+                Pincode: $('#txtPincode').val().trim(),
+                BranchStateId: parseInt($('#ddlStateId').val()) || 0,
+                BranchCountryId: parseInt($('#ddlCountryId').val()) || 0,
+                PANNo: $('#txtPAN').val().trim().toUpperCase(),
+                TANNo: $('#txtTAN').val().trim().toUpperCase(),
+                VATNo: $('#txtVAT').val().trim(),
+                GSTNo: $('#txtGST').val().trim().toUpperCase(),
+                PTTaxNo: $('#txtPT').val().trim(),
+                Email: $('#txtEmail').val().trim(),
+                ContactNo: $('#txtContactNo').val().trim(),
+                IsActive: $('#chkActiveStatusAdd').is(':checked') ? 1 : 0
+            };
+
+            $.ajax({
+                type: "POST",
+                url: '/Branch/Save',
+                contentType: 'application/json',
+                data: JSON.stringify(branchData),
+                dataType: "json",
+                success: function (response) {
+                    if (response.toLowerCase() === "success") {
+                        alert("Branch added successfully!");
+                        $('#addBranch').modal('hide');
+                        setTimeout(() => location.reload(), 500);
+                    } else {
+                        alert(response || "Unknown error");
+                    }
+                },
+                error: function (xhr) {
+                    alert("Error saving: " + xhr.responseText);
+                }
+            });
+        });
+
+        // =============================================
+        // EDIT BRANCH SAVE
+        // =============================================
+        $(document).on('click', '#btnEditBranchSave', function (e) {
+            e.preventDefault();
+            if (!validateEditForm()) return false;
+
+            var branchData = {
+                BranchId: parseInt($('#hdnBranchId').val()) || 0,
+                CompanyID: parseInt($('#ddlEditCompanyId').val()) || 0,
+                BranchName: $('#txtEditBranchName').val().trim(),
+                BranchAddress1: $('#txtEditBranchAddress1').val().trim(),
+                City: $('#txtEditCity').val().trim(),
+                Pincode: $('#txtEditPincode').val().trim(),
+                BranchStateId: parseInt($('#ddlEditStateId').val()) || 0,
+                BranchCountryId: parseInt($('#ddlEditCountryId').val()) || 0,
+                PANNo: $('#txtEditPAN').val().trim().toUpperCase(),
+                TANNo: $('#txtEditTAN').val().trim().toUpperCase(),
+                VATNo: $('#txtEditVAT').val().trim(),
+                GSTNo: $('#txtEditGST').val().trim().toUpperCase(),
+                PTTaxNo: $('#txtEditPT').val().trim(),
+                Email: $('#txtEditEmail').val().trim(),
+                ContactNo: $('#txtEditContactNo').val().trim(),
+                IsActive: $('#chkEditActiveStatus').is(':checked') ? 1 : 0
+            };
+
+            $.ajax({
+                type: "POST",
+                url: '/Branch/Edit',
+                contentType: 'application/json',
+                data: JSON.stringify(branchData),
+                dataType: "json",
+                success: function (response) {
+                    if (response.toLowerCase() === "success") {
+                        alert("Branch updated successfully!");
+                        $('#editBranch').modal('hide');
+                        setTimeout(() => location.reload(), 500);
+                    } else {
+                        alert(response);
+                    }
+                },
+                error: function (xhr) {
+                    alert("Error: " + xhr.responseText);
+                }
+            });
+        });
+
+        // =============================================
+        // DELETE BRANCH
+        // =============================================
+        $(document).on('click', '#btnConfirmBranchDelete', function (e) {
+            e.preventDefault();
+            var branchId = parseInt($('#hdnDelBranchId').val());
+
+            $.ajax({
+                type: "GET",
+                url: '/Branch/DeleteBranch?branchId=' + branchId,
+                dataType: "json",
+                success: function (response) {
+                    if (response.toLowerCase() === "success") {
+                        alert("Branch deleted successfully!");
+                        $('#deleteBranch').modal('hide');
+                        setTimeout(() => location.reload(), 500);
+                    } else {
+                        alert("Delete failed: " + response);
+                    }
+                },
+                error: function (xhr) {
+                    console.error('DELETE Error:', xhr.responseText);
+                }
+            });
+        });
+
+        // =============================================
+        // EVENT BINDING
+        // =============================================
+        function bindEvents() {
+            $(document).off('click', '.editByBranchId').on('click', '.editByBranchId', function () {
+                var branchId = parseInt($(this).attr('data-edbranchId'));
+                loadBranchForEdit(branchId);
+            });
+
+            $(document).off('click', '.viewByBranchId').on('click', '.viewByBranchId', function () {
+                var branchId = parseInt($(this).attr('data-vwBranchId'));
+                loadBranchForView(branchId);
+            });
+
+            $(document).off('click', '.deleteBranches').on('click', '.deleteBranches', function () {
+                var branchId = parseInt($(this).attr('data-dlbranchId'));
+                loadBranchForDelete(branchId);
+            });
+        }
+
+        // =============================================
+        // LOAD EDIT DATA
+        // =============================================
+        function loadBranchForEdit(branchId) {
+            $.ajax({
+                type: "GET",
+                url: '/Branch/GetBranch?branchId=' + branchId,
+                dataType: "json",
+                success: function (response) {
+                    if (response) {
+                        $('#editBranchForm .form-control, #editBranchForm select').removeClass('input-validation-error input-success');
+                        $('.validationMessage[id^="msgEdit"]').text('');
+
+                        $('#hdnBranchId').val(response.BranchId || response.branchId);
+                        $('#txtEditBranchName').val(response.BranchName || response.branchName);
+                        $('#txtEditBranchAddress1').val(response.Address1 || response.address1 || response.BranchAddress1);
+                        $('#txtEditCity').val(response.City || response.city || response.BranchCity);
+                        $('#ddlEditStateId').val(response.BranchStateId || response.branchStateId);
+                        $('#ddlEditCountryId').val(response.BranchCountryId || response.branchCountryId);
+                        $('#ddlEditCompanyId').val(response.CompanyID || response.companyID);
+                        $('#txtEditPincode').val(response.Pincode || response.pincode || response.BranchPincode);
+                        $('#txtEditPAN').val((response.PANNo || response.panNo || response.BranchPanNo || '').toUpperCase());
+                        $('#txtEditTAN').val((response.TANNo || response.tanNo || response.BranchTanNo || '').toUpperCase());
+                        $('#txtEditVAT').val(response.VATNo || response.vatNo || response.BranchVatNo);
+                        $('#txtEditGST').val((response.GSTNo || response.gstNo || response.BranchGstNo || '').toUpperCase());
+                        $('#txtEditPT').val(response.PTTaxNo || response.ptTaxNo || response.BranchPttaxNo);
+                        $('#txtEditEmail').val(response.Email || response.email || response.BranchEmail);
+                        $('#txtEditContactNo').val(response.ContactNo || response.contactNo || response.BranchContactNo);
+                        $('#chkEditActiveStatus').prop('checked', (response.IsActive == 1 || response.isActive === true));
+                        $('#editBranch').modal('show');
+                    }
+                },
+                error: function (xhr) {
+                    console.error('EDIT LOAD ERROR:', xhr.responseText);
+                }
+            });
+        }
+
+           function loadBranchForView(branchId) {
+        $.ajax({
+            type: "GET",
+            url: '/Branch/GetBranch?branchId=' + branchId,
+            dataType: "json",
+            success: function (response) {
+                console.log('VIEW RAW RESPONSE:', JSON.stringify(response));
+                if (response) {
+                    // ROW 1
+                    $('#lblvwBranchName').val(response.BranchName || response.branchName || response.Branch_Name || '');
+                    $('#lblvwBranchAddress1').val(response.Address1 || response.address1 || response.BranchAddress1 || response.branchAddress1 || response.Branch_Address1 || '');
+                    $('#lblvwBranchState').val(response.StateName || response.stateName || response.State_Name || '');
+                    $('#lblvwBranchCountry').val(response.CountryName || response.countryName || response.Country_Name || '');
+                    // ROW 2
+                    $('#lblvwBranchCity').val(response.City || response.city || response.BranchCity || response.branchCity || '');
+                    $('#lblvwPincode').val(response.Pincode || response.pincode || response.PinCode || response.pinCode || response.BranchPincode || response.branchPincode || '');
+                    $('#lblvwCompanyName').val(response.CompanyName || response.companyName || response.Company_Name || '');
+                    $('#lblvwVAT').val(response.VATNo || response.vatNo || response.VatNo || response.vATNo || response.BranchVatNo || response.branchVatNo || response.VAT || response.vat || '');
+                    // ROW 3
+                    $('#lblvwContactNo').val(response.ContactNo || response.contactNo || response.ContactNumber || response.contactNumber || response.BranchContactNo || response.branchContactNo || '');
+                    $('#lblvwBranchEmail').val(response.Email || response.email || response.BranchEmail || response.branchEmail || response.EmailId || response.emailId || '');
+                    // ROW 3 - PAN & TAN (most likely cause of blank)
+                    var panVal = response.PANNo || response.panNo || response.PanNo || response.panno || response.PANNO
+                               || response.PAN || response.pan || response.BranchPanNo || response.branchPanNo
+                               || response.PANNumber || response.panNumber || '';
+                    $('#lblvwPAN').val(panVal.toString().toUpperCase());
+
+                    var tanVal = response.TANNo || response.tanNo || response.TanNo || response.tanno || response.TANNO
+                               || response.TAN || response.tan || response.BranchTanNo || response.branchTanNo
+                               || response.TANNumber || response.tanNumber || '';
+                    $('#lblvwTAN').val(tanVal.toString().toUpperCase());
+                    // ROW 4 - GST & PT (most likely cause of blank)
+                    var gstVal = response.GSTNo || response.gstNo || response.GstNo || response.gstno || response.GSTNO
+                               || response.GST || response.gst || response.BranchGstNo || response.branchGstNo
+                               || response.GSTNumber || response.gstNumber || response.GSTRegistrationNo || '';
+                    $('#lblvwGST').val(gstVal.toString().toUpperCase());
+
+                    var ptVal  = response.PTTaxNo || response.ptTaxNo || response.PtTaxNo || response.pttaxno || response.PTTAXNO
+                               || response.PTNo || response.ptNo || response.PT || response.pt
+                               || response.BranchPttaxNo || response.branchPttaxNo
+                               || response.ProfessionalTax || response.professionalTax || '';
+                    $('#lblvwPT').val(ptVal.toString());
+
+                    // ACTIVE STATUS TOGGLE + BADGE
+                    var rawActive = response.IsActive || response.isActive || response.is_active || response.Active || response.active;
+                    var isActive  = (rawActive == 1 || rawActive === true || rawActive === 'true' || rawActive === '1');
+                    $('#lblvwActiveStatus').prop('checked', isActive);
+                    $('#lblvwStatus')
+                        .removeClass('badge-success badge-danger')
+                        .addClass(isActive ? 'badge-success' : 'badge-danger')
+                        .text(isActive ? 'Active' : 'Inactive');
+
+                    $('#viewBranch').modal({ backdrop: 'static', keyboard: false }).modal('show');
+                }
+            },
+            error: function (xhr) {
+                console.error('VIEW LOAD ERROR:', xhr.responseText);
+            }
+        });
+    }
+        // =============================================
+        // LOAD DELETE DATA
+        // =============================================
+        function loadBranchForDelete(branchId) {
+            $.ajax({
+                type: "GET",
+                url: '/Branch/GetBranch?branchId=' + branchId,
+                dataType: "json",
+                success: function (response) {
+                    if (response) {
+                        $('#hdnDelBranchId').val(response.BranchId || response.branchId);
+                        $('#lblDelBranchName').text(response.BranchName || response.branchName || 'N/A');
+                        $('#lblDelCompanyName').text(response.CompanyName || response.companyName || 'N/A');
+                        $('#lblDelBranchAddress1').text(response.Address1 || response.address1 || response.BranchAddress1 || 'N/A');
+                        $('#lblDelBranchCity').text(response.City || response.city || response.BranchCity || 'N/A');
+                        $('#lblDelBranchState').text(response.StateName || response.stateName || 'N/A');
+                        $('#lblDelBranchCountry').text(response.CountryName || response.countryName || 'N/A');
+                        $('#lblDelContactNo').text(response.ContactNo || response.contactNo || response.BranchContactNo || 'N/A');
+                        $('#deleteBranch').modal({ backdrop: 'static', keyboard: false }).modal('show');
+                    }
+                },
+                error: function (xhr) {
+                    console.error('DELETE LOAD ERROR:', xhr.responseText);
+                }
+            });
+        }
+
+        // =============================================
+        // RESET
+        // =============================================
+        $(document).on('click', '.btnBranchReset', function () {
+            var $modal = $(this).closest('.modal');
+            $modal.find('input:not([id^="hdn"],[name="BranchId"]), select, textarea').val('');
+            $modal.find('input[type="checkbox"]:not([id*="hdn"])').prop('checked', true);
+            $modal.find('.input-validation-error').removeClass('input-validation-error');
+            $modal.find('.input-success').removeClass('input-success');
+            $modal.find('.validationMessage').text('');
+        });
+
+        // Clear on modal hide
+        $('#addBranch').on('hidden.bs.modal', function () {
+            $(this).find('input, select, textarea').val('').removeClass('input-validation-error input-success');
+            $(this).find('input[type="checkbox"]').prop('checked', false);
+            $(this).find('.validationMessage').text('');
+        });
+
         // Show All Button
-        $(document).on('click', '#showAllButton', function() {
+        $(document).on('click', '#showAllButton', function () {
             $('.pagination').hide();
             $(this).remove();
             $.ajax({
                 url: '/Branch/ShowAll',
                 type: 'GET',
-                success: function(data) {
+                success: function (data) {
                     $('#branchTable tbody').empty();
-                    $.each(data || [], function(index, item) {
+                    $.each(data || [], function (index, item) {
                         $('#branchTable tbody').append(
                             '<tr class="table-info">' +
                             '<td class="table-primary">' + (item.BranchName || item.branchName || '') + '</td>' +
@@ -2001,460 +2468,25 @@
                             ((item.IsActive == 1 || item.isActive === true) ? '<span class="badge badge-success">Active</span>' : '<span class="badge badge-danger">Inactive</span>') +
                             '</td>' +
                             '<td>' +
-                            '<button class="btn btn-sm btn-gradient-primary btn-rounded editByBranchId" data-edbranchId="' + (item.BranchId || item.branchId) + '" title="Edit" data-toggle="modal" data-target="#editBranch">' +
-                            '<i class="mdi mdi-pencil"></i></button> ' +
-                            '<button class="btn btn-sm btn-gradient-dark btn-rounded viewByBranchId" data-vwBranchId="' + (item.BranchId || item.branchId) + '" title="View" data-toggle="modal" data-target="#viewBranch">' +
-                            '<i class="mdi mdi-eye"></i></button> ' +
-                            '<button class="btn btn-sm btn-gradient-warning btn-rounded deleteBranches" data-dlbranchId="' + (item.BranchId || item.branchId) + '" title="Delete" data-toggle="modal" data-target="#deleteBranch">' +
-                            '<i class="mdi mdi-delete"></i></button>' +
+                            '<button class="btn btn-sm btn-gradient-primary btn-rounded editByBranchId" data-edbranchId="' + (item.BranchId || item.branchId) + '" title="Edit" data-toggle="modal" data-target="#editBranch"><i class="mdi mdi-pencil"></i></button> ' +
+                            '<button class="btn btn-sm btn-gradient-dark btn-rounded viewByBranchId" data-vwBranchId="' + (item.BranchId || item.branchId) + '" title="View" data-toggle="modal" data-target="#viewBranch"><i class="mdi mdi-eye"></i></button> ' +
+                            '<button class="btn btn-sm btn-gradient-warning btn-rounded deleteBranches" data-dlbranchId="' + (item.BranchId || item.branchId) + '" title="Delete" data-toggle="modal" data-target="#deleteBranch"><i class="mdi mdi-delete"></i></button>' +
                             '</td></tr>'
                         );
                     });
                     bindEvents();
                 },
-                error: function(xhr) {
+                error: function (xhr) {
                     console.error('ShowAll Error:', xhr.responseText);
                 }
             });
         });
 
-        // 🔥 ADD BRANCH
-        $(document).on('click', '#btnBranchSave', function(e) {
-            e.preventDefault();
-            console.log('🆕 ADD BRANCH clicked');
-
-            var branchData = {
-                BranchId: 0,
-                CompanyID: parseInt($('#ddlCompanyId').val()) || 0,
-                BranchName: $('#txtBranchName').val().trim(),
-                BranchAddress1: $('#txtBranchAddress1').val(),
-                City: $('#txtCity').val(),  // ✅ City for BranchCity
-                Pincode: $('#txtPincode').val(),
-                BranchStateId: parseInt($('#ddlStateId').val()) || 0,
-                BranchCountryId: parseInt($('#ddlCountryId').val()) || 0,
-                PANNo: $('#txtPAN').val(),
-                TANNo: $('#txtTAN').val(),
-                VATNo: $('#txtVAT').val(),
-                GSTNo: $('#txtGST').val(),
-                PTTaxNo: $('#txtPT').val(),
-                Email: $('#txtEmail').val(),
-                ContactNo: $('#txtContactNo').val(),
-                IsActive: $('#chkActiveStatusAdd').is(':checked') ? 1 : 0
-            };
-
-            console.log('📤 ADD FORM DATA:', branchData);
-
-            $.ajax({
-                type: "POST",
-                url: '/Branch/Save',
-                contentType: 'application/json',
-                data: JSON.stringify(branchData),
-                dataType: "json",
-                success: function(response) {
-                    console.log('✅ ADD Response:', response);
-                    if (response.toLowerCase() === "success") {
-                        alert("✅ Branch added successfully!");
-                        $('#addBranch').modal('hide');
-                        setTimeout(() => location.reload(), 500);
-                    } else {
-                        alert("❌ " + (response || "Unknown error"));
-                    }
-                },
-                error: function(xhr) {
-                    console.error('❌ ADD Error:', xhr.responseText);
-                    alert("Error saving: " + xhr.responseText);
-                }
-            });
-        });
-
-           // 🔥 EDIT BRANCH - CORRECT ID
-    $(document).on('click', '#btnEditBranchSave', function(e) {
-        e.preventDefault();
-        console.log('✏️ EDIT BRANCH SUBMIT');
-
-        var branchData = {
-            BranchId: parseInt($('#hdnBranchId').val()) || 0,
-            CompanyID: parseInt($('#ddlEditCompanyId').val()) || 0,
-            BranchName: $('#txtEditBranchName').val().trim(),
-            BranchAddress1: $('#txtEditBranchAddress1').val(),
-            City: $('#txtEditCity').val(),
-            Pincode: $('#txtEditPincode').val(),
-            BranchStateId: parseInt($('#ddlEditStateId').val()) || 0,
-            BranchCountryId: parseInt($('#ddlEditCountryId').val()) || 0,
-            PANNo: $('#txtEditPAN').val(),
-            TANNo: $('#txtEditTAN').val(),
-            VATNo: $('#txtEditVAT').val(),
-            GSTNo: $('#txtEditGST').val(),
-            PTTaxNo: $('#txtEditPT').val(),
-            Email: $('#txtEditEmail').val(),
-            ContactNo: $('#txtEditContactNo').val(),
-            IsActive: $('#chkEditActiveStatus').is(':checked') ? 1 : 0
-        };
-
-        console.log('📤 EDIT DATA:', branchData);
-
-        $.ajax({
-            type: "POST",
-            url: '/Branch/Edit',
-            contentType: 'application/json',
-            data: JSON.stringify(branchData),
-            dataType: "json",
-            success: function(response) {
-                console.log('✅ EDIT Response:', response);
-                if (response.toLowerCase() === "success") {
-                    alert("✅ Branch updated successfully!");
-                    $('#editBranch').modal('hide');
-                    setTimeout(() => location.reload(), 500);
-                } else {
-                    alert("❌ " + response);
-                }
-            },
-            error: function(xhr) {
-                console.error('❌ EDIT Error:', xhr.responseText);
-                alert("Error: " + xhr.responseText);
-            }
-        });
-    });
-        // 🔥 DELETE
-        $(document).on('click', '#btnConfirmBranchDelete', function(e) {
-            e.preventDefault();
-            var branchId = parseInt($('#hdnDelBranchId').val());
-            console.log('🗑️ DELETE:', branchId);
-
-            $.ajax({
-                type: "GET",
-                url: '/Branch/DeleteBranch?branchId=' + branchId,
-                dataType: "json",
-                success: function(response) {
-                    console.log('✅ DELETE Response:', response);
-                    if (response.toLowerCase() === "success") {
-                        alert("✅ Branch deleted successfully!");
-                        $('#deleteBranch').modal('hide');
-                        setTimeout(() => location.reload(), 500);
-                    } else {
-                        alert("❌ Delete failed: " + response);
-                    }
-                },
-                error: function(xhr) {
-                    console.error('❌ DELETE Error:', xhr.responseText);
-                }
-            });
-        });
-
-        // 🔥 EVENT BINDING FUNCTION
-        function bindEvents() {
-            $(document).off('click', '.editByBranchId').on('click', '.editByBranchId', function() {
-                var branchId = parseInt($(this).attr('data-edbranchId'));
-                console.log('✏️ EDIT CLICKED:', branchId);
-                loadBranchForEdit(branchId);
-            });
-
-            $(document).off('click', '.viewByBranchId').on('click', '.viewByBranchId', function() {
-                var branchId = parseInt($(this).attr('data-vwBranchId'));
-                console.log('👁️ VIEW CLICKED:', branchId);
-                loadBranchForView(branchId);
-            });
-
-            $(document).off('click', '.deleteBranches').on('click', '.deleteBranches', function() {
-                var branchId = parseInt($(this).attr('data-dlbranchId'));
-                console.log('🗑️ DELETE CLICKED:', branchId);
-                loadBranchForDelete(branchId);
-            });
-        }
-
-        // 🔥 LOAD EDIT DATA
-        function loadBranchForEdit(branchId) {
-            $.ajax({
-                type: "GET",
-                url: '/Branch/GetBranch?branchId=' + branchId,
-                dataType: "json",
-                success: function(response) {
-                    console.log('📥 EDIT DATA LOADED:', response);
-                    if (response) {
-                        $('#hdnBranchId').val(response.BranchId || response.branchId);
-                        $('#txtEditBranchName').val(response.BranchName || response.branchName);
-                        $('#txtEditBranchAddress1').val(response.Address1 || response.address1 || response.BranchAddress1);
-                        $('#txtEditCity').val(response.City || response.city || response.BranchCity);
-                        $('#ddlEditStateId').val(response.BranchStateId || response.branchStateId);
-                        $('#ddlEditCountryId').val(response.BranchCountryId || response.branchCountryId);
-                        $('#ddlEditCompanyId').val(response.CompanyID || response.companyID);
-                        $('#txtEditPincode').val(response.Pincode || response.pincode || response.BranchPincode);
-                        $('#txtEditPAN').val(response.PANNo || response.panNo || response.BranchPanNo);
-                        $('#txtEditTAN').val(response.TANNo || response.tanNo || response.BranchTanNo);
-                        $('#txtEditVAT').val(response.VATNo || response.vatNo || response.BranchVatNo);
-                        $('#txtEditGST').val(response.GSTNo || response.gstNo || response.BranchGstNo);
-                        $('#txtEditPT').val(response.PTTaxNo || response.ptTaxNo || response.BranchPttaxNo);
-                        $('#txtEditEmail').val(response.Email || response.email || response.BranchEmail);
-                        $('#txtEditContactNo').val(response.ContactNo || response.contactNo || response.BranchContactNo);
-                        $('#chkEditActiveStatus').prop('checked', (response.IsActive == 1 || response.isActive === true));
-                        $('#editBranch').modal('show');
-                    }
-                },
-                error: function(xhr) {
-                    console.error('❌ EDIT LOAD ERROR:', xhr.responseText);
-                }
-            });
-        }
-
-        // 🔥 LOAD VIEW DATA - COMPLETE
-        function loadBranchForView(branchId) {
-            $.ajax({
-                type: "GET",
-                url: '/Branch/GetBranch?branchId=' + branchId,
-                dataType: "json",
-                success: function(response) {
-                    console.log('👁️ VIEW DATA LOADED:', response);
-                    if (response) {
-                        // BASIC INFO
-                        $('#hdnViewBranchId').val(response.BranchId || response.branchId);
-                        $('#lblvwBranchName').text(response.BranchName || response.branchName || 'N/A');
-                        $('#lblvwCompanyName').text(response.CompanyName || response.companyName || 'N/A');
-
-                        // ADDRESSES
-                        $('#lblvwBranchAddress1').text(response.Address1 || response.address1 || response.BranchAddress1 || 'N/A');
-                        $('#lblvwBranchCity').text(response.City || response.city || response.BranchCity || 'N/A');
-                        $('#lblvwPincode').text(response.Pincode || response.pincode || response.BranchPincode || 'N/A');
-
-                        // LOCATION
-                        $('#lblvwBranchState').text(response.StateName || response.stateName || 'N/A');
-                        $('#lblvwBranchCountry').text(response.CountryName || response.countryName || 'N/A');
-
-                        // CONTACT
-                        $('#lblvwBranchEmail').text(response.Email || response.email || response.BranchEmail || 'N/A');
-                        $('#lblvwContactNo').text(response.ContactNo || response.contactNo || response.BranchContactNo || 'N/A');
-
-                        // STATUS
-                        var status = (response.IsActive == 1 || response.isActive === true) ? 'Active' : 'Inactive';
-                        $('#lblvwStatus').html('<span class="badge badge-' + (status === 'Active' ? 'success' : 'danger') + '">' + status + '</span>');
-
-                        // LOGO
-                        var logoSrc = response.CompanyLogo || '~/content/images/company-logo.png';
-                        $('#viewBranchLogo').attr('src', logoSrc);
-
-                        $('#viewBranch').modal({backdrop: 'static', keyboard: false}).modal('show');
-                    }
-                },
-                error: function(xhr) {
-                    console.error('❌ VIEW LOAD ERROR:', xhr.responseText);
-                }
-            });
-        }
-
-        // 🔥 LOAD DELETE DATA
-        function loadBranchForDelete(branchId) {
-            $.ajax({
-                type: "GET",
-                url: '/Branch/GetBranch?branchId=' + branchId,
-                dataType: "json",
-                success: function(response) {
-                    console.log('🗑️ DELETE DATA LOADED:', response);
-                    if (response) {
-                        $('#hdnDelBranchId').val(response.BranchId || response.branchId);
-                        $('#lblDelBranchName').text(response.BranchName || response.branchName || 'N/A');
-                        $('#lblDelCompanyName').text(response.CompanyName || response.companyName || 'N/A');
-                        $('#lblDelBranchAddress1').text(response.Address1 || response.address1 || response.BranchAddress1 || 'N/A');
-                        $('#lblDelBranchCity').text(response.City || response.city || response.BranchCity || 'N/A');
-                        $('#lblDelBranchState').text(response.StateName || response.stateName || 'N/A');
-                        $('#lblDelBranchCountry').text(response.CountryName || response.countryName || 'N/A');
-                        $('#lblDelContactNo').text(response.ContactNo || response.contactNo || response.BranchContactNo || 'N/A');
-
-                        // LOGO
-                        var delLogo = response.CompanyLogo || '~/content/images/company-logo.png';
-                        $('#deleteBranchLogo').attr('src', delLogo);
-
-                        $('#deleteBranch').modal({backdrop: 'static', keyboard: false}).modal('show');
-                    }
-                },
-                error: function(xhr) {
-                    console.error('❌ DELETE LOAD ERROR:', xhr.responseText);
-                }
-            });
-        }
-
-        // Reset forms
-        $(document).on('click', '.btnBranchReset', function() {
-            $(this).closest('.modal').find('input,select,textarea').val('');
-            $(this).closest('.modal').find('input[type="checkbox"]').prop('checked', false);
-        });
-
         // Initial bind
         bindEvents();
-        console.log('✅ ALL FUNCTIONS READY!');
     });
 </script>
-<script>
-$(document).ready(function () {
 
-    // ================= COMMON FUNCTIONS =================
-
-    function setError(input, messageId, message) {
-        $(input).addClass("input-validation-error").removeClass("input-success");
-        $("#" + messageId).text(message);
-    }
-
-    function setSuccess(input, messageId) {
-        $(input).removeClass("input-validation-error").addClass("input-success");
-        $("#" + messageId).text("");
-    }
-
-    function isValidEmail(email) {
-        return /^[^\s@@]+@@[^\s@@]+\.[^\s@@]+$/.test(email);
-    }
-
-    function isValidPhone(phone) {
-        return /^[6-9]\d{9}$/.test(phone);
-    }
-
-    function isValidPincode(pin) {
-        return /^\d{6}$/.test(pin);
-    }
-
-    // ================= ADD VALIDATION =================
-
-    function validateAddForm() {
-        let isValid = true;
-
-        let name = $("#txtBranchName").val().trim();
-        let address = $("#txtBranchAddress1").val().trim();
-        let city = $("#txtCity").val().trim();
-        let pincode = $("#txtPincode").val().trim();
-        let state = $("#ddlStateId").val();
-        let country = $("#ddlCountryId").val();
-        let company = $("#ddlCompanyId").val();
-        let email = $("#txtEmail").val().trim();
-        let phone = $("#txtContactNo").val().trim();
-
-        if (name === "") {
-            setError("#txtBranchName", "msgAddBranchNameValidation", "Branch name required");
-            isValid = false;
-        } else setSuccess("#txtBranchName", "msgAddBranchNameValidation");
-
-        if (address === "") {
-            setError("#txtBranchAddress1", "msgAddress1Validation", "Address required");
-            isValid = false;
-        } else setSuccess("#txtBranchAddress1", "msgAddress1Validation");
-
-        if (city === "") {
-            setError("#txtCity", "msgAddCityValidation", "City required");
-            isValid = false;
-        } else setSuccess("#txtCity", "msgAddCityValidation");
-
-        if (!isValidPincode(pincode)) {
-            setError("#txtPincode", "msgAddPinCodeValidation", "Invalid pincode");
-            isValid = false;
-        } else setSuccess("#txtPincode", "msgAddPinCodeValidation");
-
-        if (!state) {
-            setError("#ddlStateId", "msgAddStateValidation", "Select state");
-            isValid = false;
-        } else setSuccess("#ddlStateId", "msgAddStateValidation");
-
-        if (!country) {
-            setError("#ddlCountryId", "msgAddCountryValidation", "Select country");
-            isValid = false;
-        } else setSuccess("#ddlCountryId", "msgAddCountryValidation");
-
-        if (!company) {
-            setError("#ddlCompanyId", "msgAddCompanyValidation", "Select company");
-            isValid = false;
-        } else setSuccess("#ddlCompanyId", "msgAddCompanyValidation");
-
-        if (email !== "" && !isValidEmail(email)) {
-            setError("#txtEmail", "msgAddEmailValidation", "Invalid email");
-            isValid = false;
-        } else setSuccess("#txtEmail", "msgAddEmailValidation");
-
-        if (phone !== "" && !isValidPhone(phone)) {
-            setError("#txtContactNo", "msgAddContactNoValidation", "Invalid phone number");
-            isValid = false;
-        } else setSuccess("#txtContactNo", "msgAddContactNoValidation");
-
-        return isValid;
-    }
-
-    // ================= EDIT VALIDATION =================
-
-    function validateEditForm() {
-        let isValid = true;
-
-        let name = $("#txtEditBranchName").val().trim();
-        let address = $("#txtEditBranchAddress1").val().trim();
-        let city = $("#txtEditCity").val().trim();
-        let pincode = $("#txtEditPincode").val().trim();
-        let state = $("#ddlEditStateId").val();
-        let country = $("#ddlEditCountryId").val();
-        let company = $("#ddlEditCompanyId").val();
-        let email = $("#txtEditEmail").val().trim();
-        let phone = $("#txtEditContactNo").val().trim();
-
-        if (name === "") {
-            setError("#txtEditBranchName", "msgEditBranchNameValidation", "Branch name required");
-            isValid = false;
-        } else setSuccess("#txtEditBranchName", "msgEditBranchNameValidation");
-
-        if (address === "") {
-            setError("#txtEditBranchAddress1", "msgEditAddress1Validation", "Address required");
-            isValid = false;
-        } else setSuccess("#txtEditBranchAddress1", "msgEditAddress1Validation");
-
-        if (city === "") {
-            setError("#txtEditCity", "msgEditCityValidation", "City required");
-            isValid = false;
-        } else setSuccess("#txtEditCity", "msgEditCityValidation");
-
-        if (!isValidPincode(pincode)) {
-            setError("#txtEditPincode", "msgEditPinCodeValidation", "Invalid pincode");
-            isValid = false;
-        } else setSuccess("#txtEditPincode", "msgEditPinCodeValidation");
-
-        if (!state) {
-            setError("#ddlEditStateId", "msgEditStateValidation", "Select state");
-            isValid = false;
-        } else setSuccess("#ddlEditStateId", "msgEditStateValidation");
-
-        if (!country) {
-            setError("#ddlEditCountryId", "msgEditCountryValidation", "Select country");
-            isValid = false;
-        } else setSuccess("#ddlEditCountryId", "msgEditCountryValidation");
-
-        if (!company) {
-            setError("#ddlEditCompanyId", "msgEditCompanyValidation", "Select company");
-            isValid = false;
-        } else setSuccess("#ddlEditCompanyId", "msgEditCompanyValidation");
-
-        if (email !== "" && !isValidEmail(email)) {
-            setError("#txtEditEmail", "msgEditEmailValidation", "Invalid email");
-            isValid = false;
-        } else setSuccess("#txtEditEmail", "msgEditEmailValidation");
-
-        if (phone !== "" && !isValidPhone(phone)) {
-            setError("#txtEditContactNo", "msgEditContactNoValidation", "Invalid phone number");
-            isValid = false;
-        } else setSuccess("#txtEditContactNo", "msgEditContactNoValidation");
-
-        return isValid;
-    }
-
-    // ================= FIXED BUTTON EVENTS =================
-
-    // ✅ ADD BUTTON (FIXED)
-    $(document).on("click", "#btnBranchSave", function (e) {
-        if (!validateAddForm()) {
-            e.preventDefault();
-            return false;
-        }
-    });
-
-    // ✅ EDIT BUTTON (FIXED - YOUR MAIN ISSUE)
-    $(document).on("click", "#btnEditBranchSave", function (e) {
-        if (!validateEditForm()) {
-            e.preventDefault();
-            return false;
-        }
-    });
-
-});
-</script>
 <script>
     let rowsPerPage = 5;
     let currentPage = 1;
@@ -2462,42 +2494,33 @@ $(document).ready(function () {
     const table = document.getElementById("branchTable");
     const tbody = table.querySelector("tbody");
     const rows = tbody.getElementsByTagName("tr");
-
     const pagination = document.getElementById("pagination");
 
     function displayTable() {
         let start = (currentPage - 1) * rowsPerPage;
         let end = start + rowsPerPage;
-
         for (let i = 0; i < rows.length; i++) {
             rows[i].style.display = (i >= start && i < end) ? "" : "none";
         }
-
         renderPagination();
     }
 
     function renderPagination() {
         pagination.innerHTML = "";
-
         let pageCount = Math.ceil(rows.length / rowsPerPage);
-
         for (let i = 1; i <= pageCount; i++) {
             let li = document.createElement("li");
             li.className = (i === currentPage) ? "active" : "";
-
             li.innerHTML = `<a href="#">${i}</a>`;
-
             li.addEventListener("click", function (e) {
                 e.preventDefault();
                 currentPage = i;
                 displayTable();
             });
-
             pagination.appendChild(li);
         }
     }
 
-    // SHOW ALL BUTTON
     document.getElementById("btnShowAll").addEventListener("click", function () {
         for (let i = 0; i < rows.length; i++) {
             rows[i].style.display = "";
@@ -2505,6 +2528,5 @@ $(document).ready(function () {
         pagination.innerHTML = "";
     });
 
-    // INIT
     displayTable();
 </script>

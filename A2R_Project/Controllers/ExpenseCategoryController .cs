@@ -23,7 +23,7 @@ namespace A2R_Project.Controllers
         {
             var allExpenseCategories = await _expenseCategoryRepository.GetAllExpenseCategories();
 
-            // 🔥 Sort by latest first (NEWLY ADDED FIRST)
+            await SetPagePermissions("ExpenseCategory");
             allExpenseCategories = allExpenseCategories
                                     .OrderByDescending(x => x.Created_Date)
                                     .ToList();

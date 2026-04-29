@@ -34,6 +34,9 @@ builder.Services.AddScoped<IRoleRepository, RoleRepository>();
 builder.Services.AddScoped<ILoginRepository,LoginRepository>();
 builder.Services.AddScoped<IAccessControl, AccessControlRepository>();
 builder.Services.AddScoped<IDashboardService, DashboardService>();
+builder.Services.AddScoped<IPermissionService, PermissionService>();
+builder.Services.AddScoped<IPermissionService, PermissionService>(); 
+builder.Services.AddMemoryCache();
 
 // Program.cs - ADD THESE 6 LINES
 builder.Services.AddSession(options =>

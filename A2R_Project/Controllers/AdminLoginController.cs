@@ -6,7 +6,7 @@ using Newtonsoft.Json;
 
 namespace A2R_Project.Controllers
 {
-    public class AdminLoginController : Controller
+    public class AdminLoginController :Controller
     {
         private readonly ILoginRepository _loginRepository;
         private readonly IRoleRepository _role;
@@ -59,7 +59,7 @@ namespace A2R_Project.Controllers
             var allAdminLogins = await _loginRepository.GetAllAdminLogin();
             var totalCount = allAdminLogins.Count;
             var pagedAdminLogins = allAdminLogins.Skip((page - 1) * pageSize).Take(pageSize).ToList();
-
+           
             models.adminLogin = pagedAdminLogins;
             models.role = await _role.GetAllRoles(); // Fixed: use _roleRepository
 
@@ -149,9 +149,17 @@ namespace A2R_Project.Controllers
         public ActionResult Logout()
         {
             HttpContext.Session.Clear();
-            return RedirectToAction("Login");
+
+            // Expire the session cookie immediately
+            Response.Cookies.Delete(".AspNetCore.Session");
+
+            Response.Headers["Cache-Control"] = "no-cache, no-store, must-revalidate, private, max-age=0";
+            Response.Headers["Pragma"] = "no-cache";
+            Response.Headers["Expires"] = "0";
+
+            return RedirectToAction("Login", "AdminLogin");
         }
-        // ... (keep all existing methods, add these forgot password methods)
+       
         [HttpGet]
         public IActionResult GetUserCredentials()
         {
@@ -247,6 +255,12 @@ namespace A2R_Project.Controllers
                 Console.WriteLine($"💥 ResetPassword ERROR: {ex}");
                 return Json(new { success = false, message = $"Server error: {ex.Message}" });
             }
+        }
+        [HttpGet]
+        public IActionResult CheckSession()
+        {
+            var username = HttpContext.Session.GetString("Username");
+            return Json(new { isLoggedIn = !string.IsNullOrEmpty(username) });
         }
     }
     }

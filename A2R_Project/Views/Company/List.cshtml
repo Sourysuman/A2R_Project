@@ -20,120 +20,210 @@
     }
 
     .card-title {
-        font-size: 22px;
-        font-weight: 700;
-        color: #000;
+        font-size: 18px;
+        font-weight: 600;
+        letter-spacing: 0.5px;
+        color: #111827;
     }
 
     /* ================= TABLE ================= */
     #companyTable {
-        border-radius: 12px;
+        border-radius: 14px;
         overflow: hidden;
-        width: 100%;
+        background: #fff;
         border-collapse: collapse;
+        border-spacing: 0;
+        width: 100%;
     }
 
-        /* HEADER (FIELD NAME COLOR CHANGE) */
         #companyTable thead {
-            background: linear-gradient(45deg, #1e3c72, #2a5298);
-            color: #fff;
-            text-align: center;
+            background: #3f454c;
         }
 
             #companyTable thead th {
-                padding: 14px;
-                font-size: 15px;
+                color: #fff !important;
+                border: none !important;
+                font-size: 14px;
                 font-weight: 700;
-                border: none;
-                letter-spacing: 0.5px;
+                text-transform: uppercase;
+                letter-spacing: 0.6px;
+                padding: 14px;
+                text-align: center !important;
             }
 
-        /* TABLE TEXT STRONG BLACK */
-        #companyTable td {
+        #companyTable tbody td {
             font-size: 15px;
             font-weight: 600;
-            color: #000;
-            vertical-align: middle;
-            border: 1px solid #eee;
-            text-align: center;
+            color: #34495e;
+            padding: 14px;
+            vertical-align: middle !important;
+            text-align: center !important;
+            background-color: white !important;
+            border: none !important;
         }
 
-        /* ROW DESIGN */
+            #companyTable tbody td:first-child {
+                font-weight: 700 !important;
+                color: #2c3e50 !important;
+                font-size: 15px !important;
+            }
+
         #companyTable tbody tr {
-            transition: all 0.3s ease;
+            transition: all 0.25s ease;
         }
 
-            #companyTable tbody tr:nth-child(even) {
-                background: #f8fbff;
+
+
+        /* ===== TABLE ACTION BUTTONS ===== */
+        #companyTable .btn-sm {
+            width: 36px !important;
+            height: 36px !important;
+            border-radius: 10px !important;
+            padding: 0 !important;
+            margin: 0 !important;
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            border: none !important;
+            transition: all 0.25s ease;
+        }
+
+            #companyTable .btn-sm i {
+                font-size: 16px !important;
+                line-height: 1;
             }
 
-            #companyTable tbody tr:nth-child(odd) {
-                background: #ffffff;
+            #companyTable .btn-sm:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 6px 15px rgba(0,0,0,0.15);
             }
 
-            /* HOVER EFFECT */
-            #companyTable tbody tr:hover {
-                background: #dbeafe !important;
-                transform: scale(1.01);
-                box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        #companyTable .btn-gradient-primary {
+            background: linear-gradient(135deg, #4e73df, #224abe) !important;
+            color: #fff !important;
+            border-radius: 10px !important;
+        }
+
+        #companyTable .btn-gradient-dark {
+            background: linear-gradient(135deg, #36b9cc, #1f8ea3) !important;
+            color: #fff !important;
+            border-radius: 10px !important;
+            border: none !important;
+        }
+
+        #companyTable .btn-gradient-warning {
+            background: linear-gradient(135deg, #e74a3b, #c0392b) !important;
+            color: #fff !important;
+            border-radius: 10px !important;
+            border: none !important;
+        }
+
+        #companyTable tbody td:last-child {
+            text-align: center !important;
+            vertical-align: middle !important;
+            display: table-cell !important;
+        }
+
+            #companyTable tbody td:last-child .btn-group {
+                display: inline-flex !important;
+                align-items: center !important;
+                justify-content: center !important;
+                gap: 5px;
             }
 
     /* ================= BADGES ================= */
     .badge-success {
-        background: #22c55e;
-        padding: 6px 12px;
+        background: #16a34a !important;
+        color: #fff !important;
+        padding: 5px 12px;
         border-radius: 20px;
-        font-size: 12px;
+        font-size: 13px;
         font-weight: 600;
     }
 
     .badge-danger {
-        background: #ef4444;
-        padding: 6px 12px;
+        background: #dc2626 !important;
+        color: #fff !important;
+        padding: 5px 12px;
         border-radius: 20px;
-        font-size: 12px;
+        font-size: 13px;
         font-weight: 600;
     }
 
     /* ================= BUTTONS ================= */
     .btn {
-        border-radius: 30px;
+        border-radius: 10px;
         font-size: 14px;
         font-weight: 600;
         padding: 6px 14px;
         transition: all 0.3s ease;
     }
 
-    /* ADD BUTTON */
+        .btn:hover {
+            transform: translateY(-2px) scale(1.05);
+            box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+        }
+
     .btn-gradient-primary {
-        background: linear-gradient(45deg, #4facfe, #00f2fe);
-        color: #fff;
-        border: none;
+        background: linear-gradient(135deg, #10b981, #059669) !important;
+        border: none !important;
+        color: #fff !important;
+        font-weight: 600;
+        border-radius: 10px !important;
+        padding: 8px 18px !important;
+        transition: 0.2s;
     }
 
-    /* VIEW BUTTON */
+        .btn-gradient-primary:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(16,185,129,0.4);
+            color: #fff !important;
+        }
+
     .btn-gradient-dark {
         background: linear-gradient(45deg, #434343, #000000);
         color: #fff;
         border: none;
     }
 
-    /* DELETE BUTTON */
     .btn-gradient-warning {
         background: linear-gradient(45deg, #ff416c, #ff4b2b);
         color: #fff;
         border: none;
     }
 
-    /* HOVER BUTTON */
-    .btn:hover {
-        transform: translateY(-3px) scale(1.05);
-        box-shadow: 0 6px 15px rgba(0,0,0,0.2);
-    }
-
-    /* BUTTON SPACING */
     td .btn {
         margin: 3px;
+    }
+
+    /* ================= SHOW ALL BUTTON ================= */
+    #showAllButton {
+        background: linear-gradient(135deg, #10b981, #059669) !important;
+        border: none !important;
+        color: #fff !important;
+        font-weight: 600;
+        border-radius: 10px !important;
+        padding: 8px 20px !important;
+        transition: 0.2s;
+    }
+
+        #showAllButton:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(16,185,129,0.4);
+        }
+
+    /* ================= PAGINATION ================= */
+    .pagination .page-item .page-link {
+        border-radius: 8px;
+        margin: 0 4px;
+        color: #4f46e5;
+        font-weight: 500;
+    }
+
+    .pagination .page-item.active .page-link {
+        background: linear-gradient(135deg, #6366f1, #4f46e5);
+        color: #fff;
+        border: none;
     }
 
     /* ================= FORM ELEMENTS ================= */
@@ -161,7 +251,13 @@
         color: red;
     }
 
-    /* ================= IMAGE STYLING ================= */
+    .validationMessage {
+        color: red;
+        font-size: 12px;
+        font-weight: 600;
+    }
+
+    /* ================= IMAGE ================= */
     #logoPreview,
     #editLogoPreview,
     #image_upload_previewEmployeeView,
@@ -170,9 +266,16 @@
         height: 140px;
         object-fit: cover;
         border-radius: 12px;
-        border: 2px solid #ddd;
+        border: 2px solid #e0e0e0;
         background: #fff;
         transition: 0.3s;
+    }
+
+    #logoPreview,
+    #editLogoPreview {
+        height: 130px;
+        border: 2px dashed #00c6ff;
+        padding: 4px;
     }
 
         #logoPreview:hover,
@@ -181,42 +284,25 @@
             transform: scale(1.05);
         }
 
+    #image_upload_previewEmployeeView,
+    #image_upload_previewCompanyDel {
+        height: 180px;
+    }
+
+        #image_upload_previewEmployeeView:hover,
+        #image_upload_previewCompanyDel:hover {
+            transform: scale(1.04);
+            border-color: #00c6ff;
+            box-shadow: 0 10px 25px rgba(0,198,255,0.4);
+        }
+
     /* ================= CHECKBOX ================= */
     .rounded-checkbox {
         transform: scale(1.2);
         margin-right: 5px;
     }
 
-    /* ================= PAGINATION ================= */
-    .pagination .page-item .page-link {
-        border-radius: 50px;
-        margin: 3px;
-        color: #1e3c72;
-        font-weight: 600;
-    }
-
-    .pagination .page-item.active .page-link {
-        background: #1e3c72;
-        border-color: #1e3c72;
-        color: #fff;
-    }
-
-    /* ================= SHOW ALL BUTTON ================= */
-    #showAllButton {
-        background: linear-gradient(45deg, #00c6ff, #0072ff);
-        border: none;
-        color: white;
-        border-radius: 25px;
-        padding: 8px 20px;
-        font-weight: 600;
-    }
-
-        #showAllButton:hover {
-            transform: scale(1.08);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-        }
-
-    /* ================= ADD & EDIT POPUP ONLY ================= */
+    /* ================= ADD & EDIT MODAL ================= */
     #addCompany .modal-content,
     #editCompany .modal-content {
         border-radius: 20px;
@@ -226,61 +312,31 @@
         animation: smoothPopup 0.35s ease;
     }
 
-    /* ANIMATION */
     @@keyframes smoothPopup {
-        from
+        from {
+            transform: translateY(-30px) scale(0.95);
+            opacity: 0;
+        }
 
-    {
-        transform: translateY(-30px) scale(0.95);
-        opacity: 0;
+        to {
+            transform: translateY(0) scale(1);
+            opacity: 1;
+        }
     }
 
-    to {
-        transform: translateY(0) scale(1);
-        opacity: 1;
-    }
-
-    }
-
-    /* ================= HEADER ================= */
-    #addCompany .modal-header {
-        background: linear-gradient(45deg, #0072ff, #00c6ff);
-        color: #fff;
-        border: none;
-    }
-
-    #editCompany .modal-header {
-        background: linear-gradient(45deg, #00c853, #64dd17);
-        color: #fff;
-        border: none;
-    }
-
-    .modal-title {
-        font-weight: 700;
-        font-size: 20px;
-    }
-
-    /* ================= BODY ================= */
     #addCompany .modal-body,
     #editCompany .modal-body {
         background: #f8fbff;
         padding: 25px;
-    }
-
-    /* REMOVE SCROLL COMPLETELY */
-    #addCompany .modal-body,
-    #editCompany .modal-body {
         max-height: unset !important;
         overflow: visible !important;
     }
 
-    /* ================= FORM GRID CLEAN ================= */
     #addCompany .row,
     #editCompany .row {
         margin-bottom: 8px;
     }
 
-    /* ================= INPUT ================= */
     #addCompany .form-control,
     #editCompany .form-control {
         border-radius: 12px;
@@ -289,7 +345,6 @@
         transition: 0.3s;
     }
 
-        /* FOCUS EFFECT */
         #addCompany .form-control:focus,
         #editCompany .form-control:focus {
             border-color: #00c6ff;
@@ -297,25 +352,12 @@
             transform: scale(1.02);
         }
 
-    /* ================= IMAGE ================= */
-    #logoPreview,
-    #editLogoPreview {
-        width: 100%;
-        height: 130px;
-        object-fit: cover;
-        border-radius: 12px;
-        border: 2px dashed #00c6ff;
-        padding: 4px;
-    }
-
-    /* ================= FOOTER ================= */
     #addCompany .modal-footer,
     #editCompany .modal-footer {
         border-top: none;
         background: #fff;
     }
 
-    /* ================= BUTTONS ================= */
     #addCompany .btn-success {
         background: linear-gradient(45deg, #00c853, #64dd17);
         border: none;
@@ -333,40 +375,13 @@
         color: #000;
     }
 
-    /* HOVER */
     #addCompany .btn:hover,
     #editCompany .btn:hover {
         transform: scale(1.05);
         box-shadow: 0 8px 20px rgba(0,0,0,0.25);
     }
 
-    @@media (min-width: 576px) {
-        .modal-dialog
-
-    {
-        max-width: 1000px;
-        margin: 1.75rem auto;
-    }
-    }
-    /* ================= DROPDOWN MODERN ================= */
-    #addCompany select,
-    #editCompany select {
-        appearance: none;
-        -webkit-appearance: none;
-        -moz-appearance: none;
-        background: #fff url("data:image/svg+xml;utf8,<svg fill='%230072ff' height='20' viewBox='0 0 24 24' width='20' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/></svg>") no-repeat right 12px center;
-        border-radius: 12px;
-        border: 1px solid #ddd;
-        padding: 10px 35px 10px 10px;
-        font-weight: 600;
-        cursor: pointer;
-    }
-
-    /* REMOVE BOOTSTRAP EXTRA ICON */
-    .input-group-append {
-        display: none !important;
-    }
-    /* ================= DROPDOWN IMPROVED ================= */
+    /* ================= DROPDOWN ================= */
     #addCompany select,
     #editCompany select {
         appearance: none;
@@ -375,27 +390,27 @@
         background: #fff url("data:image/svg+xml;utf8,<svg fill='%230072ff' height='22' viewBox='0 0 24 24' width='22' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/></svg>") no-repeat right 14px center;
         border-radius: 12px;
         border: 1px solid #ddd;
-        /* 🔥 IMPROVEMENTS */
-        padding: 12px 40px 12px 12px; /* more space */
-        font-size: 15px; /* bigger text */
+        padding: 12px 40px 12px 12px;
+        font-size: 15px;
         font-weight: 600;
         line-height: 1.5;
-        height: 45px; /* fixed height */
+        height: 45px;
         cursor: pointer;
     }
 
-        /* HOVER */
-        #addCompany select:hover,
-        #editCompany select:hover {
+        #addCompany select:hover, #editCompany select:hover {
             border-color: #00c6ff;
         }
 
-        /* FOCUS */
-        #addCompany select:focus,
-        #editCompany select:focus {
+        #addCompany select:focus, #editCompany select:focus {
             border-color: #0072ff;
             box-shadow: 0 0 10px rgba(0,114,255,0.3);
         }
+
+    .input-group-append {
+        display: none !important;
+    }
+
     /* ================= ISACTIVE SWITCH ================= */
     #addCompany .form-check,
     #editCompany .form-check {
@@ -404,7 +419,6 @@
         gap: 10px;
     }
 
-    /* HIDE DEFAULT CHECKBOX */
     #addCompany .form-check-input,
     #editCompany .form-check-input {
         appearance: none;
@@ -417,7 +431,6 @@
         transition: 0.3s;
     }
 
-        /* CIRCLE */
         #addCompany .form-check-input::before,
         #editCompany .form-check-input::before {
             content: "";
@@ -431,24 +444,22 @@
             transition: 0.3s;
         }
 
-        /* ACTIVE */
         #addCompany .form-check-input:checked,
         #editCompany .form-check-input:checked {
             background: linear-gradient(45deg, #00c853, #64dd17);
         }
 
-            /* MOVE CIRCLE */
             #addCompany .form-check-input:checked::before,
             #editCompany .form-check-input:checked::before {
                 transform: translateX(22px);
             }
 
-    /* LABEL */
     #addCompany .form-check-label,
     #editCompany .form-check-label {
         font-weight: 600;
     }
-    /* ================= FILE UPLOAD STYLISH ================= */
+
+    /* ================= FILE UPLOAD ================= */
     #addCompany .form-control-file,
     #editCompany .form-control-file {
         width: 100%;
@@ -461,7 +472,6 @@
         font-weight: 600;
     }
 
-        /* HOVER EFFECT */
         #addCompany .form-control-file:hover,
         #editCompany .form-control-file:hover {
             background: #e6f7ff;
@@ -469,7 +479,6 @@
             transform: scale(1.02);
         }
 
-    /* FILE BUTTON STYLE */
     #addCompany input[type="file"]::file-selector-button,
     #editCompany input[type="file"]::file-selector-button {
         border: none;
@@ -482,18 +491,19 @@
         margin-right: 10px;
     }
 
-        /* BUTTON HOVER */
         #addCompany input[type="file"]::file-selector-button:hover,
         #editCompany input[type="file"]::file-selector-button:hover {
             background: linear-gradient(45deg, #005bea, #00c6ff);
         }
 
-    .validationMessage {
-        color: red;
-        font-size: 12px;
-        font-weight: 600;
+    @@media (min-width: 576px) {
+        .modal-dialog {
+            max-width: 1000px;
+            margin: 1.75rem auto;
+        }
     }
-    /* ================= MODERN POPUP BASE ================= */
+
+    /* ================= VIEW & DELETE MODAL ================= */
     #viewCompany .modal-content,
     #deleteCompany .modal-content {
         border-radius: 20px;
@@ -504,229 +514,23 @@
     }
 
     @@keyframes popupSmooth {
-        from
-
-    {
-        transform: translateY(-25px) scale(0.95);
-        opacity: 0;
-    }
-
-    to {
-        transform: translateY(0) scale(1);
-        opacity: 1;
-    }
-    }
-    /* VIEW → DARK PREMIUM */
-    #viewCompany .modal-header {
-        background: linear-gradient(45deg, #1f1f1f, #000);
-        color: #fff;
-    }
-
-    /* DELETE → BLUE (as you asked) */
-    #deleteCompany .modal-header {
-        background: linear-gradient(45deg, #0072ff, #00c6ff);
-        color: #fff;
-    }
-    /* ================= COMPANY NAME ================= */
-    #lblvwCompanyName,
-    #lblDelCompanyName {
-        font-size: 20px;
-        font-weight: 800;
-        color: #0072ff;
-        letter-spacing: 1px;
-        animation: glowText 1.5s ease-in-out infinite alternate;
-    }
-
-    @@keyframes glowText {
-        from
-
-    {
-        text-shadow: 0 0 5px #0072ff;
-    }
-
-    to {
-        text-shadow: 0 0 15px #00c6ff;
-    }
-    }
-    /* ================= FIELD ROW ================= */
-    #viewCompany .form-group,
-    #deleteCompany .form-group {
-        display: flex;
-        align-items: center;
-        margin-bottom: 10px;
-    }
-
-        /* LABEL */
-        #viewCompany .form-group label,
-        #deleteCompany .form-group label {
-            min-width: 130px;
-            font-weight: 600;
-            color: #555;
-            font-size: 13px;
+        from {
+            transform: translateY(-25px) scale(0.95);
+            opacity: 0;
         }
 
-            /* VALUE */
-            #viewCompany .form-group label + label,
-            #deleteCompany .form-group label + label {
-                font-weight: 700;
-                color: #000;
-                font-size: 14px;
-                word-break: break-word;
-            }
-    /* ================= LOGO CARD ================= */
-    #viewCompany .card,
-    #deleteCompany .card {
-        border-radius: 18px;
-        border: none;
-        background: linear-gradient(135deg, #f8fbff, #eef5ff);
-        box-shadow: 0 15px 35px rgba(0,0,0,0.15);
-        padding: 10px;
-        text-align: center;
-    }
-
-    /* IMAGE */
-    #image_upload_previewEmployeeView,
-    #image_upload_previewCompanyDel {
-        border-radius: 15px;
-        object-fit: cover;
-        height: 180px;
-        width: 100%;
-        border: 2px solid #e0e0e0;
-        transition: 0.4s;
-    }
-
-        /* HOVER EFFECT */
-        #image_upload_previewEmployeeView:hover,
-        #image_upload_previewCompanyDel:hover {
-            transform: scale(1.05);
-            border-color: #00c6ff;
-            box-shadow: 0 10px 25px rgba(0,198,255,0.4);
+        to {
+            transform: translateY(0) scale(1);
+            opacity: 1;
         }
-    /* ================= BUTTON ================= */
-    #viewCompany .btnClose {
-        background: linear-gradient(45deg, #434343, #000);
-        color: #fff;
-        border: none;
     }
 
-    #deleteCompany .btn-danger {
-        background: linear-gradient(45deg, #0072ff, #00c6ff);
-        border: none;
-    }
-
-    /* HOVER */
-    #viewCompany .btn,
-    #deleteCompany .btn {
-        border-radius: 25px;
-        transition: 0.3s;
-    }
-
-        #viewCompany .btn:hover,
-        #deleteCompany .btn:hover {
-            transform: scale(1.05);
-            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
-        }
-    /* ================= RESPONSIVE ================= */
-    @@media (max-width: 768px) {
-        #viewCompany .form-group, #deleteCompany .form-group
-
-    {
-        flex-direction: column;
-        align-items: flex-start;
-    }
-
-    #viewCompany .form-group label,
-    #deleteCompany .form-group label {
-        min-width: auto;
-    }
-    }
-    /* REMOVE ANY YELLOW BACKGROUND */
-    #viewCompany .modal-body {
-        background: #ffffff !important;
-    }
-
-    /* OPTIONAL NICE COLOR */
-    #viewCompany .modal-header {
-        background: linear-gradient(45deg, #ffcc00, #ff9900);
-        color: #000;
-    }
-    /* FIELD ROW FIX */
-    #viewCompany .form-group,
-    #deleteCompany .form-group {
-        display: flex;
-        align-items: center;
-        margin-bottom: 12px;
-    }
-
-        /* LABEL */
-        #viewCompany .form-group label:first-child,
-        #deleteCompany .form-group label:first-child {
-            min-width: 150px;
-            font-weight: 700;
-            color: #333;
-        }
-
-        /* VALUE */
-        #viewCompany .form-group label:last-child,
-        #deleteCompany .form-group label:last-child {
-            margin-left: 10px;
-            font-weight: 600;
-            color: #000;
-        }
-
-        /* ADD ":" AUTOMATIC */
-        #viewCompany .form-group label:first-child::after,
-        #deleteCompany .form-group label:first-child::after {
-            content: " :";
-            margin-left: 5px;
-        }
-    /* ================= CLEAN FIELD STYLE ================= */
-    .clean-field {
-        display: flex;
-        align-items: center;
-        margin-bottom: 12px;
-    }
-
-        /* LABEL */
-        .clean-field .label {
-            min-width: 160px; /* keeps alignment same */
-            font-weight: 700;
-            color: #333;
-        }
-
-            /* ADD ":" PROPERLY */
-            .clean-field .label::after {
-                content: " :";
-                margin-left: 5px;
-            }
-
-        /* VALUE */
-        .clean-field .value {
-            margin-left: 15px; /* 🔥 GAP AFTER ":" */
-            font-weight: 600;
-            color: #000;
-        }
-
-        /* OPTIONAL HOVER */
-        .clean-field:hover .value {
-            color: #007bff;
-        }
-    /* ================= MODAL BOX ================= */
-    #viewCompany .modal-content,
-    #deleteCompany .modal-content {
-        border-radius: 20px;
-        border: none;
-        box-shadow: 0 20px 60px rgba(0,0,0,0.25);
-        overflow: hidden;
-    }
-
-    /* BODY */
     #viewCompany .modal-body,
     #deleteCompany .modal-body {
         padding: 25px;
-        background: #f8fbff;
+        background: #ffffff;
     }
-    /* ================= IMAGE CARD ================= */
+
     #viewCompany .card,
     #deleteCompany .card {
         border-radius: 18px;
@@ -736,24 +540,7 @@
         padding: 10px;
     }
 
-    /* IMAGE FIXED SIZE */
-    #image_upload_previewEmployeeView,
-    #image_upload_previewCompanyDel {
-        width: 100%;
-        height: 180px; /* 🔥 fixed height */
-        object-fit: cover; /* 🔥 fit image properly */
-        border-radius: 12px;
-        border: 2px solid #e0e0e0;
-        background: #fff;
-    }
-
-        /* HOVER EFFECT */
-        #image_upload_previewEmployeeView:hover,
-        #image_upload_previewCompanyDel:hover {
-            transform: scale(1.04);
-            transition: 0.3s;
-        }
-    /* ================= FIELD STYLE ================= */
+    /* ================= CLEAN FIELD ================= */
     .clean-field {
         display: flex;
         align-items: center;
@@ -762,7 +549,6 @@
         border-bottom: 1px solid #eaeaea;
     }
 
-        /* LABEL */
         .clean-field .label {
             min-width: 170px;
             font-weight: 700;
@@ -770,14 +556,12 @@
             font-size: 14px;
         }
 
-            /* ":" */
             .clean-field .label::after {
                 content: " :";
                 margin-left: 5px;
                 color: #777;
             }
 
-        /* VALUE BOX */
         .clean-field .value {
             margin-left: 15px;
             padding: 6px 12px;
@@ -789,11 +573,11 @@
             min-width: 140px;
         }
 
-        /* HOVER */
         .clean-field:hover .value {
             background: #e6f0ff;
             transition: 0.3s;
         }
+
     /* ================= COMPANY NAME ================= */
     #lblvwCompanyName,
     #lblDelCompanyName {
@@ -805,26 +589,7 @@
         margin-bottom: 15px;
         letter-spacing: 1px;
     }
-    /* ================= BUTTONS ================= */
-    #viewCompany .btnClose,
-    #deleteCompany .btn {
-        border-radius: 25px;
-        padding: 6px 18px;
-        font-weight: 600;
-    }
 
-    /* DELETE BUTTON */
-    #deleteCompany .btn-danger {
-        background: linear-gradient(45deg, #0072ff, #00c6ff);
-        border: none;
-    }
-
-    /* HOVER */
-    #viewCompany .btn:hover,
-    #deleteCompany .btn:hover {
-        transform: scale(1.05);
-        transition: 0.3s;
-    }
     /* ================= VIEW TITLE ================= */
     .view-section-title {
         text-align: center;
@@ -836,7 +601,6 @@
         letter-spacing: 0.5px;
     }
 
-        /* LINE LEFT + RIGHT */
         .view-section-title::before,
         .view-section-title::after {
             content: "";
@@ -855,7 +619,6 @@
             right: 0;
         }
 
-    /* SMALL SUBTEXT STYLE */
     .view-subtitle {
         text-align: center;
         font-size: 13px;
@@ -863,15 +626,86 @@
         margin-top: -10px;
         margin-bottom: 15px;
     }
+
+    /* ================= VIEW/DELETE BUTTONS ================= */
+    #viewCompany .btnClose,
+    #deleteCompany .btn {
+        border-radius: 25px;
+        padding: 6px 18px;
+        font-weight: 600;
+    }
+
+
+        #viewCompany .btn:hover,
+        #deleteCompany .btn:hover {
+            transform: scale(1.05);
+            transition: 0.3s;
+        }
+
+    @@media (max-width: 768px) {
+        #viewCompany .form-group,
+        #deleteCompany .form-group {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+    }
+
+    /* ================= ALL MODAL HEADERS ================= */
+    #addCompany .modal-header,
+    #editCompany .modal-header,
+    #viewCompany .modal-header,
+    #deleteCompany .modal-header {
+        background: linear-gradient(135deg, #2563eb, #1e40af) !important;
+        color: #fff !important;
+        border: none !important;
+    }
+
+    .modal-title {
+        font-weight: 700;
+        font-size: 20px;
+    }
+    /* ===== ALL MODAL HEADER TEXT WHITE ===== */
+    #addCompany .modal-header .modal-title,
+    #addCompany .modal-header .close,
+    #editCompany .modal-header .modal-title,
+    #editCompany .modal-header .close,
+    #viewCompany .modal-header .modal-title,
+    #viewCompany .modal-header .close,
+    #deleteCompany .modal-header .modal-title,
+    #deleteCompany .modal-header .close {
+        color: #fff !important;
+    }
+
+    .modal-backdrop {
+        opacity: 0.25 !important;
+    }
+
+    #addCompany .form-control, #editCompany .form-control {
+        border-radius: 12px;
+        border: 1px solid #ddd;
+        font-weight: 300;
+        transition: 0.3s;
+    }
 </style>
 <div class="col-lg-12 stretch-card">
     <div class="card">
         <div class="card-body">
             <div class="d-flex justify-content-between align-items-center" style="padding: 10px !important">
                 <strong class="card-title">Company List</strong>
-                <button type="button" class="btn btn-gradient-primary btn-rounded btn-fw" data-toggle="modal" data-target="#addCompany">
-                    <i class="fa fa-plus"></i> Add
-                </button>
+                @if (ViewBag.CanInsert == true)
+                {
+                    <button type="button" class="btn btn-gradient-primary btn-rounded btn-fw"
+                            data-toggle="modal" data-target="#addCompany">
+                        <i class="fa fa-plus"></i> Add
+                    </button>
+                }
+                else
+                {
+                    <button type="button" class="btn btn-secondary btn-rounded btn-fw"
+                            onclick="noAccess('Insert')">
+                        <i class="fa fa-plus"></i> Add
+                    </button>
+                }
             </div>
             <table class="table table-bordered" id="companyTable">
                 <thead>
@@ -907,18 +741,51 @@
                                     }
                                 </td>
                                 <td>
-                                    <button type="button" class="btn btn-sm btn-custom btn-gradient-primary btn-rounded btn-course-list editByCompanyId"
-                                            data-company-id="@company.CompanyID" title="Edit" data-toggle="modal" data-target="#editCompany">
-                                        <i class="mdi mdi-pencil"></i>
-                                    </button>
-                                    <button type="button" class="btn btn-sm btn-custom btn-gradient-dark btn-rounded btn-course-list viewByCompanyId"
-                                            data-company-id="@company.CompanyID" title="View" data-toggle="modal" data-target="#viewCompany">
+                                    @* EDIT *@
+                                    @if (ViewBag.CanUpdate == true)
+                                    {
+                                        <button type="button" class="btn btn-sm btn-custom btn-gradient-primary btn-rounded editByCompanyId"
+                                                data-company-id="@company.CompanyID"
+                                                data-toggle="modal" data-target="#editCompany"
+                                                title="Edit">
+                                            <i class="mdi mdi-pencil"></i>
+                                        </button>
+                                    }
+                                    else
+                                    {
+                                        <button type="button" class="btn btn-sm btn-secondary btn-rounded"
+                                                title="No Edit Permission"
+                                                onclick="noAccess('Update')">
+                                            <i class="mdi mdi-pencil"></i>
+                                        </button>
+                                    }
+
+                                    @* VIEW — always visible *@
+                                    <button type="button" class="btn btn-sm btn-custom btn-gradient-dark btn-rounded viewByCompanyId"
+                                            data-company-id="@company.CompanyID"
+                                            data-toggle="modal" data-target="#viewCompany"
+                                            title="View">
                                         <i class="mdi mdi-eye"></i>
                                     </button>
-                                    <button type="button" class="btn btn-sm btn-custom btn-gradient-warning btn-rounded btn-course-list deleteCompanies"
-                                            data-company-id="@company.CompanyID" title="Delete" data-toggle="modal" data-target="#deleteCompany">
-                                        <i class="mdi mdi-delete"></i>
-                                    </button>
+
+                                    @* DELETE *@
+                                    @if (ViewBag.CanDelete == true)
+                                    {
+                                        <button type="button" class="btn btn-sm btn-custom btn-gradient-warning btn-rounded deleteCompanies"
+                                                data-company-id="@company.CompanyID"
+                                                data-toggle="modal" data-target="#deleteCompany"
+                                                title="Delete">
+                                            <i class="mdi mdi-delete"></i>
+                                        </button>
+                                    }
+                                    else
+                                    {
+                                        <button type="button" class="btn btn-sm btn-secondary btn-rounded"
+                                                title="No Delete Permission"
+                                                onclick="noAccess('Delete')">
+                                            <i class="mdi mdi-delete"></i>
+                                        </button>
+                                    }
                                 </td>
                             </tr>
                         }
@@ -943,8 +810,8 @@
 <!-- Add Company Modal -->
 <div class="modal fade" id="addCompany" tabindex="-1" role="dialog" aria-labelledby="addCompanyModalLabel" aria-hidden="true">
 
-        <div class="modal-dialog modal-xl modal-dialog-centered" role="document">
-        <div class="modal-content" >
+    <div class="modal-dialog modal-xl modal-dialog-centered" role="document">
+        <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="addCompanyModalLabel">Add Company</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -990,7 +857,7 @@
                             <div class="form-group">
                                 <label for="ddlState">State<span class="mandatoryfield">*</span></label>
                                 <div class="input-group">
-                                    @Html.DropDownList("ddlStateId", new SelectList(Model.states, "StateID", "StateName"), "--Select State Name--", new { @class = "form-control form-control-sm", @id = "ddlStateId" })
+                                    @Html.DropDownList("ddlStateId", new SelectList(Model.states, "StateID", "StateName"), "--Select State l--", new { @class = "form-control form-control-sm", @id = "ddlStateId" })
                                     <div class="input-group-append">
                                         <span class="input-group-text" style="height: 35px;"><i class="mdi mdi-menu-down"></i></span>
                                     </div><span class="validationMessage" id="msgAddStateValidation"></span>
@@ -1001,7 +868,7 @@
                             <div class="form-group">
                                 <label for="ddlCountry">Country<span class="mandatoryfield">*</span></label>
                                 <div class="input-group">
-                                    @Html.DropDownList("ddlCountryId", new SelectList(Model.country, "CountryID", "CountryName"), "--Select Country Name--", new { @class = "form-control form-control-sm", @id = "ddlCountryId" })
+                                    @Html.DropDownList("ddlCountryId", new SelectList(Model.country, "CountryID", "CountryName"), "--Select Country --", new { @class = "form-control form-control-sm", @id = "ddlCountryId" })
                                     <div class="input-group-append">
                                         <span class="input-group-text" style="height: 35px;"><i class="mdi mdi-menu-down"></i></span>
                                     </div><span class="validationMessage" id="msgAddCountryValidation"></span>
@@ -1125,8 +992,8 @@
 <!-- Edit Company Modal -->
 <div class="modal fade" id="editCompany" tabindex="-1" role="dialog" aria-labelledby="editCompanyModalLabel" aria-hidden="true">
 
-        <div class="modal-dialog modal-xl modal-dialog-centered" role="document">
-        <div class="modal-content" >
+    <div class="modal-dialog modal-xl modal-dialog-centered" role="document">
+        <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="editCompanyModalLabel">Edit Company</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -1369,8 +1236,6 @@
                         </div>
                     </div>
                     <div class="col-md-4">
-                        
-
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -1430,714 +1295,489 @@
                         </div>
                     </div>
                     <div class="col-md-4">
-                    
                     </div>
                 </div>
                 <div class="modal-footer">
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-danger delete-submit" style="cursor:pointer !important;">DELETE</button>
+                        <button type="button" class="btn btn-danger delete-submit">DELETE</button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            console.clear();
-            console.log("🚀 COMPLETE COMPANY SCRIPT - ADD/EDIT/IMAGE UPLOAD FIXED!");
-
-            // =================================================================
-            // 🔥 IMAGE PREVIEW FUNCTIONS
-            // =================================================================
-            function setupImagePreview(inputId, previewId) {
-                const input = document.getElementById(inputId);
-                const preview = document.getElementById(previewId);
-
-                input.addEventListener('change', function(e) {
-                    const file = e.target.files[0];
-                    if (file) {
-                        const reader = new FileReader();
-                        reader.onload = function(e) {
-                            preview.src = e.target.result;
-                            console.log(`✅ ${inputId} preview loaded`);
-                        };
-                        reader.readAsDataURL(file);
-                    } else {
-                        preview.src = '~/Companys/Images/default.jpg';
-                    }
-                });
-            }
-
-            // 🔥 SETUP IMAGE PREVIEWS
-            setupImagePreview('logoUpload', 'logoPreview');
-            setupImagePreview('editLogoUpload', 'editLogoPreview');
-
-            // =================================================================
-            // 🔥 HIDDEN FIELDS
-            // =================================================================
-            ['hdnCompanyId', 'hdnDelCompanyId', 'hdnViewCompanyId'].forEach(id => {
-                if (!document.getElementById(id)) {
-                    const input = document.createElement('input');
-                    input.type = 'hidden';
-                    input.id = id;
-                    document.body.appendChild(input);
-                }
-            });
-
-            // =================================================================
-            // 🔥 ADD COMPANY - COMPLETE WORKING
-            // =================================================================
-            document.querySelectorAll('.add-submit').forEach(btn => {
-                btn.onclick = async function(e) {
-                    e.preventDefault();
-                    console.log("🟢 ADD SUBMIT CLICKED!");
-
-                    // 🔥 VALIDATE REQUIRED FIELDS
-                    const required = {
-                        'txtCompanyName': 'Company Name',
-                        'txtCompanyAddress1': 'Address 1',
-                        'txtCity': 'City',
-                        'ddlStateId': 'State',
-                        'ddlCountryId': 'Country',
-                        'txtPincode': 'Pincode'
-                    };
-
-                    for (let [id, label] of Object.entries(required)) {
-                        const field = document.getElementById(id);
-                        if (!field.value?.trim()) {
-                            alert(`⚠️ ${label} is required!`);
-                            field.focus();
-                            return false;
-                        }
-                    }
-
-                    const formData = new FormData();
-
-                    // 🔥 FILE UPLOAD
-                    const addFile = document.getElementById('logoUpload').files[0];
-                    if (addFile) {
-                        formData.append('file', addFile);
-                        console.log("📁 ADD: File attached:", addFile.name, addFile.size);
-                    }
-
-                    // 🔥 COMPANY DATA
-                    const companyData = {
-                        Comp_Name: document.getElementById('txtCompanyName').value,
-                        Comp_Address1: document.getElementById('txtCompanyAddress1').value,
-                        Comp_Address2: document.getElementById('txtCompanyAddress2').value || '',
-                        Comp_Area: document.getElementById('txtArea').value || '',
-                        Comp_City: document.getElementById('txtCity').value,
-                        Comp_State_ID: parseInt(document.getElementById('ddlStateId').value),
-                        Comp_Country_ID: parseInt(document.getElementById('ddlCountryId').value),
-                        Comp_Pincode: document.getElementById('txtPincode').value,
-                        Comp_PAN_No: document.getElementById('txtPAN').value || '',
-                        Comp_TAN_No: document.getElementById('txtTAN').value || '',
-                        Comp_TIN_No: document.getElementById('txtTIN').value || '',
-                        Comp_VAT_No: document.getElementById('txtVAT').value || '',
-                        Comp_GST_No: document.getElementById('txtGST').value || '',
-                        Comp_PTTax_No: document.getElementById('txtPT').value || '',
-                        Comp_Email: document.getElementById('txtEmail').value || '',
-                        Comp_Contact_No: document.getElementById('txtContactNo').value || '',
-                        SMTP_Server_Name: document.getElementById('txtSMTPServerName').value || '',
-                        SMTP_Port_No: document.getElementById('txtSMTPPortNo').value || '',
-                        SMTP_User_Name: document.getElementById('txtSMTPUserName').value || '',
-                        SMTP_User_Password: document.getElementById('txtSMTPPassword').value || '',
-                        IsActive: document.getElementById('chkActiveStatusAdd').checked ? 1 : 0
-                    };
-
-                    formData.append('companyJson', JSON.stringify(companyData));
-                    console.log("📤 ADD DATA:", companyData);
-
-                    try {
-                        const response = await fetch('@Url.Action("Save", "Company")', {
-                            method: 'POST',
-                            body: formData
-                        });
-
-                        const result = await response.json();
-                        console.log("✅ ADD RESULT:", result);
-
-                        if (result.success !== false) {
-                            alert('✅ Company Added Successfully!');
-                            $('#addCompany').modal('hide');
-                            document.getElementById('addCompanyForm').reset();
-                            document.getElementById('logoPreview').src = '~/Companys/Images/default.jpg';
-                            setTimeout(() => location.reload(), 1500);
-                        } else {
-                            alert('❌ ' + (result.message || 'Failed to add company'));
-                        }
-                    } catch (error) {
-                        console.error("❌ ADD ERROR:", error);
-                        alert('❌ Network Error - Please try again');
-                    }
-                };
-            });
-
-                // =================================================================
-            // 🔥 2. EDIT MODAL - IMAGE PREVIEW
-            // =================================================================
-            document.getElementById('editLogoUpload')?.addEventListener('change', function(e) {
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        console.clear();
+           // Permission denied alert
+    window.noAccess = function(type) {
+        Swal.fire({
+            icon: 'error',
+            title: 'Access Denied',
+            text: 'You do not have ' + type + ' permission for Company module.',
+            confirmButtonColor: '#dc2626'
+        });
+    }
+        // =================================================================
+        // 🔥 IMAGE PREVIEW FUNCTIONS
+        // =================================================================
+        function setupImagePreview(inputId, previewId) {
+            const input = document.getElementById(inputId);
+            const preview = document.getElementById(previewId);
+            input.addEventListener('change', function(e) {
                 const file = e.target.files[0];
-                const preview = document.getElementById('editLogoPreview');
-                if (file && preview) {
+                if (file) {
                     const reader = new FileReader();
-                    reader.onload = function(e) {
-                        preview.src = e.target.result;
-                        console.log("🖼️ EDIT Preview loaded");
-                    };
+                    reader.onload = function(e) { preview.src = e.target.result; };
                     reader.readAsDataURL(file);
+                } else {
+                    preview.src = '/Companys/Images/default.jpg';
                 }
             });
+        }
+        setupImagePreview('logoUpload', 'logoPreview');
+        setupImagePreview('editLogoUpload', 'editLogoPreview');
 
-            // =================================================================
-            // 🔥 3. EDIT BUTTON - COMPLETE FORM + IMAGE LOAD
-            // =================================================================
-            document.querySelectorAll('.editByCompanyId').forEach(btn => {
-                btn.addEventListener('click', function() {
-                    const companyId = this.dataset.companyId;
-                    console.log("✏️ EDIT LOAD - ID:", companyId);
+        // =================================================================
+        // 🔥 ADD COMPANY
+        // =================================================================
+        document.querySelectorAll('.add-submit').forEach(btn => {
+            btn.onclick = async function(e) {
+                e.preventDefault();
+                const required = {
+                    'txtCompanyName': 'Company Name',
+                    'txtCompanyAddress1': 'Address 1',
+                    'txtCity': 'City',
+                    'ddlStateId': 'State',
+                    'ddlCountryId': 'Country',
+                    'txtPincode': 'Pincode'
+                };
+                for (let [id, label] of Object.entries(required)) {
+                    const field = document.getElementById(id);
+                    if (!field.value?.trim()) {
+                        alert(`⚠️ ${label} is required!`);
+                        field.focus();
+                        return false;
+                    }
+                }
+                const formData = new FormData();
+                const addFile = document.getElementById('logoUpload').files[0];
+                if (addFile) formData.append('file', addFile);
 
-                    fetch(`@Url.Action("GetCompany", "Company")?companyID=${companyId}`)
-                        .then(r => r.json())
-                        .then(data => {
-                            console.log("📥 EDIT DATA:", data);
+                const companyData = {
+                    Comp_Name: document.getElementById('txtCompanyName').value,
+                    Comp_Address1: document.getElementById('txtCompanyAddress1').value,
+                    Comp_Address2: document.getElementById('txtCompanyAddress2').value || '',
+                    Comp_Area: document.getElementById('txtArea').value || '',
+                    Comp_City: document.getElementById('txtCity').value,
+                    Comp_State_ID: parseInt(document.getElementById('ddlStateId').value),
+                    Comp_Country_ID: parseInt(document.getElementById('ddlCountryId').value),
+                    Comp_Pincode: document.getElementById('txtPincode').value,
+                    Comp_PAN_No: document.getElementById('txtPAN').value || '',
+                    Comp_TAN_No: document.getElementById('txtTAN').value || '',
+                    Comp_TIN_No: document.getElementById('txtTIN').value || '',
+                    Comp_VAT_No: document.getElementById('txtVAT').value || '',
+                    Comp_GST_No: document.getElementById('txtGST').value || '',
+                    Comp_PTTax_No: document.getElementById('txtPT').value || '',
+                    Comp_Email: document.getElementById('txtEmail').value || '',
+                    Comp_Contact_No: document.getElementById('txtContactNo').value || '',
+                    SMTP_Server_Name: document.getElementById('txtSMTPServerName').value || '',
+                    SMTP_Port_No: document.getElementById('txtSMTPPortNo').value || '',
+                    SMTP_User_Name: document.getElementById('txtSMTPUserName').value || '',
+                    SMTP_User_Password: document.getElementById('txtSMTPPassword').value || '',
+                    IsActive: document.getElementById('chkActiveStatusAdd').checked ? 1 : 0
+                };
+                formData.append('companyJson', JSON.stringify(companyData));
+                try {
+                    const response = await fetch('@Url.Action("Save", "Company")', { method: 'POST', body: formData });
+                    const result = await response.json();
+                    if (result.success !== false) {
+                        alert('✅ Company Added Successfully!');
+                        $('#addCompany').modal('hide');
+                        document.getElementById('addCompanyForm').reset();
+                        document.getElementById('logoPreview').src = '/Companys/Images/default.jpg';
+                        setTimeout(() => location.reload(), 1500);
+                    } else {
+                        alert('❌ ' + (result.message || 'Failed to add company'));
+                    }
+                } catch (error) {
+                    alert('❌ Network Error - Please try again');
+                }
+            };
+        });
 
-                            // Set Company ID
-                            document.getElementById('hdnCompanyId').value = data.CompanyID || companyId;
+        // =================================================================
+        // 🔥 EDIT BUTTON - FIXED DATA LOADER (SP returns aliases)
+        // =================================================================
+        document.querySelectorAll('.editByCompanyId').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const companyId = this.dataset.companyId;
+                fetch(`@Url.Action("GetCompany", "Company")?companyID=${companyId}`)
+                    .then(r => r.json())
+                    .then(data => {
+                        console.log("📥 EDIT DATA:", data);
+                        document.getElementById('hdnCompanyId').value = data.CompanyID || companyId;
+                        fillEditForm(data);
 
-                            // Fill form fields
-                            fillEditForm(data);
-
-                            // 🔥 LOAD CURRENT IMAGE IN EDIT PREVIEW
                             const editPreview = document.getElementById('editLogoPreview');
-                            const imagePath = data.PicturePath || data.picturePath;
-
-                            if (imagePath && !imagePath.toLowerCase().includes('default.jpg')) {
-                                editPreview.src = window.location.origin + imagePath;
-                                editPreview.onerror = () => {
-                                    editPreview.src = '/Companys/Images/default.jpg';
-                                };
-                                console.log("🖼️ EDIT Current image loaded:", imagePath);
-                            } else {
-                                editPreview.src = '/Companys/Images/default.jpg';
-                            }
-                        })
-                        .catch(err => {
-                            console.error("❌ EDIT ERROR:", err);
-                            alert('Failed to load company data');
-                        });
-                });
+    const imagePath = data.picturePath;
+    if (imagePath && imagePath.trim() !== '') {
+        editPreview.src = imagePath;
+        editPreview.onerror = () => { editPreview.src = '/Companys/Images/default.jpg'; };
+    } else {
+        editPreview.src = '/Companys/Images/default.jpg';
+    }
+                    })
+                    .catch(err => {
+                        console.error("❌ EDIT ERROR:", err);
+                        alert('Failed to load company data');
+                    });
             });
-
-            // =================================================================
-            // 🔥 4. VIEW BUTTON - COMPLETE WITH IMAGE
-            // =================================================================
-            document.querySelectorAll('.viewByCompanyId').forEach(btn => {
-                btn.addEventListener('click', function() {
-                    const id = this.dataset.companyId;
-                    console.log("👁️ VIEW LOAD - ID:", id);
-
-                    fetch(`@Url.Action("GetCompany", "Company")?companyID=${id}`)
-                        .then(r => r.json())
-                        .then(data => {
-                            console.log("👁️ VIEW DATA:", data);
-
-                            // Fill text fields
-                            document.getElementById('lblvwCompanyName').textContent = data.Comp_Name || data.companyName || 'N/A';
-                            document.getElementById('lblvwCompanyEmail').textContent = data.Comp_Email || data.email || 'N/A';
-                            document.getElementById('lblvwCompanyAddress1').textContent = data.Comp_Address1 || data.address1 || 'N/A';
-                            document.getElementById('lblvwCompanyCity').textContent = data.Comp_City || data.city || 'N/A';
-                            document.getElementById('lblvwCompanyState').textContent = data.StateName || data.stateName || 'N/A';
-                            document.getElementById('lblvwCompanyCountry').textContent = data.CountryName || data.countryName || 'N/A';
-
-                            // 🔥 VIEW MODAL IMAGE
-                            const viewImg = document.getElementById('image_upload_previewEmployeeView');
-                            const imagePath = data.PicturePath || data.picturePath;
-
-                            if (imagePath && !imagePath.toLowerCase().includes('default.jpg')) {
-                                viewImg.src = window.location.origin + imagePath;
-                                viewImg.onerror = () => {
-                                    viewImg.src = '/Companys/Images/default.jpg';
-                                };
-                                console.log("🖼️ VIEW Image loaded:", imagePath);
-                            } else {
-                                viewImg.src = '/Companys/Images/default.jpg';
-                            }
-                        })
-                        .catch(err => {
-                            console.error("❌ VIEW ERROR:", err);
-                            alert('Failed to load company details');
-                        });
-                });
-            });
-
-            // =================================================================
-            // 🔥 5. DELETE BUTTON - IMAGE + DATA (Already Good)
-            // =================================================================
-            document.querySelectorAll('.deleteCompanies').forEach(btn => {
-                btn.addEventListener('click', function() {
-                    const id = this.dataset.companyId;
-                    console.log("🗑️ DELETE LOAD - ID:", id);
-                    document.getElementById('hdnDelCompanyId').value = id;
-
-                    fetch(`@Url.Action("GetCompany", "Company")?companyID=${id}`)
-                        .then(r => r.json())
-                        .then(data => {
-                            console.log("🗑️ DELETE DATA:", data);
-
-                            // Fill labels
-                            document.getElementById('lblDelCompanyName').textContent = data.Comp_Name || data.companyName || 'N/A';
-                            document.getElementById('lblDelCompanyEmail').textContent = data.Comp_Email || data.email || 'N/A';
-                            document.getElementById('lblDelCompanyAddress1').textContent = data.Comp_Address1 || data.address1 || 'N/A';
-                            document.getElementById('lblDelCompanyCity').textContent = data.Comp_City || data.city || 'N/A';
-                            document.getElementById('lblDelCompanyState').textContent = data.StateName || data.stateName || 'N/A';
-                            document.getElementById('lblDelCompanyCountry').textContent = data.CountryName || data.countryName || 'N/A';
-
-                            // Delete image
-                            const delImg = document.getElementById('image_upload_previewCompanyDel');
-                            const imagePath = data.PicturePath || data.picturePath;
-
-                            if (imagePath && !imagePath.toLowerCase().includes('default.jpg')) {
-                                delImg.src = window.location.origin + imagePath;
-                                delImg.onerror = () => {
-                                    delImg.src = '/Companys/Images/default.jpg';
-                                };
-                            } else {
-                                delImg.src = '/Companys/Images/default.jpg';
-                            }
-                        })
-                        .catch(err => {
-                            console.error("❌ DELETE LOAD ERROR:", err);
-                            alert('Failed to load delete details');
-                        });
-                });
-            });
-
-            // =================================================================
-            // 🔥 6. EDIT SUBMIT (Keep your existing - it's perfect)
-            // =================================================================
-            document.querySelectorAll('.edit-submit').forEach(btn => {
-                btn.addEventListener('click', async function(e) {
-                    e.preventDefault();
-                    let companyId = document.getElementById('hdnCompanyId')?.value;
-
-                    if (!companyId || companyId === '0') {
-                        alert('⚠️ Please click EDIT button first');
-                        return;
-                    }
-
-                    const formData = new FormData();
-                    const file = document.getElementById('editLogoUpload')?.files[0];
-                    if (file) formData.append('file', file);
-
-                    const companyData = {
-                        CompanyID: parseInt(companyId),
-                        Comp_Name: document.getElementById('txtEditCompanyName').value,
-                        Comp_Address1: document.getElementById('txtEditCompanyAddress1').value,
-                        Comp_Address2: document.getElementById('txtEditCompanyAddress2').value,
-                        Comp_Area: document.getElementById('txtEditArea').value,
-                        Comp_City: document.getElementById('txtEditCity').value,
-                        Comp_State_ID: parseInt(document.getElementById('ddlEditStateId').value || 0),
-                        Comp_Country_ID: parseInt(document.getElementById('ddlEditCountryId').value || 0),
-                        Comp_Pincode: document.getElementById('txtEditPincode').value,
-                        Comp_Contact_No: document.getElementById('txtEditContactNo').value,
-                        Comp_Email: document.getElementById('txtEditEmail').value,
-                        Comp_PAN_No: document.getElementById('txtEditPAN').value,
-                        Comp_TAN_No: document.getElementById('txtEditTAN').value,
-                        Comp_VAT_No: document.getElementById('txtEditVAT').value,
-                        Comp_GST_No: document.getElementById('txtEditGST').value,
-                        Comp_TIN_No: document.getElementById('txtEditTIN').value,
-                        Comp_PTTax_No: document.getElementById('txtEditPT').value,
-                        SMTP_Server_Name: document.getElementById('txtEditSMTPServerName').value,
-                        SMTP_Port_No: document.getElementById('txtEditSMTPPortNo').value,
-                        SMTP_User_Name: document.getElementById('txtEditSMTPUserName').value,
-                        SMTP_User_Password: document.getElementById('txtEditSMTPPassword').value,
-                        IsActive: document.getElementById('chkEditActiveStatus').checked ? 1 : 0
-                    };
-
-                    formData.append('companyJson', JSON.stringify(companyData));
-
-                    try {
-                        const response = await fetch('@Url.Action("Edit", "Company")', {
-                            method: 'POST',
-                            body: formData
-                        });
-                        const result = await response.json();
-
-                        if (result.success !== false) {
-                            alert('✅ Company Updated Successfully!');
-                            $('#editCompany').modal('hide');
-                            setTimeout(() => location.reload(), 1000);
-                        } else {
-                            alert('❌ ' + (result.message || 'Update failed'));
-                        }
-                    } catch (error) {
-                        console.error("❌ EDIT ERROR:", error);
-                        alert('Network Error');
-                    }
-                });
-            });
-
-            // =================================================================
-            // 🔥 7. DELETE SUBMIT (Keep your existing - perfect)
-            // =================================================================
-            document.querySelectorAll('.delete-submit').forEach(btn => {
-                btn.addEventListener('click', async function(e) {
-                    e.preventDefault();
-                    const id = document.getElementById('hdnDelCompanyId').value;
-
-                    if (!id) {
-                        alert('❌ No company selected');
-                        return;
-                    }
-
-                    if (!confirm('⚠️ Are you SURE you want to PERMANENTLY DELETE this company?')) {
-                        return;
-                    }
-
-                    try {
-                        const response = await fetch(`@Url.Action("DeleteCompany", "Company")?companyId=${id}`);
-                        const result = await response.json();
-
-                        if (result.success) {
-                            alert('✅ ' + result.message);
-                            $('#deleteCompany').modal('hide');
-                            setTimeout(() => location.reload(), 800);
-                        } else {
-                            alert('❌ ' + result.message);
-                        }
-                    } catch (error) {
-                        console.error("❌ DELETE ERROR:", error);
-                        alert('Network Error');
-                    }
-                });
-            });
-
-            // =================================================================
-            // 🔥 8. FILL EDIT FORM HELPER
-            // =================================================================
-            function fillEditForm(data) {
-                const fields = {
-                    'txtEditCompanyName': data.Comp_Name || data.companyName || '',
-                    'txtEditCompanyAddress1': data.Comp_Address1 || data.address1 || '',
-                    'txtEditCompanyAddress2': data.Comp_Address2 || data.address2 || '',
-                    'txtEditArea': data.Comp_Area || data.area || '',
-                    'txtEditCity': data.Comp_City || data.city || '',
-                    'ddlEditStateId': data.Comp_State_ID || '',
-                    'ddlEditCountryId': data.Comp_Country_ID || '',
-                    'txtEditPincode': data.Comp_Pincode || data.pincode || '',
-                    'txtEditContactNo': data.Comp_Contact_No || data.contactNo || '',
-                    'txtEditEmail': data.Comp_Email || data.email || '',
-                    'txtEditPAN': data.Comp_PAN_No || data.panNo || '',
-                    'txtEditTAN': data.Comp_TAN_No || data.tanNo || '',
-                    'txtEditVAT': data.Comp_VAT_No || data.vatNo || '',
-                    'txtEditGST': data.Comp_GST_No || data.gstNo || '',
-                    'txtEditTIN': data.Comp_TIN_No || data.tinNo || '',
-                    'txtEditPT': data.Comp_PTTax_No || data.ptTaxNo || '',
-                    'txtEditSMTPServerName': data.SMTP_Server_Name || '',
-                    'txtEditSMTPPortNo': data.SMTP_Port_No || '',
-                    'txtEditSMTPUserName': data.SMTP_User_Name || '',
-                    'txtEditSMTPPassword': data.SMTP_User_Password || ''
-                };
-
-                Object.entries(fields).forEach(([id, value]) => {
-                    const el = document.getElementById(id);
-                    if (el) el.value = value || '';
-                });
-
-                const chkActive = document.getElementById('chkEditActiveStatus');
-                if (chkActive) chkActive.checked = data.IsActive == 1;
-            }
-
-            // =================================================================
-            // 🔥 9. RESET & CLOSE BUTTONS
-            // =================================================================
-            document.querySelectorAll('.reset-btn').forEach(btn => {
-                btn.addEventListener('click', function() {
-                    const form = this.closest('.modal').querySelector('form');
-                    if (form) form.reset();
-                    // Reset image previews
-                    document.getElementById('logoPreview').src = '/Companys/Images/default.jpg';
-                    document.getElementById('editLogoPreview').src = '/Companys/Images/default.jpg';
-                });
-            });
-
-            document.querySelectorAll('.close-modal, .btnClose').forEach(btn => {
-                btn.addEventListener('click', function() {
-                    $(this.closest('.modal')).modal('hide');
-                });
-            });
-
-            console.log("✅ ALL HANDLERS LOADED - IMAGES ✅ EDIT ✅ VIEW ✅ DELETE ✅");
         });
-    </script>
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
 
-            const table = document.getElementById("companyTable");
-            if (!table) return;
+        // =================================================================
+        // 🔥 VIEW BUTTON - FIXED (SP aliases: CompanyName, Address1, Email, StateName, CountryName)
+        // =================================================================
+        document.querySelectorAll('.viewByCompanyId').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const id = this.dataset.companyId;
+                fetch(`@Url.Action("GetCompany", "Company")?companyID=${id}`)
+                    .then(r => r.json())
+                    .then(data => {
+                        console.log("👁️ VIEW DATA:", data);
 
-            const rows = table.querySelectorAll("tbody tr");
-            const pagination = document.getElementById("pagination");
-            const showAllBtn = document.getElementById("showAllButton");
+                        document.getElementById('lblvwCompanyName').textContent     = data.companyName || 'N/A';
+    document.getElementById('lblvwCompanyEmail').textContent    = data.email       || 'N/A';
+    document.getElementById('lblvwCompanyAddress1').textContent = data.address1    || 'N/A';
+    document.getElementById('lblvwCompanyCity').textContent     = data.city        || 'N/A';
+    document.getElementById('lblvwCompanyState').textContent    = data.stateName   || 'N/A';
+    document.getElementById('lblvwCompanyCountry').textContent  = data.countryName || 'N/A';
 
-            let currentPage = 1;
-            const pageSize = 5; // 🔥 change if needed
-            const totalRows = rows.length;
-            const totalPages = Math.ceil(totalRows / pageSize);
+                           const viewImg = document.getElementById('image_upload_previewEmployeeView');
+    const imagePath = data.picturePath;
+    if (imagePath && imagePath.trim() !== '') {
+        viewImg.src = imagePath;
+        viewImg.onerror = () => { viewImg.src = '/Companys/Images/default.jpg'; };
+    } else {
+        viewImg.src = '/Companys/Images/default.jpg';
+    }
+                    })
+                    .catch(err => {
+                        console.error("❌ VIEW ERROR:", err);
+                        alert('Failed to load company details');
+                    });
+            });
+        });
 
-            // ===============================
-            // SHOW PAGE
-            // ===============================
-            function showPage(page) {
+        // =================================================================
+        // 🔥 DELETE BUTTON - FIXED (same SP aliases)
+        // =================================================================
+        document.querySelectorAll('.deleteCompanies').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const id = this.dataset.companyId;
+                document.getElementById('hdnDelCompanyId').value = id;
+                fetch(`@Url.Action("GetCompany", "Company")?companyID=${id}`)
+                    .then(r => r.json())
+                    .then(data => {
+                        console.log("🗑️ DELETE DATA:", data);
 
-                currentPage = page;
+    document.getElementById('lblDelCompanyName').textContent    = data.companyName || 'N/A';
+    document.getElementById('lblDelCompanyEmail').textContent   = data.email       || 'N/A';
+    document.getElementById('lblDelCompanyAddress1').textContent= data.address1    || 'N/A';
+    document.getElementById('lblDelCompanyCity').textContent    = data.city        || 'N/A';
+    document.getElementById('lblDelCompanyState').textContent   = data.stateName   || 'N/A';
+    document.getElementById('lblDelCompanyCountry').textContent = data.countryName || 'N/A';
 
-                rows.forEach((row, index) => {
-                    const start = (page - 1) * pageSize;
-                    const end = start + pageSize;
+                           const delImg = document.getElementById('image_upload_previewCompanyDel');
+    const imagePath = data.picturePath;
+    if (imagePath && imagePath.trim() !== '') {
+        delImg.src = imagePath;
+        delImg.onerror = () => { delImg.src = '/Companys/Images/default.jpg'; };
+    } else {
+        delImg.src = '/Companys/Images/default.jpg';
+    }
+                    })
+                    .catch(err => {
+                        console.error("❌ DELETE LOAD ERROR:", err);
+                        alert('Failed to load delete details');
+                    });
+            });
+        });
 
-                    row.style.display = (index >= start && index < end) ? "" : "none";
-                });
-
-                renderPagination();
-            }
-
-            // ===============================
-            // RENDER PAGINATION
-            // ===============================
-            function renderPagination() {
-
-                if (!pagination) return;
-
-                pagination.innerHTML = "";
-
-                // PREVIOUS
-                const prev = document.createElement("li");
-                prev.className = "page-item " + (currentPage === 1 ? "disabled" : "");
-                prev.innerHTML = '<a class="page-link" href="#">Previous</a>';
-                prev.onclick = function (e) {
-                    e.preventDefault();
-                    if (currentPage > 1) showPage(currentPage - 1);
-                };
-                pagination.appendChild(prev);
-
-                // PAGE NUMBERS
-                for (let i = 1; i <= totalPages; i++) {
-                    const li = document.createElement("li");
-                    li.className = "page-item " + (i === currentPage ? "active" : "");
-                    li.innerHTML = '<a class="page-link" href="#">' + i + '</a>';
-
-                    li.onclick = function (e) {
-                        e.preventDefault();
-                        showPage(i);
-                    };
-
-                    pagination.appendChild(li);
+        // =================================================================
+        // 🔥 EDIT SUBMIT
+        // =================================================================
+        document.querySelectorAll('.edit-submit').forEach(btn => {
+            btn.addEventListener('click', async function(e) {
+                e.preventDefault();
+                let companyId = document.getElementById('hdnCompanyId')?.value;
+                if (!companyId || companyId === '0') {
+                    alert('⚠️ Please click EDIT button first');
+                    return;
                 }
+                const formData = new FormData();
+                const file = document.getElementById('editLogoUpload')?.files[0];
+                if (file) formData.append('file', file);
 
-                // NEXT
-                const next = document.createElement("li");
-                next.className = "page-item " + (currentPage === totalPages ? "disabled" : "");
-                next.innerHTML = '<a class="page-link" href="#">Next</a>';
-                next.onclick = function (e) {
-                    e.preventDefault();
-                    if (currentPage < totalPages) showPage(currentPage + 1);
+                const companyData = {
+                    CompanyID: parseInt(companyId),
+                    Comp_Name: document.getElementById('txtEditCompanyName').value,
+                    Comp_Address1: document.getElementById('txtEditCompanyAddress1').value,
+                    Comp_Address2: document.getElementById('txtEditCompanyAddress2').value,
+                    Comp_Area: document.getElementById('txtEditArea').value,
+                    Comp_City: document.getElementById('txtEditCity').value,
+                    Comp_State_ID: parseInt(document.getElementById('ddlEditStateId').value || 0),
+                    Comp_Country_ID: parseInt(document.getElementById('ddlEditCountryId').value || 0),
+                    Comp_Pincode: document.getElementById('txtEditPincode').value,
+                    Comp_Contact_No: document.getElementById('txtEditContactNo').value,
+                    Comp_Email: document.getElementById('txtEditEmail').value,
+                    Comp_PAN_No: document.getElementById('txtEditPAN').value,
+                    Comp_TAN_No: document.getElementById('txtEditTAN').value,
+                    Comp_VAT_No: document.getElementById('txtEditVAT').value,
+                    Comp_GST_No: document.getElementById('txtEditGST').value,
+                    Comp_TIN_No: document.getElementById('txtEditTIN').value,
+                    Comp_PTTax_No: document.getElementById('txtEditPT').value,
+                    SMTP_Server_Name: document.getElementById('txtEditSMTPServerName').value,
+                    SMTP_Port_No: document.getElementById('txtEditSMTPPortNo').value,
+                    SMTP_User_Name: document.getElementById('txtEditSMTPUserName').value,
+                    SMTP_User_Password: document.getElementById('txtEditSMTPPassword').value,
+                    IsActive: document.getElementById('chkEditActiveStatus').checked ? 1 : 0
                 };
-                pagination.appendChild(next);
-            }
-
-            // ===============================
-            // SHOW ALL BUTTON
-            // ===============================
-            if (showAllBtn) {
-                showAllBtn.addEventListener("click", function () {
-
-                    rows.forEach(row => row.style.display = "");
-
-                    if (pagination) pagination.innerHTML = "";
-                    this.style.display = "none";
-                });
-            }
-
-            // ===============================
-            // INIT
-            // ===============================
-            if (rows.length > 0) {
-                showPage(1);
-            }
-
-        });
-    </script>
-    <script>
-document.addEventListener("DOMContentLoaded", function () {
-
-    console.log("✅ Validation Script Loaded");
-
-    // ================= COMMON FUNCTIONS =================
-    function showError(field, message) {
-        if (!field) return;
-        field.style.border = "1px solid red";
-
-        let msg = field.parentElement.nextElementSibling;
-        if (msg) msg.textContent = message;
-    }
-
-    function clearError(field) {
-        if (!field) return;
-        field.style.border = "1px solid #ddd";
-
-        let msg = field.parentElement.nextElementSibling;
-        if (msg) msg.textContent = "";
-    }
-
-    function validateEmail(email) {
-        return /^\S+@@\S+\.\S+$/.test(email);
-    }
-
-    function validatePhone(phone) {
-        return /^[0-9]{10}$/.test(phone);
-    }
-
-    function validatePin(pin) {
-        return /^[0-9]{6}$/.test(pin);
-    }
-
-    function validatePAN(pan) {
-        return /^[A-Z]{5}[0-9]{4}[A-Z]{1}$/.test(pan);
-    }
-
-    // ================= ADD VALIDATION =================
-    function validateAddForm() {
-        let isValid = true;
-
-        const fields = {
-            txtCompanyName: "Company Name",
-            txtCompanyAddress1: "Address",
-            txtCity: "City",
-            ddlStateId: "State",
-            ddlCountryId: "Country",
-            txtPincode: "PIN",
-            txtEmail: "Email",
-            txtContactNo: "Contact"
-        };
-
-        Object.keys(fields).forEach(id => {
-            const field = document.getElementById(id);
-            if (!field || !field.value.trim()) {
-                showError(field, fields[id] + " is required");
-                isValid = false;
-            } else {
-                clearError(field);
-            }
+                formData.append('companyJson', JSON.stringify(companyData));
+                try {
+                    const response = await fetch('@Url.Action("Edit", "Company")', { method: 'POST', body: formData });
+                    const result = await response.json();
+                    if (result.success !== false) {
+                        alert('✅ Company Updated Successfully!');
+                        $('#editCompany').modal('hide');
+                        setTimeout(() => location.reload(), 1000);
+                    } else {
+                        alert('❌ ' + (result.message || 'Update failed'));
+                    }
+                } catch (error) {
+                    alert('Network Error');
+                }
+            });
         });
 
-        // Email
-        const email = document.getElementById("txtEmail");
-        if (email.value && !validateEmail(email.value)) {
-            showError(email, "Invalid email");
-            isValid = false;
-        }
-
-        // Phone
-        const phone = document.getElementById("txtContactNo");
-        if (phone.value && !validatePhone(phone.value)) {
-            showError(phone, "10 digit number required");
-            isValid = false;
-        }
-
-        // PIN
-        const pin = document.getElementById("txtPincode");
-        if (pin.value && !validatePin(pin.value)) {
-            showError(pin, "Invalid PIN");
-            isValid = false;
-        }
-
-        // PAN
-        const pan = document.getElementById("txtPAN");
-        if (pan.value && !validatePAN(pan.value)) {
-            showError(pan, "Invalid PAN");
-            isValid = false;
-        }
-
-        return isValid;
-    }
-
-    // ================= EDIT VALIDATION =================
-    function validateEditForm() {
-        let isValid = true;
-
-        const fields = {
-            txtEditCompanyName: "Company Name",
-            txtEditCompanyAddress1: "Address",
-            txtEditCity: "City",
-            ddlEditStateId: "State",
-            ddlEditCountryId: "Country",
-            txtEditPincode: "PIN",
-            txtEditEmail: "Email",
-            txtEditContactNo: "Contact"
-        };
-
-        Object.keys(fields).forEach(id => {
-            const field = document.getElementById(id);
-            if (!field || !field.value.trim()) {
-                showError(field, fields[id] + " is required");
-                isValid = false;
-            } else {
-                clearError(field);
-            }
+        // =================================================================
+        // 🔥 DELETE SUBMIT
+        // =================================================================
+        document.querySelectorAll('.delete-submit').forEach(btn => {
+            btn.addEventListener('click', async function(e) {
+                e.preventDefault();
+                const id = document.getElementById('hdnDelCompanyId').value;
+                if (!id) { alert('❌ No company selected'); return; }
+                if (!confirm('⚠️ Are you SURE you want to PERMANENTLY DELETE this company?')) return;
+                try {
+                    const response = await fetch(`@Url.Action("DeleteCompany", "Company")?companyId=${id}`);
+                    const result = await response.json();
+                    if (result.success) {
+                        alert('✅ ' + result.message);
+                        $('#deleteCompany').modal('hide');
+                        setTimeout(() => location.reload(), 800);
+                    } else {
+                        alert('❌ ' + result.message);
+                    }
+                } catch (error) {
+                    alert('Network Error');
+                }
+            });
         });
 
-        // Email
-        const email = document.getElementById("txtEditEmail");
-        if (email.value && !validateEmail(email.value)) {
-            showError(email, "Invalid email");
-            isValid = false;
-        }
+        // =================================================================
+        // 🔥 FILL EDIT FORM - FIXED (SP aliases mapped correctly)
+         function fillEditForm(data) {
+    const fields = {
+        'txtEditCompanyName':     data.companyName    || '',
+        'txtEditCompanyAddress1': data.address1       || '',
+        'txtEditCompanyAddress2': data.address2       || '',
+        'txtEditArea':            data.area           || '',
+        'txtEditCity':            data.city           || '',
+        'ddlEditStateId':         data.comp_State_ID  || '',
+        'ddlEditCountryId':       data.comp_Country_ID|| '',
+        'txtEditPincode':         data.pincode        || '',
+        'txtEditContactNo':       data.contactNo      || '',
+        'txtEditEmail':           data.email          || '',
+        'txtEditPAN':             data.panNo          || '',
+        'txtEditTAN':             data.tanNo          || '',
+        'txtEditVAT':             data.vatNo          || '',
+        'txtEditGST':             data.gstNo          || '',
+        'txtEditTIN':             data.tinNo          || '',
+        'txtEditPT':              data.ptTaxNo        || '',
+        // 🔥 KEY FIX - exact camelCase from your JSON
+        'txtEditSMTPServerName':  data.smtpServerName  || '',
+        'txtEditSMTPPortNo':      data.smtpPortNo      || '',
+        'txtEditSMTPUserName':    data.smtpUserName    || '',
+        'txtEditSMTPPassword':    data.smtpUserPassword|| ''
+    };
 
-        // Phone
-        const phone = document.getElementById("txtEditContactNo");
-        if (phone.value && !validatePhone(phone.value)) {
-            showError(phone, "Invalid number");
-            isValid = false;
-        }
-
-        // PIN
-        const pin = document.getElementById("txtEditPincode");
-        if (pin.value && !validatePin(pin.value)) {
-            showError(pin, "Invalid PIN");
-            isValid = false;
-        }
-
-        return isValid;
-    }
-
-    // ================= HOOK INTO BUTTONS =================
-    document.querySelectorAll(".add-submit").forEach(btn => {
-        btn.addEventListener("click", function (e) {
-            if (!validateAddForm()) {
-                e.stopImmediatePropagation();
-                console.log("❌ ADD VALIDATION FAILED");
-            } else {
-                console.log("✅ ADD VALIDATION PASSED");
-            }
-        }, true);
+    Object.entries(fields).forEach(([id, value]) => {
+        const el = document.getElementById(id);
+        if (el) el.value = value || '';
     });
 
-    document.querySelectorAll(".edit-submit").forEach(btn => {
-        btn.addEventListener("click", function (e) {
-            if (!validateEditForm()) {
-                e.stopImmediatePropagation();
-                console.log("❌ EDIT VALIDATION FAILED");
-            } else {
-                console.log("✅ EDIT VALIDATION PASSED");
-            }
-        }, true);
-    });
+    const chkActive = document.getElementById('chkEditActiveStatus');
+    if (chkActive) chkActive.checked = (data.isActive == 1);
+}
 
-});
+        // =================================================================
+        // 🔥 RESET BUTTONS
+        // =================================================================
+        document.querySelectorAll('.reset-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const form = this.closest('.modal').querySelector('form');
+                if (form) form.reset();
+                document.getElementById('logoPreview').src = '/Companys/Images/default.jpg';
+                document.getElementById('editLogoPreview').src = '/Companys/Images/default.jpg';
+            });
+        });
+
+        console.log("✅ ALL HANDLERS LOADED");
+    });
 </script>
 
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const table = document.getElementById("companyTable");
+        if (!table) return;
+
+        const rows = table.querySelectorAll("tbody tr");
+        const pagination = document.getElementById("pagination");
+        const showAllBtn = document.getElementById("showAllButton");
+
+        let currentPage = 1;
+        const pageSize = 5;
+        const totalRows = rows.length;
+        const totalPages = Math.ceil(totalRows / pageSize);
+
+        function showPage(page) {
+            currentPage = page;
+            rows.forEach((row, index) => {
+                const start = (page - 1) * pageSize;
+                const end = start + pageSize;
+                row.style.display = (index >= start && index < end) ? "" : "none";
+            });
+            renderPagination();
+        }
+
+        function renderPagination() {
+            if (!pagination) return;
+            pagination.innerHTML = "";
+
+            const prev = document.createElement("li");
+            prev.className = "page-item " + (currentPage === 1 ? "disabled" : "");
+            prev.innerHTML = '<a class="page-link" href="#">Previous</a>';
+            prev.onclick = function(e) { e.preventDefault(); if (currentPage > 1) showPage(currentPage - 1); };
+            pagination.appendChild(prev);
+
+            for (let i = 1; i <= totalPages; i++) {
+                const li = document.createElement("li");
+                li.className = "page-item " + (i === currentPage ? "active" : "");
+                li.innerHTML = '<a class="page-link" href="#">' + i + '</a>';
+                li.onclick = function(e) { e.preventDefault(); showPage(i); };
+                pagination.appendChild(li);
+            }
+
+            const next = document.createElement("li");
+            next.className = "page-item " + (currentPage === totalPages ? "disabled" : "");
+            next.innerHTML = '<a class="page-link" href="#">Next</a>';
+            next.onclick = function(e) { e.preventDefault(); if (currentPage < totalPages) showPage(currentPage + 1); };
+            pagination.appendChild(next);
+        }
+
+        if (showAllBtn) {
+            showAllBtn.addEventListener("click", function() {
+                rows.forEach(row => row.style.display = "");
+                if (pagination) pagination.innerHTML = "";
+                this.style.display = "none";
+            });
+        }
+
+        if (rows.length > 0) showPage(1);
+    });
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        console.log("✅ Validation Script Loaded");
+
+        function showError(field, message) {
+            if (!field) return;
+            field.style.border = "1px solid red";
+            let msg = field.parentElement.nextElementSibling;
+            if (msg) msg.textContent = message;
+        }
+
+        function clearError(field) {
+            if (!field) return;
+            field.style.border = "1px solid #ddd";
+            let msg = field.parentElement.nextElementSibling;
+            if (msg) msg.textContent = "";
+        }
+
+        function validateEmail(email) { return /^\S+@@\S+\.\S+$/.test(email); }
+        function validatePhone(phone) { return /^[0-9]{10}$/.test(phone); }
+        function validatePin(pin)     { return /^[0-9]{6}$/.test(pin); }
+        function validatePAN(pan)     { return /^[A-Z]{5}[0-9]{4}[A-Z]{1}$/.test(pan); }
+
+        function validateAddForm() {
+            let isValid = true;
+            const fields = {
+                txtCompanyName: "Company Name", txtCompanyAddress1: "Address",
+                txtCity: "City", ddlStateId: "State", ddlCountryId: "Country",
+                txtPincode: "PIN", txtEmail: "Email", txtContactNo: "Contact"
+            };
+            Object.keys(fields).forEach(id => {
+                const field = document.getElementById(id);
+                if (!field || !field.value.trim()) { showError(field, fields[id] + " is required"); isValid = false; }
+                else clearError(field);
+            });
+            const email = document.getElementById("txtEmail");
+            if (email.value && !validateEmail(email.value)) { showError(email, "Invalid email"); isValid = false; }
+            const phone = document.getElementById("txtContactNo");
+            if (phone.value && !validatePhone(phone.value)) { showError(phone, "10 digit number required"); isValid = false; }
+            const pin = document.getElementById("txtPincode");
+            if (pin.value && !validatePin(pin.value)) { showError(pin, "Invalid PIN"); isValid = false; }
+            const pan = document.getElementById("txtPAN");
+            if (pan.value && !validatePAN(pan.value)) { showError(pan, "Invalid PAN"); isValid = false; }
+            return isValid;
+        }
+
+        function validateEditForm() {
+            let isValid = true;
+            const fields = {
+                txtEditCompanyName: "Company Name", txtEditCompanyAddress1: "Address",
+                txtEditCity: "City", ddlEditStateId: "State", ddlEditCountryId: "Country",
+                txtEditPincode: "PIN", txtEditEmail: "Email", txtEditContactNo: "Contact"
+            };
+            Object.keys(fields).forEach(id => {
+                const field = document.getElementById(id);
+                if (!field || !field.value.trim()) { showError(field, fields[id] + " is required"); isValid = false; }
+                else clearError(field);
+            });
+            const email = document.getElementById("txtEditEmail");
+            if (email.value && !validateEmail(email.value)) { showError(email, "Invalid email"); isValid = false; }
+            const phone = document.getElementById("txtEditContactNo");
+            if (phone.value && !validatePhone(phone.value)) { showError(phone, "Invalid number"); isValid = false; }
+            const pin = document.getElementById("txtEditPincode");
+            if (pin.value && !validatePin(pin.value)) { showError(pin, "Invalid PIN"); isValid = false; }
+            return isValid;
+        }
+
+        document.querySelectorAll(".add-submit").forEach(btn => {
+            btn.addEventListener("click", function(e) {
+                if (!validateAddForm()) { e.stopImmediatePropagation(); }
+            }, true);
+        });
+
+        document.querySelectorAll(".edit-submit").forEach(btn => {
+            btn.addEventListener("click", function(e) {
+                if (!validateEditForm()) { e.stopImmediatePropagation(); }
+            }, true);
+        });
+    });
+</script>
 

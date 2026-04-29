@@ -39,6 +39,7 @@ namespace A2R_Project.Controllers
         public async Task<IActionResult> List(int page = 1, int pageSize = 10)
         {
             var models = new StudentInquiries();
+            await SetPagePermissions("StudentList");
             var allStudentInquiries = await _studentInquiryRepository.GetAllStudentInquiries();
 
             // 🔥 ONLY THIS LINE CHANGED - NEWEST FIRST!
@@ -126,7 +127,7 @@ namespace A2R_Project.Controllers
         {
             try
             {
-                Console.WriteLine($"Admission StudentID: {admissionData.StudentInquiryID}");
+                await SetPagePermissions("StudentInquiry");
 
                 if (admissionData.StudentInquiryID <= 0)
                     return Json("Invalid student ID");

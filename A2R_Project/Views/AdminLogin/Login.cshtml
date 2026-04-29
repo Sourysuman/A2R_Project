@@ -12,7 +12,7 @@
     <title>A2R - Admin Login</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>z
     <style>
         * {
             margin: 0;
@@ -128,24 +128,18 @@
         }
 
         .card-glow {
-            position: absolute;
-            inset: -2px;
-            background: conic-gradient(#667eea, #764ba2, #ff6b6b, #667eea);
-            border-radius: 20px;
-            z-index: -1;
-            animation: spin 3s linear infinite;
-            padding: 2px;
-            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-            mask-composite: exclude;
+            display: none !important;
         }
 
-        @@keyframes spin {
-            to
-
-        {
-            transform: rotate(360deg);
+        /* ===== GOLDEN BORDER - CONSTANT NO SPIN ===== */
+        .login-card {
+            border: 2px solid #f5c518 !important;
+            box-shadow: 0 0 10px rgba(245, 197, 24, 0.6), 0 0 30px rgba(245, 197, 24, 0.3), 0 0 60px rgba(245, 197, 24, 0.15), 0 24px 48px rgba(0, 0, 0, 0.6) !important;
         }
 
+        /* ===== REMOVE SPINNING GLOW - NOT NEEDED ===== */
+        .card-glow {
+            display: none !important;
         }
 
         .logo-section {
@@ -426,7 +420,7 @@
    
     <div class="login-container">
         <div class="login-card">
-            <div class="card-glow"></div>
+          
 
             <div class="logo-section">
                 <img src="~/image/a2r software.png" alt="A2R Logo" class="logo-image"
@@ -458,10 +452,13 @@
                 <div class="input-group">
                     @Html.PasswordFor(model => model.Password, new {
                     @class = "input-field",
-                                @id = "password"   // ✅ REQUIRED
+                                @id = "password",
+                                @placeholder = "Password"
                                 })
-                    <div class="error-message" id="password-error">Password must be 4+ characters</div>
-                </div>
+                <i class="fas fa-eye input-icon" id="togglePassword"
+                   style="cursor:pointer; right:16px; position:absolute; top:50%; transform:translateY(-50%); color:#888; font-size:1rem; z-index:10;"></i>
+                <div class="error-message" id="password-error">Password must be 4+ characters</div>
+            </div>
 
                 <div class="checkbox-row">
                     <div class="checkbox-container">
@@ -561,6 +558,7 @@
                 $('.alert-danger').fadeOut(300);
             });
 
+
             // Remember me
             var rememberMeUsername = getCookie("rememberMeUsername");
             if (rememberMeUsername) {
@@ -586,7 +584,21 @@
             }
             document.cookie = name + "=" + (value || "") + expires + "; path=/";
         }
+          var passwordVisible = false;
 
+        $('#togglePassword').on('click', function () {
+            passwordVisible = !passwordVisible;
+
+            if (passwordVisible) {
+                $('#password').attr('type', 'text');
+                $(this).removeClass('fa-eye').addClass('fa-eye-slash');
+                $(this).css('color', '#667eea');
+            } else {
+                $('#password').attr('type', 'password');
+                $(this).removeClass('fa-eye-slash').addClass('fa-eye');
+                $(this).css('color', '#888');
+            }
+        });
         function getCookie(name) {
             var nameEQ = name + "=";
             var ca = document.cookie.split(';');

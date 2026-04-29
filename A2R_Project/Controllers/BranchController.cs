@@ -25,8 +25,8 @@ namespace A2R_Project.Controllers
 
         public async Task<IActionResult> List(int page = 1, int pageSize = 10)
         {
-            var model = new BranchViewModel(); // ✅ Always initialized
-
+            var model = new BranchViewModel();
+         
             try
             {
                 var allBranches = await _branchRepository.GetAllBranches() ?? new List<Branch>();
@@ -40,11 +40,11 @@ namespace A2R_Project.Controllers
             }
             catch (Exception ex)
             {
-                // Log error
+            
                 Console.WriteLine($"List Error: {ex.Message}");
-                model.branches = new List<Branch>(); // ✅ Safe empty list
+                model.branches = new List<Branch>(); 
             }
-
+            await SetPagePermissions("Branch");
             ViewBag.TotalCount = model.branches.Count;
             ViewBag.CurrentPage = page;
             ViewBag.PageSize = pageSize;

@@ -19,6 +19,7 @@ namespace A2RSystemWebApp.Controllers
 
         public async Task<IActionResult> List(int page = 1, int pageSize = 10)
         {
+
             try
             {
                 var allCourses = await _courseRepository.GetAllCourses();
@@ -26,7 +27,7 @@ namespace A2RSystemWebApp.Controllers
 
                 var totalCount = allCourses.Count;
                 var pagedCourses = allCourses.Skip((page - 1) * pageSize).Take(pageSize).ToList();
-
+                await SetPagePermissions("Course");
                 ViewBag.TotalCount = totalCount;
                 ViewBag.CurrentPage = page;
                 ViewBag.PageSize = pageSize;

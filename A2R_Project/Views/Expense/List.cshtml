@@ -4,81 +4,46 @@
 }
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" rel="stylesheet">
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css" rel="stylesheet">
 <link href="https://cdn.jsdelivr.net/npm/@@mdi/font@6.5.95/css/materialdesignicons.min.css" rel="stylesheet">
 
 <style>
-
     /* ================= GLOBAL ================= */
     body {
         background: linear-gradient(135deg, #eef2ff, #f8fbff);
         font-family: 'Segoe UI', sans-serif;
     }
 
-    /* ================= CARD ================= */
-    .card {
-        border-radius: 16px;
-        border: none;
-        box-shadow: 0 10px 25px rgba(0,0,0,0.08);
-        transition: all 0.3s ease;
-    }
-
-        .card:hover {
-            transform: translateY(-3px);
-        }
-
-    /* ================= TABLE ================= */
-    .table {
-        border-radius: 12px;
-        overflow: hidden;
-        background: #ffffff;
-    }
-
-        .table thead {
-            background: linear-gradient(45deg, #4f46e5, #6366f1);
-            color: #fff;
-            font-weight: 600;
-        }
-
-        .table th {
-            border: none !important;
-            padding: 14px;
-        }
-
-        .table td {
-            border: none !important;
-            padding: 12px;
-            font-weight: 500;
-            color: #333;
-        }
-
-        /* Row hover animation */
-        .table tbody tr {
-            transition: all 0.25s ease-in-out;
-        }
-
-            .table tbody tr:hover {
-                background: #eef2ff;
-                transform: scale(1.01);
-                box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-            }
-
-            /* Alternate row color */
-            .table tbody tr:nth-child(even) {
-                background: #f9fbff;
-            }
-
     /* ================= BADGES ================= */
     .badge-success {
-        background: linear-gradient(45deg, #22c55e, #16a34a);
-        padding: 6px 10px;
+        background: linear-gradient(135deg, #1cc88a, #17a673) !important;
+        padding: 7px 12px;
         border-radius: 20px;
+        font-size: 13px;
+        font-weight: 600;
+        color: #fff;
     }
 
     .badge-danger {
-        background: linear-gradient(45deg, #ef4444, #dc2626);
-        padding: 6px 10px;
+        background: linear-gradient(135deg, #e74a3b, #c0392b) !important;
+        padding: 7px 12px;
         border-radius: 20px;
+        font-size: 13px;
+        font-weight: 600;
+        color: #fff;
+    }
+
+    /* ================= CARD ================= */
+    .card {
+        border-radius: 18px;
+        border: none;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+    }
+
+    .card-title {
+        font-size: 20px;
+        font-weight: 700;
+        color: #2c3e50;
+        letter-spacing: 0.5px;
     }
 
     /* ================= BUTTONS ================= */
@@ -90,404 +55,307 @@
 
         .btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 8px 18px rgba(0,0,0,0.15);
+            box-shadow: 0 6px 15px rgba(0,0,0,0.15);
         }
 
-    /* Action buttons */
-    .btn-sm {
-        padding: 6px 10px;
-    }
-
-    /* ================= INPUT FIELDS ================= */
-    .form-control,
-    textarea,
-    select {
-        border-radius: 10px;
-        border: 1px solid #d1d5db;
-        padding: 10px;
-        font-weight: 600;
-        color: #111 !important;
-        transition: all 0.3s ease;
-    }
-
-        /* Focus effect */
-        .form-control:focus,
-        textarea:focus,
-        select:focus {
-            border-color: #6366f1;
-            box-shadow: 0 0 0 3px rgba(99,102,241,0.2);
-            outline: none;
-        }
-
-    /* Labels */
-    label {
-        font-weight: 600;
-        color: #222;
-    }
-
-    /* ================= MODAL ================= */
-    .modal-content {
-        border-radius: 16px;
-        border: none;
-        animation: fadeInScale 0.3s ease;
-    }
-
-    .modal-header {
-        background: linear-gradient(45deg, #6366f1, #4f46e5);
-        color: white;
-        border-top-left-radius: 16px;
-        border-top-right-radius: 16px;
-    }
-
-    .modal-title {
-        font-weight: 600;
-    }
-
-    .modal-footer {
-        border-top: none;
-    }
-
-    /* Modal animation */
-    @@keyframes fadeInScale {
-        from {
-            opacity: 0;
-            transform: scale(0.9);
-        }
-
-        to {
-            opacity: 1;
-            transform: scale(1);
-        }
-    }
-
-    /* ================= IMAGE PREVIEW ================= */
-    img {
-        border-radius: 10px;
-        border: 1px solid #ddd;
-        transition: 0.3s;
-    }
-
-        img:hover {
-            transform: scale(1.05);
-        }
-
-    /* ================= PAGINATION ================= */
-    .pagination .page-link {
-        border-radius: 8px;
-        margin: 0 3px;
-        color: #4f46e5;
-        font-weight: 500;
-    }
-
-    .pagination .active .page-link {
-        background: #4f46e5;
-        color: #fff;
-    }
-
-    /* ================= RESPONSIVE ================= */
-    @@media (max-width: 768px) {
-        .table th, .table td {
-            font-size: 12px;
-            padding: 8px;
-        }
-
-        .modal-dialog {
-            max-width: 95%;
-        }
-
-        .btn {
-            font-size: 12px;
-            padding: 6px 10px;
-        }
-    }
-    /* ROUND ICON BUTTONS */
-    .btn-course-list {
-        width: 38px;
-        height: 38px;
-        border-radius: 50% !important;
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        padding: 0;
-    }
-
-    /* COLORS */
     .btn-gradient-primary {
-        background: linear-gradient(45deg, #6366f1, #4f46e5);
-        color: white;
+        background: linear-gradient(135deg, #28a745, #20c997) !important;
+        border: none !important;
+        color: #fff !important;
+        font-weight: 700;
+        padding: 8px 18px !important;
     }
 
     .btn-gradient-dark {
-        background: linear-gradient(45deg, #111827, #374151);
-        color: white;
+        background: linear-gradient(45deg, #111827, #374151) !important;
+        color: white !important;
+        border: none !important;
     }
 
     .btn-gradient-warning {
-        background: linear-gradient(45deg, #f59e0b, #d97706);
-        color: white;
+        background: linear-gradient(45deg, #f59e0b, #d97706) !important;
+        color: white !important;
+        border: none !important;
     }
 
-    /* HOVER */
-    .btn:hover {
-        transform: translateY(-3px) scale(1.08);
-        box-shadow: 0 10px 20px rgba(0,0,0,0.2);
-    }
-    /* BIG MODAL SIZE */
-    #addExpense .modal-dialog,
-    #editExpense .modal-dialog {
-        max-width: 950px;
-        width: 95%;
+    .btn-gradient-danger {
+        background: linear-gradient(45deg, #ef4444, #dc2626) !important;
+        color: white !important;
+        border: none !important;
     }
 
-    /* AUTO HEIGHT */
-    #addExpense .modal-content,
-    #editExpense .modal-content {
-        height: auto !important;
-        min-height: 520px;
-    }
-    /* HEADER - YELLOW GRADIENT */
-    #addExpense .modal-header,
-    #editExpense .modal-header {
-        background: linear-gradient(45deg, #facc15, #eab308);
-        color: #222;
-        border-top-left-radius: 16px;
-        border-top-right-radius: 16px;
+    .btn-gradient-info {
+        background: linear-gradient(45deg, #06b6d4, #0891b2) !important;
+        color: white !important;
+        border: none !important;
     }
 
-    /* BODY BACKGROUND */
-    #addExpense .modal-body,
-    #editExpense .modal-body {
-        background: #fffdf5;
+    /* ================= TABLE ================= */
+    .table {
+        border-radius: 14px;
+        overflow: hidden;
+        background: #fff;
+        border-collapse: collapse;
     }
 
-    /* LABEL COLOR */
-    #addExpense label,
-    #editExpense label {
-        color: #92400e;
-        font-weight: 600;
-    }
-    /* INPUT STYLE */
-    #addExpense .form-control,
-    #editExpense .form-control,
-    #addExpense select,
-    #editExpense select {
-        border-radius: 10px;
-        border: 1px solid #fcd34d;
-        font-weight: 600;
-        color: #111;
-    }
-
-        /* FOCUS EFFECT */
-        #addExpense .form-control:focus,
-        #editExpense .form-control:focus,
-        #addExpense select:focus,
-        #editExpense select:focus {
-            border-color: #f59e0b;
-            box-shadow: 0 0 0 3px rgba(251,191,36,0.3);
+        .table thead th,
+        .thead-dark th {
+            color: #fff !important;
+            border: none !important;
+            font-size: 14px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.6px;
+            padding: 14px;
+            text-align: center !important;
         }
-    /* SUBMIT BUTTON */
-    #btnExpenseSave,
-    #btnExpenseUpdate {
-        background: linear-gradient(45deg, #facc15, #f59e0b);
-        color: #222;
-        border-radius: 25px;
+
+        .table tbody td {
+            font-size: 15px;
+            font-weight: 600;
+            color: #34495e;
+            padding: 14px;
+            vertical-align: middle !important;
+            text-align: center !important;
+            border: none !important;
+            background-color:white !important;
+        }
+
+            .table tbody td:first-child {
+                text-align: left !important;
+                font-weight: 700 !important;
+                color: #2c3e50 !important;
+            }
+
+        /* TABLE ACTION BUTTONS */
+        .table .btn-sm {
+            width: 36px !important;
+            height: 36px !important;
+            border-radius: 10px !important;
+            padding: 0 !important;
+            margin-right: 4px;
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            border: none !important;
+        }
+
+            .table .btn-sm i {
+                font-size: 16px !important;
+            }
+
+            .table .btn-sm.editExpenseByID {
+                background: linear-gradient(135deg, #4e73df, #224abe) !important;
+                color: #fff !important;
+            }
+
+            .table .btn-sm.viewExpenseId {
+                background: linear-gradient(135deg, #36b9cc, #1f8ea3) !important;
+                color: #fff !important;
+            }
+
+            .table .btn-sm.deleteExpenses {
+                background: linear-gradient(135deg, #e74a3b, #c0392b) !important;
+                color: #fff !important;
+            }
+
+    /* ================= SHOW ALL BUTTON ================= */
+    #showAllButton {
+        background: linear-gradient(135deg, #28a745, #20c997) !important;
+        border: none !important;
+        color: #fff !important;
+        font-weight: 700;
+        border-radius: 25px !important;
+        padding: 6px 18px !important;
+    }
+
+    /* ================= PAGINATION ================= */
+    .pagination .page-link {
+        border-radius: 10px;
+        margin: 0 4px;
         font-weight: 600;
-    }
-
-    /* RESET BUTTON */
-    .btnExpenseReset {
-        background: linear-gradient(45deg, #fde68a, #fcd34d);
-        color: #222;
-    }
-
-    /* CLOSE BUTTON */
-    .btnClose {
-        background: #f3f4f6;
-        color: #333;
-    }
-
-    /* HOVER EFFECT */
-    #btnExpenseSave:hover,
-    #btnExpenseUpdate:hover,
-    .btnExpenseReset:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 8px 18px rgba(0,0,0,0.15);
-    }
-    /* POPUP BUTTON COMMON */
-    .modal-footer .btn {
-        border-radius: 30px !important;
-        font-weight: 600;
-        padding: 8px 18px;
-        letter-spacing: 0.5px;
-        transition: all 0.3s ease;
-    }
-
-    /* SUBMIT (YELLOW PRIMARY) */
-    #btnExpenseSave,
-    #btnExpenseUpdate {
-        background: linear-gradient(45deg, #facc15, #f59e0b);
-        color: #222;
+        color: #4e73df;
         border: none;
     }
 
-    /* RESET */
-    .btnExpenseReset {
-        background: linear-gradient(45deg, #fde68a, #fcd34d);
-        color: #333;
-        border: none;
-    }
-
-    /* CLOSE */
-    .btnClose {
-        background: #e5e7eb;
-        color: #333;
-        border: none;
-    }
-
-    /* DELETE BUTTON */
-    #btnExpenseDelete {
-        background: linear-gradient(45deg, #ef4444, #dc2626);
+    .pagination .page-item.active .page-link {
+        background: linear-gradient(135deg, #4e73df, #224abe);
         color: #fff;
     }
 
-    /* HOVER EFFECT */
-    .modal-footer .btn:hover {
-        transform: translateY(-2px) scale(1.05);
-        box-shadow: 0 8px 18px rgba(0,0,0,0.2);
+    .pagination .page-link:hover {
+        background: #e8edff;
     }
 
-    /* CLICK EFFECT */
-    .modal-footer .btn:active {
-        transform: scale(0.95);
+    /* ================= UNIFIED MODAL STYLE — ALL SAME ================= */
+    /* Every modal: same width, same position */
+    .modal .modal-dialog {
+        max-width: 820px !important;
+        width: 95% !important;
+        margin: 20px auto !important; /* small top gap so modal sits near top */
     }
-    /* IMAGE CONTAINER FIXED SIZE */
+
+    .modal .modal-content {
+        border-radius: 16px !important;
+        border: none !important;
+        box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+        animation: fadeInScale 0.25s ease;
+    }
+
+    /* SAME HEADER FOR ALL MODALS (incl. delete) */
+    .modal .modal-header {
+        background: linear-gradient(135deg, #4e73df, #224abe) !important;
+        color: #fff !important;
+        border-radius: 16px 16px 0 0 !important;
+        padding: 15px 20px !important;
+        border-bottom: none !important;
+    }
+
+        .modal .modal-header .modal-title {
+            font-weight: 700 !important;
+            font-size: 17px !important;
+            color: #fff !important;
+            letter-spacing: 0.4px;
+        }
+
+        .modal .modal-header .close {
+            color: #fff !important;
+            opacity: 0.85;
+            font-size: 22px;
+            text-shadow: none;
+        }
+
+            .modal .modal-header .close:hover {
+                opacity: 1;
+            }
+
+    /* ALL BODIES WHITE */
+    .modal .modal-body {
+        background: #ffffff !important;
+        padding: 22px 24px !important;
+    }
+
+    /* ALL FOOTERS SAME */
+    .modal .modal-footer {
+        background: #f8f9fa !important;
+        border-top: 1px solid #e9ecef !important;
+        border-radius: 0 0 16px 16px !important;
+        padding: 12px 20px !important;
+    }
+
+        .modal .modal-footer .btn {
+            border-radius: 30px !important;
+            font-weight: 600;
+            padding: 8px 22px;
+        }
+
+    /* ================= FORM INSIDE MODALS ================= */
+    .modal .form-control,
+    .modal textarea,
+    .modal select {
+        border-radius: 10px;
+        border: 1.5px solid #dce3f0;
+        padding: 8px 12px;
+        font-weight: 600;
+        color: #111 !important;
+        background: #fff !important;
+        transition: all 0.3s ease;
+    }
+
+        .modal .form-control:focus,
+        .modal textarea:focus,
+        .modal select:focus {
+            border-color: #4e73df;
+            box-shadow: 0 0 0 3px rgba(78,115,223,0.15);
+            outline: none;
+        }
+
+    .modal label {
+        font-weight: 600;
+        color: #2c3e50 !important;
+    }
+
+    /* ================= IMAGE PREVIEW ================= */
     #Add_Expense_Proof_Preview,
     #Edit_Expense_Proof_Preview,
     #View_Expense_Proof {
         width: 100%;
-        height: 150px;
-        object-fit: cover; /* crop nicely */
-        border-radius: 12px;
-        border: 2px solid #fcd34d;
-        background: #fff;
+        height: 110px;
+        object-fit: cover;
+        border-radius: 10px;
+        border: 2px solid #dce3f0;
+        background: #f8f9fa;
     }
 
-    /* IMAGE BOX WRAPPER (OPTIONAL BUT BEST) */
-    .image-box {
-        width: 100%;
-        height: 150px;
-        overflow: hidden;
-        border-radius: 12px;
-        background: #fff;
-        box-shadow: 0 5px 12px rgba(0,0,0,0.1);
-    }
-
-        /* HOVER EFFECT */
-        .image-box img:hover {
-            transform: scale(1.08);
-            transition: 0.3s;
-        }
-
-    #editExpense .modal-header {
-        background: linear-gradient(45deg, #22c55e, #16a34a);
-        color: #fff;
-    }
-
-    #editExpense .modal-body {
-        background: #f0fdf4;
-    }
-
-    /* Inputs */
-    #editExpense .form-control,
-    #editExpense select {
-        border: 1px solid #86efac;
-        background: #ffffff;
-    }
-
-        #editExpense .form-control:focus,
-        #editExpense select:focus {
-            border-color: #22c55e;
-            box-shadow: 0 0 0 3px rgba(34,197,94,0.2);
-        }
-
-    /* Labels */
-    #editExpense label {
-        color: #166534;
-    }
-
-    #viewExpense .modal-header {
-        background: linear-gradient(45deg, #8b5cf6, #6d28d9);
-        color: #fff;
-    }
-
-    #viewExpense .modal-body {
-        background: #faf5ff;
-    }
-
-    /* Text */
-    #viewExpense label {
-        color: #4c1d95;
-        font-weight: 600;
-    }
-
-    /* Image border */
-    #View_Expense_Proof {
-        border: 2px solid #c4b5fd;
-    }
-
-    #deleteExpense .modal-header {
-        background: linear-gradient(45deg, #ef4444, #dc2626);
-        color: #fff;
-    }
-
+    /* ================= DELETE MODAL BODY ================= */
     #deleteExpense .modal-body {
-        background: #fef2f2;
-    }
-
-    /* Text */
-    #deleteExpense label {
-        color: #7f1d1d;
-        font-weight: 600;
-    }
-
-    #deleteExpense .modal-dialog {
-        max-width: 400px;
-        width: 90%;
-    }
-
-    #deleteExpense .modal-content {
-        border-radius: 18px;
         text-align: center;
-        padding: 10px;
+        padding: 30px 24px !important;
     }
 
-    #deleteExpense .modal-dialog {
-        max-width: 566px;
-        width: 95%;
-    }
-    /* Remove extra gap */
-    #deleteExpense p {
-        margin-bottom: 6px;
-        font-size: 14px;
-        color: #444;
+    .delete-icon-wrap {
+        width: 70px;
+        height: 70px;
+        background: linear-gradient(135deg, #fee2e2, #fecaca);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 16px;
+        border: 3px solid #fca5a5;
     }
 
-    /* Expense title (field name) tight + highlight */
-    #Delete_Expense_Title {
-        display: inline; /* keeps it inline with sentence */
-        margin-left: 4px; /* small gap only */
-        color: #dc2626;
+        .delete-icon-wrap i {
+            font-size: 32px;
+            color: #dc2626;
+        }
+
+    .delete-expense-name {
+        font-size: 18px;
         font-weight: 700;
+        color: #dc2626;
+        background: #fef2f2;
+        border: 1.5px dashed #fca5a5;
+        border-radius: 10px;
+        padding: 8px 20px;
+        display: inline-block;
+        margin: 8px 0 14px;
     }
 
-    #deleteExpense .form-group {
-        margin-bottom: 5px;
-    }
-
-    #deleteExpense label {
+    .delete-confirm-text {
+        font-size: 15px;
+        color: #555;
         margin-bottom: 0;
     }
 
+    /* ================= VIEW MODAL ================= */
+    .view-detail-row {
+        display: flex;
+        align-items: flex-start;
+        padding: 8px 0;
+        border-bottom: 1px solid #f0f0f0;
+    }
+
+        .view-detail-row:last-child {
+            border-bottom: none;
+        }
+
+    .view-detail-label {
+        font-weight: 700;
+        color: #4e73df;
+        min-width: 130px;
+        font-size: 13px;
+        text-transform: uppercase;
+        letter-spacing: 0.4px;
+    }
+
+    .view-detail-value {
+        font-weight: 600;
+        color: #2c3e50;
+        font-size: 15px;
+    }
+
+    /* ================= ERROR ================= */
     .error-text {
         font-size: 12px;
         margin-top: 3px;
@@ -499,104 +367,178 @@
         border-color: #ef4444 !important;
     }
 
+    /* ================= BACKDROP ================= */
+    .modal-backdrop {
+        opacity: 0.3 !important;
+    }
+
+    @@keyframes fadeInScale {
+        from {
+            opacity: 0;
+            transform: scale(0.94);
+        }
+
+        to {
+            opacity: 1;
+            transform: scale(1);
+        }
+    }
+
+    /* ================= RESPONSIVE ================= */
+    @@media (max-width: 768px) {
+        .table th, .table td {
+            font-size: 12px;
+            padding: 8px;
+        }
+
+        .modal .modal-dialog {
+            max-width: 98% !important;
+            margin: 10px auto !important;
+        }
+    }
 </style>
+
 <div class="col-lg-12 stretch-card">
     <div class="card">
         <div class="card-body">
-            <div class="d-flex justify-content-between align-items-center" style="padding: 10px !important">
+            <div class="d-flex justify-content-between align-items-center" style="padding:10px">
                 <strong class="card-title">Expense List</strong>
-                <button type="button" class="btn btn-gradient-primary btn-rounded btn-fw" data-toggle="modal" data-target="#addExpense">
-                    <i class="fa fa-plus"></i> Add
-                </button>
+                @if (ViewBag.CanInsert == true)
+                {
+                    <button type="button" class="btn btn-gradient-primary"
+                            data-toggle="modal" data-target="#addExpense">
+                        <i class="fa fa-plus"></i> Add
+                    </button>
+                }
+                else
+                {
+                    <button type="button" class="btn btn-secondary"
+                            onclick="noAccess('Insert')">
+                        <i class="fa fa-plus"></i> Add
+                    </button>
+                }
             </div>
 
-            <!-- Table with ID for ShowAll functionality -->
-            <table id="expenseTable" class="table table-bordered">
-                <thead>
-                    <tr>
-                        <th>Expense Title</th>
-                        <th>Category</th>
-                        <th>Amount</th>
-                        <th>Date</th>
-                        <th>Status</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @if (Model != null && Model.expenses != null && Model.expenses.Any())
-                    {
-                        foreach (var expense in Model.expenses)
-                        {
-                            <tr>
-                                <td>@expense.Expense_Title</td>
-                                <td>@expense.Category_Name</td>
-                                <td>@expense.Expense_Amount</td>
-                                <td>@expense.Expense_Date?.ToString("dd-MM-yyyy")</td>
-                                <td>
-                                    @if (expense.IsActive == 1)
-                                    {
-                                        <span class="badge badge-success">Active</span>
-                                    }
-                                    else
-                                    {
-                                        <span class="badge badge-danger">Inactive</span>
-                                    }
-                                </td>
-                                <td>
-                                    <!-- ✅ FIXED - NO SINGLE QUOTES -->
-                                    <button type="button" class="btn btn-sm btn-custom btn-gradient-primary btn-rounded btn-course-list editExpenseByID"
-                                            data-edexpenseId="@expense.Expense_ID" title="Edit" data-toggle="modal" data-target="#editExpense">
-                                        <i class="mdi mdi-pencil"></i>
-                                    </button>
-                                    <!-- ✅ FIXED - NO SINGLE QUOTES -->
-                                    <button type="button" class="btn btn-sm btn-custom btn-gradient-dark btn-rounded btn-course-list viewExpenseId"
-                                            data-vwexpenseId="@expense.Expense_ID" title="View" data-toggle="modal" data-target="#viewExpense">
-                                        <i class="mdi mdi-eye"></i>
-                                    </button>
-                                    <!-- ✅ FIXED - NO SINGLE QUOTES -->
-                                    <button type="button" class="btn btn-sm btn-custom btn-gradient-warning btn-rounded btn-course-list deleteExpenses"
-                                            data-dltexpenseId="@expense.Expense_ID" title="Delete" data-toggle="modal" data-target="#deleteExpense">
-                                        <i class="mdi mdi-delete"></i>
-                                    </button>
-                                </td>
-                            </tr>
-                        }
-                    }
-                    else
-                    {
+            <div id="expenseTableWrapper">
+                <table id="expenseTable" class="table table-bordered">
+                    <thead class="thead-dark">
                         <tr>
-                            <td colspan="6" class="text-center">No expenses found</td>
+                            <th>Expense Title</th>
+                            <th>Category</th>
+                            <th>Amount</th>
+                            <th>Date</th>
+                            <th>Status</th>
+                            <th>Action</th>
                         </tr>
-                    }
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody id="expenseTableBody">
+                        @if (Model != null && Model.expenses != null && Model.expenses.Any())
+                        {
+                            foreach (var expense in Model.expenses)
+                            {
+                                <tr>
+                                    <td>@expense.Expense_Title</td>
+                                    <td>@expense.Category_Name</td>
+                                    <td>@expense.Expense_Amount</td>
+                                    <td>@expense.Expense_Date?.ToString("dd-MM-yyyy")</td>
+                                    <td>
+                                        @if (expense.IsActive == 1)
+                                        {
+                                            <span class="badge badge-success">Active</span>
+                                        }
+                                        else
+                                        {
+
+                                            <span class="badge badge-danger">Inactive</span>
+                                        }
+                                    </td>
+                                    <td>
+                                        @* EDIT *@
+                                        @if (ViewBag.CanUpdate == true)
+                                        {
+                                            <button type="button" class="btn btn-sm editExpenseByID"
+                                                    data-edexpenseId="@expense.Expense_ID"
+                                                    data-toggle="modal" data-target="#editExpense"
+                                                    title="Edit">
+                                                <i class="mdi mdi-pencil"></i>
+                                            </button>
+                                        }
+                                        else
+                                        {
+                                            <button type="button" class="btn btn-sm"
+                                                    style="background:linear-gradient(135deg,#6b7280,#4b5563)!important;color:#fff!important;"
+                                                    title="No Edit Permission"
+                                                    onclick="noAccess('Update')">
+                                                <i class="mdi mdi-pencil"></i>
+                                            </button>
+                                        }
+
+                                        @* VIEW — always visible *@
+                                        <button type="button" class="btn btn-sm viewExpenseId"
+                                                data-vwexpenseId="@expense.Expense_ID"
+                                                data-toggle="modal" data-target="#viewExpense"
+                                                title="View">
+                                            <i class="mdi mdi-eye"></i>
+                                        </button>
+
+                                        @* DELETE *@
+                                        @if (ViewBag.CanDelete == true)
+                                        {
+                                            <button type="button" class="btn btn-sm deleteExpenses"
+                                                    data-dltexpenseId="@expense.Expense_ID"
+                                                    data-toggle="modal" data-target="#deleteExpense"
+                                                    title="Delete">
+                                                <i class="mdi mdi-delete"></i>
+                                            </button>
+                                        }
+                                        else
+                                        {
+                                            <button type="button" class="btn btn-sm"
+                                                    style="background:linear-gradient(135deg,#6b7280,#4b5563)!important;color:#fff!important;"
+                                                    title="No Delete Permission"
+                                                    onclick="noAccess('Delete')">
+                                                <i class="mdi mdi-delete"></i>
+                                            </button>
+                                        }
+                                    </td>
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr><td colspan="6" class="text-center">No expenses found</td></tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
 
             @if (ViewBag.ShowAllButton == true)
             {
                 <div class="row">
                     <div class="col text-right">
-                        <button type="button" id="showAllButton" class="btn btn-primary">Show All</button>
+                        <button type="button" id="showAllButton" class="btn">Show All</button>
                     </div>
                 </div>
             }
 
+            <!-- AJAX Pagination (no page reload) -->
             @if (ViewBag.TotalCount != null && ViewBag.TotalCount > ViewBag.PageSize)
             {
-                <div class="row">
+                <div class="row mt-2">
                     <div class="col">
-                        <nav aria-label="Page navigation">
-                            <ul id="pagination" class="pagination">
-                                <li class="page-item @(ViewBag.CurrentPage == 1 ? "disabled" : "")">
-                                    <a class="page-link" href="@Url.Action("List", new { page = ViewBag.CurrentPage - 1, pageSize = ViewBag.PageSize })" tabindex="-1">Previous</a>
+                        <nav>
+                            <ul id="pagination" class="pagination flex-wrap">
+                                <li class="page-item @(ViewBag.CurrentPage == 1 ? "disabled" : "")" data-page="@(ViewBag.CurrentPage - 1)">
+                                    <a class="page-link page-btn" href="#">Previous</a>
                                 </li>
-                                @for (int i = 1; i <= Math.Ceiling((double)ViewBag.TotalCount / ViewBag.PageSize); i++)
+                                @for (int i = 1; i <= (int)Math.Ceiling((double)ViewBag.TotalCount / ViewBag.PageSize); i++)
                                 {
-                                    <li class="page-item @(i == ViewBag.CurrentPage ? "active" : "")">
-                                        <a class="page-link" href="@Url.Action("List", new { page = i, pageSize = ViewBag.PageSize })">@i</a>
+                                    <li class="page-item @(i == ViewBag.CurrentPage ? "active" : "")" data-page="@i">
+                                        <a class="page-link page-btn" href="#">@i</a>
                                     </li>
                                 }
-                                <li class="page-item @(ViewBag.CurrentPage == Math.Ceiling((double)ViewBag.TotalCount / ViewBag.PageSize) ? "disabled" : "")">
-                                    <a class="page-link" href="@Url.Action("List", new { page = ViewBag.CurrentPage + 1, pageSize = ViewBag.PageSize })">Next</a>
+                                <li class="page-item @(ViewBag.CurrentPage == (int)Math.Ceiling((double)ViewBag.TotalCount / ViewBag.PageSize) ? "disabled" : "")" data-page="@(ViewBag.CurrentPage + 1)">
+                                    <a class="page-link page-btn" href="#">Next</a>
                                 </li>
                             </ul>
                         </nav>
@@ -607,56 +549,49 @@
     </div>
 </div>
 
-<!-- Add Expense Modal -->
-<div class="modal fade" id="addExpense" tabindex="-1" role="dialog" aria-labelledby="addExpenseModalLabel" aria-hidden="true">
+<!-- ==================== ADD EXPENSE MODAL ==================== -->
+<div class="modal fade" id="addExpense" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content" style="height: 348px;width: 824px;">
+        <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="addExpenseModalLabel">Add Expense</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+                <h5 class="modal-title"><i class="mdi mdi-plus-circle mr-2"></i>Add Expense</h5>
+                <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
             </div>
             <div class="modal-body">
-                <form id="addExpenseForm" class="form-sample" enctype="multipart/form-data">
+                <form id="addExpenseForm" enctype="multipart/form-data">
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="Expense_Title">Expense Title</label>
-                                <input type="text" class="form-control" id="Expense_Title" name="Expense_Title" />
+                                <label>Expense Title</label>
+                                <input type="text" class="form-control" id="Expense_Title" name="Expense_Title" placeholder="Enter title..." />
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="Category_ID">Category</label>
-                                <div style="position: relative; flex: 1;">
-                                    <select class="form-control" id="Category_ID" name="Category_ID">
-                                        <option value="">Select Category</option>
-                                        @if (Model.expenseCategory != null)
+                                <label>Category</label>
+                                <select class="form-control" id="Category_ID" name="Category_ID">
+                                    <option value="">Select Category</option>
+                                    @if (Model.expenseCategory != null)
+                                    {
+                                        @foreach (var category in Model.expenseCategory)
                                         {
-                                            @foreach (var category in Model.expenseCategory)
-                                            {
-                                                <option value="@category.Category_ID">@category.Category_Name</option>
-                                            }
+                                            <option value="@category.Category_ID">@category.Category_Name</option>
                                         }
-                                    </select>
-                                    <span class="input-group-text" style="position: absolute; right: 0; top: 0; bottom: 0; display: flex; align-items: center; padding: 0 10px;">
-                                        <i class="mdi mdi-menu-down"></i>
-                                    </span>
-                                </div>
+                                    }
+                                </select>
                             </div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="Expense_Amount">Amount</label>
-                                <input type="text" class="form-control" id="Expense_Amount" name="Expense_Amount" />
+                                <label>Amount</label>
+                                <input type="text" class="form-control" id="Expense_Amount" name="Expense_Amount" placeholder="0.00" />
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="Expense_Date">Date</label>
+                                <label>Date</label>
                                 <input type="date" class="form-control" id="Expense_Date" name="Expense_Date" />
                             </div>
                         </div>
@@ -664,97 +599,89 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="Invoice_Id">Invoice ID</label>
-                                <input type="text" class="form-control" id="Invoice_Id" name="Invoice_Id" />
+                                <label>Invoice ID</label>
+                                <input type="text" class="form-control" id="Invoice_Id" name="Invoice_Id" placeholder="INV-0001" />
                             </div>
                         </div>
                         <div class="col-md-3">
                             <div class="form-group">
-                                <label for="Expense_Proof">Proof</label>
+                                <label>Proof</label>
                                 <input type="file" class="form-control-file" id="Add_Expense_Proof" name="Expense_Proof" accept="image/*" />
                             </div>
                         </div>
-                        <div class="col-md-3">
-                            <img id="Add_Expense_Proof_Preview" src="~/images/bird.jpg" alt="Preview" style="max-width: 100px; max-height: 100px;" />
+                        <div class="col-md-3 d-flex align-items-end pb-2">
+                            <img id="Add_Expense_Proof_Preview" src="~/images/bird.jpg" alt="Preview" />
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="Expense_Remark">Remark</label>
-                                <textarea class="form-control" id="Expense_Remark" name="Expense_Remark" rows="3"></textarea>
+                                <label>Remark</label>
+                                <textarea class="form-control" id="Expense_Remark" name="Expense_Remark" rows="2" placeholder="Optional remark..."></textarea>
                             </div>
                         </div>
-                        <div class="col-md-6">
-                            <div class="form-check">
-                                <input type="checkbox" class="form-check-input rounded-checkbox" id="chkActiveStatusAdd" checked>
-                                <label class="form-check-label" for="chkActiveStatusAdd">Status</label>
+                        <div class="col-md-6 d-flex align-items-center">
+                            <div class="form-check mt-3">
+                                <input type="checkbox" class="form-check-input" id="chkActiveStatusAdd" checked>
+                                <label class="form-check-label" for="chkActiveStatusAdd">Active Status</label>
                             </div>
                         </div>
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-gradient-warning btn-rounded btn-fw btnClose" data-dismiss="modal">Close</button>
-               
-                <button type="button" class="btn btn-gradient-info btn-rounded btn-fw" id="btnExpenseSave">Submit</button>
+                <button type="button" class="btn btn-gradient-warning btnClose" data-dismiss="modal"><i class="fa fa-times mr-1"></i>Close</button>
+                <button type="button" class="btn btn-gradient-info" id="btnExpenseSave"><i class="fa fa-save mr-1"></i>Submit</button>
             </div>
         </div>
     </div>
 </div>
 
-<!-- Edit Expense Modal -->
-<div class="modal fade" id="editExpense" tabindex="-1" role="dialog" aria-labelledby="editExpenseModalLabel" aria-hidden="true">
+<!-- ==================== EDIT EXPENSE MODAL ==================== -->
+<div class="modal fade" id="editExpense" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content" style="height: 348px;width: 824px;">
+        <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="editExpenseModalLabel">Edit Expense</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+                <h5 class="modal-title"><i class="mdi mdi-pencil mr-2"></i>Edit Expense</h5>
+                <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
             </div>
             <div class="modal-body">
-                <form id="editExpenseForm" class="form-sample">
+                <form id="editExpenseForm">
                     <input type="hidden" id="hdnExpenseId" name="expense_ID">
                     <input type="hidden" id="hdnExpenseProofId" name="expenseImagId">
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="Edit_Expense_Title">Expense Title</label>
+                                <label>Expense Title</label>
                                 <input type="text" class="form-control" id="Edit_Expense_Title" name="Edit_Expense_Title" />
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="Edit_Category_ID">Category</label>
-                                <div style="position: relative; flex: 1;">
-                                    <select class="form-control" id="Edit_Category_ID" name="Edit_Category_ID">
-                                        <option value="">Select Category</option>
-                                        @if (Model.expenseCategory != null)
+                                <label>Category</label>
+                                <select class="form-control" id="Edit_Category_ID" name="Edit_Category_ID">
+                                    <option value="">Select Category</option>
+                                    @if (Model.expenseCategory != null)
+                                    {
+                                        @foreach (var category in Model.expenseCategory)
                                         {
-                                            @foreach (var category in Model.expenseCategory)
-                                            {
-                                                <option value="@category.Category_ID">@category.Category_Name</option>
-                                            }
+                                            <option value="@category.Category_ID">@category.Category_Name</option>
                                         }
-                                    </select>
-                                    <span class="input-group-text" style="position: absolute; right: 0; top: 0; bottom: 0; display: flex; align-items: center; padding: 0 10px;">
-                                        <i class="mdi mdi-menu-down"></i>
-                                    </span>
-                                </div>
+                                    }
+                                </select>
                             </div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="Edit_Expense_Amount">Amount</label>
+                                <label>Amount</label>
                                 <input type="text" class="form-control" id="Edit_Expense_Amount" name="Edit_Expense_Amount" />
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="Edit_Expense_Date">Date</label>
+                                <label>Date</label>
                                 <input type="date" class="form-control" id="Edit_Expense_Date" name="Edit_Expense_Date" />
                             </div>
                         </div>
@@ -762,271 +689,272 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="Invoice_IdEdit">Invoice ID</label>
+                                <label>Invoice ID</label>
                                 <input type="text" class="form-control" id="Invoice_IdEdit" name="Invoice_IdEdit" />
                             </div>
                         </div>
                         <div class="col-md-3">
                             <div class="form-group">
-                                <label for="Edit_Expense_Proof">Proof</label>
+                                <label>Proof</label>
                                 <input type="file" class="form-control-file" id="Edit_Expense_Proof" name="Edit_Expense_Proof" accept="image/*" />
                             </div>
                         </div>
-                        <div class="col-md-3">
-                            <img id="Edit_Expense_Proof_Preview" src="~/images/bird.jpg" alt="Preview" style="max-width: 100px; max-height: 100px;" />
+                        <div class="col-md-3 d-flex align-items-end pb-2">
+                            <img id="Edit_Expense_Proof_Preview" src="~/images/bird.jpg" alt="Preview" />
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="Expense_RemarkEdit">Remark</label>
-                                <textarea class="form-control" id="Expense_RemarkEdit" name="Expense_RemarkEdit" rows="3"></textarea>
+                                <label>Remark</label>
+                                <textarea class="form-control" id="Expense_RemarkEdit" name="Expense_RemarkEdit" rows="2"></textarea>
                             </div>
                         </div>
-                        <div class="col-md-6">
-                            <div class="form-check">
-                                <input type="checkbox" class="form-check-input rounded-checkbox" id="chkEditActiveStatus">
-                                <label class="form-check-label" for="chkEditActiveStatus">Status</label>
+                        <div class="col-md-6 d-flex align-items-center">
+                            <div class="form-check mt-3">
+                                <input type="checkbox" class="form-check-input" id="chkEditActiveStatus">
+                                <label class="form-check-label" for="chkEditActiveStatus">Active Status</label>
                             </div>
                         </div>
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-gradient-warning btn-rounded btn-fw btnClose" data-dismiss="modal">Close</button>
-               
-                <button type="button" class="btn btn-gradient-info btn-rounded btn-fw" id="btnExpenseUpdate">Submit</button>
+                <button type="button" class="btn btn-gradient-warning btnClose" data-dismiss="modal"><i class="fa fa-times mr-1"></i>Close</button>
+                <button type="button" class="btn btn-gradient-info" id="btnExpenseUpdate"><i class="fa fa-save mr-1"></i>Submit</button>
             </div>
         </div>
     </div>
 </div>
 
-<!-- View Expense Modal -->
-<div class="modal fade" id="viewExpense" tabindex="-1" role="dialog" aria-labelledby="viewExpenseModalLabel" aria-hidden="true">
+<!-- ==================== VIEW EXPENSE MODAL ==================== -->
+<div class="modal fade" id="viewExpense" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="viewExpenseModalLabel">View Expense</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+                <h5 class="modal-title"><i class="mdi mdi-eye mr-2"></i>View Expense</h5>
+                <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
             </div>
             <div class="modal-body">
                 <div class="row">
-                    <div class="col-md-4">
-                        <div class="card">
-                            <div class="card-body">
-                                <img id="View_Expense_Proof" class="card-img-top" src="~/images/bird.jpg" alt="Expense Proof" style="max-width:100%; max-height:200px;">
-                            </div>
-                        </div>
+                    <div class="col-md-4 text-center">
+                        <img id="View_Expense_Proof" src="~/images/bird.jpg" alt="Proof"
+                             style="width:100%; max-height:200px; object-fit:cover; border-radius:12px; border:2px solid #dce3f0;" />
+                        <p class="mt-2 text-muted" style="font-size:12px;">Expense Proof</p>
                     </div>
                     <div class="col-md-8">
-                        <span style="color:black !important">Expense Details</span>
-                        <hr style="color:black !important" />
-                        <div class="row form-group">
-                            <div class="col col-md-4"><label class="form-control-label">Expense Title:</label></div>
-                            <div class="col-12 col-md-8">
-                                <label class="form-control-label" id="lblvwExpenseTitle"></label>
-                            </div>
-                            <input type="hidden" id="hdnvwExpenseId" name="expense_ID">
+                        <h6 class="font-weight-bold mb-3" style="color:#4e73df; border-bottom:2px solid #e8edff; padding-bottom:8px;">
+                            <i class="mdi mdi-receipt mr-1"></i> Expense Details
+                        </h6>
+                        <input type="hidden" id="hdnvwExpenseId">
+                        <div class="view-detail-row">
+                            <span class="view-detail-label">Title</span>
+                            <span class="view-detail-value" id="lblvwExpenseTitle">—</span>
                         </div>
-                        <div class="row form-group">
-                            <div class="col col-md-4"><label class="form-control-label">Category:</label></div>
-                            <div class="col-12 col-md-8">
-                                <label class="form-control-label" id="lblvwCategoryName"></label>
-                            </div>
+                        <div class="view-detail-row">
+                            <span class="view-detail-label">Category</span>
+                            <span class="view-detail-value" id="lblvwCategoryName">—</span>
                         </div>
-                        <div class="row form-group">
-                            <div class="col col-md-4"><label class="form-control-label">Amount:</label></div>
-                            <div class="col-12 col-md-8">
-                                <label class="form-control-label" id="lblvwExpenseAmount"></label>
-                            </div>
+                        <div class="view-detail-row">
+                            <span class="view-detail-label">Amount</span>
+                            <span class="view-detail-value" id="lblvwExpenseAmount">—</span>
                         </div>
-                        <div class="row form-group">
-                            <div class="col col-md-4"><label class="form-control-label">Date:</label></div>
-                            <div class="col-12 col-md-8">
-                                <label class="form-control-label" id="lblvwExpenseDate"></label>
-                            </div>
+                        <div class="view-detail-row">
+                            <span class="view-detail-label">Date</span>
+                            <span class="view-detail-value" id="lblvwExpenseDate">—</span>
                         </div>
-                        <div class="row form-group">
-                            <div class="col col-md-4"><label class="form-control-label">Invoice ID:</label></div>
-                            <div class="col-12 col-md-8">
-                                <label class="form-control-label" id="lblvwInvoiceId"></label>
-                            </div>
+                        <div class="view-detail-row">
+                            <span class="view-detail-label">Invoice ID</span>
+                            <span class="view-detail-value" id="lblvwInvoiceId">—</span>
                         </div>
-                        <div class="row form-group">
-                            <div class="col col-md-4"><label class="form-control-label">Remark:</label></div>
-                            <div class="col-12 col-md-8">
-                                <label class="form-control-label" id="lblvwRemark"></label>
-                            </div>
+                        <div class="view-detail-row">
+                            <span class="view-detail-label">Remark</span>
+                            <span class="view-detail-value" id="lblvwRemark">—</span>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-gradient-warning btn-rounded btn-fw btnClose" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-gradient-warning btnClose" data-dismiss="modal"><i class="fa fa-times mr-1"></i>Close</button>
             </div>
         </div>
     </div>
 </div>
 
-<!-- Delete Expense Modal -->
-<div class="modal fade" id="deleteExpense" tabindex="-1" role="dialog" aria-labelledby="deleteExpenseModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
+<!-- ==================== DELETE EXPENSE MODAL ==================== -->
+<div class="modal fade" id="deleteExpense" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id=" deletedeleteExpenseModalLabel">Confirm Delete Expense</h5>
-                <input type="hidden" id="hdndltExpenseId" name="expense_Id">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+                <h5 class="modal-title"><i class="mdi mdi-delete-alert mr-2"></i>Confirm Delete</h5>
+                <input type="hidden" id="hdndltExpenseId">
+                <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
             </div>
             <div class="modal-body">
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="row form-group">
-                            <div class="col col-md-3"><label class="form-control-label">Expense Title:</label></div>
-                            <div class="col-md-9">
-                                <label class="form-control-label" id="Delete_Expense_Title"></label>
-                            </div>
-                        </div>
-                    </div>
+                <div class="delete-icon-wrap">
+                    <i class="mdi mdi-delete-forever"></i>
                 </div>
-                <p>Are you sure you want to delete this expense?</p>
+                <p style="font-size:15px; color:#555; margin-bottom:6px;">You are about to delete:</p>
+                <div class="delete-expense-name" id="Delete_Expense_Title">—</div>
+                <p class="delete-confirm-text">This action <strong>cannot be undone</strong>. Are you sure?</p>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-gradient-warning btn-rounded btn-fw btnClose" data-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-gradient-danger btn-rounded btn-fw" id="btnExpenseDelete">Delete</button>
+                <button type="button" class="btn btn-gradient-warning btnClose" data-dismiss="modal"><i class="fa fa-times mr-1"></i>Cancel</button>
+                <button type="button" class="btn btn-gradient-danger" id="btnExpenseDelete"><i class="mdi mdi-delete mr-1"></i>Delete</button>
             </div>
         </div>
     </div>
 </div>
-<!-- LOADING POPUP - ADD THIS -->
+
+<!-- LOADING MODAL -->
 <div class="modal fade" id="loadingModal" tabindex="-1" data-backdrop="static" data-keyboard="false">
-    <div class="modal-dialog modal-sm">
-        <div class="modal-content">
-            <div class="modal-body text-center p-4">
-                <div class="spinner-border text-primary mb-3" style="width: 3rem; height: 3rem;"></div>
+    <div class="modal-dialog modal-sm" style="max-width:280px !important; margin:20px auto !important;">
+        <div class="modal-content text-center" style="border-radius:14px;">
+            <div class="modal-body p-4" style="background:#fff !important;">
+                <div class="spinner-border text-primary mb-3" style="width:3rem;height:3rem;"></div>
                 <h5 id="loadingText">Loading...</h5>
             </div>
         </div>
     </div>
 </div>
-<!-- SCRIPTS - ALL CDN -->
+
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<!-- CDN - ALL DEPENDENCIES -->
-
-
 
 <script>
-    $(document).ready(function() {
-        console.log("🚀 ✅ PERFECT SCRIPT - Handles ALL cases!");
+        function noAccess(type) {
+        Swal.fire({
+            icon: 'error',
+            title: 'Access Denied',
+            text: 'You do not have ' + type + ' permission for Expense module.',
+            confirmButtonColor: '#dc2626'
+        });
+    }
+    $(document).ready(function () {
 
-        function reloadPage() { setTimeout(() => location.reload(), 1000); }
-        function showLoader($btn, text = "Loading...") { $btn.prop('disabled', true).html(`<i class="fa fa-spinner fa-spin mr-1"></i>${text}`); }
+        // ---- HELPERS ----
+        function reloadPage() { setTimeout(() => location.reload(), 900); }
+        function showLoader($btn, text) { $btn.prop('disabled', true).html('<i class="fa fa-spinner fa-spin mr-1"></i>' + (text || 'Loading...')); }
         function hideLoader($btn, originalHtml) { $btn.prop('disabled', false).html(originalHtml); }
+        function getImageUrl(path) { return path && path.trim() ? path : '~/images/bird.jpg'; }
 
         function resetForm(formId) {
             $(formId)[0].reset();
             $(formId).find('input[type="checkbox"]').prop('checked', true);
             $(formId).find('img').attr('src', '~/images/bird.jpg');
             $(formId).find('select').val('');
+            $(formId).find('.error-text').remove();
+            $(formId).find('.is-invalid').removeClass('is-invalid');
         }
 
-        function getImageUrl(path) { return path && path.trim() ? path : '~/images/bird.jpg'; }
-
-        // File Preview
-        $(document).on('change', 'input[type="file"]', function() {
-            const id = $(this).attr('id');
-            const previewId = id === 'Add_Expense_Proof' ? '#Add_Expense_Proof_Preview' : '#Edit_Expense_Proof_Preview';
-            if (this.files[0] && previewId) {
+        // ---- FILE PREVIEW ----
+        $(document).on('change', 'input[type="file"]', function () {
+            const previewId = $(this).attr('id') === 'Add_Expense_Proof' ? '#Add_Expense_Proof_Preview' : '#Edit_Expense_Proof_Preview';
+            if (this.files[0]) {
                 const reader = new FileReader();
                 reader.onload = e => $(previewId).attr('src', e.target.result);
                 reader.readAsDataURL(this.files[0]);
             }
         });
 
-        // ADD
-        $('#btnExpenseSave').click(function(e) {
+        // ---- VALIDATE ----
+        function validateExpenseForm(formId) {
+            let isValid = true;
+            $(formId + ' .error-text').remove();
+            $(formId + ' .form-control').removeClass('is-invalid');
+
+            function showError(input, msg) {
+                input.addClass('is-invalid');
+                input.after('<span class="error-text">' + msg + '</span>');
+                isValid = false;
+            }
+
+            const title    = $(formId + ' input[id*="Expense_Title"]');
+            const category = $(formId + ' select[id*="Category_ID"]');
+            const amount   = $(formId + ' input[id*="Expense_Amount"]');
+            const date     = $(formId + ' input[id*="Expense_Date"]');
+
+            if (!title.val().trim())             showError(title,    'Title is required');
+            if (!category.val())                 showError(category, 'Category is required');
+            if (!amount.val() || isNaN(amount.val())) showError(amount, 'Valid amount required');
+            if (!date.val())                     showError(date,     'Date is required');
+
+            return isValid;
+        }
+
+        // ---- SAVE FUNCTION ----
+        function saveExpense(url, formSelector, modalSelector, btnElement) {
+            const $btn = $(btnElement);
+            const originalHtml = $btn.html();
+            const isAdd = formSelector === '#addExpenseForm';
+
+            const expenseData = {
+                Expense_ID:      parseInt($('#hdnExpenseId').val()) || 0,
+                Category_ID:     parseInt($(formSelector + ' select[id*="Category_ID"]').val()) || null,
+                Expense_Title:   $(formSelector + ' input[id*="Expense_Title"]').val().trim(),
+                Invoice_Id:      $(formSelector + ' ' + (isAdd ? '#Invoice_Id' : '#Invoice_IdEdit')).val().trim(),
+                Expense_Amount:  parseFloat($(formSelector + ' input[id*="Expense_Amount"]').val()) || 0,
+                Expense_Date:    $(formSelector + ' input[id*="Expense_Date"]').val() || null,
+                Expense_Remark:  $(formSelector + ' textarea[id*="Expense_Remark"]').val().trim(),
+                IsActive:        $(formSelector + ' input[type="checkbox"]').is(':checked') ? 1 : 0
+            };
+
+            if (!isAdd) expenseData.ExistingExpense_Proof = $('#hdnExpenseProofId').val() || '';
+
+            const formData = new FormData();
+            formData.append('Expense', JSON.stringify(expenseData));
+            const fileInput = $(isAdd ? '#Add_Expense_Proof' : '#Edit_Expense_Proof')[0];
+            if (fileInput && fileInput.files[0]) formData.append('file', fileInput.files[0]);
+
+            showLoader($btn, 'Saving...');
+            $.ajax({
+                url: url, type: 'POST', data: formData,
+                contentType: false, processData: false,
+                success: function (result) {
+                    if (result.toLowerCase().includes('success')) {
+                        Swal.fire({ icon: 'success', title: 'Saved!', text: 'Expense saved successfully.', timer: 1500, showConfirmButton: false });
+                        $(modalSelector).modal('hide');
+                        reloadPage();
+                    } else {
+                        Swal.fire({ icon: 'error', title: 'Error', text: result });
+                    }
+                },
+                error: function () {
+                    Swal.fire({ icon: 'error', title: 'Error', text: 'Something went wrong.' });
+                },
+                complete: function () { hideLoader($btn, originalHtml); }
+            });
+        }
+
+        // ---- ADD ----
+        $('#btnExpenseSave').click(function (e) {
             e.preventDefault();
+            if (!validateExpenseForm('#addExpenseForm')) return;
             saveExpense('@Url.Action("Save", "Expense")', '#addExpenseForm', '#addExpense', this);
         });
 
-        // VIEW - ✅ FIXED for ID=0 issue
-        $(document).on('click', '.viewExpenseId', function(e) {
+        // ---- EDIT ----
+        $('#btnExpenseUpdate').click(function (e) {
             e.preventDefault();
-            const expenseID = $(this).data('vwexpenseid');
-            const $btn = $(this);
-            const originalHtml = $btn.html();
-
-            console.log(`👁️ VIEW BUTTON ID: ${expenseID}`); // DEBUG
-
-            showLoader($btn);
-            $.ajax({
-                url: '@Url.Action("GetExpense", "Expense")',
-                type: 'GET',
-                data: { expense_ID: expenseID },
-                success: function(data) {
-                    console.log("✅ VIEW DATA:", data);
-
-                    // ✅ CHECK DATA EXISTS (even if ID=0)
-                    if (data && (data.expense_Title || data.Expense_Title)) {
-                        $('#lblvwExpenseTitle').text(data.expense_Title || data.Expense_Title || 'N/A');
-                        $('#lblvwCategoryName').text(data.category_Name || data.Category_Name || 'N/A');
-                        $('#lblvwExpenseAmount').text('₹' + Number(data.expense_Amount || data.Expense_Amount || 0).toLocaleString('en-IN'));
-                        $('#lblvwInvoiceId').text(data.invoice_Id || data.Invoice_Id || 'N/A');
-                        $('#lblvwRemark').text(data.expense_Remark || data.Expense_Remark || 'N/A');
-
-                        const dateVal = data.expense_Date || data.Expense_Date;
-                        if (dateVal) {
-                            const date = new Date(dateVal);
-                            $('#lblvwExpenseDate').text(date.toLocaleDateString('en-IN'));
-                        } else {
-                            $('#lblvwExpenseDate').text('N/A');
-                        }
-
-                        $('#View_Expense_Proof').attr('src', getImageUrl(data.expense_Proof || data.Expense_Proof));
-                        $('#viewExpense').modal('show');
-                        console.log("✅ VIEW SUCCESS!");
-                    } else {
-                        console.log("❌ NO DATA FOUND");
-                        alert("❌ No expense data!");
-                    }
-                },
-                error: function(xhr) {
-                    console.error("❌ VIEW ERROR:", xhr.responseText);
-                    alert("View failed!");
-                },
-                complete: function() {
-                    hideLoader($btn, originalHtml);
-                }
-            });
+            if (!validateExpenseForm('#editExpenseForm')) return;
+            saveExpense('@Url.Action("Edit", "Expense")', '#editExpenseForm', '#editExpense', this);
         });
 
-        // EDIT - ✅ FIXED for ID=0 issue
-        $(document).on('click', '.editExpenseByID', function(e) {
+        // ---- LOAD EDIT ----
+        $(document).on('click', '.editExpenseByID', function (e) {
             e.preventDefault();
             const expenseID = $(this).data('edexpenseid');
             const $btn = $(this);
             const originalHtml = $btn.html();
-
-            console.log(`✏️ EDIT BUTTON ID: ${expenseID}`); // DEBUG
-
             showLoader($btn);
             $.ajax({
                 url: '@Url.Action("GetExpense", "Expense")',
                 type: 'GET',
                 data: { expense_ID: expenseID },
-                success: function(data) {
-                    console.log("✅ EDIT DATA:", data);
-
-                    // ✅ CHECK DATA EXISTS (ignore ID=0)
+                success: function (data) {
                     if (data && (data.expense_Title || data.Expense_Title)) {
                         resetForm('#editExpenseForm');
-
                         $('#hdnExpenseId').val(data.expense_ID || data.Expense_ID || expenseID);
                         $('#Edit_Expense_Title').val(data.expense_Title || data.Expense_Title || '');
                         $('#Edit_Category_ID').val(data.category_ID || data.Category_ID || '');
@@ -1034,38 +962,56 @@
                         $('#Invoice_IdEdit').val(data.invoice_Id || data.Invoice_Id || '');
                         $('#Expense_RemarkEdit').val(data.expense_Remark || data.Expense_Remark || '');
                         $('#hdnExpenseProofId').val(data.expense_Proof || data.Expense_Proof || '');
-
                         const dateVal = data.expense_Date || data.Expense_Date;
                         if (dateVal) {
-                            const date = new Date(dateVal);
-                            const year = date.getFullYear();
-                            const month = String(date.getMonth() + 1).padStart(2, '0');
-                            const day = String(date.getDate()).padStart(2, '0');
-                            $('#Edit_Expense_Date').val(`${year}-${month}-${day}`);
+                            const d = new Date(dateVal);
+                            $('#Edit_Expense_Date').val(d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0'));
                         }
-
                         $('#Edit_Expense_Proof_Preview').attr('src', getImageUrl(data.expense_Proof || data.Expense_Proof));
                         $('#chkEditActiveStatus').prop('checked', (data.isActive || data.IsActive) == 1);
-
                         $('#editExpense').modal('show');
-                        console.log("✅ EDIT FORM FILLED!");
                     } else {
-                        console.log("❌ NO EDIT DATA");
-                        alert("❌ No expense data!");
+                        Swal.fire({ icon: 'error', title: 'Error', text: 'No expense data found.' });
                     }
                 },
-                error: function(xhr) {
-                    console.error("❌ EDIT ERROR:", xhr.responseText);
-                    alert("Edit failed!");
-                },
-                complete: function() {
-                    hideLoader($btn, originalHtml);
-                }
+                error: function () { Swal.fire({ icon: 'error', title: 'Error', text: 'Edit load failed.' }); },
+                complete: function () { hideLoader($btn, originalHtml); }
             });
         });
 
-        // DELETE
-        $(document).on('click', '.deleteExpenses', function(e) {
+        // ---- LOAD VIEW ----
+        $(document).on('click', '.viewExpenseId', function (e) {
+            e.preventDefault();
+            const expenseID = $(this).data('vwexpenseid');
+            const $btn = $(this);
+            const originalHtml = $btn.html();
+            showLoader($btn);
+            $.ajax({
+                url: '@Url.Action("GetExpense", "Expense")',
+                type: 'GET',
+                data: { expense_ID: expenseID },
+                success: function (data) {
+                    if (data && (data.expense_Title || data.Expense_Title)) {
+                        $('#lblvwExpenseTitle').text(data.expense_Title || data.Expense_Title || 'N/A');
+                        $('#lblvwCategoryName').text(data.category_Name || data.Category_Name || 'N/A');
+                        $('#lblvwExpenseAmount').text('₹' + Number(data.expense_Amount || data.Expense_Amount || 0).toLocaleString('en-IN'));
+                        $('#lblvwInvoiceId').text(data.invoice_Id || data.Invoice_Id || 'N/A');
+                        $('#lblvwRemark').text(data.expense_Remark || data.Expense_Remark || 'N/A');
+                        const dateVal = data.expense_Date || data.Expense_Date;
+                        $('#lblvwExpenseDate').text(dateVal ? new Date(dateVal).toLocaleDateString('en-IN') : 'N/A');
+                        $('#View_Expense_Proof').attr('src', getImageUrl(data.expense_Proof || data.Expense_Proof));
+                        $('#viewExpense').modal('show');
+                    } else {
+                        Swal.fire({ icon: 'error', title: 'Error', text: 'No expense data found.' });
+                    }
+                },
+                error: function () { Swal.fire({ icon: 'error', title: 'Error', text: 'View load failed.' }); },
+                complete: function () { hideLoader($btn, originalHtml); }
+            });
+        });
+
+        // ---- DELETE MODAL OPEN ----
+        $(document).on('click', '.deleteExpenses', function (e) {
             e.preventDefault();
             const expenseID = $(this).data('dltexpenseid');
             const title = $(this).closest('tr').find('td:eq(0)').text().trim();
@@ -1074,160 +1020,93 @@
             $('#deleteExpense').modal('show');
         });
 
-        $('#btnExpenseDelete').click(function() {
+        // ---- DELETE CONFIRM ----
+        $('#btnExpenseDelete').click(function () {
             const expenseID = $('#hdndltExpenseId').val();
             const $btn = $(this);
             const originalHtml = $btn.html();
-            showLoader($btn, "Deleting...");
-
+            showLoader($btn, 'Deleting...');
             $.ajax({
                 url: '@Url.Action("DeleteExpense", "Expense")',
                 type: 'GET',
                 data: { expense_ID: expenseID },
-                success: function(result) {
-                    if (result === "success") {
-                        alert("✅ Deleted!");
+                success: function (result) {
+                    if (result === 'success') {
+                        Swal.fire({ icon: 'success', title: 'Deleted!', text: 'Expense deleted.', timer: 1200, showConfirmButton: false });
                         $('#deleteExpense').modal('hide');
                         reloadPage();
                     } else {
-                        alert("❌ " + result);
+                        Swal.fire({ icon: 'error', title: 'Error', text: result });
                     }
                 },
-                complete: function() {
-                    hideLoader($btn, originalHtml);
-                }
+                complete: function () { hideLoader($btn, originalHtml); }
             });
         });
 
-        // SAVE FUNCTION
-        function saveExpense(url, formSelector, modalSelector, btnElement) {
-            const $btn = $(btnElement);
-            const formData = new FormData();
-            const isAdd = formSelector === '#addExpenseForm';
-
-            const expenseData = {
-                Expense_ID: parseInt($(`${formSelector} #hdnExpenseId`).val()) || 0,
-                Category_ID: parseInt($(`${formSelector} select[id*="Category_ID"]`).val()) || null,
-                Expense_Title: $(`${formSelector} input[id*="Expense_Title"]`).val().trim() || '',
-                Invoice_Id: $(`${formSelector} ${isAdd ? '#Invoice_Id' : '#Invoice_IdEdit'}`).val().trim() || '',
-                Expense_Amount: parseFloat($(`${formSelector} input[id*="Expense_Amount"]`).val()) || 0,
-                Expense_Date: $(`${formSelector} input[id*="Expense_Date"]`).val() || null,
-                Expense_Remark: $(`${formSelector} textarea[id*="Expense_Remark"]`).val().trim() || '',
-                IsActive: $(`${formSelector} input[type="checkbox"]`).is(':checked') ? 1 : 0
-            };
-
-            if (!isAdd) expenseData.ExistingExpense_Proof = $('#hdnExpenseProofId').val() || '';
-
-            if (!expenseData.Expense_Title || !expenseData.Category_ID) {
-                alert("❌ Title & Category required!");
-                return;
-            }
-
-            formData.append('Expense', JSON.stringify(expenseData));
-            const fileId = isAdd ? '#Add_Expense_Proof' : '#Edit_Expense_Proof';
-            const fileInput = $(fileId)[0];
-            if (fileInput?.files[0]) formData.append('file', fileInput.files[0]);
-
-            showLoader($btn, 'Saving...');
-            $.ajax({
-                url: url, type: 'POST', data: formData,
-                contentType: false, processData: false,
-                success: function(result) {
-                    if (result.toLowerCase().includes('success')) {
-                        alert("✅ Saved!");
-                        $(modalSelector).modal('hide');
-                        reloadPage();
-                    } else {
-                        alert("❌ " + result);
-                    }
-                },
-                complete: function() {
-                    $btn.prop('disabled', false).html('Submit');
-                }
-            });
-        }
-
-        $('#btnExpenseUpdate').click(function(e) {
+        // ---- AJAX PAGINATION (no page reload) ----
+        $(document).on('click', '.page-btn', function (e) {
             e.preventDefault();
-            saveExpense('@Url.Action("Edit", "Expense")', '#editExpenseForm', '#editExpense', this);
+            const $li = $(this).closest('li');
+            if ($li.hasClass('disabled') || $li.hasClass('active')) return;
+            const page = $li.data('page');
+            const pageSize = @(ViewBag.PageSize ?? 10);
+
+            $.ajax({
+                url: '@Url.Action("List", "Expense")',
+                type: 'GET',
+                data: { page: page, pageSize: pageSize },
+                success: function (html) {
+                    // Extract tbody rows only
+                    const $newTbody = $(html).find('#expenseTableBody');
+                    if ($newTbody.length) {
+                        $('#expenseTableBody').html($newTbody.html());
+                    }
+                    // Update active page in pagination
+                    $('#pagination .page-item').removeClass('active');
+                    $('#pagination .page-item[data-page="' + page + '"]').addClass('active');
+                    // Update prev/next disabled state
+                    $('#pagination .page-item').first().toggleClass('disabled', page <= 1);
+                }
+            });
         });
 
-        $(document).on('click', '.btnExpenseReset, .btnClose', function() {
-            const $modal = $(this).closest('.modal');
-            resetForm($modal.find('form'));
-            $modal.modal('hide');
-        });
-
-        // Show All
-        $('#showAllButton').click(function() {
+        // ---- SHOW ALL ----
+        $('#showAllButton').click(function () {
             $.ajax({
                 url: '@Url.Action("ShowAll", "Expense")',
-                success: function(expenses) {
-                    let html = expenses?.length ?
-                        expenses.map(e => {
+                success: function (expenses) {
+                    let html = '';
+                    if (expenses && expenses.length) {
+                        html = expenses.map(e => {
                             const id = e.expense_ID || e.Expense_ID;
-                            return `<tr >
+                            const active = (e.isActive || e.IsActive) == 1;
+                            return `<tr>
                                 <td>${e.expense_Title || e.Expense_Title}</td>
                                 <td>${e.category_Name || e.Category_Name}</td>
                                 <td>${e.expense_Amount || e.Expense_Amount}</td>
                                 <td>${new Date(e.expense_Date || e.Expense_Date).toLocaleDateString('en-IN')}</td>
-                                <td>${(e.isActive || e.IsActive) == 1 ? '<span class="badge badge-success">Active</span>' : '<span class="badge badge-danger">Inactive</span>'}</td>
+                                <td>${active ? '<span class="badge badge-success">Active</span>' : '<span class="badge badge-danger">Inactive</span>'}</td>
                                 <td>
-                                    <button class="btn btn-sm btn-gradient-primary editExpenseByID" data-edexpenseId="${id}"><i class="mdi mdi-pencil"></i></button>
-                                    <button class="btn btn-sm btn-gradient-dark viewExpenseId" data-vwexpenseId="${id}"><i class="mdi mdi-eye"></i></button>
-                                    <button class="btn btn-sm btn-gradient-warning deleteExpenses" data-dltexpenseId="${id}"><i class="mdi mdi-delete"></i></button>
+                                    <button class="btn btn-sm editExpenseByID" data-edexpenseId="${id}"><i class="mdi mdi-pencil"></i></button>
+                                    <button class="btn btn-sm viewExpenseId" data-vwexpenseId="${id}"><i class="mdi mdi-eye"></i></button>
+                                    <button class="btn btn-sm deleteExpenses" data-dltexpenseId="${id}"><i class="mdi mdi-delete"></i></button>
                                 </td>
                             </tr>`;
-                        }).join('') :
-                        '<tr><td colspan="6" class="text-center">No expenses</td></tr>';
-                    $('#expenseTable tbody').html(html);
+                        }).join('');
+                    } else {
+                        html = '<tr><td colspan="6" class="text-center">No expenses</td></tr>';
+                    }
+                    $('#expenseTableBody').html(html);
                 }
             });
         });
-            // ADD
- 
 
-    // EDIT
-    $('#btnExpenseUpdate').click(function (e) {
-        e.preventDefault();
-        if (!validateExpenseForm('#editExpenseForm')) return;
-        saveExpense('@Url.Action("Edit", "Expense")', '#editExpenseForm', '#editExpense', this);
-    });
-        function validateExpenseForm(formId) {
-        let isValid = true;
+        // ---- CLOSE RESET ----
+        $(document).on('click', '.btnClose', function () {
+            const $modal = $(this).closest('.modal');
+            const form = $modal.find('form');
+            if (form.length) resetForm('#' + form.attr('id'));
+        });
 
-        // remove old errors
-        $(formId + ' .error-text').remove();
-        $(formId + ' .form-control').removeClass('is-invalid');
-
-        function showError(input, message) {
-            input.addClass('is-invalid');
-            input.after('<span class="error-text">' + message + '</span>');
-            isValid = false;
-        }
-
-        let title = $(formId + ' input[id*="Expense_Title"]');
-        let category = $(formId + ' select[id*="Category_ID"]');
-        let amount = $(formId + ' input[id*="Expense_Amount"]');
-        let date = $(formId + ' input[id*="Expense_Date"]');
-
-        if (!title.val().trim()) {
-            showError(title, "Title is required");
-        }
-
-        if (!category.val()) {
-            showError(category, "Category is required");
-        }
-
-        if (!amount.val() || isNaN(amount.val())) {
-            showError(amount, "Valid amount required");
-        }
-
-        if (!date.val()) {
-            showError(date, "Date is required");
-        }
-
-        return isValid;
-    }
     });
 </script>

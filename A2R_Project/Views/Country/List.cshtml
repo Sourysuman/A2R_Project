@@ -4,7 +4,9 @@
     ViewBag.Title = "Countries Management";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<link href="https://cdn.jsdelivr.net/npm/@@mdi/font@6.5.95/css/materialdesignicons.min.css" rel="stylesheet">
 <style>
+
     :root {
         --primary: #2563eb;
         --primary-dark: #1e40af;
@@ -22,7 +24,7 @@
         font-family: 'Inter', sans-serif;
     }
 
-    /* ===== MODAL POSITION TOP CENTER ===== */
+    /* ===== MODAL ===== */
     .modal-dialog {
         margin-top: 40px;
         display: flex;
@@ -30,7 +32,10 @@
         justify-content: center;
     }
 
-    /* ===== MODAL DESIGN ===== */
+    #deleteCountry .modal-dialog {
+        max-width: 400px;
+    }
+
     .modal-content {
         border-radius: 16px;
         border: none;
@@ -38,7 +43,6 @@
         box-shadow: 0 10px 40px rgba(0,0,0,0.15);
     }
 
-    /* HEADER STYLE */
     .modal-header {
         background: linear-gradient(135deg, var(--primary), var(--primary-dark));
         color: #fff;
@@ -50,7 +54,6 @@
         font-size: 18px;
     }
 
-    /* CHANGE TITLE COLORS BASED ON MODAL */
     #addCountry .modal-header {
         background: linear-gradient(135deg, #10b981, #059669);
     }
@@ -67,12 +70,11 @@
         background: linear-gradient(135deg, #6366f1, #4338ca);
     }
 
-    /* ===== DELETE MODAL SMALL ===== */
-    #deleteCountry .modal-dialog {
-        max-width: 400px;
+    #deleteCountry .modal-body {
+        text-align: center;
     }
 
-    /* ===== INLINE FORM (LABEL + VALUE SAME LINE) ===== */
+    /* ===== FORM ===== */
     .form-group {
         display: flex;
         align-items: center;
@@ -91,7 +93,6 @@
             flex: 1;
         }
 
-    /* ===== INPUT STYLE ===== */
     .form-control-modern {
         border-radius: 8px;
         border: 1px solid #ddd;
@@ -103,7 +104,25 @@
             box-shadow: 0 0 6px rgba(37,99,235,0.3);
         }
 
-    /* ===== BUTTON COLORS ===== */
+    .form-label {
+        color: #374151;
+        font-weight: 600;
+        font-size: 14px;
+    }
+
+    /* ===== BUTTONS ===== */
+    .btn-modern {
+        border-radius: 8px;
+        padding: 6px 14px;
+        border: none;
+        transition: 0.2s;
+    }
+
+        .btn-modern:hover {
+            transform: scale(1.05);
+            opacity: 0.9;
+        }
+
     .btn-primary-modern {
         background: linear-gradient(135deg, #3b82f6, #1d4ed8);
         color: #fff;
@@ -124,27 +143,167 @@
         color: #fff;
     }
 
-    .btn-modern {
-        border-radius: 8px;
-        padding: 6px 14px;
-        border: none;
-        transition: 0.2s;
+    .btn-info-modern {
+        background: linear-gradient(135deg, #06b6d4, #0891b2);
+        color: #fff;
     }
 
-        .btn-modern:hover {
-            transform: scale(1.05);
-            opacity: 0.9;
+        .btn-primary-modern:hover,
+        .btn-info-modern:hover,
+        .btn-danger-modern:hover {
+            transform: scale(1.08);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
         }
 
-    /* ===== DELETE ICON CENTER ===== */
-    #deleteCountry .modal-body {
-        text-align: center;
+    .btn-primary-modern.btn-modern {
+        background: linear-gradient(135deg, #6366f1, #4f46e5);
+        font-weight: 600;
+        padding: 8px 18px;
     }
 
-    /* ===== VIEW MODAL LABEL STYLE ===== */
-    #viewCountry label {
+    .btn-gradient-primary {
+        background: linear-gradient(135deg, #28a745, #20c997) !important;
+        border: none !important;
+        color: #fff !important;
+        font-weight: 700;
+        border-radius: 25px !important;
+        padding: 8px 18px !important;
+        transition: all 0.25s ease;
+    }
+
+        .btn-gradient-primary:hover {
+            background: linear-gradient(135deg, #218838, #17a2b8) !important;
+            color: #fff !important;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(0,0,0,0.15);
+        }
+
+    .show-all-btn {
+        background: linear-gradient(135deg, #10b981, #059669);
+        color: #fff;
         font-weight: 600;
-        color: var(--dark);
+        padding: 8px 20px;
+        border-radius: 10px;
+    }
+
+        .show-all-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(16,185,129,0.4);
+        }
+
+    /* ===== CARD ===== */
+    .card-header-custom {
+        background-color: white;
+        color: black;
+        border-radius: 15px 15px 0 0;
+        padding: 18px 20px;
+    }
+
+    .card-title {
+        font-size: 18px;
+        font-weight: 600;
+        letter-spacing: 0.5px;
+    }
+
+    /* ===== TABLE ===== */
+    .table {
+        border-radius: 14px;
+        overflow: hidden;
+        background: #fff;
+        border-collapse: collapse;
+        border-spacing: 0;
+    }
+
+        .table thead {
+            background: #3f454c;
+        }
+
+            .table thead th {
+                color: #fff !important;
+                border: none !important;
+                font-size: 14px;
+                font-weight: 700;
+                text-transform: uppercase;
+                letter-spacing: 0.6px;
+                padding: 14px;
+                text-align: center !important;
+            }
+
+        .table tbody td {
+            font-size: 15px;
+            font-weight: 600;
+            color: #34495e;
+            padding: 14px;
+            vertical-align: middle !important;
+            text-align: center !important;
+            background-color:white !important;
+        }
+
+            .table tbody td:first-child {
+                text-align: center !important;
+                font-weight: 700 !important;
+                color: #2c3e50 !important;
+                font-size: 15px !important;
+            }
+
+        .table tbody tr {
+            transition: all 0.25s ease;
+            background: #fff;
+        }
+
+        
+
+        /* ===== TABLE ACTION BUTTONS ===== */
+        .table .btn-sm {
+            width: 36px !important;
+            height: 36px !important;
+            border-radius: 10px !important;
+            padding: 0 !important;
+            margin-right: 4px;
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            border: none !important;
+            transition: all 0.25s ease;
+        }
+
+            .table .btn-sm i {
+                font-size: 16px !important;
+                line-height: 1;
+            }
+
+            .table .btn-sm:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 6px 15px rgba(0,0,0,0.15);
+            }
+
+            .table .btn-sm.btn-primary {
+                background: linear-gradient(135deg, #4e73df, #224abe) !important;
+                color: #fff !important;
+            }
+
+            .table .btn-sm.btn-info {
+                background: linear-gradient(135deg, #36b9cc, #1f8ea3) !important;
+                color: #fff !important;
+            }
+
+            .table .btn-sm.btn-danger {
+                background: linear-gradient(135deg, #e74a3b, #c0392b) !important;
+                color: #fff !important;
+            }
+
+    .btn-group .btn {
+        margin-left: 6px;
+    }
+
+    /* ===== TABLE TEXT ===== */
+    .table-modern strong {
+        color: #111827;
+        font-size: 15px;
+    }
+
+    .table-modern small {
+        color: #6b7280;
     }
 
     /* ===== BADGE ===== */
@@ -165,140 +324,10 @@
         color: #fff;
     }
 
-</style>
-<style>
-
-    /* ===== CARD HEADER (TITLE AREA) ===== */
-    .card-header-custom {
-        background: linear-gradient(135deg, #4f46e5, #4338ca);
-        color: #fff;
-        border-radius: 15px 15px 0 0;
-        padding: 18px 20px;
-    }
-
-    .card-title {
-        font-size: 18px;
+    /* ===== VIEW MODAL LABEL ===== */
+    #viewCountry label {
         font-weight: 600;
-        letter-spacing: 0.5px;
-    }
-
-    /* ===== TABLE DESIGN ===== */
-    .table-modern {
-        border-collapse: collapse;
-        width: 100%;
-        background: #fff;
-    }
-
-        /* HEADER */
-        .table-modern thead th {
-            background: linear-gradient(135deg, #6366f1, #4f46e5);
-            color: #fff;
-            font-size: 14px;
-            font-weight: 600;
-            padding: 14px;
-            text-align: center;
-            border: none;
-        }
-
-        /* ROW */
-        .table-modern tbody tr {
-            transition: all 0.2s ease;
-            border-bottom: 1px solid #e5e7eb;
-        }
-
-            /* STRIPED */
-            .table-modern tbody tr:nth-child(even) {
-                background: #f9fafb;
-            }
-
-            /* HOVER EFFECT */
-            .table-modern tbody tr:hover {
-                background: #eef2ff;
-                transform: scale(1.002);
-                box-shadow: 0 3px 10px rgba(0,0,0,0.05);
-            }
-
-        /* CELLS */
-        .table-modern td {
-            padding: 14px;
-            font-size: 14px;
-            color: #374151;
-            text-align: center;
-        }
-
-            .table-modern td:first-child {
-                text-align: left;
-            }
-
-            .table-modern td:last-child {
-                text-align: right;
-            }
-
-        /* ===== COUNTRY NAME STYLE ===== */
-        .table-modern strong {
-            color: #111827;
-            font-size: 15px;
-        }
-
-        .table-modern small {
-            color: #6b7280;
-        }
-
-    /* ===== BUTTON GROUP ===== */
-    .btn-group .btn {
-        margin-left: 6px;
-    }
-
-    /* ===== ACTION BUTTONS ===== */
-    .btn-sm {
-        border-radius: 8px;
-        padding: 6px 10px;
-    }
-
-    .btn-primary-modern {
-        background: linear-gradient(135deg, #3b82f6, #2563eb);
-    }
-
-    .btn-info-modern {
-        background: linear-gradient(135deg, #06b6d4, #0891b2);
-    }
-
-    .btn-danger-modern {
-        background: linear-gradient(135deg, #ef4444, #dc2626);
-    }
-
-        .btn-primary-modern:hover,
-        .btn-info-modern:hover,
-        .btn-danger-modern:hover {
-            transform: scale(1.08);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-        }
-
-    /* ===== MAIN BUTTONS (ADD + SHOW ALL) ===== */
-    .btn-primary-modern.btn-modern {
-        background: linear-gradient(135deg, #6366f1, #4f46e5);
-        font-weight: 600;
-        padding: 8px 18px;
-    }
-
-    .show-all-btn {
-        background: linear-gradient(135deg, #10b981, #059669);
-        color: #fff;
-        font-weight: 600;
-        padding: 8px 20px;
-        border-radius: 10px;
-    }
-
-        .show-all-btn:hover {
-            transform: scale(1.05);
-            box-shadow: 0 5px 15px rgba(16,185,129,0.4);
-        }
-
-    /* ===== LABEL COLOR (FORM FIELD NAMES) ===== */
-    .form-label {
-        color: #374151;
-        font-weight: 600;
-        font-size: 14px;
+        color: var(--dark);
     }
 
     /* ===== EMPTY STATE ===== */
@@ -327,7 +356,413 @@
         color: #fff;
         border: none;
     }
+    /* ===== Add Country button SEPARATE class ===== */
+    .add-country-btn {
+        background: linear-gradient(135deg, #10b981, #059669);
+        color: #fff;
+        font-weight: 600;
+        padding: 8px 20px;
+        border-radius: 10px;
+        border: none;
+        transition: 0.2s;
+    }
 
+        .add-country-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(16,185,129,0.4);
+            color: #fff;
+        }
+
+    /* ===== ACTION BUTTONS SPACING ===== */
+    .btn-group {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+    }
+
+        .btn-group .btn {
+            margin: 0;
+        }
+    /* ===== ACTION BUTTONS CELL CENTER ===== */
+    .table tbody td:last-child {
+        text-align: center !important;
+        vertical-align: middle !important;
+    }
+
+        .table tbody td:last-child .btn-group {
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            gap: 5px;
+        }
+    /* ===== TOGGLE SWITCH STYLE ===== */
+    .custom-switch {
+        padding-left: 0;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+        .custom-switch .custom-control-label {
+            padding-left: 52px;
+            line-height: 24px;
+            font-size: 13px;
+            font-weight: 600;
+            color: #dc2626;
+            cursor: pointer;
+        }
+
+        .custom-switch .custom-control-input:checked ~ .custom-control-label {
+            color: #10b981;
+        }
+
+        .custom-switch .custom-control-label::before {
+            width: 44px;
+            height: 24px;
+            border-radius: 24px;
+            background-color: #dc2626;
+            border: none;
+            top: 0;
+            left: 0;
+            transition: background-color 0.25s ease;
+        }
+
+        .custom-switch .custom-control-label::after {
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background-color: #fff;
+            top: 3px;
+            left: 3px;
+            transition: transform 0.25s ease;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+        }
+
+        .custom-switch .custom-control-input:checked ~ .custom-control-label::before {
+            background-color: #10b981;
+        }
+
+        .custom-switch .custom-control-input:checked ~ .custom-control-label::after {
+            transform: translateX(20px);
+        }
+
+        .custom-switch .custom-control-input:focus ~ .custom-control-label::before {
+            box-shadow: 0 0 0 3px rgba(16,185,129,0.25);
+        }
+    /* ===== ADD & EDIT MODAL SIZE ===== */
+    #addCountry .modal-dialog,
+    #editCountry .modal-dialog {
+        max-width: 600px !important;
+    }
+
+    #addCountry .modal-body,
+    #editCountry .modal-body {
+        padding: 30px 35px !important;
+        min-height: 160px;
+    }
+
+    #addCountry .modal-footer,
+    #editCountry .modal-footer {
+        padding: 15px 35px;
+    }
+    /* ===== VIEW MODAL ROWS ===== */
+    #viewCountry .modal-dialog {
+        max-width: 500px !important;
+    }
+
+    .view-row {
+        display: flex;
+        align-items: center;
+        padding: 10px 0;
+        border-bottom: 1px solid #f0f0f0;
+        gap: 16px;
+    }
+
+        .view-row.mb-0 {
+            border-bottom: none;
+        }
+
+    .view-label {
+        width: 130px;
+        font-size: 13px;
+        font-weight: 700;
+        color: #374151;
+        flex-shrink: 0;
+    }
+
+    .view-value {
+        font-size: 14px;
+        font-weight: 600;
+        color: #111827;
+        flex: 1;
+    }
+    /* ===== ALL MODAL HEADER - bg-primary style ===== */
+    #addCountry .modal-header,
+    #editCountry .modal-header,
+    #viewCountry .modal-header,
+    #deleteCountry .modal-header {
+        background: linear-gradient(135deg, #2563eb, #1e40af) !important;
+        color: #fff !important;
+        padding: 16px 20px;
+    }
+
+    /* ===== MODAL POSITION - little bit lower ===== */
+    #addCountry .modal-dialog,
+    #editCountry .modal-dialog,
+    #viewCountry .modal-dialog,
+    #deleteCountry .modal-dialog {
+        margin-top: 80px !important;
+    }
+    /* ===== MODAL STANDARDIZATION - ALL SAME SIZE ===== */
+    .modal-dialog {
+        margin-top: 80px !important;
+        max-width: 700px !important;
+        display: flex;
+        align-items: flex-start;
+        justify-content: center;
+    }
+
+    /* Specific modal overrides */
+    #deleteCountry .modal-dialog {
+        max-width: 700px !important;
+    }
+
+    #addCountry .modal-dialog,
+    #editCountry .modal-dialog,
+    #viewCountry .modal-dialog {
+        max-width: 700px !important;
+    }
+
+    /* ===== MODAL CONTENT HEIGHT & PADDING ===== */
+    .modal-content {
+        border-radius: 16px;
+        border: none;
+        overflow: hidden;
+        box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+        max-height: 90vh;
+        height: 350px; /* Standard height like delete modal */
+    }
+
+    .modal-header {
+        background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+        color: #fff;
+        padding: 20px 25px;
+        min-height: 70px;
+    }
+
+    .modal-title {
+        font-weight: 600;
+        font-size: 20px;
+    }
+
+    /* ===== STANDARDIZED MODAL BODY ===== */
+    .modal-body {
+        padding: 35px !important;
+        min-height: 200px;
+        max-height: 300px;
+        overflow-y: auto;
+    }
+
+    /* ===== STANDARDIZED MODAL FOOTER ===== */
+    .modal-footer {
+        padding: 20px 35px !important;
+        border-top: 1px solid #e5e7eb;
+        min-height: 70px;
+    }
+
+    /* ===== DELETE MODAL SPECIFIC (Reference height) ===== */
+    #deleteCountry .modal-body {
+        padding: 35px !important;
+        text-align: center;
+        min-height: 200px;
+    }
+
+    /* ===== FORM STANDARDIZATION ===== */
+    .form-group {
+        display: flex;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+
+        .form-group label {
+            width: 160px;
+            margin-bottom: 0;
+            font-weight: 600;
+            color: var(--dark);
+            font-size: 14px;
+        }
+
+        .form-group input,
+        .form-group .custom-control {
+            flex: 1;
+        }
+
+    .form-control-modern {
+        border-radius: 10px;
+        border: 2px solid #e5e7eb;
+        padding: 12px 16px;
+        font-size: 14px;
+        height: 44px;
+        transition: all 0.2s ease;
+    }
+
+        .form-control-modern:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(37,99,235,0.1);
+            outline: none;
+        }
+
+    /* ===== VIEW MODAL ROWS (Updated for 700px width) ===== */
+    .view-row {
+        display: flex;
+        align-items: center;
+        padding: 15px 0;
+        border-bottom: 1px solid #f0f0f0;
+        gap: 25px;
+    }
+
+        .view-row.mb-0 {
+            border-bottom: none;
+        }
+
+    .view-label {
+        width: 180px;
+        font-size: 14px;
+        font-weight: 700;
+        color: #374151;
+        flex-shrink: 0;
+    }
+
+    .view-value {
+        font-size: 16px;
+        font-weight: 600;
+        color: #111827;
+        flex: 1;
+    }
+
+    /* ===== ALL MODAL HEADERS - UNIFIED STYLE ===== */
+    #addCountry .modal-header,
+    #editCountry .modal-header,
+    #viewCountry .modal-header,
+    #deleteCountry .modal-header {
+        background: linear-gradient(135deg, #2563eb, #1e40af) !important;
+        color: #fff !important;
+        padding: 20px 25px !important;
+    }
+    /* ================= ALL MODAL HEADERS ================= */
+    #addCompany .modal-header,
+    #editCompany .modal-header,
+    #viewCompany .modal-header,
+    #deleteCompany .modal-header {
+        background: linear-gradient(135deg, #2563eb, #1e40af) !important;
+        color: #fff !important; /* ✅ WHITE TEXT */
+        border: none !important;
+    }
+    /* 🔥 BULLETPROOF WHITE TEXT - ADD THIS */
+    .modal-header * {
+        color: #ffffff !important;
+    }
+
+    .modal-header .modal-title,
+    .modal-header .close,
+    .modal-header .close span,
+    .modal-header h5 {
+        color: #ffffff !important;
+        text-shadow: none !important;
+    }
+
+    .modal-header .close {
+        opacity: 1 !important;
+        font-size: 28px !important;
+    }
+
+        .modal-header .close:hover {
+            color: #ffffff !important;
+            opacity: 0.8 !important;
+        }
+    /* Center Country Name column (override flex issue) */
+    .table tbody td:first-child .d-flex {
+        justify-content: center !important;
+        text-align: center !important;
+        width: 100%;
+    }
+
+        /* Ensure inner text is centered */
+        .table tbody td:first-child .d-flex > div {
+            width: 100%;
+            text-align: center !important;
+        }
+    /* ================= STATIC PAGINATION ================= */
+    .static-pagination-wrapper {
+        padding: 15px 20px;
+        background: #f8fafc;
+        border-top: 1px solid #e2e8f0;
+    }
+
+    .pagination-modern {
+        display: flex;
+        gap: 8px;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        justify-content: center;
+    }
+
+        .pagination-modern li {
+            cursor: pointer;
+        }
+
+            .pagination-modern li a {
+                display: inline-flex;
+                align-items: center;
+                gap: 6px;
+                padding: 8px 14px;
+                border-radius: 10px;
+                background: #f1f5f9;
+                color: #475569;
+                font-weight: 600;
+                font-size: 14px;
+                text-decoration: none;
+                transition: all 0.25s ease;
+                border: 1px solid #e2e8f0;
+                min-width: 44px;
+                justify-content: center;
+            }
+
+                .pagination-modern li a:hover {
+                    background: #3b82f6;
+                    color: #fff;
+                    border-color: #3b82f6;
+                    transform: translateY(-1px);
+                }
+
+            .pagination-modern li.active a {
+                background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+                color: #fff;
+                border-color: #3b82f6;
+                box-shadow: 0 4px 12px rgba(59,130,246,0.3);
+            }
+
+            .pagination-modern li.disabled a {
+                opacity: 0.5;
+                cursor: not-allowed;
+                transform: none !important;
+            }
+
+    #showAllCountriesBtn {
+        background: linear-gradient(135deg, #10b981, #059669) !important;
+        color: #fff !important;
+        font-weight: 600 !important;
+        padding: 10px 20px !important;
+        border-radius: 10px !important;
+        border: none !important;
+        transition: 0.25s !important;
+    }
+
+        #showAllCountriesBtn:hover {
+            transform: scale(1.05) !important;
+            box-shadow: 0 6px 20px rgba(16,185,129,0.4) !important;
+        }
 </style>
 <div></div>
 <div></div>
@@ -346,9 +781,20 @@
                             </h5>
                             <small>Total: <strong id="totalCount">@(ViewBag.TotalCount ?? 0)</strong></small>
                         </div>
-                        <button type="button" class="btn btn-primary-modern btn-modern" data-toggle="modal" data-target="#addCountry">
-                            <i class="fas fa-plus mr-2"></i>Add Country
-                        </button>
+                        @if (ViewBag.CanInsert == true)
+                        {
+                            <button type="button" class="btn add-country-btn"
+                                    data-toggle="modal" data-target="#addCountry">
+                                <i class="fas fa-plus mr-2"></i>Add Country
+                            </button>
+                        }
+                        else
+                        {
+                            <button type="button" class="btn btn-secondary"
+                                    onclick="noAccess('Insert')">
+                                <i class="fas fa-plus mr-2"></i>Add Country
+                            </button>
+                        }
                     </div>
                 </div>
                 <div class="card-body p-0">
@@ -370,12 +816,10 @@
                                         <tr class="@(item.IsActive == 1 ? "recently-added" : "")">
                                             <td>
                                                 <div class="d-flex align-items-center">
-                                                    <div style="width: 45px; height: 45px; border-radius: 12px; background: linear-gradient(135deg, var(--primary), var(--primary-dark)); display: flex; align-items: center; justify-content: center; margin-right: 1rem;">
-                                                        <i class="fas fa-flag text-white" style="font-size: 1.1rem;"></i>
-                                                    </div>
+                                                   
                                                     <div>
                                                         <strong style="color: var(--dark);">@item.CountryName</strong>
-                                                        <br><small style="color: var(--gray);">ID: @item.CountryID</small>
+                                                        
                                                     </div>
                                                 </div>
                                             </td>
@@ -395,21 +839,50 @@
                                             </td>
                                             <td>
                                                 <div class="btn-group" role="group">
-                                                    <button class="btn btn-primary-modern btn-modern btn-sm mr-1 editByCountryId" 
-                                                            data-edCountryId="@item.CountryID" data-toggle="modal" data-target="#editCountry"
-                                                            title="Edit">
-                                                        <i class="fas fa-edit"></i>
-                                                    </button>
-                                                    <button class="btn btn-info-modern btn-modern btn-sm mr-1 viewByCountryId" 
-                                                            data-vwCountryId="@item.CountryID" data-toggle="modal" data-target="#viewCountry"
+                                                    @if (ViewBag.CanUpdate == true)
+                                                    {
+                                                        <button class="btn btn-primary-modern btn-modern btn-sm mr-1 editByCountryId"
+                                                                data-edCountryId="@item.CountryID"
+                                                                data-toggle="modal" data-target="#editCountry"
+                                                                title="Edit">
+                                                            <i class="mdi mdi-pencil"></i>
+                                                        </button>
+                                                    }
+                                                    else
+                                                    {
+                                                        <button class="btn btn-secondary btn-sm mr-1"
+                                                                title="No Edit Permission"
+                                                                onclick="noAccess('Update')">
+                                                            <i class="mdi mdi-pencil"></i>
+                                                        </button>
+                                                    }
+
+                                                    @* VIEW — always visible *@
+                                                    <button class="btn btn-info-modern btn-modern btn-sm mr-1 viewByCountryId"
+                                                            data-vwCountryId="@item.CountryID"
+                                                            data-toggle="modal" data-target="#viewCountry"
                                                             title="View">
-                                                        <i class="fas fa-eye"></i>
+                                                        <i class="mdi mdi-eye"></i>
                                                     </button>
-                                                    <button class="btn btn-danger-modern btn-modern btn-sm deleteCountries" 
-                                                            data-dlCountryId="@item.CountryID" data-toggle="modal" data-target="#deleteCountry"
-                                                            title="Delete">
-                                                        <i class="fas fa-trash-alt"></i>
-                                                    </button>
+
+                                                    @* DELETE *@
+                                                    @if (ViewBag.CanDelete == true)
+                                                    {
+                                                        <button class="btn btn-danger-modern btn-modern btn-sm deleteCountries"
+                                                                data-dlCountryId="@item.CountryID"
+                                                                data-toggle="modal" data-target="#deleteCountry"
+                                                                title="Delete">
+                                                            <i class="mdi mdi-delete"></i>
+                                                        </button>
+                                                    }
+                                                    else
+                                                    {
+                                                        <button class="btn btn-secondary btn-sm"
+                                                                title="No Delete Permission"
+                                                                onclick="noAccess('Delete')">
+                                                            <i class="mdi mdi-delete"></i>
+                                                        </button>
+                                                    }
                                                 </div>
                                             </td>
                                         </tr>
@@ -429,55 +902,26 @@
                         </table>
                     </div>
 
-                    @if (ViewBag.ShowAllButton == true)
-                    {
-                        <div class="row mt-4 px-4 pb-4">
-                            <div class="col text-right">
-                                <button type="button" id="showAllButton" class="show-all-btn btn-modern">
-                                    <i class="fas fa-expand-arrows-alt mr-2"></i>Show All Records
-                                </button>
-                            </div>
-                        </div>
-                    }
+             
 
-                    @if (ViewBag.TotalCount != null && ViewBag.TotalCount > ViewBag.PageSize)
-                    {
-                        <div class="row mt-4 px-4 pb-4">
-                            <div class="col">
-                                <nav aria-label="Page navigation">
-                                    <ul class="pagination pagination-modern justify-content-center">
-                                       
-                                        <li class="page-item @(ViewBag.CurrentPage == 1 ? "disabled" : "")">
-                                            <a class="page-link" href="@Url.Action("List", new { page = ViewBag.CurrentPage - 1, pageSize = ViewBag.PageSize })">
-                                                <i class="fas fa-chevron-left"></i> Previous
-                                            </a>
-                                        </li>
-                                        @for (int i = 1; i <= Math.Ceiling((double)ViewBag.TotalCount / ViewBag.PageSize); i++)
-                                        {
-                                            <li class="page-item @(i == ViewBag.CurrentPage ? "active" : "")">
-                                                <a class="page-link" href="@Url.Action("List", new { page = i, pageSize = ViewBag.PageSize })">@i</a>
-                                            </li>
-                                        }
-                                        <li class="page-item @(ViewBag.CurrentPage == Math.Ceiling((double)ViewBag.TotalCount / ViewBag.PageSize) ? "disabled" : "")">
-                                            <a class="page-link" href="@Url.Action("List", new { page = ViewBag.CurrentPage + 1, pageSize = ViewBag.PageSize })">
-                                                Next <i class="fas fa-chevron-right"></i>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </nav>
-                            </div>
-                        </div>
-                    }
+                  <!-- ✅ REPLACE WITH THIS -->
+<div class="static-pagination-wrapper">
+    <div class="d-flex justify-content-between align-items-center">
+        <button id="showAllCountriesBtn" class="btn btn-success-modern">
+            <i class="mdi mdi-view-grid mr-2"></i>Show All
+        </button>
+        <ul class="pagination pagination-modern mb-0" id="countryPagination"></ul>
+    </div>
+</div>
                 </div>
             </div>
         </div>
     </div>
 </div>
 
-<!-- MODALS WITH PROFESSIONAL STYLING -->
 <!-- Add Country Modal -->
 <div class="modal fade modal-modern" id="addCountry" tabindex="-1">
-    <div class="modal-dialog modal-lg">
+    <div class="modal-dialog" style="max-width: 480px;">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">
@@ -485,28 +929,26 @@
                 </h5>
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
-            <div class="modal-body">
+            <div class="modal-body" style="padding: 20px 25px;">
                 <form id="addCountryForm">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <label class="form-label">Country Name <span class="text-danger">*</span></label>
-                                <input type="text" class="form-control form-control-modern" id="txtCountryName" placeholder="Enter country name (letters only)">
-                                <span class="validationMessage text-danger mt-1 d-block" id="msgAddCountryValidation" style="font-size: 0.85rem;"></span>
-                            </div>
-                        </div>
+                    <div class="form-group mb-2">
+                        <label class="form-label" style="font-size: 13px;">
+                            Country Name <span class="text-danger">*</span>
+                        </label>
+                        <input type="text"
+                               class="form-control form-control-modern"
+                               id="txtCountryName"
+                               placeholder="Enter country name (letters only)"
+                               style="height: 36px; font-size: 13px; padding: 6px 10px;">
+                        <span class="validationMessage text-danger mt-1 d-block"
+                              id="msgAddCountryValidation"
+                              style="font-size: 0.80rem;"></span>
                     </div>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <label class="form-label">Status</label>
-                                <div class="custom-control custom-switch mt-2">
-                                    <input type="checkbox" class="custom-control-input" id="chkActiveStatus" checked>
-                                    <label class="custom-control-label" for="chkActiveStatus">
-                                        <i class="fas fa-toggle-on text-success mr-2"></i>Active
-                                    </label>
-                                </div>
-                            </div>
+                    <div class="form-group mb-0">
+                        <label class="form-label" style="font-size: 13px;">Status:</label>
+                        <div class="custom-control custom-switch mt-1">
+                            <input type="checkbox" class="custom-control-input" id="chkActiveStatus" checked>
+                            <label class="custom-control-label" for="chkActiveStatus">Active</label>
                         </div>
                     </div>
                 </form>
@@ -526,7 +968,7 @@
 
 <!-- Edit Country Modal -->
 <div class="modal fade modal-modern modal-edit" id="editCountry" tabindex="-1">
-    <div class="modal-dialog modal-lg">
+    <div class="modal-dialog" style="max-width: 480px;">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">
@@ -534,29 +976,27 @@
                 </h5>
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
-            <div class="modal-body">
+            <div class="modal-body" style="padding: 20px 25px;">
                 <form id="editCountryForm">
                     <input type="hidden" id="hdnCountryId">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <label class="form-label">Country Name <span class="text-danger">*</span></label>
-                                <input type="text" class="form-control form-control-modern" id="txtEditCountryNameInput" placeholder="Enter country name">
-                                <span class="validationMessage text-danger mt-1 d-block" id="msgEditCountryValidation" style="font-size: 0.85rem;"></span>
-                            </div>
-                        </div>
+                    <div class="form-group mb-2">
+                        <label class="form-label" style="font-size: 13px;">
+                            Country Name <span class="text-danger">*</span>
+                        </label>
+                        <input type="text"
+                               class="form-control form-control-modern"
+                               id="txtEditCountryNameInput"
+                               placeholder="Enter country name"
+                               style="height: 36px; font-size: 13px; padding: 6px 10px;">
+                        <span class="validationMessage text-danger mt-1 d-block"
+                              id="msgEditCountryValidation"
+                              style="font-size: 0.80rem;"></span>
                     </div>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <label class="form-label">Status</label>
-                                <div class="custom-control custom-switch mt-2">
-                                    <input type="checkbox" class="custom-control-input" id="chkActiveStatusEdit">
-                                    <label class="custom-control-label" for="chkActiveStatusEdit">
-                                        <i class="fas fa-toggle-on text-success mr-2"></i>Active
-                                    </label>
-                                </div>
-                            </div>
+                    <div class="form-group mb-0">
+                        <label class="form-label" style="font-size: 13px;">Status:</label>
+                        <div class="custom-control custom-switch mt-1">
+                            <input type="checkbox" class="custom-control-input" id="chkActiveStatusEdit">
+                            <label class="custom-control-label" for="chkActiveStatusEdit">Active</label>
                         </div>
                     </div>
                 </form>
@@ -571,10 +1011,9 @@
         </div>
     </div>
 </div>
-
 <!-- View Country Modal -->
 <div class="modal fade modal-modern modal-view" id="viewCountry" tabindex="-1">
-    <div class="modal-dialog modal-lg">
+    <div class="modal-dialog" style="max-width: 500px;">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">
@@ -582,37 +1021,21 @@
                 </h5>
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
-            <div class="modal-body">
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="row form-group mb-4">
-                            <div class="col-md-4">
-                                <label class="form-label fw-bold">Country Name:</label>
-                            </div>
-                            <div class="col-md-8">
-                                <label class="form-control-label h5 mb-0" id="lblvwCountryName" style="color: var(--dark);"></label>
-                            </div>
-                        </div>
-                        <div class="row form-group mb-4">
-                            <div class="col-md-4">
-                                <label class="form-label fw-bold">Country ID:</label>
-                            </div>
-                            <div class="col-md-8">
-                                <label class="form-control-label h6 mb-0" id="lblvwCountryId" style="color: var(--gray);"></label>
-                            </div>
-                        </div>
-                        <div class="row form-group">
-                            <div class="col-md-4">
-                                <label class="form-label fw-bold">Status:</label>
-                            </div>
-                            <div class="col-md-8">
-                                <span class="status-badge" id="lblvwStatus" style="font-size: 1rem;"></span>
-                            </div>
-                        </div>
-                    </div>
+            <div class="modal-body" style="padding: 25px 30px;">
+                <div class="view-row">
+                    <span class="view-label">Country Name:</span>
+                    <span class="view-value" id="lblvwCountryName"></span>
+                </div>
+                <div class="view-row">
+                    <span class="view-label">Country ID:</span>
+                    <span class="view-value" id="lblvwCountryId"></span>
+                </div>
+                <div class="view-row mb-0">
+                    <span class="view-label">Status:</span>
+                    <span class="status-badge" id="lblvwStatus"></span>
                 </div>
             </div>
-            <div class="modal-footer">
+            <div class="modal-footer" style="padding: 12px 30px;">
                 <button type="button" class="btn btn-secondary btn-modern" data-dismiss="modal">Close</button>
             </div>
         </div>
@@ -652,10 +1075,23 @@
 @section Scripts {
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
-    <script> $(document).ready(function () {
+
+    <script>
+
+                     function noAccess(type) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Access Denied',
+                        text: 'You do not have ' + type + ' permission for this module.',
+                        confirmButtonColor: '#dc2626'
+                    });
+                }
+
+
+$(document).ready(function () {
         console.log('✅ Professional Countries Management Loaded!');
 
-        // GLOBAL EVENT HANDLER
+           
         function bindEventHandlers() {
             $(document).off('click', '.editByCountryId').on('click', '.editByCountryId', function () {
                 var countryId = $(this).data('edcountryid');
@@ -961,9 +1397,158 @@
         console.log('✅ All professional features initialized perfectly!');
     });
 </script>
+    <script>
+        // ========== COUNTRIES STATIC PAGINATION + SHOW ALL WITH ARROWS ==========
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('🚀 Countries Pagination Script Loaded with Arrows!');
 
-<!-- SweetAlert2 for Professional Notifications -->
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+            // Get table elements
+            const table = document.getElementById("countryTable");
+            const tbody = table.querySelector("tbody");
+            const allRows = Array.from(tbody.querySelectorAll("tr:not(.empty-state-row)"));
+            const paginationContainer = document.getElementById("countryPagination");
+            const showAllBtn = document.getElementById("showAllCountriesBtn");
+
+            let currentPage = 1;
+            const rowsPerPage = 8; // Perfect for your design
+
+            // ========== MAIN PAGINATION FUNCTION ==========
+            function showPage(pageNum) {
+                currentPage = pageNum;
+
+                // Hide all rows first
+                allRows.forEach(row => row.style.display = 'none');
+
+                // Calculate visible rows
+                const startIndex = (pageNum - 1) * rowsPerPage;
+                const endIndex = startIndex + rowsPerPage;
+                const visibleRows = allRows.slice(startIndex, endIndex);
+
+                // Show only visible rows
+                visibleRows.forEach(row => row.style.display = '');
+
+                // Update pagination UI
+                renderPagination();
+                console.log(`📄 Page ${pageNum} shown (${visibleRows.length} rows)`);
+            }
+
+            // ========== RENDER PAGINATION UI ==========
+            function renderPagination() {
+                const totalPages = Math.ceil(allRows.length / rowsPerPage);
+
+                if (totalPages <= 1) {
+                    paginationContainer.innerHTML = '';
+                    return;
+                }
+
+                paginationContainer.innerHTML = '';
+
+                // ========== LEFT SIDE: Previous Button with Arrow ==========
+                const prevBtn = createPageButton(
+                    '<i class="mdi mdi-chevron-left mr-1"></i>Previous',
+                    currentPage > 1,
+                    () => {
+                        if (currentPage > 1) showPage(currentPage - 1);
+                    }
+                );
+                paginationContainer.appendChild(prevBtn);
+
+                // ========== CENTER: Page Numbers (Smart: max 7 visible) ==========
+                const maxVisible = 7;
+                let startPage = Math.max(1, currentPage - Math.floor(maxVisible / 2));
+                let endPage = Math.min(totalPages, startPage + maxVisible - 1);
+
+                // Adjust start if needed
+                if (endPage - startPage + 1 < maxVisible) {
+                    startPage = Math.max(1, endPage - maxVisible + 1);
+                }
+
+                // First page (if not visible)
+                if (startPage > 1) {
+                    paginationContainer.appendChild(createPageButton('1', true, () => showPage(1)));
+                    if (startPage > 2) {
+                        const dots = document.createElement('li');
+                        dots.innerHTML = '<a href="#" class="page-link">...</a>';
+                        dots.style.cursor = 'default';
+                        paginationContainer.appendChild(dots);
+                    }
+                }
+
+                // Main page buttons
+                for (let i = startPage; i <= endPage; i++) {
+                    const pageBtn = createPageButton(i.toString(), true, () => showPage(i));
+                    if (i === currentPage) pageBtn.classList.add('active');
+                    paginationContainer.appendChild(pageBtn);
+                }
+
+                // Last page (if not visible)
+                if (endPage < totalPages) {
+                    if (endPage < totalPages - 1) {
+                        const dots = document.createElement('li');
+                        dots.innerHTML = '<a href="#" class="page-link">...</a>';
+                        dots.style.cursor = 'default';
+                        paginationContainer.appendChild(dots);
+                    }
+                    paginationContainer.appendChild(createPageButton(totalPages.toString(), true, () => showPage(totalPages)));
+                }
+
+                // ========== RIGHT SIDE: Next Button with Arrow ==========
+                const nextBtn = createPageButton(
+                    'Next<i class="mdi mdi-chevron-right ml-1"></i>',
+                    currentPage < totalPages,
+                    () => {
+                        if (currentPage < totalPages) showPage(currentPage + 1);
+                    }
+                );
+                paginationContainer.appendChild(nextBtn);
+            }
+
+            // ========== CREATE PAGE BUTTON ==========
+            function createPageButton(text, enabled, onClick) {
+                const li = document.createElement('li');
+                const a = document.createElement('a');
+                a.href = '#';
+                a.className = 'page-link';
+                a.innerHTML = text;
+
+                if (!enabled) {
+                    li.classList.add('disabled');
+                    a.style.cursor = 'not-allowed';
+                } else {
+                    a.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        onClick();
+                    });
+                }
+
+                li.appendChild(a);
+                return li;
+            }
+
+            // ========== SHOW ALL BUTTON ==========
+            showAllBtn.addEventListener('click', function() {
+                // Show all rows
+                allRows.forEach(row => row.style.display = '');
+
+                // Hide pagination
+                paginationContainer.innerHTML = '';
+                showAllBtn.style.display = 'none';
+
+                console.log('✅ Show All - All rows visible!');
+            });
+
+            // ========== INITIALIZE ==========
+            if (allRows.length > rowsPerPage) {
+                showPage(1);
+            } else {
+                // Less than page size - show all
+                allRows.forEach(row => row.style.display = '');
+            }
+
+            console.log(`✅ Pagination Ready! ${allRows.length} rows | ${Math.ceil(allRows.length / rowsPerPage)} pages`);
+        });
+    </script>
+
 
 <!-- Google Fonts for Inter -->
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">

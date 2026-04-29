@@ -20,9 +20,9 @@ namespace A2R_Project.Repository
         {
             using var connection = _dbContext.CreateConnection();
             return (await connection.QueryAsync<AccessControl>(
-                "sp_FilterAccessControls",  // ✅ USE SAME SP with NULL params
-                new { RoleName = (string)null, UserName = (string)null },
-                commandType: CommandType.StoredProcedure)).AsList();
+                "sp_GetAllAccessControls",  // ✅ CHANGE TO YOUR WORKING SP
+                commandType: CommandType.StoredProcedure  // ✅ NO parameters needed
+            )).AsList();
         }
         public async Task<List<AccessControl>> GetFilteredAccessControls(string? roleName, string? userName)
         {
@@ -38,29 +38,32 @@ namespace A2R_Project.Repository
         // ✅ UPDATE - Dapper auto-opens, manual transaction
         public async Task<string> UpdateAccessControl(List<AccessControl> accessControls)
         {
+            if (accessControls == null || !accessControls.Any())
+                return "No data provided";
+
             using var connection = _dbContext.CreateConnection();
+            // 🔥 Dapper AUTO-OPENS connection (no manual OpenAsync needed!)
+
+            int successCount = 0;
 
             foreach (var item in accessControls)
             {
                 var parameters = new DynamicParameters();
-                parameters.Add("AccessID", item.AccessID);
-                parameters.Add("Module_Flag", item.Module_Flag);
-                parameters.Add("Insert_Flag", item.Insert_Flag);
-                parameters.Add("Update_Flag", item.Update_Flag);
-                parameters.Add("Delete_Flag", item.Delete_Flag);
+                parameters.Add("@AccessID", item.AccessID);
+                parameters.Add("@Module_Flag", item.Module_Flag);
+                parameters.Add("@Insert_Flag", item.Insert_Flag);
+                parameters.Add("@Update_Flag", item.Update_Flag);
+                parameters.Add("@Delete_Flag", item.Delete_Flag);
 
-                int rowsAffected = await connection.ExecuteAsync(
+                int rows = await connection.ExecuteAsync(
                     "sp_UpdateAccessControl",
                     parameters,
                     commandType: CommandType.StoredProcedure);
 
-                if (rowsAffected == 0)
-                {
-                    return $"No rows updated for AccessID: {item.AccessID}";
-                }
+                if (rows > 0) successCount++;
             }
 
-            return "Access has been modified successfully.";
+            return $"✅ Updated {successCount}/{accessControls.Count}";
         }
 
         // ✅ INSERT - Dapper auto-opens connection

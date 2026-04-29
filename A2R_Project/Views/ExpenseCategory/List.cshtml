@@ -1,537 +1,1146 @@
-﻿
-@model IEnumerable<A2R_Project.Models.ExpenseCategory>
-
+﻿@model IEnumerable<A2R_Project.Models.ExpenseCategory>
 @{
-    ViewBag.Title = "Expense Category List";
+    ViewBag.Title = "Expense Category Management";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<link href="https://cdn.jsdelivr.net/npm/@@mdi/font@6.5.95/css/materialdesignicons.min.css" rel="stylesheet">
+<style>
 
-<!DOCTYPE html>
-<html>
-<head>
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
-    <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    :root {
+        --primary: #2563eb;
+        --primary-dark: #1e40af;
+        --success: #16a34a;
+        --danger: #dc2626;
+        --warning: #f59e0b;
+        --dark: #111827;
+        --light: #f9fafb;
+        --white: #ffffff;
+        --gray: #6b7280;
+    }
+
+    body {
+        background: #f3f4f6;
+        font-family: 'Inter', sans-serif;
+    }
+
+    .modal-dialog {
+        margin-top: 40px;
+        display: flex;
+        align-items: flex-start;
+        justify-content: center;
+    }
+
+    #deleteModal .modal-dialog {
+        max-width: 400px;
+    }
+
+    .modal-content {
+        border-radius: 16px;
+        border: none;
+        overflow: hidden;
+        box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+    }
+
+    .modal-header {
+        background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+        color: #fff;
+        padding: 16px 20px;
+    }
+
+    .modal-title {
+        font-weight: 600;
+        font-size: 18px;
+    }
+
+    #deleteModal .modal-body {
+        text-align: center;
+    }
+
+    .form-group {
+        margin-bottom: 15px;
+    }
+
+    .form-control-modern {
+        border-radius: 8px;
+        border: 1px solid #ddd;
+        padding: 8px 12px;
+        width: 100%;
+    }
+
+        .form-control-modern:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 6px rgba(37,99,235,0.3);
+            outline: none;
         }
 
-        .card {
-            box-shadow: 0 0.5rem 1rem rgba(0,0,0,.15);
-            border: none;
+    .form-label {
+        color: #374151;
+        font-weight: 600;
+        font-size: 14px;
+        display: block;
+        margin-bottom: 6px;
+    }
+
+    .btn-modern {
+        border-radius: 8px;
+        padding: 6px 14px;
+        border: none;
+        transition: 0.2s;
+    }
+
+        .btn-modern:hover {
+            transform: scale(1.05);
+            opacity: 0.9;
         }
 
-        .btn {
-            border-radius: 0.25rem;
+    .btn-primary-modern {
+        background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+        color: #fff;
+    }
+
+    .btn-warning-modern {
+        background: linear-gradient(135deg, #f59e0b, #d97706);
+        color: #fff;
+    }
+
+    .btn-danger-modern {
+        background: linear-gradient(135deg, #ef4444, #b91c1c);
+        color: #fff;
+    }
+
+    .btn-info-modern {
+        background: linear-gradient(135deg, #06b6d4, #0891b2);
+        color: #fff;
+    }
+
+        .btn-primary-modern:hover, .btn-info-modern:hover, .btn-danger-modern:hover {
+            transform: scale(1.08);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
         }
 
-        .table th {
-            background: linear-gradient(45deg, #007bff, #0056b3);
-            color: white;
+    .btn-primary-modern.btn-modern {
+        background: linear-gradient(135deg, #6366f1, #4f46e5);
+        font-weight: 600;
+        padding: 8px 18px;
+    }
+
+    .add-category-btn {
+        background: linear-gradient(135deg, #10b981, #059669);
+        color: #fff;
+        font-weight: 600;
+        padding: 8px 20px;
+        border-radius: 10px;
+        border: none;
+        transition: 0.2s;
+    }
+
+        .add-category-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(16,185,129,0.4);
+            color: #fff;
         }
 
-        .table-hover tbody tr:hover {
-            background-color: rgba(0,123,255,.075);
+    .show-all-btn {
+        background: linear-gradient(135deg, #10b981, #059669);
+        color: #fff;
+        font-weight: 600;
+        padding: 8px 20px;
+        border-radius: 10px;
+        border: none;
+    }
+
+        .show-all-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(16,185,129,0.4);
         }
 
-        .btn-loading {
-            opacity: 0.6;
+    .card-header-custom {
+        background-color: white;
+        color: black;
+        border-radius: 15px 15px 0 0;
+        padding: 18px 20px;
+    }
+
+    .card-title {
+        font-size: 18px;
+        font-weight: 600;
+        letter-spacing: 0.5px;
+    }
+
+    .table {
+        border-radius: 14px;
+        overflow: hidden;
+        background: #fff;
+        border-collapse: collapse;
+        border-spacing: 0;
+    }
+
+        .table thead {
+            background: #3f454c;
         }
-    </style>
-</head>
-<body>
-    <div class="container-fluid mt-4">
-        <div class="row">
-            <div class="col-12">
-                <div class="card">
-                    <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
-                        <h4 class="mb-0"><i class="fas fa-list mr-2"></i>Expense Category List</h4>
-                        <button class="btn btn-success btn-sm" data-toggle="modal" data-target="#addModal">
-                            <i class="fas fa-plus mr-1"></i>Add New
-                        </button>
+
+            .table thead th {
+                color: #fff !important;
+                border: none !important;
+                font-size: 14px;
+                font-weight: 700;
+                text-transform: uppercase;
+                letter-spacing: 0.6px;
+                padding: 14px;
+                text-align: center !important;
+            }
+
+        .table tbody td {
+            font-size: 15px;
+            font-weight: 600;
+            color: #34495e;
+            padding: 14px;
+            vertical-align: middle !important;
+            text-align: center !important;
+            background-color: white !important;
+        }
+
+            .table tbody td:first-child {
+                text-align: center !important;
+                font-weight: 700 !important;
+                color: #2c3e50 !important;
+                font-size: 15px !important;
+            }
+
+        .table tbody tr {
+            transition: all 0.25s ease;
+            background: #fff;
+        }
+
+           
+
+        .table .btn-sm {
+            width: 36px !important;
+            height: 36px !important;
+            border-radius: 10px !important;
+            padding: 0 !important;
+            margin-right: 4px;
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            border: none !important;
+            transition: all 0.25s ease;
+        }
+
+            .table .btn-sm i {
+                font-size: 16px !important;
+                line-height: 1;
+            }
+
+            .table .btn-sm:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 6px 15px rgba(0,0,0,0.15);
+            }
+
+    .btn-group {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+    }
+
+        .btn-group .btn {
+            margin: 0;
+        }
+
+    .status-badge {
+        padding: 5px 12px;
+        border-radius: 20px;
+        font-size: 13px;
+        font-weight: 600;
+    }
+
+    .badge-success-custom {
+        background: var(--success);
+        color: #fff;
+    }
+
+    .badge-danger-custom {
+        background: var(--danger);
+        color: #fff;
+    }
+
+    .empty-state {
+        text-align: center;
+        padding: 40px;
+        color: #6b7280;
+    }
+
+        .empty-state i {
+            font-size: 40px;
+            margin-bottom: 10px;
+            color: #9ca3af;
+        }
+
+    .pagination-modern .page-link {
+        border-radius: 8px;
+        margin: 0 4px;
+        color: #4f46e5;
+        font-weight: 500;
+    }
+
+    .pagination-modern .active .page-link {
+        background: linear-gradient(135deg, #6366f1, #4f46e5);
+        color: #fff;
+        border: none;
+    }
+
+    .table tbody td:last-child {
+        text-align: center !important;
+        vertical-align: middle !important;
+    }
+
+        .table tbody td:last-child .btn-group {
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            gap: 5px;
+        }
+
+    #addModal .modal-dialog, #editModal .modal-dialog {
+        max-width: 480px !important;
+    }
+
+    #addModal .modal-body, #editModal .modal-body {
+        padding: 20px 25px !important;
+    }
+
+    #addModal .modal-footer, #editModal .modal-footer {
+        padding: 15px 25px;
+    }
+
+    #viewModal .modal-dialog {
+        max-width: 500px !important;
+    }
+
+    .view-row {
+        display: flex;
+        align-items: center;
+        padding: 10px 0;
+        border-bottom: 1px solid #f0f0f0;
+        gap: 16px;
+    }
+
+        .view-row.last {
+            border-bottom: none;
+        }
+
+    .view-label {
+        width: 140px;
+        font-size: 13px;
+        font-weight: 700;
+        color: #374151;
+        flex-shrink: 0;
+    }
+
+    .view-value {
+        font-size: 14px;
+        font-weight: 600;
+        color: #111827;
+        flex: 1;
+    }
+
+    #addModal .modal-header, #editModal .modal-header, #viewModal .modal-header, #deleteModal .modal-header {
+        background: linear-gradient(135deg, #2563eb, #1e40af) !important;
+        color: #fff !important;
+        padding: 16px 20px;
+    }
+
+    #addModal .modal-dialog, #editModal .modal-dialog, #viewModal .modal-dialog, #deleteModal .modal-dialog {
+        margin-top: 80px !important;
+    }
+    /* ===== CATEGORY NAME COLUMN LEFT ALIGN ===== */
+  
+    /* ===== UNIFORM MODAL SIZE ===== */
+    #addModal .modal-dialog,
+    #editModal .modal-dialog,
+    #viewModal .modal-dialog,
+    #deleteModal .modal-dialog {
+        max-width: 500px !important; /* SAME WIDTH */
+    }
+
+    /* ===== SAME HEIGHT STYLE ===== */
+    #addModal .modal-content,
+    #editModal .modal-content,
+    #viewModal .modal-content,
+    #deleteModal .modal-content {
+        min-height: 380px; /* SAME HEIGHT */
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+
+    /* ===== BODY SCROLL (if content bigger) ===== */
+    .modal-body {
+        max-height: 300px;
+        overflow-y: auto;
+    }/* ===== FORM SPACING IMPROVEMENT ===== */
+.form-group {
+    margin-bottom: 20px !important;   /* space between fields */
+}
+
+/* Label spacing */
+.form-label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #374151;
+}
+
+/* Input field spacing + better UI */
+.form-control-modern {
+    height: 40px !important;
+    padding: 10px 14px !important;
+    font-size: 14px;
+    border-radius: 10px;
+}
+
+/* Add space inside modal body */
+#addModal .modal-body,
+#editModal .modal-body {
+    padding: 25px 30px !important;
+}
+
+/* Footer button spacing */
+.modal-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;   /* space between buttons */
+    padding: 15px 25px;
+}
+
+/* Optional: better vertical alignment */
+.modal-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+    /* ===== INLINE FORM FIELD ===== */
+    .form-group {
+        display: flex;
+        align-items: center;
+        gap: 15px; /* space between label & input */
+        margin-bottom: 20px;
+    }
+
+    /* Label fixed width */
+    .form-label {
+        min-width: 140px; /* adjust if needed */
+        margin-bottom: 0;
+        font-size: 14px;
+        font-weight: 600;
+        color: #374151;
+    }
+
+    /* Input takes remaining space */
+    .form-control-modern {
+        flex: 1;
+        height: 40px;
+        padding: 8px 12px;
+    }
+    /* Push form section down */
+    #addModal .modal-body,
+    #editModal .modal-body {
+        padding-top: 35px !important; /* increase this if you want more space */
+    }
+    /* ===== SAME STUDENT LIST THEME ===== */
+    :root {
+        --primary-gradient: linear-gradient(135deg, #4e73df, #224abe);
+    }
+
+    /* ===== MODAL HEADER ===== */
+    .modal-header {
+        background: var(--primary-gradient) !important;
+        color: #fff !important;
+        border-bottom: none !important;
+        border-radius: 18px 18px 0 0 !important;
+    }
+
+        .modal-header .modal-title {
+            color: #fff !important;
+            font-size: 18px;
+            font-weight: 700;
+        }
+
+        .modal-header .close {
+            color: #fff !important;
+            opacity: 1;
+            font-size: 24px;
+        }
+
+    /* ===== MODAL BODY ===== */
+    .modal-body {
+        background: #f9fbff !important;
+        padding: 24px !important;
+    }
+
+    /* ===== MODAL FOOTER ===== */
+    .modal-footer {
+        background: #fff !important;
+        border-top: 1px solid #eee !important;
+        padding: 14px 20px !important;
+    }
+
+        /* ===== BUTTONS (MATCH STUDENT LIST) ===== */
+
+        /* SAVE / PRIMARY */
+        .modal-footer .btn-primary,
+        .modal-footer .btn-success {
+            background: var(--primary-gradient) !important;
+            border: none !important;
+            color: #fff !important;
+        }
+
+        /* RESET */
+        .modal-footer .btn-warning {
+            background: linear-gradient(135deg, #f6c23e, #e0a800) !important;
+            color: #000 !important;
+            border: none !important;
+        }
+
+        /* CANCEL */
+        .modal-footer .btn-secondary {
+            background: #6c757d !important;
+            color: #fff !important;
+            border: none !important;
+        }
+
+        /* HOVER EFFECT (same feel) */
+        .modal-footer .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(0,0,0,0.15);
+        }
+
+    /* ===== MODAL BOX (CARD LOOK SAME AS LIST PAGE) ===== */
+    .modal-content {
+        border-radius: 18px !important;
+        border: none !important;
+        box-shadow: 0 12px 40px rgba(0,0,0,0.18) !important;
+        overflow: hidden;
+    }
+    /* ===== ADD / EDIT MODAL FIELD STYLING ===== */
+    #addModal .modal-body,
+    #editModal .modal-body {
+        padding: 30px 30px 10px 30px !important;
+        background: #f9fbff !important;
+    }
+
+    #addModal .form-group,
+    #editModal .form-group {
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: stretch !important;
+        gap: 0 !important;
+        margin-bottom: 20px !important;
+    }
+
+    #addModal .form-label,
+    #editModal .form-label {
+        font-size: 13px !important;
+        font-weight: 700 !important;
+        color: #374151 !important;
+        margin-bottom: 8px !important;
+        min-width: unset !important;
+    }
+
+    #addModal .form-control-modern,
+    #editModal .form-control-modern {
+        width: 100% !important;
+        height: 42px !important;
+        border-radius: 10px !important;
+        border: 1.5px solid #dce3f0 !important;
+        padding: 10px 14px !important;
+        font-size: 14px !important;
+        font-weight: 500 !important;
+        color: #111 !important;
+        background: #fff !important;
+        transition: all 0.3s ease !important;
+        flex: unset !important;
+    }
+
+        #addModal .form-control-modern:focus,
+        #editModal .form-control-modern:focus {
+            border-color: #4e73df !important;
+            box-shadow: 0 0 0 3px rgba(78,115,223,0.15) !important;
+            outline: none !important;
+        }
+
+    #addModal .modal-body,
+    #editModal .modal-body {
+        padding: 40px 30px 10px 30px !important;
+    }
+    /* ===== ALL MODALS SAME WIDTH ===== */
+    #addModal .modal-dialog,
+    #editModal .modal-dialog,
+    #viewModal .modal-dialog,
+    #deleteModal .modal-dialog {
+        max-width: 800px !important;
+    }
+
+    /* ===== ADD & EDIT - INLINE LABEL + INPUT ===== */
+    #addModal .form-group,
+    #editModal .form-group {
+        display: flex !important;
+        flex-direction: row !important;
+        align-items: center !important;
+        gap: 20px !important;
+        margin-bottom: 20px !important;
+    }
+
+    #addModal .form-label,
+    #editModal .form-label {
+        min-width: 160px !important;
+        width: 160px !important;
+        font-size: 15px !important;
+        font-weight: 700 !important;
+        color: #1e293b !important;
+        margin-bottom: 0 !important;
+    }
+
+    #addModal .form-control-modern,
+    #editModal .form-control-modern {
+        width: 60% !important;
+        flex: 1 !important;
+        height: 42px !important;
+        font-size: 14px !important;
+        font-weight: 500 !important;
+        border-radius: 10px !important;
+    }
+
+    /* ===== VIEW MODAL - STRONG LARGER TEXT ===== */
+    #viewModal .view-label {
+        font-size: 15px !important;
+        font-weight: 700 !important;
+        color: #1e293b !important;
+        min-width: 160px !important;
+    }
+
+    #viewModal .view-value {
+        font-size: 15px !important;
+        font-weight: 700 !important;
+        color: #111827 !important;
+    }
+
+    /* ===== MODAL TITLE - ALL THREE ===== */
+    #addModal .modal-title,
+    #editModal .modal-title,
+    #viewModal .modal-title {
+        font-size: 18px !important;
+        font-weight: 700 !important;
+    }
+
+    /* ===== VALIDATION MESSAGE POSITION FIX ===== */
+    #addModal .text-danger,
+    #editModal .text-danger {
+        padding-left: 180px !important;
+        display: block !important;
+        margin-top: 4px !important;
+        font-size: 12px !important;
+    }
+    /* ===== ALL MODALS SAME WIDTH ===== */
+    #addModal .modal-dialog,
+    #editModal .modal-dialog,
+    #viewModal .modal-dialog,
+    #deleteModal .modal-dialog {
+        max-width: 800px !important;
+    }
+
+    /* ===== ADD & EDIT - INLINE LABEL + INPUT ===== */
+    #addModal .form-group,
+    #editModal .form-group {
+        display: flex !important;
+        flex-direction: row !important;
+        align-items: center !important;
+        gap: 20px !important;
+        margin-bottom: 20px !important;
+    }
+
+    #addModal .form-label,
+    #editModal .form-label {
+        min-width: 160px !important;
+        width: 160px !important;
+        font-size: 15px !important;
+        font-weight: 700 !important;
+        color: #1e293b !important;
+        margin-bottom: 0 !important;
+    }
+
+    #addModal .form-control-modern,
+    #editModal .form-control-modern {
+        width: 60% !important;
+        flex: 1 !important;
+        height: 42px !important;
+        font-size: 14px !important;
+        font-weight: 500 !important;
+        border-radius: 10px !important;
+    }
+
+    /* ===== VIEW MODAL - STRONG LARGER TEXT ===== */
+    #viewModal .view-label {
+        font-size: 15px !important;
+        font-weight: 700 !important;
+        color: #1e293b !important;
+        min-width: 160px !important;
+    }
+
+    #viewModal .view-value {
+        font-size: 15px !important;
+        font-weight: 700 !important;
+        color: #111827 !important;
+    }
+
+    /* ===== MODAL TITLE - ALL THREE ===== */
+    #addModal .modal-title,
+    #editModal .modal-title,
+    #viewModal .modal-title {
+        font-size: 18px !important;
+        font-weight: 700 !important;
+    }
+
+    /* ===== VALIDATION MESSAGE POSITION FIX ===== */
+    #addModal .text-danger,
+    #editModal .text-danger {
+        padding-left: 180px !important;
+        display: block !important;
+        margin-top: 4px !important;
+        font-size: 12px !important;
+    }
+
+</style>
+
+<div class="container-fluid px-4">
+    <div class="row">
+        <div class="col-12">
+            <div class="card card-modern">
+                <div class="card-header-custom">
+                    <div class="d-flex justify-content-between align-items-center flex-wrap">
+                        <div>
+                            <h5 class="card-title mb-1">
+                                <i class="fas fa-list mr-2"></i>Expense Category List
+                            </h5>
+                            <small>Total: <strong id="totalCount">@(ViewBag.TotalCount ?? 0)</strong></small>
+                        </div>
+
+                        @if (ViewBag.CanInsert == true)
+                        {
+                            <button type="button" class="btn add-category-btn"
+                                    data-toggle="modal" data-target="#addModal">
+                                <i class="fas fa-plus mr-2"></i>Add Category
+                            </button>
+                        }
+                        else
+                        {
+                            <button type="button" class="btn add-category-btn"
+                                    style="background:linear-gradient(135deg,#6b7280,#4b5563)!important;"
+                                    onclick="noAccess('Insert')">
+                                <i class="fas fa-plus mr-2"></i>Add Category
+                            </button>
+                        }
                     </div>
-                    <div class="card-body p-0">
-                        <div class="table-responsive">
-                            <table class="table table-hover mb-0">
-                                <thead>
-                                    <tr>
-                                        <th>Category Name</th>
-                                        <th>Created By</th>
-                                        <th>Created Date</th>
-                                        <th>Updated By</th>
-                                        <th>Updated Date</th>
-                                        <th>Actions</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="categoryTable">
-                                    @if (Model != null && Model.Any())
-                                    {
-                                        @foreach (var item in Model)
-                                        {
-                                            <tr>
-                                                <td><strong>@item.Category_Name</strong></td>
-                                                <td>@(item.Created_By ?? "N/A")</td>
-                                                <td>@(item.Created_Date?.ToString("dd/MM/yyyy HH:mm") ?? "N/A")</td>
-                                                <td>@(item.Updated_By ?? "N/A")</td>
-                                                <td>@(item.Updated_Date?.ToString("dd/MM/yyyy HH:mm") ?? "N/A")</td>
-                                                <td>
-                                                    <div class="btn-group btn-group-sm">
-                                                        <button class="btn btn-primary edit-btn" data-id="@item.Category_ID" title="Edit">
-                                                            <i class="fas fa-edit"></i>
-                                                        </button>
-                                                        <button class="btn btn-info view-btn" data-id="@item.Category_ID" title="View">
-                                                            <i class="fas fa-eye"></i>
-                                                        </button>
-                                                        <button class="btn btn-danger delete-btn" data-id="@item.Category_ID" title="Delete">
-                                                            <i class="fas fa-trash"></i>
-                                                        </button>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        }
-                                    }
-                                    else
+                </div>
+                <div class="card-body p-0">
+                    <div class="table-responsive">
+                        <table class="table table-modern mb-0" id="categoryTable">
+                            <thead>
+                                <tr>
+                                    <th>Category Name</th>
+                                   
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="categoryTableBody">
+                                @if (Model != null && Model.Any())
+                                {
+                                    foreach (var item in Model)
                                     {
                                         <tr>
-                                            <td colspan="6" class="text-center py-5 text-muted">
-                                                <i class="fas fa-inbox fa-3x mb-3 d-block"></i>
-                                                No Expense Categories Found
+                                            <td style="text-align: left !important;">
+                                                <div class="d-flex align-items-center" style="padding-left: 16px;">
+                                                   
+                                                    <div>
+                                                        <strong style="color:var(--dark);">@item.Category_Name</strong>
+                                                        <br><small style="color:var(--gray);">ID: @item.Category_ID</small>
+                                                    </div>
+                                                </div>
                                             </td>
+
+                                            <td>
+                                                <div class="btn-group" role="group">
+
+                                                    @* EDIT *@
+                                                    @if (ViewBag.CanUpdate == true)
+                                                    {
+                                                        <button class="btn btn-primary-modern btn-modern btn-sm edit-btn"
+                                                                data-id="@item.Category_ID" title="Edit">
+                                                            <i class="mdi mdi-pencil"></i>
+                                                        </button>
+                                                    }
+                                                    else
+                                                    {
+                                                        <button class="btn btn-modern btn-sm"
+                                                                style="background:linear-gradient(135deg,#6b7280,#4b5563)!important;color:#fff!important;"
+                                                                title="No Edit Permission"
+                                                                onclick="noAccess('Update')">
+                                                            <i class="mdi mdi-pencil"></i>
+                                                        </button>
+                                                    }
+
+                                                    @* VIEW — always visible *@
+                                                    <button class="btn btn-info-modern btn-modern btn-sm view-btn"
+                                                            data-id="@item.Category_ID" title="View">
+                                                        <i class="mdi mdi-eye"></i>
+                                                    </button>
+
+                                                    @* DELETE *@
+                                                    @if (ViewBag.CanDelete == true)
+                                                    {
+                                                        <button class="btn btn-danger-modern btn-modern btn-sm delete-btn"
+                                                                data-id="@item.Category_ID" title="Delete">
+                                                            <i class="mdi mdi-delete"></i>
+                                                        </button>
+                                                    }
+                                                    else
+                                                    {
+                                                        <button class="btn btn-modern btn-sm"
+                                                                style="background:linear-gradient(135deg,#6b7280,#4b5563)!important;color:#fff!important;"
+                                                                title="No Delete Permission"
+                                                                onclick="noAccess('Delete')">
+                                                            <i class="mdi mdi-delete"></i>
+                                                        </button>
+                                                    }
+
+                                                </div>
+                                            </td>
+                                         
                                         </tr>
                                     }
-                                </tbody>
-                              
-                            </table>
-                        </div>
+                                }
+                                else
+                                {
+                                    <tr>
+                                        <td colspan="6" class="empty-state">
+                                            <i class="fas fa-tags"></i>
+                                            <h5>No Expense Categories Found</h5>
+                                            <p class="mb-0">Click "Add Category" to get started</p>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
                     </div>
 
-                    @if (ViewBag.TotalCount != null && (int)ViewBag.TotalCount > (int)ViewBag.PageSize)
-                    {
-                        <div class="card-footer">
-                            <div class="d-flex justify-content-between align-items-center">
-                                <small class="text-muted">Showing @(Model?.Count() ?? 0) of @ViewBag.TotalCount entries</small>
-                                <nav>
-                                    <ul class="pagination pagination-sm mb-0">
-                                        <li class="page-item @(ViewBag.CurrentPage == 1 ? "disabled" : "")">
-                                            <a class="page-link" href="@Url.Action("List", new { page = ViewBag.CurrentPage - 1, pageSize = ViewBag.PageSize })">Previous</a>
-                                        </li>
-                                        @for (int i = 1; i <= Math.Ceiling((double)(int)ViewBag.TotalCount / (int)ViewBag.PageSize); i++)
-                                        {
-                                            <li class="page-item @(i == ViewBag.CurrentPage ? "active" : "")">
-                                                <a class="page-link" href="@Url.Action("List", new { page = i, pageSize = ViewBag.PageSize })">@i</a>
-                                            </li>
-                                        }
-                                        <li class="page-item @(((int)ViewBag.CurrentPage == Math.Ceiling((double)(int)ViewBag.TotalCount / (int)ViewBag.PageSize)) ? "disabled" : "")">
-                                            <a class="page-link" href="@Url.Action("List", new { page = ViewBag.CurrentPage + 1, pageSize = ViewBag.PageSize })">Next</a>
-                                        </li>
-                                    </ul>
-                                </nav>
-                            </div>
+                    <!-- Show All + Pagination -->
+                    <div class="row mt-3 px-4 pb-4 align-items-center">
+                        <div class="col-auto">
+                            <button type="button" id="btnShowAll" class="show-all-btn btn-modern">
+                                <i class="fas fa-expand-arrows-alt mr-2"></i>Show All Records
+                            </button>
                         </div>
-                    }
+                        <div class="col">
+                            <nav aria-label="Page navigation">
+                                <ul class="pagination pagination-modern justify-content-end mb-0" id="clientPagination"></ul>
+                            </nav>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+</div>
 
-    <!-- ADD MODAL -->
-    <div class="modal fade" id="addModal" tabindex="-1" role="dialog">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header bg-success text-white">
-                    <h5 class="modal-title"><i class="fas fa-plus mr-2"></i>Add New Category</h5>
-                    <button type="button" class="close text-white" data-dismiss="modal">&times;</button>
-                </div>
+<!-- ADD MODAL -->
+<div class="modal fade" id="addModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title"><i class="fas fa-plus-circle mr-2"></i>Add New Category</h5>
+                <button type="button" class="close text-white" data-dismiss="modal">&times;</button>
+            </div>
+            <span class="text-danger" id="msgAddValidation" style="font-size:12px;"></span>
+            <!-- ADD MODAL BODY -->
+            <div class="modal-body">
                 <form id="addForm">
-                    <div class="modal-body">
-                        <div class="form-group">
-                            <label>Category Name <span class="text-danger">*</span></label>
-                            <input type="text" class="form-control" id="addCategoryName" required>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                        <button type="submit" class="btn btn-success" id="addBtn">Save</button>
+                    <div class="form-group">
+                        <label class="form-label">Category Name: <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control form-control-modern" id="addCategoryName"
+                               placeholder="Enter category name" />
                     </div>
                 </form>
             </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary btn-modern" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-warning-modern btn-modern" id="btnAddReset">
+                   Reset
+                </button>
+                <button type="button" class="btn btn-primary-modern btn-modern" id="btnAddSave">
+                    Save Category
+                </button>
+            </div>
         </div>
     </div>
+</div>
 
-    <!-- EDIT MODAL - FIXED! -->
-    <div class="modal fade" id="editModal" tabindex="-1" role="dialog">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header bg-primary text-white">
-                    <h5 class="modal-title"><i class="fas fa-edit mr-2"></i>Edit Category</h5>
-                    <button type="button" class="close text-white" data-dismiss="modal">&times;</button>
-                </div>
+<!-- EDIT MODAL -->
+<div class="modal fade" id="editModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title"><i class="fas fa-edit mr-2"></i>Edit Category</h5>
+                <button type="button" class="close text-white" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
                 <form id="editForm">
-                    <div class="modal-body">
-                        <input type="hidden" id="editCategoryId">
-                        <div class="form-group">
-                            <label>Category Name <span class="text-danger">*</span></label>
-                            <input type="text" class="form-control" id="editCategoryName" required>
-                        </div>
+                    <input type="hidden" id="editCategoryId">
+                    <!-- EDIT MODAL -->
+                    <div class="form-group">
+                        <label class="form-label">Category Name: <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control form-control-modern" id="editCategoryName"
+                               placeholder="Enter category name" />
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                        <button type="submit" class="btn btn-primary" id="editBtn">Update</button>
-                    </div>
+                    <span class="text-danger" id="msgEditValidation" style="font-size:12px;"></span>
                 </form>
             </div>
-        </div>
-    </div>
-
-    <!-- VIEW MODAL - FIXED! Shows REAL DATA -->
-    <div class="modal fade" id="viewModal" tabindex="-1" role="dialog">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header bg-info text-white">
-                    <h5 class="modal-title"><i class="fas fa-eye mr-2"></i>Category Details</h5>
-                    <button type="button" class="close text-white" data-dismiss="modal">&times;</button>
-                </div>
-                <div class="modal-body">
-                    <div class="row mb-3">
-                        <div class="col-4 font-weight-bold">Category Name:</div>
-                        <div class="col-8" id="viewCategoryName">Loading...</div>
-                    </div>
-                    <div class="row mb-3">
-                        <div class="col-4 font-weight-bold">Created By:</div>
-                        <div class="col-8" id="viewCreatedBy">Loading...</div>
-                    </div>
-                    <div class="row mb-3">
-                        <div class="col-4 font-weight-bold">Created Date:</div>
-                        <div class="col-8" id="viewCreatedDate">Loading...</div>
-                    </div>
-                    <div class="row mb-3">
-                        <div class="col-4 font-weight-bold">Updated By:</div>
-                        <div class="col-8" id="viewUpdatedBy">Loading...</div>
-                    </div>
-                    <div class="row">
-                        <div class="col-4 font-weight-bold">Updated Date:</div>
-                        <div class="col-8" id="viewUpdatedDate">Loading...</div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary btn-modern" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-warning-modern btn-modern" id="btnEditReset">Reset</button>
+                <button type="button" class="btn btn-primary-modern btn-modern" id="btnEditSave">
+                   Update Category
+                </button>
             </div>
         </div>
     </div>
+</div>
 
-    <!-- DELETE MODAL -->
-    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header bg-danger text-white">
-                    <h5 class="modal-title"><i class="fas fa-trash mr-2"></i>Confirm Delete</h5>
-                    <button type="button" class="close text-white" data-dismiss="modal">&times;</button>
+<!-- VIEW MODAL -->
+<div class="modal fade" id="viewModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title"><i class="fas fa-eye mr-2"></i>Category Details</h5>
+                <button type="button" class="close text-white" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body" style="padding:25px 30px;">
+                <div class="view-row">
+                    <span class="view-label">Category Name:</span>
+                    <span class="view-value" id="viewCategoryName"></span>
                 </div>
-                <div class="modal-body">
-                    <p>Are you sure you want to delete <strong id="deleteCategoryName"></strong>?</p>
-                    <input type="hidden" id="deleteCategoryId">
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn btn-danger" id="confirmDeleteBtn">Delete</button>
-                </div>
+                
+            </div>
+            <div class="modal-footer" style="padding:12px 30px;">
+                <button type="button" class="btn btn-secondary btn-modern" data-dismiss="modal">Close</button>
             </div>
         </div>
     </div>
+</div>
 
-    <!-- Scripts - LOADED IN CORRECT ORDER -->
-    <!-- SCRIPTS - ALL CDN -->
-    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+<!-- DELETE MODAL -->
+<div class="modal fade" id="deleteModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title"><i class="fas fa-exclamation-triangle mr-2"></i>Confirm Delete</h5>
+                <button type="button" class="close text-white" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" id="deleteCategoryId" />
+                <div class="text-center py-4">
+                    <div style="width:80px;height:80px;border-radius:50%;background:rgba(239,68,68,0.1);margin:0 auto 1.5rem;display:flex;align-items:center;justify-content:center;">
+                        <i class="fas fa-trash-alt" style="font-size:2.5rem;color:var(--danger);"></i>
+                    </div>
+                    <h5 class="mb-3" style="color:var(--dark);">Delete this category?</h5>
+                    <p class="mb-4" style="color:var(--gray);">This action cannot be undone. Category "<strong id="deleteCategoryName"></strong>" will be permanently deleted.</p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary btn-modern" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-danger-modern btn-modern" id="confirmDeleteBtn">
+                   Delete Category
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <!-- CDN - ALL DEPENDENCIES -->
-
-
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <script>
-        $(document).ready(function() {
-            console.log('🚀 ALL BUTTONS FIXED - Edit/View 100% WORKING!');
+        function noAccess(type) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Access Denied',
+                text: 'You do not have ' + type + ' permission for Expense Category module.',
+                confirmButtonColor: '#dc2626'
+            });
+        }
+        $(document).ready(function () {
+            console.log('✅ Expense Category Management Loaded!');
 
-            // Universal property getter - FIXES N/A issue
-            function getDataProperty(data, propName) {
-                if (!data) return null;
-                const props = [
-                    propName,
-                    propName.toLowerCase(),
-                    propName.charAt(0).toLowerCase() + propName.slice(1),
-                    propName.replace('_', '')
-                ];
-                for (let prop of props) {
-                    if (data[prop] !== undefined && data[prop] !== null) {
-                        return data[prop];
-                    }
-                }
+            let tableRows = [];
+
+            // ===== HELPERS =====
+            function getVal(data, prop) {
+                var keys = [prop, prop.toLowerCase(), prop.charAt(0).toLowerCase() + prop.slice(1), prop.replace('_', '')];
+                for (var k of keys) { if (data[k] !== undefined && data[k] !== null) return data[k]; }
                 return null;
             }
 
-            // Toast Alert
-            function showAlert(message, type = 'success') {
-                const alertHtml = `
-                    <div class="alert alert-${type === 'success' ? 'success' : 'danger'} alert-dismissible fade show position-fixed"
-                         style="top: 20px; right: 20px; z-index: 9999; min-width: 300px;">
-                        <i class="fas fa-${type === 'success' ? 'check-circle' : 'exclamation-circle'} mr-2"></i>
-                        ${message}
-                        <button type="button" class="close" data-dismiss="alert">&times;</button>
-                    </div>`;
-                $('body').append(alertHtml);
+            function formatDate(val) {
+                if (!val) return 'N/A';
+                try { return new Date(val).toLocaleString('en-IN'); } catch (e) { return val; }
             }
 
-            // 1. ADD ✅ WORKING
-            $('#addForm').on('submit', function(e) {
-                e.preventDefault();
-                const name = $('#addCategoryName').val().trim();
-                if (!name) {
-                    $('#addCategoryName').addClass('is-invalid').focus();
-                    return;
-                }
+            // ===== PAGINATION =====
+            function setupPagination() {
+                tableRows = $('#categoryTableBody tr').filter(function () { return $(this).find('td').length > 1; });
+                var rowsPerPage = 5, totalPages = Math.ceil(tableRows.length / rowsPerPage);
+                $('#clientPagination').empty();
+                if (tableRows.length === 0) return;
 
-                const $btn = $('#addBtn').prop('disabled', true).html('<i class="fas fa-spinner fa-spin"></i> Saving...');
+                $('#clientPagination').append('<li class="page-item" id="prevPage"><a class="page-link" href="#"><i class="fas fa-chevron-left"></i></a></li>');
+                for (var i = 1; i <= totalPages; i++) {
+                    $('#clientPagination').append('<li class="page-item' + (i === 1 ? ' active' : '') + '" data-page="' + i + '"><a class="page-link" href="#">' + i + '</a></li>');
+                }
+                $('#clientPagination').append('<li class="page-item" id="nextPage"><a class="page-link" href="#"><i class="fas fa-chevron-right"></i></a></li>');
+                showPage(1, rowsPerPage);
+            }
+
+            function showPage(page, rowsPerPage) {
+                rowsPerPage = rowsPerPage || 5;
+                tableRows.hide();
+                tableRows.slice((page - 1) * rowsPerPage, page * rowsPerPage).show();
+                $('#clientPagination .page-item[data-page]').removeClass('active');
+                $('#clientPagination .page-item[data-page="' + page + '"]').addClass('active');
+            }
+
+            function getCurrentPage() { return parseInt($('#clientPagination .page-item.active').data('page')) || 1; }
+            function getTotalPages()  { return $('#clientPagination .page-item[data-page]').length; }
+
+            $(document).on('click', '#clientPagination .page-item[data-page] a', function (e) {
+                e.preventDefault(); showPage($(this).closest('.page-item').data('page'));
+            });
+            $(document).on('click', '#prevPage a', function (e) {
+                e.preventDefault(); var c = getCurrentPage(); if (c > 1) showPage(c - 1);
+            });
+            $(document).on('click', '#nextPage a', function (e) {
+                e.preventDefault(); var c = getCurrentPage(); if (c < getTotalPages()) showPage(c + 1);
+            });
+
+            $('#btnShowAll').click(function () {
+                tableRows.show();
+                $('#clientPagination').empty().append('<li class="page-item disabled"><a class="page-link" href="#"><i class="fas fa-check mr-1"></i>Showing All ' + tableRows.length + ' Records</a></li>');
+            });
+
+            // ===== ADD =====
+            $('#btnAddSave').on('click', function () {
+                var name = $('#addCategoryName').val().trim();
+                if (!name) { $('#msgAddValidation').text('Please enter Category Name'); return; }
+                $('#msgAddValidation').text('');
+
                 $.post('@Url.Action("Save", "ExpenseCategory")', { Category_Name: name })
-                    .done(function(response) {
-                        console.log('ADD Response:', response);
-                        if (response.toLowerCase() === 'success') {
-                            showAlert('✅ Category added successfully!');
-                            $('#addModal').modal('hide');
-                            setTimeout(() => location.reload(), 1000);
-                        } else {
-                            showAlert('❌ ' + response);
-                        }
+                    .done(function (r) {
+                        if (r.toLowerCase() === 'success') {
+                            Swal.fire({ icon: 'success', title: 'Success!', text: 'Category added successfully!', confirmButtonColor: 'var(--primary)' })
+                                .then(function () { location.reload(); });
+                        } else { Swal.fire('Error!', r, 'error'); }
                     })
-                    .fail(function() {
-                        showAlert('❌ Failed to add category');
-                    })
-                    .always(function() {
-                        $btn.prop('disabled', false).html('Save Category');
-                    });
+                    .fail(function () { Swal.fire('Error!', 'Failed to add category', 'error'); });
             });
 
-        // EDIT LOAD (Working - keep your fixed version)
-        $(document).on('click', '.edit-btn', function() {
-            const id = $(this).data('id');
-            $.get('@Url.Action("GetExpenseCategory", "ExpenseCategory")', { category_ID: id })
-                .done(function(data) {
-                    const categoryId = data.category_ID || data.Category_ID;
-                    const categoryName = data.category_Name || data.Category_Name;
+            $('#btnAddReset').click(function () { $('#addCategoryName').val(''); $('#msgAddValidation').text(''); });
 
-                    $('#editCategoryId').val(categoryId);
-                    $('#editCategoryName').val(categoryName);
-                    $('#editModal').modal('show');
-                });
-        });
-
-        // 🔥 EDIT SUBMIT - 100% WORKING
-        $('#editForm').on('submit', function(e) {
-            e.preventDefault();
-
-            const id = $('#editCategoryId').val();
-            const name = $('#editCategoryName').val().trim();
-
-            console.log('Submitting:', id, name);
-
-            $('#editBtn').prop('disabled', true).html('Saving...');
-
-            $.ajax({
-                url: '@Url.Action("Edit", "ExpenseCategory")',
-                type: 'POST',
-                data: { Category_ID: id, Category_Name: name },
-                success: function(response) {
-                    console.log('SUCCESS:', response);
-
-                    // 🔥 ANY response = success (since DB works)
-                    showAlert('✅ Category updated successfully!');
-                    $('#editModal').modal('hide');
-
-                    // 🔥 REAL-TIME TABLE UPDATE
-                    const $row = $(`button[data-id="${id}"]`).closest('tr');
-                    $row.find('td:eq(0) strong').text(name);
-                    $row.find('td:eq(3)').text('@User.Identity.Name');
-                    $row.find('td:eq(4)').text(new Date().toLocaleString('en-IN'));
-                },
-                error: function() {
-                    showAlert('❌ Update failed');
-                },
-                complete: function() {
-                    $('#editBtn').prop('disabled', false).html('Update');
-                }
-            });
-        });
-            // 4. VIEW BUTTON - FIXED ✅ Shows REAL DATA (NOT N/A!)
-            $(document).on('click', '.view-btn', function() {
-                const id = parseInt($(this).data('id'));
-                console.log('👁️ VIEW CLICKED - ID:', id);
-
-                // Show loading
-                $(this).addClass('btn-loading').html('<i class="fas fa-spinner fa-spin"></i>');
-
+            // ===== EDIT LOAD =====
+            $(document).on('click', '.edit-btn', function () {
+                var id = $(this).data('id');
                 $.get('@Url.Action("GetExpenseCategory", "ExpenseCategory")', { category_ID: id })
-                    .done(function(data) {
-                        console.log('👁️ VIEW DATA LOADED:', data);
-
-                        // ✅ REAL DATA - No more N/A!
-                        $('#viewCategoryName').text(getDataProperty(data, 'Category_Name') || 'N/A');
-                        $('#viewCreatedBy').text(getDataProperty(data, 'Created_By') || 'N/A');
-
-                        const createdDate = getDataProperty(data, 'Created_Date');
-                        $('#viewCreatedDate').text(createdDate ?
-                            (typeof createdDate === 'string' ? new Date(createdDate).toLocaleString('en-IN') : createdDate.toLocaleString('en-IN')) :
-                            'N/A');
-
-                        $('#viewUpdatedBy').text(getDataProperty(data, 'Updated_By') || 'N/A');
-
-                        const updatedDate = getDataProperty(data, 'Updated_Date');
-                        $('#viewUpdatedDate').text(updatedDate ?
-                            (typeof updatedDate === 'string' ? new Date(updatedDate).toLocaleString('en-IN') : updatedDate.toLocaleString('en-IN')) :
-                            'N/A');
-
-                        $('#viewModal').modal('show'); // ✅ POPUP WORKS!
-                        console.log('✅ VIEW MODAL SHOWN');
+                    .done(function (data) {
+                        $('#editCategoryId').val(getVal(data, 'Category_ID'));
+                        $('#editCategoryName').val(getVal(data, 'Category_Name'));
+                        $('#editModal').modal('show');
                     })
-                    .fail(function(xhr) {
-                        console.error('❌ VIEW FAILED:', xhr);
-                        showAlert('❌ Failed to load details');
-                    })
-                    .always(function() {
-                        $('.view-btn').removeClass('btn-loading').html('<i class="fas fa-eye"></i>');
-                    });
+                    .fail(function () { Swal.fire('Error!', 'Error loading category data', 'error'); });
             });
 
-            // 5. DELETE ✅ WORKING
-            $(document).on('click', '.delete-btn', function() {
-                const id = $(this).data('id');
-                const name = $(this).closest('tr').find('td:eq(0) strong').text().trim();
+            // ===== EDIT SAVE =====
+            $('#btnEditSave').on('click', function () {
+                var name = $('#editCategoryName').val().trim();
+                if (!name) { $('#msgEditValidation').text('Please enter Category Name'); return; }
+                $('#msgEditValidation').text('');
+                var id = $('#editCategoryId').val();
 
+                $.ajax({
+                    type: 'POST', url: '@Url.Action("Edit", "ExpenseCategory")',
+                    data: { Category_ID: id, Category_Name: name },
+                    success: function (r) {
+                        Swal.fire({ icon: 'success', title: 'Updated!', text: 'Category updated successfully!', confirmButtonColor: 'var(--primary)' })
+                            .then(function () { location.reload(); });
+                    },
+                    error: function () { Swal.fire('Error!', 'Update failed', 'error'); }
+                });
+            });
+
+            $('#btnEditReset').click(function () { $('#editCategoryName').val(''); $('#msgEditValidation').text(''); });
+
+            // ===== VIEW =====
+            $(document).on('click', '.view-btn', function () {
+                var id = $(this).data('id');
+                $.get('@Url.Action("GetExpenseCategory", "ExpenseCategory")', { category_ID: id })
+                    .done(function (data) {
+                        $('#viewCategoryName').text(getVal(data, 'Category_Name') || 'N/A');
+                        $('#viewCategoryId').text(getVal(data, 'Category_ID') || 'N/A');
+                        $('#viewCreatedBy').text(getVal(data, 'Created_By') || 'N/A');
+                        $('#viewCreatedDate').text(formatDate(getVal(data, 'Created_Date')));
+                        $('#viewUpdatedBy').text(getVal(data, 'Updated_By') || 'N/A');
+                        $('#viewUpdatedDate').text(formatDate(getVal(data, 'Updated_Date')));
+                        $('#viewModal').modal('show');
+                    })
+                    .fail(function () { Swal.fire('Error!', 'Error loading details', 'error'); });
+            });
+
+            // ===== DELETE =====
+            $(document).on('click', '.delete-btn', function () {
+                var id   = $(this).data('id');
+                var name = $(this).closest('tr').find('td:first strong').text().trim();
                 $('#deleteCategoryId').val(id);
                 $('#deleteCategoryName').text(name);
                 $('#deleteModal').modal('show');
             });
 
-            // 6. CONFIRM DELETE ✅ WORKING
-            $('#confirmDeleteBtn').click(function() {
-                const id = parseInt($('#deleteCategoryId').val());
-                const $btn = $(this).prop('disabled', true).html('<i class="fas fa-spinner fa-spin"></i> Deleting...');
-
+            $('#confirmDeleteBtn').on('click', function () {
+                var id = $('#deleteCategoryId').val();
                 $.get('@Url.Action("DeleteExpenseCategory", "ExpenseCategory")', { category_ID: id })
-                    .done(function(response) {
-                        console.log('🗑️ DELETE Response:', response);
-                        if (response === '1') {
-                            showAlert('✅ Category deleted successfully!');
-                            $('#deleteModal').modal('hide');
-                            setTimeout(() => location.reload(), 1000);
-                        } else {
-                            showAlert('❌ Delete failed!');
-                        }
+                    .done(function (r) {
+                        r = r.toString().trim().replace(/"/g, '');
+                        if (r === '1' || r.toLowerCase() === 'success') {
+                            Swal.fire({ icon: 'success', title: 'Deleted!', text: 'Category deleted successfully!', confirmButtonColor: 'var(--primary)' })
+                                .then(function () { location.reload(); });
+                        } else { Swal.fire('Error!', 'Delete failed: ' + r, 'error'); }
                     })
-                    .fail(function() {
-                        showAlert('❌ Delete failed');
-                    })
-                    .always(function() {
-                        $btn.prop('disabled', false).html('Delete Category');
-                    });
+                    .fail(function () { Swal.fire('Error!', 'Error deleting category', 'error'); });
             });
 
-            // 7. RESET MODALS & FORMS
-            $('.modal').on('hidden.bs.modal', function() {
-                $(this).find('form')[0]?.reset();
-                $(this).find('.is-invalid').removeClass('is-invalid');
-                $(this).find('input[type="hidden"]').val('');
-                // Reset buttons
-                $('#addBtn, #editBtn, #confirmDeleteBtn').prop('disabled', false);
+            // ===== MODAL RESET ON CLOSE =====
+            $('#addModal, #editModal, #deleteModal, #viewModal').on('hidden.bs.modal', function () {
+                $(this).find('.form-control-modern').val('');
+                $('#msgAddValidation, #msgEditValidation').text('');
+                $('#deleteCategoryId, #editCategoryId').val('');
+                $('#deleteCategoryName').text('');
             });
 
-            // 8. Clear validation on input
-            $(document).on('input', '.form-control', function() {
-                $(this).removeClass('is-invalid');
+            // ===== REAL-TIME VALIDATION =====
+            $('#addCategoryName, #editCategoryName').on('input', function () {
+                var msgId = $(this).attr('id') === 'addCategoryName' ? '#msgAddValidation' : '#msgEditValidation';
+                if ($(this).val().trim() !== '') { $(msgId).text(''); }
             });
 
-            console.log('✅ ALL BUTTONS READY - Test Edit/View buttons now!');
+            setupPagination();
+            console.log('✅ All features initialized!');
         });
     </script>
-    <script>
-        (function () {
-
-            $(document).ready(function () {
-
-                const tableBody = $('#categoryTable');
-
-                // If ID not found, exit safely (won't break your page)
-                if (tableBody.length === 0) return;
-
-                let rows = tableBody.find('tr');
-                const rowsPerPage = 5;
-                let totalRows = rows.length;
-                let totalPages = Math.ceil(totalRows / rowsPerPage);
-
-                // Create UI only once
-                if ($('#customPaginationWrapper').length === 0) {
-
-                    const html = `
-                        <div id="customPaginationWrapper" class="d-flex justify-content-between align-items-center p-3">
-
-                            <button class="btn btn-sm btn-secondary" id="jsShowAllBtn">
-                                Show All
-                            </button>
-
-                            <ul class="pagination pagination-sm mb-0" id="jsPagination"></ul>
-
-                        </div>
-                    `;
-
-                    $('.card-body').append(html);
-                }
-
-                function showPage(page) {
-                    rows.hide();
-
-                    let start = (page - 1) * rowsPerPage;
-                    let end = start + rowsPerPage;
-
-                    rows.slice(start, end).show();
-                }
-
-                function buildPagination() {
-                    const pagination = $('#jsPagination');
-                    pagination.empty();
-
-                    for (let i = 1; i <= totalPages; i++) {
-                        pagination.append(`
-                            <li class="page-item">
-                                <a href="#" class="page-link" data-page="${i}">${i}</a>
-                            </li>
-                        `);
-                    }
-                }
-
-                // INIT
-                showPage(1);
-                buildPagination();
-
-                // PAGE CLICK
-                $(document).on('click', '#jsPagination a', function (e) {
-                    e.preventDefault();
-
-                    let page = $(this).data('page');
-                    showPage(page);
-
-                    $('#jsPagination .page-item').removeClass('active');
-                    $(this).parent().addClass('active');
-                });
-
-                // SHOW ALL
-                $(document).on('click', '#jsShowAllBtn', function () {
-                    rows.show();
-                    $('#jsPagination .page-item').removeClass('active');
-                });
-
-            });
-
-        })();
-    </script>
-
-</body>
-</html>
+}

@@ -21,6 +21,7 @@ namespace A2R_Project.Controllers
         [HttpGet]
         public async Task<IActionResult> List(int page = 1, int pageSize = 10)
         {
+            await SetPagePermissions("UserManagement");
             var models = new Logins();
             var allAdminLogins = await _loginRepository.GetAllAdminLogin();
             var totalCount = allAdminLogins.Count;

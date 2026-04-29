@@ -1,8 +1,32 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
 <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>A2R</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="~/image/a2r software.png" type="image/png" />
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="~/cotains/pluto-1.0.0/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/cotains/pluto-1.0.0/style.css" />
+    <link rel="stylesheet" href="~/cotains/pluto-1.0.0/css/responsive.css" />
+    <link rel="stylesheet" href="~/cotains/pluto-1.0.0/css/colors.css" />
+    <link rel="stylesheet" href="~/cotains/pluto-1.0.0/css/bootstrap-select.css" />
+    <link rel="stylesheet" href="~/cotains/pluto-1.0.0/css/perfect-scrollbar.css" />
+    <link rel="stylesheet" href="~/cotains/pluto-1.0.0/css/custom.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@@mdi/font@6.5.95/css/materialdesignicons.min.css" />
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+
     <style>
-        /* ================= LAYOUT FIX ================= */
+        /* ================= LAYOUT ================= */
         html, body {
             height: 100%;
         }
@@ -17,126 +41,66 @@
             flex: 1;
             display: flex;
             flex-direction: column;
+            min-height: 100vh;
         }
 
-        /* ================= ADMIN FOOTER ================= */
+        /* ================= MAIN CONTENT ================= */
+        .main-content {
+            flex: 1;
+            padding: 3px;
+            margin-top: 3px;
+        }
+
+        /* ================= FOOTER ================= */
         .footer-wrapper {
             margin-top: auto;
         }
 
         .admin-footer {
-            background: #0f172a; /* dark professional */
-            color: #e2e8f0;
+            background: #ffffff;
+            color: #111827;
             text-align: center;
-            padding: 12px 10px;
-            font-size: 15px;
-            font-weight: 500;
-            border-top: 2px solid #4f46e5;
+            padding: 14px 10px;
+            font-size: 16px;
+            font-weight: 700;
             letter-spacing: 0.5px;
+            border-top: 2px solid #e5e7eb;
+            box-shadow: 0 -2px 8px rgba(0,0,0,0.08);
         }
 
-            /* highlight institute name */
             .admin-footer .brand {
-                color: #38bdf8;
-                font-weight: 600;
+                color: #000000;
+                font-weight: 800;
             }
 
-            /* subtle hover */
             .admin-footer:hover {
-                background: #1e293b;
-                transition: 0.3s;
+                background: #f9fafb;
+                transition: 0.3s ease;
             }
-    </style>
-    <!-- basic -->
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <!-- mobile metas -->
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="viewport" content="initial-scale=1, maximum-scale=1">
-    <!-- site metas -->
-    <title>A2R</title>
-    <meta name="keywords" content="">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <!-- site icon -->
-    <link rel="icon" href="~/image/a2r software.png" type="image/png" />
-    <!-- bootstrap css -->
-    <link rel="stylesheet" href="~/cotains/pluto-1.0.0/css/bootstrap.min.css" />
-    <!-- site css -->
 
-
-    <link rel="stylesheet" href="~/cotains/pluto-1.0.0/style.css" />
-    <!-- responsive css -->
-    <link rel="stylesheet" href="~/cotains/pluto-1.0.0/css/responsive.css" />
-    <!-- color css -->
-    <link rel="stylesheet" href="~/cotains/pluto-1.0.0/css/colors.css" />
-    <!-- select bootstrap -->
-    <link rel="stylesheet" href="~/cotains/pluto-1.0.0/css/bootstrap-select.css" />
-    <!-- scrollbar css -->
-    <link rel="stylesheet" href="~/cotains/pluto-1.0.0/css/perfect-scrollbar.css" />
-    <!-- custom css -->
-    <link rel="stylesheet" href="~/cotains/pluto-1.0.0/css/custom.css" />
-
-    <!-- Font Awesome 6 - Required for all icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-
-    <!--[if lt IE 9]>
-    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css" rel="stylesheet" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@@mdi/font@6.5.95/css/materialdesignicons.min.css">
-    <style>
+        /* ================= LOGO ================= */
         .logo_section img.logo_icon {
             margin: 0;
             text-align: center;
-            padding: 2px 2px;
+            padding: 2px;
             height: 80px;
             width: 80px;
         }
-        /* ================= ADMIN FOOTER CLEAN ================= */
-        .admin-footer {
-            background: linear-gradient(135deg, #1e293b, #0f172a);
-            color: #f1f5f9;
-            text-align: center;
-            padding: 14px 10px;
-            font-size: 16px; /* 🔥 slightly bigger */
-            font-weight: 600;
-            letter-spacing: 0.6px;
-            border-top: 2px solid #6366f1;
-            box-shadow: 0 -3px 10px rgba(0,0,0,0.15);
-        }
 
-            /* highlight institute name */
-            .admin-footer .brand {
-                color: #38bdf8;
-                font-weight: 700;
-            }
-
-            /* smooth hover */
-            .admin-footer:hover {
-                background: linear-gradient(135deg, #334155, #1e293b);
-                transition: 0.3s ease;
-            }
-        /* ================= SIDEBAR COLLAPSE FIX ================= */
-
-        /* Default sidebar width */
+        /* ================= SIDEBAR ================= */
         #sidebar {
-            width: 250px;
-            transition: all 0.3s ease;
+            width: 260px;
+            transition: width 0.3s ease;
         }
 
-            /* Collapsed sidebar */
             #sidebar.active {
                 width: 80px;
             }
 
-                /* Hide text when collapsed */
                 #sidebar.active .components li a span {
                     display: none;
                 }
 
-                /* Center icons when collapsed */
                 #sidebar.active .components li a {
                     display: flex;
                     justify-content: center;
@@ -144,105 +108,231 @@
                     padding: 15px 0;
                 }
 
-            /* Icon size improve */
-            #sidebar .components li a i {
-                font-size: 18px;
-                min-width: 25px;
-                text-align: center;
-            }
+                #sidebar.active .collapse {
+                    display: none !important;
+                }
 
-            /* Fix submenu hiding in collapsed mode */
-            #sidebar.active .collapse {
-                display: none !important;
-            }
+                #sidebar.active .components li:hover .collapse {
+                    display: block !important;
+                    position: absolute;
+                    left: 80px;
+                    background: #1e293b;
+                    min-width: 180px;
+                    z-index: 999;
+                }
 
-            /* Optional: hover show submenu (advanced UX) */
-            #sidebar.active .components li:hover .collapse {
-                display: block !important;
-                position: absolute;
-                left: 80px;
-                background: #1e293b;
-                min-width: 180px;
-                z-index: 999;
-            }
-
-            /* Fix dashboard icon alignment */
             #sidebar .components li a {
                 display: flex;
                 align-items: center;
                 gap: 12px;
             }
 
-                /* Active menu highlight */
+                #sidebar .components li a span {
+                    white-space: nowrap;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    font-size: 15px;
+                    font-weight: 600;
+                    letter-spacing: 0.3px;
+                }
+
                 #sidebar .components li a:hover {
                     background: rgba(255,255,255,0.1);
                     border-radius: 8px;
                 }
-                /* Prevent menu text from breaking into 2 lines */
-                #sidebar .components li a span {
-                    white-space: nowrap; /* 🔥 key fix */
-                    overflow: hidden;
-                    text-overflow: ellipsis; /* optional: adds ... if too long */
+
+                #sidebar .components li a i {
+                    font-size: 18px;
+                    min-width: 30px;
+                    text-align: center;
+                    border-radius: 8px;
+                    padding: 8px;
+                    transition: all 0.3s ease;
                 }
 
-            /* Ensure proper alignment */
-            #sidebar .components li a {
-                display: flex;
-                align-items: center;
-                gap: 12px;
-            }
+                #sidebar .components li a:hover i {
+                    transform: scale(1.1);
+                }
 
-        /* Optional: slightly increase sidebar width for better fit */
-        #sidebar {
-            width: 260px; /* was 250px */
+        #dynamic-sidebar ul li {
+            margin-bottom: 8px;
+            animation: slideIn 0.2s ease forwards;
+            opacity: 0;
+            transform: translateY(-10px);
         }
 
-        .admin-footer {
-            background: #ffffff; /* white bg */
-            color: #111827; /* strong black text */
-            text-align: center;
-            padding: 14px 10px;
-            font-size: 16px;
-            font-weight: 700; /* bold */
-            letter-spacing: 0.5px;
-            border-top: 2px solid #e5e7eb;
-            box-shadow: 0 -2px 8px rgba(0,0,0,0.08);
+            #dynamic-sidebar ul li:nth-child(1) {
+                animation-delay: 0ms;
+            }
+
+            #dynamic-sidebar ul li:nth-child(2) {
+                animation-delay: 30ms;
+            }
+
+            #dynamic-sidebar ul li:nth-child(3) {
+                animation-delay: 60ms;
+            }
+
+            #dynamic-sidebar ul li:nth-child(4) {
+                animation-delay: 90ms;
+            }
+
+            #dynamic-sidebar ul li:nth-child(5) {
+                animation-delay: 120ms;
+            }
+
+        @@keyframes slideIn {
+            to
+
+        {
+            opacity: 1;
+            transform: translateY(0);
         }
 
-            /* brand highlight */
-            .admin-footer .brand {
-                color: #000000;
-                font-weight: 800;
+        }
+
+        /* ================= SPINNER ================= */
+        #loading-section {
+            display: block !important;
+            min-height: 100px;
+        }
+
+        .spinner-wrapper {
+            display: flex !important;
+            flex-direction: column !important;
+            align-items: center !important;
+            gap: 12px !important;
+        }
+
+        .colorful-spinner {
+            width: 48px !important;
+            height: 48px !important;
+            border: 4px solid #f8f9fa !important;
+            border-top: 4px solid #667eea !important;
+            border-radius: 50% !important;
+            animation: spin 0.8s linear infinite, colorShift 1.5s ease-in-out infinite !important;
+            box-shadow: 0 4px 20px rgba(102,126,234,0.4) !important;
+        }
+
+        .spinner-text {
+            color: #6c757d !important;
+            font-weight: 500 !important;
+            font-size: 12px !important;
+        }
+
+        @@keyframes spin {
+            0%
+
+        {
+            transform: rotate(0deg);
+        }
+
+        100% {
+            transform: rotate(360deg);
+        }
+
+        }
+
+        @@keyframes colorShift {
+            0%, 100%
+
+        {
+            border-top-color: #667eea;
+        }
+
+        20% {
+            border-top-color: #764ba2;
+        }
+
+        40% {
+            border-top-color: #f093fb;
+        }
+
+        60% {
+            border-top-color: #f5576c;
+        }
+
+        80% {
+            border-top-color: #4facfe;
+        }
+
+        }
+
+        /* ================= MEDIA ================= */
+        @@media (min-width: 1200px) {
+            #sidebar.active .logo_section
+
+        {
+            padding: 0;
+            margin-bottom: 10px;
+            background-color: black !important;
+            width: 100%;
+        }
+
+        }
+
+        #logoutForm button.dropdown-item,
+        #logoutForm button.dropdown-item span,
+        #logoutForm button.dropdown-item i {
+            color: #000000 !important;
+            background: none !important;
+        }
+
+            #logoutForm button.dropdown-item:hover,
+            #logoutForm button.dropdown-item:hover span,
+            #logoutForm button.dropdown-item:hover i {
+                color: #000000 !important;
+                background: #f8f9fa !important;
             }
 
-            /* hover (clean subtle) */
-            .admin-footer:hover {
-                background: #f9fafb;
-                transition: 0.3s ease;
+            #logoutForm button.dropdown-item,
+            #logoutForm button.dropdown-item span,
+            #logoutForm button.dropdown-item i {
+                color: #000000 !important;
+                background: #ffffff !important;
+                font-size: 15px !important;
+                font-weight: 600 !important;
             }
 
-    </style>
-
-
-
+                #logoutForm button.dropdown-item:hover,
+                #logoutForm button.dropdown-item:hover span,
+                #logoutForm button.dropdown-item:hover i {
+                    color: #ffffff !important;
+                    background: #000000 !important;
+                }
+        
+            </style>
 </head>
+
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger alert-dismissible fade show" role="alert"
+         style="position:fixed;top:70px;right:20px;z-index:9999;max-width:400px;">
+        @TempData["Error"]
+        <button type="button" class="close" data-dismiss="alert">×</button>
+    </div>
+}
+
 <body class="dashboard dashboard_1">
     <div class="full_container">
         <div class="inner_container">
-            <!-- Sidebar  -->
+
+            <!-- Sidebar -->
             <nav id="sidebar">
                 <div class="sidebar_blog_1">
                     <div class="sidebar-header">
                         <div class="logo_section">
-
-
-                            <a href="@Url.Action("Index", "Dashboard")"><img class="logo_icon img-responsive" src="~/image/a2rlogoicon.png" alt="#" /></a>
+                            <a href="@Url.Action("Index", "Dashboard")">
+                                <img class="logo_icon img-responsive" src="~/image/hrms.png" alt="#" />
+                            </a>
                         </div>
                     </div>
                     <div class="sidebar_user_info">
                         <div class="icon_setting"></div>
                         <div class="user_profle_side">
-                            <div class="user_img"><img class="img-responsive" src="~/image/user.png" alt="#" /></div>
+                            <div class="user_img">
+                                <img class="img-responsive" src="~/image/user.png" alt="#" />
+                            </div>
                             <div class="user_info">
                                 <h6>@ViewBag.Username</h6>
                                 <p><span class="online_animation"></span> Online</p>
@@ -251,109 +341,43 @@
                     </div>
                     <div class="sidebar_blog_2">
                         <h4>General</h4>
-                        <ul class="list-unstyled components">
-
-                            <!-- Dashboard 🔥 -->
-                            <li>
-                                <a href="@Url.Action("Index", "Dashboard")">
-                                    <i class="fas fa-tachometer-alt fa-fw text-primary"></i>
-                                    <span>Dashboard</span>
-                                </a>
-                            </li>
-
-                            <!-- Organization 🔥 -->
-                            <li>
-                                <a href="#org" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
-                                    <i class="fas fa-building-columns fa-fw text-info"></i>
-                                    <span>Organization</span>
-                                </a>
-                                <ul class="collapse list-unstyled" id="org">
-                                    <li><a href="@Url.Action("List", "Country")"><i class="fas fa-globe fa-fw text-success"></i> Country</a></li>
-                                    <li><a href="@Url.Action("List", "State")"><i class="fas fa-map-marker-alt fa-fw text-warning"></i> State</a></li>
-                                    <li><a href="@Url.Action("List", "Company")"><i class="fas fa-industry fa-fw text-secondary"></i> Company</a></li>
-                                    <li><a href="@Url.Action("List", "Branch")"><i class="fas fa-code-branch fa-fw text-purple"></i> Branch</a></li>
-                                    <li><a href="@Url.Action("List", "Course")"><i class="fas fa-graduation-cap fa-fw text-danger"></i> Course</a></li>
-                                </ul>
-                            </li>
-
-                            <!-- Account Management 🔥 -->
-                            <li>
-                                <a href="#account" data-toggle="collapse" class="dropdown-toggle">
-                                    <i class="fas fa-wallet fa-fw text-warning"></i>
-                                    <span>Account Management</span>
-                                </a>
-                                <ul class="collapse list-unstyled" id="account">
-                                    <li><a href="@Url.Action("List", "ExpenseCategory")"><i class="fas fa-tags fa-fw text-info"></i> Expense Category</a></li>
-                                    <li><a href="@Url.Action("List", "Expense")"><i class="fas fa-receipt fa-fw text-success"></i> Expense</a></li>
-                                    <li><a href="@Url.Action("List", "ExpenseReport")"><i class="fas fa-chart-line fa-fw text-primary"></i> Reports</a></li>
-                                </ul>
-                            </li>
-
-                            <!-- Student Management 🔥 -->
-                            <li>
-                                <a href="#student" data-toggle="collapse" class="dropdown-toggle">
-                                    <i class="fas fa-users fa-fw text-success"></i>
-                                    <span>Student Management</span>
-                                </a>
-                                <ul class="collapse list-unstyled" id="student">
-                                    <li><a href="@Url.Action("List", "StudentInquiry")"><i class="fas fa-question-circle fa-fw text-info"></i> Inquiry Form</a></li>
-                                    <li><a href="@Url.Action("List", "StudentsList")"><i class="fas fa-list fa-fw text-secondary"></i> Inquiry List</a></li>
-                                    <li><a href="@Url.Action("List", "Admission")"><i class="fas fa-clipboard-check fa-fw text-success"></i> Admission List</a></li>
-                                </ul>
-                            </li>
-
-                            <!-- Fees Collection 🔥 -->
-                            <li>
-                                <a href="@Url.Action("List", "FeesCollection")">
-                                    <i class="fas fa-money-bill-wave fa-fw text-success"></i>
-                                    <span>Fees Collection</span>
-                                </a>
-                            </li>
-
-                         
-                            <li>
-                                <a href="@Url.Action("List", "UserManagement")">
-                                    <i class="fas fa-user-shield fa-fw text-danger"></i>
-                                    <span>Users</span>
-                                </a>
-                            </li>
-
-                            <!-- Roles 🔥 -->
-                            <li>
-                                <a href="#roles" data-toggle="collapse" class="dropdown-toggle">
-                                    <i class="fas fa-key fa-fw text-warning"></i>
-                                    <span>Roles</span>
-                                </a>
-                                <ul class="collapse list-unstyled" id="roles">
-                                    <li><a href="@Url.Action("List", "AccessControl")"><i class="fas fa-lock-open fa-fw text-primary"></i> Access</a></li>
-                                    <li><a href="@Url.Action("List", "Role")"><i class="fas fa-user-tag fa-fw text-info"></i> Role Type</a></li>
-                                </ul>
-                            </li>
-
-                        </ul>
+                        <div id="dynamic-sidebar">
+                            <ul class="list-unstyled components"></ul>
+                        </div>
                     </div>
+                </div>
             </nav>
             <!-- end sidebar -->
-            <!-- right content -->
+            <!-- Right Content -->
             <div id="content">
-                <!-- topbar -->
+                <!-- Topbar -->
                 <div class="topbar">
                     <nav class="navbar navbar-expand-lg navbar-light">
                         <div class="full">
-                            <button type="button" id="sidebarCollapse" class="sidebar_toggle"><i class="fa fa-bars"></i></button>
+                            <button type="button" id="sidebarCollapse" class="sidebar_toggle">
+                                <i class="fa fa-bars"></i>
+                            </button>
                             <div class="logo_section">
-
-                                <a href="@Url.Action("Index", "Dashboard")"><img class="img-responsive" src="~/image/ar.png" alt="#" /></a>
+                                <a href="@Url.Action("Index", "Dashboard")">
+                                    <img class="img-responsive" src="~/image/ar.png" alt="#" />
+                                </a>
                             </div>
                             <div class="right_topbar">
                                 <div class="icon_info">
-
                                     <ul class="user_profile_dd">
                                         <li>
-                                            <a class="dropdown-toggle" data-toggle="dropdown"><img class="img-responsive rounded-circle" src="~/image/user.png" alt="#" /><span class="name_user">@ViewBag.Username</span></a>
+                                            
+                                            <a class="dropdown-toggle" data-toggle="dropdown">
+                                                <img class="img-responsive rounded-circle" src="~/image/user.png" alt="#" />
+                                                <span class="name_user">@ViewBag.Username</span>
+                                            </a>
                                             <div class="dropdown-menu">
-                                       
-                                                <a class="dropdown-item" href="@Url.Action("Login", "AdminLogin")"><span>Log Out</span> <i class="fa fa-sign-out"></i></a>
+                                                <form id="logoutForm" method="post" action="/AdminLogin/Logout">
+                                                    @Html.AntiForgeryToken()
+                                                    <button type="submit" class="dropdown-item" style="background:none; border:none; width:100%; text-align:left; cursor:pointer;">
+                                                        <span>Log Out</span> <i class="fa fa-sign-out"></i>
+                                                    </button>
+                                                </form>
                                             </div>
                                         </li>
                                     </ul>
@@ -362,127 +386,255 @@
                         </div>
                     </nav>
                 </div>
-                <!-- end topbar -->
-                <!-- dashboard inner -->
-                @RenderBody()
-                <!-- footer -->
-                <!-- footer -->
+
+                <div class="main-content">
+                    @RenderBody()
+                </div>
+
                 <div class="container-fluid footer-wrapper">
                     <footer class="admin-footer">
                         <p>
                             © <span id="year"></span>
                             <span class="brand">A2R Software Consulting Private Limited. All rights reserved.</span>
-
                         </p>
                     </footer>
                 </div>
-
-                <!-- end dashboard inner -->
             </div>
+            <!-- end right content -->
+
         </div>
+    </div>
 
-        <!-- jQuery -->
-        <script src="~/cotains/pluto-1.0.0/js/jquery.min.js"></script>
-        <script src="~/cotains/pluto-1.0.0/js/popper.min.js"></script>
-        <script src="~/cotains/pluto-1.0.0/js/bootstrap.min.js"></script>
-        <!-- wow animation -->
-        <script src="~/cotains/pluto-1.0.0/js/animate.js"></script>
-        <!-- select country -->
-        <script src="~/cotains/pluto-1.0.0/js/bootstrap-select.js"></script>
-        <!-- owl carousel -->
-        <script src="~/cotains/pluto-1.0.0/js/owl.carousel.js"></script>
-        <!-- chart js -->
-        <script src="~/cotains/pluto-1.0.0/js/Chart.min.js"></script>
-        <script src="~/cotains/pluto-1.0.0/js/Chart.bundle.min.js"></script>
-        <script src="~/cotains/pluto-1.0.0/js/utils.js"></script>
-        <script src="~/cotains/pluto-1.0.0/js/analyser.js"></script>
-        <!-- nice scrollbar -->
-        <script src="~/cotains/pluto-1.0.0/js/perfect-scrollbar.min.js"></script>
-        <script>
-            var ps = new PerfectScrollbar('#sidebar');
-        </script>
-        <!-- custom js -->
-        <script src="~/cotains/pluto-1.0.0/js/custom.js"></script>
-        <script src="~/cotains/pluto-1.0.0/js/chart_custom_style1.js"></script>
-       <script>
-    $(document).ready(function() {
-        console.log('🔥 DROPDOWN FIX LOADED');
 
-        // 1. SIDEBAR COLLAPSE
-        $('#sidebarCollapse').off('click').on('click', function() {
-            $('#sidebar').toggleClass('active');
-        });
+    <!-- jQuery -->
+    <script src="~/cotains/pluto-1.0.0/js/jquery.min.js"></script>
+    <script src="~/cotains/pluto-1.0.0/js/popper.min.js"></script>
+    <script src="~/cotains/pluto-1.0.0/js/bootstrap.min.js"></script>
+    <!-- wow animation -->
+    <script src="~/cotains/pluto-1.0.0/js/animate.js"></script>
+    <!-- select country -->
+    <script src="~/cotains/pluto-1.0.0/js/bootstrap-select.js"></script>
+    <!-- owl carousel -->
+    <script src="~/cotains/pluto-1.0.0/js/owl.carousel.js"></script>
+    <!-- chart js -->
+    <script src="~/cotains/pluto-1.0.0/js/Chart.min.js"></script>
+    <script src="~/cotains/pluto-1.0.0/js/Chart.bundle.min.js"></script>
+    <script src="~/cotains/pluto-1.0.0/js/utils.js"></script>
+    <script src="~/cotains/pluto-1.0.0/js/analyser.js"></script>
+    <!-- nice scrollbar -->
+    <script src="~/cotains/pluto-1.0.0/js/perfect-scrollbar.min.js"></script>
+    <script>
+        var ps = new PerfectScrollbar('#sidebar');
+    </script>
+    <!-- custom js -->
+    <script src="~/cotains/pluto-1.0.0/js/custom.js"></script>
+    <script src="~/cotains/pluto-1.0.0/js/chart_custom_style1.js"></script>
+  
+   
+    <script>
+        $(document).ready(function () {
 
-        // 2. USER PROFILE DROPDOWN (TOPBAR)
-        $('.user_profile_dd > li > a.dropdown-toggle').off('click').on('click', function(e) {
-            e.preventDefault();
-            $(this).next('.dropdown-menu').toggleClass('show');
-            $(this).toggleClass('show');
-        });
+            // 1. SIDEBAR COLLAPSE
+            $('#sidebarCollapse').off('click').on('click', function () {
+                $('#sidebar').toggleClass('active');
+            });
 
-        // 3. SIDEBAR DROPDOWNS (Organization, Account, etc.)
-        $('.components .dropdown-toggle').off('click').on('click', function(e) {
-            e.preventDefault();
-            e.stopPropagation();
-            $(this).next('.collapse').collapse('toggle');
-        });
-
-        // 4. CLOSE ALL DROPDOWNS ON OUTSIDE CLICK
-        $(document).off('click.dropdown').on('click.dropdown', function(e) {
-            if (!$(e.target).closest('.dropdown, .user_profile_dd, #sidebar').length) {
-                $('.dropdown-menu, .collapse').removeClass('show');
-                $('.dropdown-toggle').removeClass('show');
-            }
-        });
-
-        // 5. PERFECT SCROLLBAR
-        new PerfectScrollbar('#sidebar');
-
-        // 6. YEAR
-        $('#year').text(new Date().getFullYear());
-
-        console.log('✅ ALL DROPDOWNS FIXED!');
-    });
-                $('.components .dropdown-toggle').off('click').on('click', function(e) {
+            // 2. USER PROFILE DROPDOWN
+            $('.user_profile_dd > li > a.dropdown-toggle').off('click').on('click', function (e) {
                 e.preventDefault();
+                $(this).next('.dropdown-menu').toggleClass('show');
+                $(this).toggleClass('show');
+            });
+
+            // 3. SIDEBAR DROPDOWNS
+            $('.components .dropdown-toggle').off('click').on('click', function (e) {
+                e.preventDefault();
+                e.stopPropagation();
 
                 let sidebar = $('#sidebar');
                 let submenu = $(this).next('.collapse');
 
-                // 👉 If sidebar is collapsed → expand it first
                 if (sidebar.hasClass('active')) {
                     sidebar.removeClass('active');
-
-                    // Small delay so animation completes
-                    setTimeout(() => {
-                        submenu.collapse('show');
-                    }, 200);
-
+                    setTimeout(() => { submenu.collapse('show'); }, 200);
                 } else {
-                    // 👉 Normal behavior
                     submenu.collapse('toggle');
                 }
             });
-</script>
 
-@RenderSection("Scripts", required: false)
-        <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+            // 4. CLOSE ON OUTSIDE CLICK
+            $(document).off('click.dropdown').on('click.dropdown', function (e) {
+                if (!$(e.target).closest('.dropdown, .user_profile_dd, #sidebar').length) {
+                    $('.dropdown-menu, .collapse').removeClass('show');
+                    $('.dropdown-toggle').removeClass('show');
+                }
+            });
 
-        <!-- Bootstrap 4 JS -->
-        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+            // 5. PERFECT SCROLLBAR
+            new PerfectScrollbar('#sidebar');
 
-        <!-- Material Design Icons (for buttons) -->
-        <link rel="stylesheet" href="https://cdn.materialdesignicons.com/5.4.55/css/materialdesignicons.min.css">
-        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+            // 6. YEAR
+            $('#year').text(new Date().getFullYear());
+
+            // 7. LOAD DYNAMIC SIDEBAR
+            const username = '@ViewBag.Username';
+            if (username && username !== 'Guest') {
+                loadDynamicSidebar(username);
+            }
+        });
+
+        async function loadDynamicSidebar(username) {
+            try {
+                const response = await fetch(`/AccessControl/GetDynamicSidebar?username=${encodeURIComponent(username)}`);
+                const data = await response.json();
+                const menus = data.menus || [];
+
+                let html = `
+                    <li style="margin-bottom:8px;">
+                        <a href="@Url.Action("Index", "Dashboard")">
+                            <i class="fas fa-tachometer-alt fa-fw" style="color:${getMenuColor('Dashboard')}"></i>
+                            <span>Dashboard</span>
+                        </a>
+                    </li>`;
+
+                menus.forEach((menu, index) => {
+                    const menuId = `menu_${index}_${menu.menuName.replace(/[^a-zA-Z0-9]/g, '')}`;
+                    html += `
+                        <li style="margin-bottom:8px;">
+                            <a href="#${menuId}" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                                <i class="fas fa-${menu.icon} fa-fw" style="color:${getMenuColor(menu.menuName)}"></i>
+                                <span>${menu.menuName}</span>
+                            </a>
+                            <ul class="collapse list-unstyled" id="${menuId}">`;
+
+                    menu.subMenus.forEach((sub, subIndex) => {
+                        const subColors = ['text-success', 'text-warning', 'text-secondary', 'text-danger', 'text-info'];
+
+                        let finalController = sub.controller;
+                        let finalAction = sub.action;
+                        let finalName = sub.name;
+                        let finalIcon = getSubmenuIcon(sub.name);
+
+                        if (sub.controller === 'AdminLogin' && sub.action === 'List') {
+                            finalController = 'UserManagement';
+                            finalAction = 'List';
+                            finalName = 'User Management List';
+                            finalIcon = 'users-cog';
+                        }
+
+                        const url = `/${finalController}/${finalAction}`;
+                        html += `
+                            <li>
+                                <a href="${url}">
+                                    <i class="fas fa-${finalIcon} fa-fw ${subColors[subIndex % subColors.length]}"></i>
+                                    <span>${finalName}</span>
+                                </a>
+                            </li>`;
+                    });
+
+                    html += `</ul></li>`;
+                });
+
+                $('#dynamic-sidebar ul').html(html);
+
+            } catch (error) {
+                $('#dynamic-sidebar ul').html(`
+                    <li class="text-center py-4 text-muted">
+                        <i class="fas fa-exclamation-triangle fa-lg mb-2"></i>
+                        Menu load failed
+                    </li>`);
+            }
+        }
+
+        function getMenuColor(name) {
+            const colors = {
+                'Dashboard':          '#2563eb',
+                'Organization':       '#7c3aed',
+                'Account Management': '#16a34a',
+                'Student Management': '#ea580c',
+                'Fees Collection':    '#eab308',
+                'Users':              '#dc2626',
+                'Roles':              '#0d9488'
+            };
+            return colors[name] || '#6366f1';
+        }
+
+        function getSubmenuIcon(name) {
+            const icons = {
+                'Country':          'globe',
+                'State':            'map-marker-alt',
+                'Company':          'industry',
+                'Branch':           'code-branch',
+                'Courses':          'graduation-cap',
+                'Course':           'graduation-cap',
+                'Expense Category': 'tags',
+                'Expense':          'receipt',
+                'Expense Reports':  'chart-line',
+                'Inquiry Form':     'question-circle',
+                'Inquiry List':     'list-alt',
+                'Admission List':   'clipboard-check',
+                'Fees Collection':  'money-bill-wave',
+                'User List':        'users',
+                'UserManagement':   'users-cog',
+                'Access List':      'lock-open',
+                'Role Type':        'user-tag'
+            };
+            return icons[name] || 'arrow-right';
+        }
+                 // ✅ SIDEBAR DROPDOWN + EXPAND LOGIC
+        $(document).on('click', '.components .dropdown-toggle', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            let sidebar = $('#sidebar');
+            let submenu = $(this).next('.collapse');
+
+            if (sidebar.hasClass('active')) {
+                // Sidebar is collapsed → expand it first
+                sidebar.removeClass('active');
+                // Wait for CSS transition to finish then show submenu
+                setTimeout(function () {
+                    submenu.addClass('show');
+                }, 300);
+            } else {
+                // Sidebar already expanded → just toggle submenu
+                if (submenu.hasClass('show')) {
+                    submenu.removeClass('show');
+                } else {
+                    // Close all other open submenus first
+                    $('.components .collapse.show').removeClass('show');
+                    submenu.addClass('show');
+                }
+            }
+        });
+    </script>
+
+    @RenderSection("Scripts", required: false)
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+    <!-- Bootstrap 4 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <!-- Material Design Icons (for buttons) -->
+    <link rel="stylesheet" href="https://cdn.materialdesignicons.com/5.4.55/css/materialdesignicons.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        window.addEventListener('pageshow', function (e) {
+            if (e.persisted) {
+                fetch('/AdminLogin/CheckSession')
+                    .then(r => r.json())
+                    .then(data => {
+                        if (!data.isLoggedIn) {
+                            window.location.replace('/AdminLogin/Login');
+                        }
+                    });
+            }
+        });
+    </script>
 </body>
 </html>
-
-
-
-
-<!-- 🔥 UNIVERSAL DROPDOWN + MODAL FIX -->

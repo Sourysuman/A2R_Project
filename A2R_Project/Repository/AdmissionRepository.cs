@@ -58,8 +58,8 @@ namespace A2R_Project.Repositories
                 parameters.Add("@Paid_Amount", admission.Paid_Amount);
                 parameters.Add("@Payment_Method", admission.Payment_Method);
                 parameters.Add("@Payment_Remark", admission.Payment_Remark);
-                parameters.Add("@Created_By", GetAllAdmission());
-                parameters.Add("@Updated_By", GetAllAdmission());
+                parameters.Add("@Created_By", admission.Created_By);
+                parameters.Add("@Updated_By", admission.Updated_By);
                 parameters.Add("@SequenceNo", admission.SequenceNo);
 
                 parameters.Add("@ResultMessage", dbType: DbType.String,

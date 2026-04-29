@@ -25,22 +25,22 @@ namespace A2R_Project.Controllers
         [HttpGet]
         public async Task<IActionResult> List(int page = 1, int pageSize = 10)
         {
-            // ✅ Get all expenses and sort by latest first
+
             var allExpenses = (await _expenseRepository.GetAllExpenses())
                                 .OrderByDescending(x => x.Expense_Date)
-                                .ThenByDescending(x => x.Expense_ID) // for same date
+                                .ThenByDescending(x => x.Expense_ID) 
                                 .ToList();
 
-            // ✅ Total count
+           
             var totalCount = allExpenses.Count;
+            await SetPagePermissions("Expense");
 
-            // ✅ Pagination
             var pagedExpenses = allExpenses
                                 .Skip((page - 1) * pageSize)
                                 .Take(pageSize)
                                 .ToList();
 
-            // ✅ View Model
+       
             var model = new ExpenseViewModel
             {
                 expenses = pagedExpenses,

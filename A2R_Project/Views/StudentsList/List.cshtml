@@ -1,5 +1,4 @@
-﻿
-@model A2R_Project.Models.StudentInquiries
+﻿@model A2R_Project.Models.StudentInquiries
 @{
     ViewBag.Title = "Students List";
 }
@@ -9,13 +8,11 @@
 <link href="https://cdn.jsdelivr.net/npm/@@mdi/font@6.5.95/css/materialdesignicons.min.css" rel="stylesheet">
 
 <style>
-    /* ================= GLOBAL ================= */
     body {
         background: linear-gradient(135deg, #eef2ff, #f8fbff);
         font-family: 'Segoe UI', sans-serif;
     }
 
-    /* ================= CARD ================= */
     .card {
         border-radius: 18px;
         border: none;
@@ -29,26 +26,22 @@
         letter-spacing: 0.5px;
     }
 
-    /* ================= TABLE ================= */
     .table {
         border-radius: 14px;
         overflow: hidden;
         background: #fff;
     }
 
-        .table thead {
-            background: linear-gradient(135deg, #4e73df, #224abe);
+        .table thead th {
+            border: none;
+            color: #fff;
+            font-size: 14px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.6px;
+            padding: 14px;
+            text-align: center;
         }
-
-            .table thead th {
-                border: none;
-                color: #fff;
-                font-size: 14px;
-                font-weight: 700;
-                text-transform: uppercase;
-                letter-spacing: 0.6px;
-                padding: 14px;
-            }
 
         .table tbody td {
             font-size: 15px;
@@ -56,20 +49,15 @@
             color: #34495e;
             padding: 14px;
             vertical-align: middle;
+            background-color:white !important;
+            text-align: center;
         }
 
-        /* ================= ROW HOVER ================= */
         .table tbody tr {
             transition: all 0.25s ease;
         }
 
-            .table tbody tr:hover {
-                background: #eef4ff;
-                transform: translateY(-2px);
-                box-shadow: 0 6px 14px rgba(0,0,0,0.08);
-            }
 
-    /* ================= BADGES ================= */
     .badge-success {
         background: linear-gradient(135deg, #1cc88a, #17a673);
         padding: 7px 12px;
@@ -86,11 +74,16 @@
         font-weight: 600;
     }
 
-    /* ================= BUTTON BASE ================= */
+    /* ── Action column centred ── */
+    .action-cell {
+        text-align: center !important;
+        white-space: nowrap;
+    }
+
     .btn-sm {
         border-radius: 10px;
         padding: 6px 12px;
-        margin-right: 5px;
+        margin: 0 2px;
         font-size: 14px;
         font-weight: 600;
         transition: all 0.25s ease;
@@ -105,17 +98,6 @@
             box-shadow: 0 6px 15px rgba(0,0,0,0.15);
         }
 
-    /* ================= ICON BUTTON ================= */
-    .btn-icon {
-        width: 36px;
-        height: 36px;
-        border-radius: 50%;
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-    }
-
-    /* ================= ACTION BUTTON COLORS ================= */
     .btn-primary {
         background: linear-gradient(135deg, #4e73df, #224abe);
         border: none;
@@ -133,7 +115,6 @@
         color: #000;
     }
 
-    /* ================= 🔥 ADMISSION BUTTON FIX ================= */
     .btn-admission {
         background: linear-gradient(135deg, #28a745, #20c997);
         border: none;
@@ -146,30 +127,21 @@
         gap: 6px;
     }
 
-        .btn-admission i {
-            font-size: 16px;
-        }
-
         .btn-admission:hover {
             background: linear-gradient(135deg, #218838, #17a2b8);
             color: #fff;
             transform: scale(1.05);
         }
 
-    /* ================= TABLE EMPTY TEXT ================= */
-    .text-center {
-        font-size: 16px;
-        font-weight: 600;
-        color: #888;
-    }
-
-    /* ================= PAGINATION ================= */
+    /* ===== PAGINATION ===== */
     .pagination .page-link {
         border-radius: 10px;
         margin: 0 4px;
         font-weight: 600;
         color: #4e73df;
         border: none;
+        cursor: pointer;
+        user-select: none;
     }
 
     .pagination .page-item.active .page-link {
@@ -181,517 +153,446 @@
         background: #e8edff;
     }
 
-</style>
-<style>
-
-    /* ================= MODAL CONTAINER ================= */
-    .modal-content {
-        border-radius: 18px;
-        border: none;
-        box-shadow: 0 12px 35px rgba(0,0,0,0.15);
-        overflow: hidden;
+    /* ===== MODAL SYSTEM ===== */
+    .modal {
+        backdrop-filter: blur(4px);
     }
 
-    /* ================= MODAL HEADER ================= */
-    .modal-header {
-        background: linear-gradient(135deg, #4e73df, #224abe);
-        color: #fff;
-        padding: 16px 20px;
+    @@keyframes modalPop {
+        from {
+            transform: scale(0.93);
+            opacity: 0;
+        }
+
+        to {
+            transform: scale(1);
+            opacity: 1;
+        }
     }
 
-    .modal-title {
-        font-size: 20px;
-        font-weight: 700;
-        letter-spacing: 0.5px;
+    #editStudent .modal-dialog,
+    #viewStudent .modal-dialog,
+    #followUpModal .modal-dialog,
+    #admissionModal .modal-dialog {
+        max-width: 1000px !important;
+        width: 95vw !important;
+        margin: 80px auto 1.75rem auto !important;
     }
 
-    .modal-header .close {
-        color: #fff;
-        opacity: 1;
-        font-size: 24px;
+    #editStudent .modal-content,
+    #viewStudent .modal-content,
+    #followUpModal .modal-content,
+    #admissionModal .modal-content {
+        min-height: 580px !important;
+        max-height: 85vh !important;
+        height: 580px !important;
+        border-radius: 18px !important;
+        overflow: hidden !important;
+        display: flex !important;
+        flex-direction: column !important;
+        border: none !important;
+        box-shadow: 0 12px 40px rgba(0,0,0,0.18) !important;
+        animation: modalPop 0.28s ease;
     }
 
-    /* ================= MODAL BODY ================= */
-    .modal-body {
-        padding: 25px;
-        background: #f9fbff;
+    #editStudent .modal-header,
+    #viewStudent .modal-header,
+    #followUpModal .modal-header,
+    #admissionModal .modal-header {
+        background: linear-gradient(135deg, #4e73df, #224abe) !important;
+        color: #fff !important;
+        padding: 18px 24px !important;
+        border-bottom: none !important;
+        border-radius: 18px 18px 0 0 !important;
+        flex-shrink: 0 !important;
     }
 
-    /* ================= FORM GROUP ================= */
-    .form-group {
-        margin-bottom: 20px;
+    #editStudent .modal-title,
+    #viewStudent .modal-title,
+    #followUpModal .modal-title,
+    #admissionModal .modal-title {
+        color: #fff !important;
+        font-size: 18px !important;
+        font-weight: 700 !important;
+        letter-spacing: 0.4px !important;
     }
 
-        /* ================= LABEL ================= */
-        .form-group label {
-            font-size: 14px;
+    #editStudent .modal-header .close,
+    #viewStudent .modal-header .close,
+    #followUpModal .modal-header .close,
+    #admissionModal .modal-header .close {
+        color: #fff !important;
+        opacity: 0.9 !important;
+        font-size: 26px !important;
+        text-shadow: none !important;
+    }
+
+        #editStudent .modal-header .close:hover,
+        #viewStudent .modal-header .close:hover,
+        #followUpModal .modal-header .close:hover,
+        #admissionModal .modal-header .close:hover {
+            opacity: 1 !important;
+        }
+
+    #editStudent .modal-body,
+    #viewStudent .modal-body,
+    #followUpModal .modal-body,
+    #admissionModal .modal-body {
+        flex: 1 !important;
+        overflow-y: auto !important;
+        padding: 24px 28px !important;
+        background: #f9fbff !important;
+        max-height: none !important;
+    }
+
+        #editStudent .modal-body::-webkit-scrollbar,
+        #viewStudent .modal-body::-webkit-scrollbar,
+        #followUpModal .modal-body::-webkit-scrollbar,
+        #admissionModal .modal-body::-webkit-scrollbar {
+            width: 5px !important;
+        }
+
+        #editStudent .modal-body::-webkit-scrollbar-thumb,
+        #viewStudent .modal-body::-webkit-scrollbar-thumb,
+        #followUpModal .modal-body::-webkit-scrollbar-thumb,
+        #admissionModal .modal-body::-webkit-scrollbar-thumb {
+            background: #4e73df !important;
+            border-radius: 10px !important;
+        }
+
+    #editStudent .modal-footer,
+    #viewStudent .modal-footer,
+    #followUpModal .modal-footer,
+    #admissionModal .modal-footer {
+        background: #fff !important;
+        border-top: 1px solid #eee !important;
+        padding: 14px 24px !important;
+        display: flex !important;
+        justify-content: flex-end !important;
+        gap: 10px !important;
+        flex-shrink: 0 !important;
+    }
+
+        #editStudent .modal-footer .btn,
+        #viewStudent .modal-footer .btn,
+        #followUpModal .modal-footer .btn,
+        #admissionModal .modal-footer .btn {
+            border-radius: 10px !important;
+            padding: 9px 22px !important;
+            font-weight: 600 !important;
+            font-size: 14px !important;
+            border: none !important;
+            transition: all 0.25s ease !important;
+            letter-spacing: 0.3px;
+        }
+
+            #editStudent .modal-footer .btn:hover,
+            #viewStudent .modal-footer .btn:hover,
+            #followUpModal .modal-footer .btn:hover,
+            #admissionModal .modal-footer .btn:hover {
+                transform: translateY(-2px) !important;
+                box-shadow: 0 6px 16px rgba(0,0,0,0.15) !important;
+            }
+
+        #editStudent .modal-footer .btn-secondary,
+        #viewStudent .modal-footer .btn-secondary,
+        #followUpModal .modal-footer .btn-secondary,
+        #admissionModal .modal-footer .btn-secondary {
+            background: #6c757d !important;
+            color: #fff !important;
+        }
+
+        #editStudent .modal-footer .btn-warning,
+        #viewStudent .modal-footer .btn-warning,
+        #followUpModal .modal-footer .btn-warning,
+        #admissionModal .modal-footer .btn-warning {
+            background: linear-gradient(135deg, #f6c23e, #e0a800) !important;
+            color: #000 !important;
+        }
+
+        #editStudent .modal-footer .btn-primary,
+        #viewStudent .modal-footer .btn-primary,
+        #followUpModal .modal-footer .btn-primary,
+        #admissionModal .modal-footer .btn-primary {
+            background: linear-gradient(135deg, #4e73df, #224abe) !important;
+            color: #fff !important;
+        }
+
+        #editStudent .modal-footer .btn-success,
+        #viewStudent .modal-footer .btn-success,
+        #followUpModal .modal-footer .btn-success,
+        #admissionModal .modal-footer .btn-success {
+            background: linear-gradient(135deg, #28a745, #20c997) !important;
+            color: #fff !important;
+        }
+
+    /* ===== MODAL FORM STYLES ===== */
+    .modal .form-group {
+        margin-bottom: 18px;
+    }
+
+        .modal .form-group label {
+            font-size: 13px;
             font-weight: 700;
             color: #2c3e50;
             margin-bottom: 6px;
             display: block;
         }
 
-    /* ================= INPUT FIELDS ================= */
-    .form-control {
+    .modal .form-control {
         height: 42px;
         border-radius: 10px;
-        border: 1px solid #dce3f0;
-        font-size: 15px;
+        border: 1.5px solid #dce3f0;
+        font-size: 14px;
         font-weight: 600;
         padding: 8px 12px;
         transition: all 0.25s ease;
     }
 
-    /* TEXTAREA */
-    textarea.form-control {
+    .modal textarea.form-control {
         height: auto;
-        min-height: 80px;
+        min-height: 70px;
     }
 
-    /* ================= INPUT FOCUS ================= */
-    .form-control:focus {
+    .modal .form-control:focus {
         border-color: #4e73df;
         box-shadow: 0 0 0 3px rgba(78,115,223,0.15);
         background: #fff;
     }
 
-    /* ================= ROW SPACING ================= */
-    .modal-body .row {
-        margin-bottom: 10px;
-    }
-
-    .modal-body .col-md-3,
-    .modal-body .col-md-6 {
-        padding-bottom: 10px;
-    }
-
-    /* ================= DROPDOWN ================= */
-    select.form-control {
-        cursor: pointer;
-    }
-
-    /* ================= FOOTER ================= */
-    .modal-footer {
-        padding: 15px 20px;
-        background: #fff;
-        border-top: 1px solid #eee;
-    }
-
-        /* ================= BUTTONS ================= */
-        .modal-footer .btn {
-            border-radius: 10px;
-            padding: 8px 18px;
-            font-weight: 600;
-            font-size: 14px;
-            transition: all 0.25s ease;
-        }
-
-            .modal-footer .btn:hover {
-                transform: translateY(-2px);
-                box-shadow: 0 6px 15px rgba(0,0,0,0.15);
-            }
-
-    /* PRIMARY */
-    .btn-primary {
-        background: linear-gradient(135deg, #4e73df, #224abe);
-        border: none;
-    }
-
-    /* WARNING */
-    .btn-warning {
-        background: linear-gradient(135deg, #f6c23e, #e0a800);
-        border: none;
-        color: #000;
-    }
-
-    /* SECONDARY */
-    .btn-secondary {
-        background: #858796;
-        border: none;
-        color: #fff;
-    }
-
-    /* ================= SECTION HEADINGS ================= */
-    .modal-body h6 {
-        font-size: 16px;
-        font-weight: 700;
-        margin-bottom: 12px;
-        color: #4e73df;
-    }
-
-    /* ================= VIEW POPUP TEXT ================= */
-    .form-control-plaintext {
+    .modal h6 {
         font-size: 15px;
-        font-weight: 600;
-        color: #2c3e50;
-        background: #f4f6fb;
-        border-radius: 8px;
-    }
-
-    .modal-dialog {
-        max-width: 900px;
-        margin: 1.75rem auto;
-    }
-    /* ================= VIEW MODAL - PERFECT MATCHING STYLE ================= */
-    #viewStudent .modal-dialog {
-        max-width: 550px;
-        margin: 1.75rem auto;
-        max-height:550px;
-    }
-
-    #viewStudent .modal-content {
-        border-radius: 18px;
-        border: none;
-        box-shadow: 0 12px 35px rgba(0,0,0,0.15);
-    }
-
-    #viewStudent .modal-header {
-        background: linear-gradient(135deg, #4e73df, #224abe);
-        color: #fff;
-        padding: 20px;
-        border-radius: 18px 18px 0 0;
-    }
-
-    #viewStudent .modal-title {
-        font-size: 22px;
         font-weight: 700;
-        letter-spacing: 0.5px;
-    }
-
-    #viewStudent .close {
-        color: #fff;
-        opacity: 1;
-        font-size: 28px;
-        font-weight: 300;
-    }
-
-    #viewStudent .modal-body {
-        padding: 30px;
-        background: #f9fbff;
-    }
-
-    #viewStudent h6 {
-        font-size: 18px;
-        font-weight: 700;
-        margin-bottom: 20px;
+        margin-bottom: 14px;
         color: #4e73df;
-        padding-bottom: 10px;
+        padding-bottom: 8px;
         border-bottom: 2px solid #e3f2fd;
-        margin-top: 25px;
+        margin-top: 20px;
     }
 
-        #viewStudent h6:first-child {
+        .modal h6:first-child {
             margin-top: 0;
         }
 
-    #viewStudent .form-group {
-        margin-bottom: 22px;
+    .form-control.is-invalid {
+        border-color: #e74c3c !important;
     }
 
-        #viewStudent .form-group label {
-            font-size: 15px;
-            font-weight: 700;
-            color: #2c3e50;
-            margin-bottom: 10px;
-            display: block;
-        }
+    .invalid-feedback {
+        font-size: 12px;
+        color: #e74c3c;
+        margin-top: 3px;
+        display: block;
+    }
 
+    /* ===== VIEW MODAL PLAINTEXT ===== */
     #viewStudent .form-control-plaintext {
-        font-size: 16px;
+        font-size: 14px;
         font-weight: 600;
         color: #2c3e50;
         background: linear-gradient(135deg, #fff, #f8fbff);
-        border: 2px solid #e8f0fe;
-        border-radius: 12px;
-        padding: 15px 18px;
-        min-height: 52px;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        border: 1.5px solid #e8f0fe;
+        border-radius: 10px;
+        padding: 10px 14px;
+        min-height: 42px;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.04);
         transition: all 0.25s ease;
+        display: block;
     }
 
         #viewStudent .form-control-plaintext:hover {
             border-color: #4e73df;
-            box-shadow: 0 4px 15px rgba(78,115,223,0.15);
+            box-shadow: 0 4px 12px rgba(78,115,223,0.12);
         }
 
-    #viewStudent .row {
-        margin-bottom: 25px;
+    /* ===== FOLLOW UP MODAL CARDS ===== */
+    #followUpModal .card {
+        border-radius: 12px;
+        overflow: hidden;
     }
 
-    #viewStudent .col-md-6 {
-        padding-bottom: 20px;
-    }
-
-    /* ================= ADMISSION MODAL - ENHANCED STYLE ================= */
-    #admissionModal .modal-dialog {
-        max-width: 1000px;
-        margin: 1.75rem auto;
-    }
-
-    #admissionModal .modal-content {
-        border-radius: 18px;
-        border: none;
-        box-shadow: 0 12px 35px rgba(0,0,0,0.15);
-    }
-
-    #admissionModal .modal-header {
-        background: linear-gradient(135deg, #28a745, #20c997);
-        color: #fff;
-        padding: 22px 25px;
-        border-radius: 18px 18px 0 0;
-    }
-
-    #admissionModal .modal-title {
-        font-size: 22px;
+    #followUpModal .card-header {
         font-weight: 700;
-        letter-spacing: 0.5px;
+        padding: 10px 16px;
     }
 
-    #admissionModal .close {
-        color: #fff;
-        opacity: 1;
-        font-size: 28px;
-    }
-
-    #admissionModal .modal-body {
-        padding: 35px;
-        background: #f9fbff;
-    }
-
-    #admissionModal .alert-info {
-        background: linear-gradient(135deg, #4e73df, #224abe);
-        color: #fff;
-        border: none;
-        border-radius: 12px;
-        padding: 18px 22px;
-        margin-bottom: 30px;
-        font-size: 16px;
-        font-weight: 600;
-    }
-
-    #admissionModal .form-group {
-        margin-bottom: 25px;
-    }
-
-        #admissionModal .form-group label {
-            font-size: 15px;
-            font-weight: 700;
-            color: #2c3e50;
-            margin-bottom: 10px;
-            display: block;
-        }
-
-    #admissionModal .form-control,
-    #admissionModal select.form-control,
-    #admissionModal textarea.form-control {
-        height: 50px;
-        border-radius: 12px;
-        border: 2px solid #e8f0fe;
-        font-size: 16px;
-        font-weight: 600;
-        padding: 12px 16px;
-        background: #fff;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-        transition: all 0.25s ease;
-    }
-
-    #admissionModal textarea.form-control {
-        height: 85px;
-        resize: vertical;
-    }
-
-    #admissionModal .form-control:focus,
-    #admissionModal select.form-control:focus {
-        border-color: #28a745;
-        box-shadow: 0 0 0 4px rgba(40,167,69,0.2);
-        transform: translateY(-1px);
-    }
-
+    /* ===== ADMISSION READONLY FIELDS ===== */
+    #admissionModal .form-control[readonly],
     #admissionModal .form-control.bg-light {
         background: linear-gradient(135deg, #f8f9fa, #e9ecef) !important;
-        color: #495057;
-        font-weight: 700;
-        border-color: #dee2e6;
-    }
-
-    /* ================= READONLY FIELDS ================= */
-    #admissionModal .form-control[readonly] {
-        background: linear-gradient(135deg, #f8f9fa, #e9ecef);
         color: #28a745;
         font-weight: 700;
         cursor: not-allowed;
     }
 
-    /* ================= COL POSITIONING ================= */
-    #admissionModal .col-md-2,
-    #admissionModal .col-md-3 {
-        padding-bottom: 20px;
-    }
-
-    /* ================= MODAL FOOTER - ENHANCED ================= */
-    #admissionModal .modal-footer,
-    #viewStudent .modal-footer,
-    #editStudent .modal-footer,
-    #followUpModal .modal-footer {
-        padding: 20px 30px;
-        background: #fff;
-        border-top: 1px solid #e9ecef;
-        border-radius: 0 0 18px 18px;
-    }
-
-    .modal-footer .btn {
-        border-radius: 12px;
-        padding: 12px 24px;
-        font-weight: 700;
-        font-size: 15px;
-        margin-left: 10px;
-        min-width: 120px;
-        height: 48px;
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        gap: 8px;
-        transition: all 0.25s ease;
-    }
-
-        .modal-footer .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+    /* ===== ROW FLASH ON INSTANT UPDATE ===== */
+    @@keyframes rowFlash {
+        0% {
+            background-color: #b8f5d4 !important;
         }
 
-    /* ================= RESPONSIVE ================= */
+        100% {
+            background-color: #FFFFDE !important;
+        }
+    }
+
+    .row-updated td {
+        animation: rowFlash 1.4s ease forwards !important;
+    }
+
     @@media (max-width: 768px) {
-        .modal-dialog
+        #editStudent .modal-dialog,
+        #viewStudent .modal-dialog,
+        #followUpModal .modal-dialog,
+        #admissionModal .modal-dialog {
+            width: calc(100vw - 20px) !important;
+            margin: 10px auto !important;
+        }
 
-    {
-        margin: 1rem;
-        max-width: calc(100% - 2rem);
+        #editStudent .modal-content,
+        #viewStudent .modal-content,
+        #followUpModal .modal-content,
+        #admissionModal .modal-content {
+            height: auto !important;
+            min-height: auto !important;
+            max-height: 92vh !important;
+        }
     }
-
-    #viewStudent .modal-body,
-    #admissionModal .modal-body {
-        padding: 20px;
-    }
-
-    .col-md-2, .col-md-3 {
-        margin-bottom: 15px;
-    }
-
-    }
-
-
 </style>
 
 
+<!-- ===== MAIN TABLE ===== -->
 <div class="col-lg-12 stretch-card">
     <div class="card">
         <div class="card-body">
-            <div class="d-flex justify-content-between align-items-center" style="padding: 10px !important">
-                <strong class="card-title">Students List</strong>
+            <div class="d-flex justify-content-between align-items-center" style="padding: 10px">
+                <strong class="card-title">Inquiry List</strong>
             </div>
-            <div class="table-responsive">
-                <table class="table table-bordered table-striped">
-                    <thead class="thead-dark">
-                        <tr>
-                            <th>Student Name</th>
-                            <th>Education</th>
-                            <th>Courses</th>
-                            <th>Status</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @if (Model != null && Model.StudentInquiry != null && Model.StudentInquiry.Any())
-                        {
-                            foreach (var item in Model.StudentInquiry)
+
+            <div id="tableWrapper">
+                <div class="table-responsive">
+                    <table class="table table-bordered table-striped">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th>Student Name</th>
+                                <th>Education</th>
+                                <th>Status</th>
+                                <th class="text-center">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (Model != null && Model.StudentInquiry != null && Model.StudentInquiry.Any())
+                            {
+                                foreach (var item in Model.StudentInquiry)
+                                {
+                                    <tr data-student-id="@item.StudentInquiryID">
+                                        <td class="col-student-name">@item.NameOfStudent</td>
+                                        <td class="col-education">@item.Education</td>
+                                        <td class="col-status">
+                                            @if (item.IsActive == 1)
+                                            {
+                                                <span class="badge badge-success">Active</span>
+                                            }
+                                            else
+                                            {
+                                                <span class="badge badge-danger">Inactive</span>
+                                            }
+                                        </td>
+                                        <td class="action-cell">
+                                            @if (ViewBag.CanUpdate == true)
+                                            {
+                                                <button class="btn btn-sm btn-primary editByStudentInquiryId"
+                                                        data-edstudent-id="@item.StudentInquiryID" title="Edit">
+                                                    <i class="mdi mdi-pencil"></i>
+                                                </button>
+                                            }
+                                            else
+                                            {
+                                                <button class="btn btn-sm btn-secondary"
+                                                        title="No Edit Permission"
+                                                        onclick="noAccess('Update')">
+                                                    <i class="mdi mdi-pencil"></i>
+                                                </button>
+                                            }
+                                            <button class="btn btn-sm btn-info viewByStudentInquiryId" data-vwstudent-id="@item.StudentInquiryID" title="View">
+                                                <i class="mdi mdi-eye"></i>
+                                            </button>
+                                            <button type="button" class="btn btn-sm btn-warning followUp"
+                                                    data-follow-up-id="@item.StudentInquiryID" title="Follow Up">
+                                                <i class="mdi mdi-clock-outline"></i>
+                                            </button>
+                                            @if (ViewBag.CanInsert == true)
+                                            {
+                                                <button type="button" class="btn btn-sm btn-admission admission"
+                                                        data-admissionId="@item.StudentInquiryID" title="Admission">
+                                                    <i class="mdi mdi-account-check"></i> Admission
+                                                </button>
+                                            }
+                                            else
+                                            {
+                                                <button type="button" class="btn btn-sm btn-secondary"
+                                                        title="No Admission Permission"
+                                                        onclick="noAccess('Insert')">
+                                                    <i class="mdi mdi-account-check"></i> Admission
+                                                </button>
+                                            }
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                            else
                             {
                                 <tr>
-                                    <td>@item.NameOfStudent</td>
-                                    <td>@item.Education</td>
-                                    <td>@item.Course</td>
-                                    <td>
-                                        @if (item.IsActive == 1)
-                                        {
-                                            <span class="badge badge-success">Active</span>
-                                        }
-                                        else
-                                        {
-                                            <span class="badge badge-danger">Inactive</span>
-                                        }
-                                    </td>
-                                    <td>
-                                        <!-- ✅ FIXED BUTTONS -->
-                                        <button class="btn btn-sm btn-primary editByStudentInquiryId" data-edstudent-id="@item.StudentInquiryID">
-                                            <i class="mdi mdi-pencil"></i>
-                                        </button>
-                                        <button class="btn btn-sm btn-info viewByStudentInquiryId" data-vwstudent-id="@item.StudentInquiryID">
-                                            <i class="mdi mdi-eye"></i>
-                                        </button>
-
-                                        <!-- ✅ FIXED Follow Up Button -->
-                                        <button type="button" class="btn btn-sm btn-warning followUp"
-                                                data-follow-up-id="@item.StudentInquiryID"
-                                                title="Follow Up">
-                                            <i class="mdi mdi-clock-outline"></i>
-                                        </button>
-
-                                        <button type="button"
-                                                class="btn btn-sm btn-admission admission"
-                                                data-admissionId='@item.StudentInquiryID'
-                                                title="Admission"
-                                                data-toggle="modal"
-                                                data-target="#admissionModal">
-                                            <i class="mdi mdi-account-check"></i> Admission
-                                        </button>
-                                    </td>
+                                    <td colspan="4" class="text-center">No students found</td>
                                 </tr>
                             }
-                        }
-                        else
-                        {
-                            <tr>
-                                <td colspan="5" class="text-center">No students found</td>
-                            </tr>
-                        }
-                    </tbody>
-                </table>
-            </div>
+                        </tbody>
+                    </table>
+                </div>
 
-            <!-- Pagination -->
-            @if (ViewBag.TotalCount != null && (int)ViewBag.TotalCount > (int)ViewBag.PageSize)
-            {
-                <nav>
-                    <ul class="pagination justify-content-center">
-                        <li class="page-item @(ViewBag.CurrentPage == 1 ? "disabled" : "")">
-                            <a class="page-link" href="@Url.Action("List", new { page = ViewBag.CurrentPage - 1, pageSize = ViewBag.PageSize })">Previous</a>
-                        </li>
-                        @for (int i = 1; i <= Math.Ceiling((double)(int)ViewBag.TotalCount / (int)ViewBag.PageSize); i++)
-                        {
-                            <li class="page-item @(i == ViewBag.CurrentPage ? "active" : "")">
-                                <a class="page-link" href="@Url.Action("List", new { page = i, pageSize = ViewBag.PageSize })">@i</a>
+                @if (ViewBag.TotalCount != null && (int)ViewBag.TotalCount > (int)ViewBag.PageSize)
+                {
+                    int totalPages = (int)Math.Ceiling((double)(int)ViewBag.TotalCount / (int)ViewBag.PageSize);
+                    int currentPage = (int)ViewBag.CurrentPage;
+                    int pageSize = (int)ViewBag.PageSize;
+
+                    <nav>
+                        <ul class="pagination justify-content-center" id="ajaxPagination">
+                            <li class="page-item @(currentPage == 1 ? "disabled" : "")">
+                                <a class="page-link" data-page="@(currentPage - 1)">Previous</a>
                             </li>
-                        }
-                        <li class="page-item @(((int)ViewBag.CurrentPage == Math.Ceiling((double)(int)ViewBag.TotalCount / (int)ViewBag.PageSize)) ? "disabled" : "")">
-                            <a class="page-link" href="@Url.Action("List", new { page = ViewBag.CurrentPage + 1, pageSize = ViewBag.PageSize })">Next</a>
-                        </li>
-                    </ul>
-                </nav>
-            }
+                            @for (int i = 1; i <= totalPages; i++)
+                            {
+                                <li class="page-item @(i == currentPage ? "active" : "")">
+                                    <a class="page-link" data-page="@i">@i</a>
+                                </li>
+                            }
+                            <li class="page-item @(currentPage == totalPages ? "disabled" : "")">
+                                <a class="page-link" data-page="@(currentPage + 1)">Next</a>
+                            </li>
+                        </ul>
+                    </nav>
+                }
+            </div>
         </div>
     </div>
 </div>
 
-<!-- Edit Modal -->
+
+<!-- ===================================================
+     EDIT MODAL
+=================================================== -->
 <div class="modal fade" id="editStudent" tabindex="-1" role="dialog">
-    <div class="modal-dialog modal-xl" role="document">
+    <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Edit Student</h5>
+                <h5 class="modal-title"><i class="mdi mdi-pencil mr-2"></i> Edit Student</h5>
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
             <div class="modal-body">
                 <form id="editStudentForm">
                     <input type="hidden" id="hdnStudentId">
+                    <h6><i class="mdi mdi-account mr-1"></i> Student Information</h6>
                     <div class="row">
                         <div class="col-md-3">
                             <div class="form-group">
@@ -701,7 +602,7 @@
                         </div>
                         <div class="col-md-3">
                             <div class="form-group">
-                                <label>Contact No.</label>
+                                <label>Contact No. <span class="text-danger">*</span></label>
                                 <input type="text" class="form-control" id="txtEditContactNo" />
                             </div>
                         </div>
@@ -713,16 +614,15 @@
                         </div>
                         <div class="col-md-3">
                             <div class="form-group">
-                                <label>Education</label>
+                                <label>Education <span class="text-danger">*</span></label>
                                 <input type="text" class="form-control" id="txtEditEducation" />
                             </div>
                         </div>
                     </div>
-                    <!-- Rest of your form fields stay SAME -->
                     <div class="row">
                         <div class="col-md-3">
                             <div class="form-group">
-                                <label>Email</label>
+                                <label>Email <span class="text-danger">*</span></label>
                                 <input type="email" class="form-control" id="txtEditEmail" />
                             </div>
                         </div>
@@ -740,11 +640,12 @@
                         </div>
                         <div class="col-md-3">
                             <div class="form-group">
-                                <label>Course</label>
+                                <label>Course <span class="text-danger">*</span></label>
                                 @Html.DropDownList("courseID", new SelectList(Model.course, "CourseID", "CourseName"), "-- Select --", new { @class = "form-control", @id = "ddlEditCourseId" })
                             </div>
                         </div>
                     </div>
+                    <h6><i class="mdi mdi-map-marker mr-1"></i> Address Information</h6>
                     <div class="row">
                         <div class="col-md-3">
                             <div class="form-group">
@@ -760,7 +661,7 @@
                         </div>
                         <div class="col-md-3">
                             <div class="form-group">
-                                <label>City</label>
+                                <label>City <span class="text-danger">*</span></label>
                                 <input type="text" class="form-control" id="txtEditCity" />
                             </div>
                         </div>
@@ -786,13 +687,13 @@
                         </div>
                         <div class="col-md-3">
                             <div class="form-group">
-                                <label>State</label>
+                                <label>State <span class="text-danger">*</span></label>
                                 @Html.DropDownList("stateID", new SelectList(Model.state, "StateID", "StateName"), "-- Select --", new { @class = "form-control", @id = "ddlEditStateId" })
                             </div>
                         </div>
                         <div class="col-md-3">
                             <div class="form-group">
-                                <label>Country</label>
+                                <label>Country <span class="text-danger">*</span></label>
                                 @Html.DropDownList("countryID", new SelectList(Model.country, "CountryID", "CountryName"), "-- Select --", new { @class = "form-control", @id = "ddlEditCountryId" })
                             </div>
                         </div>
@@ -808,85 +709,110 @@
     </div>
 </div>
 
-<!-- ✅ View Modal -->
+
+<!-- ===================================================
+     VIEW MODAL
+=================================================== -->
 <div class="modal fade" id="viewStudent" tabindex="-1">
-    <div class="modal-dialog modal-xl">
+    <div class="modal-dialog">
         <div class="modal-content">
-            <div class="modal-header bg-primary text-white">
-                <h5 class="modal-title">Student Details</h5>
-                <button type="button" class="close text-white" data-dismiss="modal">&times;</button>
+            <div class="modal-header">
+                <h5 class="modal-title"><i class="mdi mdi-eye mr-2"></i> Student Details</h5>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
             <div class="modal-body">
+                <h6><i class="mdi mdi-account mr-1"></i> Student Information</h6>
                 <div class="row">
                     <div class="col-md-6">
-                        <h6 class="text-primary"><strong>👤 Student Information</strong></h6>
                         <div class="form-group">
-                            <label class="font-weight-bold">Name:</label>
-                            <p id="lblvwStudentName" class="form-control-plaintext border p-2 bg-light rounded"></p>
-                        </div>
-                        <div class="form-group">
-                            <label class="font-weight-bold">Father's Name:</label>
-                            <p id="lblvwFathersName" class="form-control-plaintext border p-2 bg-light rounded"></p>
-                        </div>
-                        <div class="form-group">
-                            <label class="font-weight-bold">Contact No:</label>
-                            <p id="lblvwContactNo" class="form-control-plaintext border p-2 bg-light rounded"></p>
-                        </div>
-                        <div class="form-group">
-                            <label class="font-weight-bold">Email:</label>
-                            <p id="lblvwEmail" class="form-control-plaintext border p-2 bg-light rounded"></p>
-                        </div>
-                        <div class="form-group">
-                            <label class="font-weight-bold">Education:</label>
-                            <p id="lblvwEducation" class="form-control-plaintext border p-2 bg-light rounded"></p>
+                            <label>Name</label>
+                            <p id="lblvwStudentName" class="form-control-plaintext"></p>
                         </div>
                     </div>
                     <div class="col-md-6">
-                        <h6 class="text-primary"><strong>📍 Address Information</strong></h6>
                         <div class="form-group">
-                            <label class="font-weight-bold">Address 1:</label>
-                            <p id="lblvwAddress1" class="form-control-plaintext border p-2 bg-light rounded"></p>
+                            <label>Father's Name</label>
+                            <p id="lblvwFathersName" class="form-control-plaintext"></p>
                         </div>
+                    </div>
+                    <div class="col-md-6">
                         <div class="form-group">
-                            <label class="font-weight-bold">Post Code:</label>
-                            <p id="lblvwPincode" class="form-control-plaintext border p-2 bg-light rounded"></p>
+                            <label>Contact No</label>
+                            <p id="lblvwContactNo" class="form-control-plaintext"></p>
                         </div>
+                    </div>
+                    <div class="col-md-6">
                         <div class="form-group">
-                            <label class="font-weight-bold">City:</label>
-                            <p id="lblvwCity" class="form-control-plaintext border p-2 bg-light rounded"></p>
+                            <label>Email</label>
+                            <p id="lblvwEmail" class="form-control-plaintext"></p>
                         </div>
+                    </div>
+                    <div class="col-md-6">
                         <div class="form-group">
-                            <label class="font-weight-bold">State:</label>
-                            <p id="lblvwState" class="form-control-plaintext border p-2 bg-light rounded"></p>
-                        </div>
-                        <div class="form-group">
-                            <label class="font-weight-bold">Country:</label>
-                            <p id="lblvwCountry" class="form-control-plaintext border p-2 bg-light rounded"></p>
+                            <label>Education</label>
+                            <p id="lblvwEducation" class="form-control-plaintext"></p>
                         </div>
                     </div>
                 </div>
-                <hr class="my-4">
+
+                <h6><i class="mdi mdi-map-marker mr-1"></i> Address Information</h6>
                 <div class="row">
                     <div class="col-md-6">
-                        <h6 class="text-warning"><strong>📞 Follow-Up 1</strong></h6>
                         <div class="form-group">
-                            <label class="font-weight-bold">Description:</label>
-                            <p id="lblvwFollowUpDesc1" class="form-control-plaintext border p-2 bg-light rounded"></p>
-                        </div>
-                        <div class="form-group">
-                            <label class="font-weight-bold">Date:</label>
-                            <p id="lblvwFollowUpDate1" class="form-control-plaintext border p-2 bg-light rounded"></p>
+                            <label>Address 1</label>
+                            <p id="lblvwAddress1" class="form-control-plaintext"></p>
                         </div>
                     </div>
                     <div class="col-md-6">
-                        <h6 class="text-warning"><strong>📞 Follow-Up 2</strong></h6>
                         <div class="form-group">
-                            <label class="font-weight-bold">Description:</label>
-                            <p id="lblvwFollowUpDesc2" class="form-control-plaintext border p-2 bg-light rounded"></p>
+                            <label>City</label>
+                            <p id="lblvwCity" class="form-control-plaintext"></p>
                         </div>
+                    </div>
+                    <div class="col-md-4">
                         <div class="form-group">
-                            <label class="font-weight-bold">Date:</label>
-                            <p id="lblvwFollowUpDate2" class="form-control-plaintext border p-2 bg-light rounded"></p>
+                            <label>Post Code</label>
+                            <p id="lblvwPincode" class="form-control-plaintext"></p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>State</label>
+                            <p id="lblvwState" class="form-control-plaintext"></p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>Country</label>
+                            <p id="lblvwCountry" class="form-control-plaintext"></p>
+                        </div>
+                    </div>
+                </div>
+
+                <h6><i class="mdi mdi-clock-outline mr-1"></i> Follow-Up Details</h6>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Follow-Up 1 Description</label>
+                            <p id="lblvwFollowUpDesc1" class="form-control-plaintext"></p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Follow-Up 1 Date</label>
+                            <p id="lblvwFollowUpDate1" class="form-control-plaintext"></p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Follow-Up 2 Description</label>
+                            <p id="lblvwFollowUpDesc2" class="form-control-plaintext"></p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Follow-Up 2 Date</label>
+                            <p id="lblvwFollowUpDate2" class="form-control-plaintext"></p>
                         </div>
                     </div>
                 </div>
@@ -899,55 +825,44 @@
 </div>
 
 
-
-
-<!-- ✅ FOLLOW UP MODAL - PERFECTLY WORKING -->
+<!-- ===================================================
+     FOLLOW UP MODAL
+=================================================== -->
 <div class="modal fade" id="followUpModal" tabindex="-1" role="dialog">
-    <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <div class="modal-header bg-warning text-dark">
+            <div class="modal-header">
                 <h5 class="modal-title">
-                    <i class="mdi mdi-clock-outline"></i> Follow Up Details
+                    <i class="mdi mdi-clock-outline mr-1"></i> Follow Up Details
                 </h5>
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
             <div class="modal-body">
-                <!-- ✅ HIDDEN STUDENT ID -->
                 <input type="hidden" id="hdnFollowupStudentId">
-
                 <form id="followUpForm">
                     <div class="row">
-                        <!-- Follow Up 1 -->
                         <div class="col-md-6">
                             <div class="card border-warning mb-3">
-                                <div class="card-header bg-warning text-dark">
-                                    <strong>📞 Follow Up 1</strong>
-                                </div>
+                                <div class="card-header bg-warning text-dark"><strong>Follow Up 1</strong></div>
                                 <div class="card-body">
                                     <div class="form-group">
                                         <label>Description <span class="text-danger">*</span></label>
-                                        <textarea class="form-control" id="followUpDesc1"
-                                                  rows="3" placeholder="Enter follow up description..."></textarea>
+                                        <textarea class="form-control" id="followUpDesc1" rows="3" placeholder="Enter follow up description..."></textarea>
                                     </div>
                                     <div class="form-group">
-                                        <label>Date</label>
+                                        <label>Date <span class="text-danger">*</span></label>
                                         <input type="date" class="form-control" id="followUpDate1">
                                     </div>
                                 </div>
                             </div>
                         </div>
-
-                        <!-- Follow Up 2 -->
                         <div class="col-md-6">
                             <div class="card border-info mb-3">
-                                <div class="card-header bg-info text-white">
-                                    <strong>📞 Follow Up 2</strong>
-                                </div>
+                                <div class="card-header bg-info text-white"><strong>Follow Up 2</strong></div>
                                 <div class="card-body">
                                     <div class="form-group">
                                         <label>Description</label>
-                                        <textarea class="form-control" id="followUpDesc2"
-                                                  rows="3" placeholder="Enter follow up description..."></textarea>
+                                        <textarea class="form-control" id="followUpDesc2" rows="3" placeholder="Enter follow up description..."></textarea>
                                     </div>
                                     <div class="form-group">
                                         <label>Date</label>
@@ -960,45 +875,30 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">
-                    <i class="mdi mdi-close"></i> Close
-                </button>
-                <button type="button" class="btn btn-warning btnFollowUpReset">
-                    <i class="mdi mdi-refresh"></i> Reset
-                </button>
-                <button type="button" class="btn btn-success" id="saveFollowUp">
-                    <i class="mdi mdi-check"></i> Save Follow Up
-                </button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-warning btnFollowUpReset">Reset</button>
+                <button type="button" class="btn btn-success" id="saveFollowUp">Save Follow Up</button>
             </div>
         </div>
     </div>
 </div>
 
 
-<!-- ✅ ADMISSION MODAL - 100% WORKING -->
-<div class="modal fade" id="admissionModal" tabindex="-1" role="dialog" aria-labelledby="addAdmissionModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-xl" role="document">
+<!-- ===================================================
+     ADMISSION MODAL
+=================================================== -->
+<div class="modal fade" id="admissionModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <div class="modal-header bg-success text-white">
-                <h5 class="modal-title">
-                    <i class="mdi mdi-account-check"></i> Add Admission
-                </h5>
-                <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+            <div class="modal-header">
+                <h5 class="modal-title"><i class="mdi mdi-account-check mr-2"></i> Add Admission</h5>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
             <div class="modal-body">
-                <!-- ✅ HIDDEN STUDENT ID -->
                 <input type="hidden" id="hdnAdmissionStudentInquiryID">
-
-                <!-- ✅ STUDENT INFO DISPLAY -->
-                <div class="alert alert-info">
-                    <strong>Student:</strong> <span id="admissionStudentName"></span>
-                </div>
-
                 <form id="addAdmissionForm">
+                    <h6><i class="mdi mdi-calendar mr-1"></i> Admission Details</h6>
                     <div class="row">
-                        <!-- Admission Date & Course -->
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label>Admission Date <span class="text-danger">*</span></label>
@@ -1008,57 +908,53 @@
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label>Course <span class="text-danger">*</span></label>
-                                @Html.DropDownList("CourseID", new SelectList(Model.course, "CourseID", "CourseName"),
-                                "-- Select Course --", new { @class = "form-control", @id = "ddlCourseId" })
+                                @Html.DropDownList("CourseID", new SelectList(Model.course, "CourseID", "CourseName"), "-- Select Course --", new { @class = "form-control", @id = "ddlCourseId" })
                             </div>
                         </div>
-
-                        <!-- Amounts -->
-                        <div class="col-md-2">
+                        <div class="col-md-3">
                             <div class="form-group">
                                 <label>Course Fee <span class="text-danger">*</span></label>
-                                <input type="number" class="form-control" id="actualAmount" min="0" required>
+                                <input type="text" class="form-control" id="actualAmount" min="0" required>
                             </div>
                         </div>
-                        <div class="col-md-2">
+                        <div class="col-md-3">
                             <div class="form-group">
                                 <label>Discount</label>
-                                <input type="number" class="form-control" id="discountAmount" min="0" value="0">
-                            </div>
-                        </div>
-                        <div class="col-md-2">
-                            <div class="form-group">
-                                <label>Paid Amount</label>
-                                <input type="number" class="form-control" id="paidAmount" min="0" value="0">
+                                <input type="text" class="form-control" id="discountAmount" min="0" value="0">
                             </div>
                         </div>
                     </div>
-
+                    <h6><i class="mdi mdi-currency-inr mr-1"></i> Payment Details</h6>
                     <div class="row">
-                        <!-- Calculated Fields (Read-only) -->
-                        <div class="col-md-2">
-                            <div class="form-group">
-                                <label>Net Amount</label>
-                                <input type="number" class="form-control bg-light" id="netAmount" readonly>
-                            </div>
-                        </div>
-                        <div class="col-md-2">
-                            <div class="form-group">
-                                <label>Pending Amount</label>
-                                <input type="number" class="form-control bg-light" id="pendingAmount" readonly>
-                            </div>
-                        </div>
-                        <div class="col-md-2">
-                            <div class="form-group">
-                                <label>Fine Amount</label>
-                                <input type="number" class="form-control" id="fineAmount" min="0" value="0">
-                            </div>
-                        </div>
-
-                        <!-- Payment Method -->
                         <div class="col-md-3">
                             <div class="form-group">
-                                <label>Payment Method</label>
+                                <label>Paid Amount</label>
+                                <input type="text" class="form-control" id="paidAmount" min="0" value="0">
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Net Amount</label>
+                                <input type="text" class="form-control bg-light" id="netAmount" readonly>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Pending Amount</label>
+                                <input type="text" class="form-control bg-light" id="pendingAmount" readonly>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Fine Amount</label>
+                                <input type="text" class="form-control" id="fineAmount" min="0" value="0">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>Payment Method <span class="text-danger">*</span></label>
                                 <select class="form-control" id="paymentMethod">
                                     <option value="">-- Select --</option>
                                     <option value="UPI">UPI</option>
@@ -1070,64 +966,118 @@
                                 </select>
                             </div>
                         </div>
-
-                        <!-- Sequence No -->
-                        <div class="col-md-3">
+                        <div class="col-md-4">
                             <div class="form-group">
-                                <label>Sequence No (Optional)</label>
+                                <label>UTR No</label>
                                 <input type="text" class="form-control" id="sequenceNo">
                             </div>
                         </div>
-                    </div>
-
-                    <!-- Payment Remark -->
-                    <div class="row">
-                        <div class="col-md-12">
+                        <div class="col-md-4">
                             <div class="form-group">
                                 <label>Payment Remark</label>
-                                <textarea class="form-control" id="paymentRemark" rows="2"
-                                          placeholder="Payment details, cheque no, transaction ID etc..."></textarea>
+                                <input type="text" class="form-control" id="paymentRemark" placeholder="Transaction ID, cheque no...">
                             </div>
                         </div>
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">
-                    <i class="mdi mdi-close"></i> Close
-                </button>
-                <button type="button" class="btn btn-warning btnAdmissionReset">
-                    <i class="mdi mdi-refresh"></i> Reset
-                </button>
-                <button type="button" class="btn btn-success" id="btnAdmissionSave">
-                    <i class="mdi mdi-check"></i> Save Admission
-                </button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-warning btnAdmissionReset">Reset</button>
+                <button type="button" class="btn btn-success" id="btnAdmissionSave">Save Admission</button>
             </div>
         </div>
     </div>
 </div>
-<!-- ✅ COMPLETE WORKING SCRIPT -->
-<!-- SCRIPTS - ALL CDN -->
+
+
+<!-- ===== SCRIPTS ===== -->
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<!-- CDN - ALL DEPENDENCIES -->
 
 <script>
-    $(document).ready(function() {
-        console.log('✅ Ready!');
+        function noAccess(type) {
+        Swal.fire({
+            icon: 'error',
+            title: 'Access Denied',
+            text: 'You do not have ' + type + ' permission for Student Inquiry module.',
+            confirmButtonColor: '#dc2626'
+        });
+    }
+    $(document).ready(function () {
 
-        // EDIT BUTTON - FIXED PROPERTY MAPPING
-        $(document).on('click', '.editByStudentInquiryId', function() {
+        // ── HELPERS ──────────────────────────────────────────
+        function showError(input, message) {
+            $(input).addClass('is-invalid');
+            if (!$(input).next('.invalid-feedback').length) {
+                $(input).after('<div class="invalid-feedback">' + message + '</div>');
+            }
+        }
+
+        function clearErrors() {
+            $('.form-control').removeClass('is-invalid');
+            $('.invalid-feedback').remove();
+        }
+
+        function isValidEmail(email) {
+            return /^[^\s@@]+@@[^\s@@]+\.[^\s@@]+$/.test(email);
+        }
+
+        function isValidPhone(phone) {
+            return /^[6-9]\d{9}$/.test(phone);
+        }
+
+        // Flash the updated table row green for 1.4 s
+        function flashRow(studentId) {
+            var $row = $('tr[data-student-id="' + studentId + '"]');
+            $row.addClass('row-updated');
+            setTimeout(function () { $row.removeClass('row-updated'); }, 1500);
+        }
+
+        // Toast notification (top-right, no button)
+        function toast(icon, title, text) {
+            Swal.fire({
+                icon: icon,
+                title: title,
+                text: text,
+                timer: 1800,
+                showConfirmButton: false,
+                toast: true,
+                position: 'top-end'
+            });
+        }
+
+        $(document).on('input change', '.form-control', function () {
+            $(this).removeClass('is-invalid');
+            $(this).next('.invalid-feedback').remove();
+        });
+
+        // ── AJAX PAGINATION ──────────────────────────────────
+        var _pageSize = @(ViewBag.PageSize ?? 10);
+
+        $(document).on('click', '#ajaxPagination .page-link', function (e) {
+            e.preventDefault();
+            var $item = $(this).closest('.page-item');
+            if ($item.hasClass('disabled') || $item.hasClass('active')) return;
+            var page = $(this).data('page');
+
+            $.get('@Url.Action("List", "StudentsList")', { page: page, pageSize: _pageSize })
+            .done(function (html) {
+                var $newWrapper = $($.parseHTML(html, document, true)).find('#tableWrapper');
+                if ($newWrapper.length) { $('#tableWrapper').html($newWrapper.html()); }
+            })
+            .fail(function () { Swal.fire('Error', 'Failed to load page.', 'error'); });
+        });
+
+        // ── EDIT — open modal ────────────────────────────────
+        $(document).on('click', '.editByStudentInquiryId', function () {
             var id = $(this).data('edstudent-id');
-            console.log('🔄 Edit ID:', id);
 
             $.get('@Url.Action("GetStudentInquiry", "StudentsList")', { studentInquiryID: id })
-            .done(function(data) {
-                console.log('📋 Edit Data:', data);
-                if(data && !data.error) {
-                    // ✅ FIXED: Use exact property names from your console
+            .done(function (data) {
+                if (data && !data.error) {
                     $('#hdnStudentId').val(data.studentInquiryID);
                     $('#txtEditStudentName').val(data.nameOfStudent);
                     $('#txtEditContactNo').val(data.contactNo);
@@ -1143,512 +1093,302 @@
                     $('#txtEditAddress2').val(data.address2);
                     $('#txtEditCity').val(data.city);
                     $('#txtEditPincode').val(data.postcode);
-
-                    // Dates - FIXED
-                    if(data.enrolledDate) {
-                        var d = new Date(data.enrolledDate);
-                        $('#enrolledDateEdit').val(d.toISOString().split('T')[0]);
-                    }
-                    if(data.completionDate) {
-                        var d = new Date(data.completionDate);
-                        $('#completionDateEdit').val(d.toISOString().split('T')[0]);
-                    }
-
-                    // ✅ MANUAL MODAL SHOW (fixes Bootstrap conflict)
+                    if (data.enrolledDate)   { $('#enrolledDateEdit').val(new Date(data.enrolledDate).toISOString().split('T')[0]); }
+                    if (data.completionDate) { $('#completionDateEdit').val(new Date(data.completionDate).toISOString().split('T')[0]); }
                     $('#editStudent').modal('show');
                 }
-            });
+            })
+            .fail(function () { Swal.fire('Error', 'Failed to load student data.', 'error'); });
         });
 
-        // VIEW BUTTON - FIXED
-        $(document).on('click', '.viewByStudentInquiryId', function() {
-            var id = $(this).data('vwstudent-id');
-            console.log('👁️ View ID:', id);
+        // ── EDIT SAVE — instant row update, NO page reload ───
+        $(document).on('click', '#btnEditStudentSave', function () {
+            clearErrors();
+            var isValid = true;
 
-            $.get('@Url.Action("GetStudentInquiry", "StudentsList")', { studentInquiryID: id })
-            .done(function(data) {
-                console.log('👁️ View Data:', data);
-                if(data && !data.error) {
-                    // ✅ FIXED: Use exact property names
-                    $('#lblvwStudentName').text(data.nameOfStudent || 'N/A');
-                    $('#lblvwFathersName').text(data.fathersName || 'N/A');
-                    $('#lblvwContactNo').text(data.contactNo || 'N/A');
-                    $('#lblvwEmail').text(data.email || 'N/A');
-                    $('#lblvwEducation').text(data.education || 'N/A');
-                    $('#lblvwAddress1').text(data.address1 || 'N/A');
-                    $('#lblvwPincode').text(data.postcode || 'N/A');
-                    $('#lblvwCity').text(data.city || 'N/A');
-                    $('#lblvwState').text(data.state || 'N/A');
-                    $('#lblvwCountry').text(data.country || 'N/A');
-                    $('#lblvwFollowUpDesc1').text(data.followUpDesc1 || 'N/A');
-                    $('#lblvwFollowUpDate1').text(data.followUpDate1 || 'N/A');
-                    $('#lblvwFollowUpDesc2').text(data.followUpDesc2 || 'N/A');
-                    $('#lblvwFollowUpDate2').text(data.followUpDate2 || 'N/A');
+            if (!$('#txtEditStudentName').val().trim())  { showError('#txtEditStudentName', 'Name is required'); isValid = false; }
 
-                    // ✅ MANUAL MODAL SHOW
-                    $('#viewStudent').modal('show');
-                }
-            });
-        });
+            var contact = $('#txtEditContactNo').val().trim();
+            if (!contact)                { showError('#txtEditContactNo', 'Contact No. is required'); isValid = false; }
+            else if (!isValidPhone(contact)) { showError('#txtEditContactNo', 'Enter valid 10-digit mobile number'); isValid = false; }
 
-        // EDIT SAVE - FIXED PROPERTY NAMES
-        $(document).on('click', '#btnEditStudentSave', function() {
-            var data = {
-                studentInquiryID: parseInt($('#hdnStudentId').val()) || 0,
-                nameOfStudent: $('#txtEditStudentName').val().trim(),
-                fathersName: $('#txtEditFatherName').val().trim(),
-                companyName: $('#txtEditCompanyName').val().trim(),
-                education: $('#txtEditEducation').val().trim(),
-                contactNo: $('#txtEditContactNo').val().trim(),
-                designation: $('#txtEditDesignation').val().trim(),
-                email: $('#txtEditEmail').val().trim(),
-                stateID: parseInt($('#ddlEditStateId').val()) || 0,
-                countryID: parseInt($('#ddlEditCountryId').val()) || 0,
-                courseID: parseInt($('#ddlEditCourseId').val()) || 0,
-                address1: $('#txtEditStudentAddress1').val().trim(),
-                address2: $('#txtEditAddress2').val().trim(),
-                city: $('#txtEditCity').val().trim(),
-                postcode: $('#txtEditPincode').val().trim(),
-                enrolledDate: $('#enrolledDateEdit').val() || null,
-                completionDate: $('#completionDateEdit').val() || null,
+            var email = $('#txtEditEmail').val().trim();
+            if (!email)                  { showError('#txtEditEmail', 'Email is required'); isValid = false; }
+            else if (!isValidEmail(email)) { showError('#txtEditEmail', 'Enter a valid email address'); isValid = false; }
+
+            if (!$('#txtEditEducation').val().trim()) { showError('#txtEditEducation', 'Education is required'); isValid = false; }
+            if (!$('#ddlEditCourseId').val())         { showError('#ddlEditCourseId', 'Please select a course'); isValid = false; }
+            if (!$('#ddlEditStateId').val())          { showError('#ddlEditStateId', 'Please select a state'); isValid = false; }
+            if (!$('#ddlEditCountryId').val())        { showError('#ddlEditCountryId', 'Please select a country'); isValid = false; }
+            if (!$('#txtEditCity').val().trim())      { showError('#txtEditCity', 'City is required'); isValid = false; }
+
+            var pin = $('#txtEditPincode').val().trim();
+            if (pin && !/^\d{6}$/.test(pin)) { showError('#txtEditPincode', 'Enter valid 6-digit pincode'); isValid = false; }
+
+            if (!isValid) {
+                Swal.fire({ icon: 'warning', title: 'Validation Error', text: 'Please fix the highlighted fields.', confirmButtonColor: '#4e73df' });
+                return;
+            }
+
+            var studentId = parseInt($('#hdnStudentId').val()) || 0;
+            var newName   = $('#txtEditStudentName').val().trim();
+            var newEdu    = $('#txtEditEducation').val().trim();
+
+            var payload = {
+                studentInquiryID: studentId,
+                nameOfStudent:    newName,
+                fathersName:      $('#txtEditFatherName').val().trim(),
+                companyName:      $('#txtEditCompanyName').val().trim(),
+                education:        newEdu,
+                contactNo:        contact,
+                designation:      $('#txtEditDesignation').val().trim(),
+                email:            email,
+                stateID:          parseInt($('#ddlEditStateId').val()) || 0,
+                countryID:        parseInt($('#ddlEditCountryId').val()) || 0,
+                courseID:         parseInt($('#ddlEditCourseId').val()) || 0,
+                address1:         $('#txtEditStudentAddress1').val().trim(),
+                address2:         $('#txtEditAddress2').val().trim(),
+                city:             $('#txtEditCity').val().trim(),
+                postcode:         pin,
+                enrolledDate:     $('#enrolledDateEdit').val() || null,
+                completionDate:   $('#completionDateEdit').val() || null,
                 isActive: 1,
                 isDeleted: 0
             };
 
-            console.log('💾 Save Data:', data);
-
-            $(this).prop('disabled', true).text('Saving...');
+            $('#btnEditStudentSave').prop('disabled', true).text('Saving...');
 
             $.ajax({
                 url: '@Url.Action("Edit", "StudentsList")',
                 method: 'POST',
                 contentType: 'application/json',
-                data: JSON.stringify(data),
-                success: function(result) {
-                    console.log('✅ Save Result:', result);
-                    if(result === "success") {
-                        alert('✅ Updated Successfully!');
+                data: JSON.stringify(payload),
+                success: function (result) {
+                    if (result === "success") {
+                        // 1. Update the row in-place
+                        var $row = $('tr[data-student-id="' + studentId + '"]');
+                        $row.find('.col-student-name').text(newName);
+                        $row.find('.col-education').text(newEdu);
+
+                        // 2. Close modal instantly
                         $('#editStudent').modal('hide');
-                        location.reload();
+
+                        // 3. Flash the row
+                        flashRow(studentId);
+
+                        // 4. Small toast — no page reload
+                        toast('success', 'Updated!', 'Student updated successfully.');
                     } else {
-                        alert('❌ ' + result);
+                        Swal.fire('Error', result, 'error');
                     }
                 },
-                error: function(xhr) {
-                    console.error('❌ Save Error:', xhr.responseText);
-                    alert('❌ Error: ' + xhr.responseText);
-                },
-                complete: function() {
-                    $('#btnEditStudentSave').prop('disabled', false).text('Save Changes');
-                }
+                error: function (xhr) { Swal.fire('Error', 'Server error: ' + xhr.responseText, 'error'); },
+                complete: function () { $('#btnEditStudentSave').prop('disabled', false).text('Save Changes'); }
             });
         });
 
-        // Reset
-        $(document).on('click', '.btnStudentReset', function() {
+        $(document).on('click', '.btnStudentReset', function () {
+            clearErrors();
             $('#editStudentForm')[0].reset();
             $('#hdnStudentId').val('');
         });
-    });
 
+        // ── VIEW ─────────────────────────────────────────────
+        $(document).on('click', '.viewByStudentInquiryId', function () {
+            var id = $(this).data('vwstudent-id');
 
-
-        // ✅ FOLLOW UP BUTTON - COMPLETE WORKING
-    $(document).on('click', '.followUp', function() {
-        var studentId = $(this).data('follow-up-id'); // Fixed data attribute
-        console.log('📞 FollowUp ID:', studentId);
-
-        if (!studentId) {
-            alert('❌ Invalid Student ID');
-            return;
-        }
-
-        // Load existing follow-up data
-        $.get('@Url.Action("GetStudentInquiry", "StudentsList")', { studentInquiryID: studentId })
-        .done(function(data) {
-            console.log('📞 FollowUp Data:', data);
-            $('#hdnFollowupStudentId').val(data.studentInquiryID);
-
-            // Pre-fill existing data
-            $('#followUpDesc1').val(data.followUpDesc1 || '');
-            $('#followUpDate1').val(data.followUpDate1 ? new Date(data.followUpDate1).toISOString().split('T')[0] : '');
-            $('#followUpDesc2').val(data.followUpDesc2 || '');
-            $('#followUpDate2').val(data.followUpDate2 ? new Date(data.followUpDate2).toISOString().split('T')[0] : '');
-
-            $('#followUpModal').modal('show');
-        })
-        .fail(function() {
-            alert('Error loading student data');
-        });
-    });
-
-    // ✅ FOLLOW UP SAVE - COMPLETE WORKING
-    $(document).on('click', '#saveFollowUp', function() {
-        var studentId = parseInt($('#hdnFollowupStudentId').val());
-        if (!studentId) {
-            alert('❌ Student ID missing');
-            return;
-        }
-
-        var followUpData = {
-            StudentInquiryID: studentId,
-            FollowUpDesc1: $('#followUpDesc1').val().trim(),
-            FollowUpDate1: $('#followUpDate1').val() || null,
-            FollowUpDesc2: $('#followUpDesc2').val().trim(),
-            FollowUpDate2: $('#followUpDate2').val() || null
-        };
-
-        console.log('💾 Saving FollowUp:', followUpData);
-        $(this).prop('disabled', true).text('Saving...');
-
-        $.ajax({
-            url: '@Url.Action("SaveFollowUp", "StudentsList")',
-            method: 'POST',
-            contentType: 'application/json',
-            data: JSON.stringify(followUpData),
-            dataType: 'json',
-            success: function(response) {
-                if (response === "success") {
-                    alert('✅ Follow-up saved successfully!');
-                    $('#followUpModal').modal('hide');
-                    location.reload();
-                } else {
-                    alert('❌ ' + response);
+            $.get('@Url.Action("GetStudentInquiry", "StudentsList")', { studentInquiryID: id })
+            .done(function (data) {
+                if (data && !data.error) {
+                    $('#lblvwStudentName').text(data.nameOfStudent  || 'N/A');
+                    $('#lblvwFathersName').text(data.fathersName    || 'N/A');
+                    $('#lblvwContactNo').text(data.contactNo        || 'N/A');
+                    $('#lblvwEmail').text(data.email                || 'N/A');
+                    $('#lblvwEducation').text(data.education        || 'N/A');
+                    $('#lblvwAddress1').text(data.address1          || 'N/A');
+                    $('#lblvwCity').text(data.city                  || 'N/A');
+                    $('#lblvwPincode').text(data.postcode           || 'N/A');
+                    $('#lblvwState').text(data.state                || 'N/A');
+                    $('#lblvwCountry').text(data.country            || 'N/A');
+                    $('#lblvwFollowUpDesc1').text(data.followUpDesc1 || 'N/A');
+                    $('#lblvwFollowUpDate1').text(data.followUpDate1 || 'N/A');
+                    $('#lblvwFollowUpDesc2').text(data.followUpDesc2 || 'N/A');
+                    $('#lblvwFollowUpDate2').text(data.followUpDate2 || 'N/A');
+                    $('#viewStudent').modal('show');
                 }
-            },
-            error: function(xhr) {
-                console.error('❌ FollowUp Error:', xhr.responseText);
-                alert('❌ Error: ' + xhr.responseText);
-            },
-            complete: function() {
-                $('#saveFollowUp').prop('disabled', false).text('Submit');
+            })
+            .fail(function () { Swal.fire('Error', 'Failed to load student details.', 'error'); });
+        });
+
+        // ── FOLLOW UP — open modal ───────────────────────────
+        $(document).on('click', '.followUp', function () {
+            var studentId = $(this).data('follow-up-id');
+            if (!studentId) { Swal.fire('Error', 'Invalid Student ID', 'error'); return; }
+
+            $.get('@Url.Action("GetStudentInquiry", "StudentsList")', { studentInquiryID: studentId })
+            .done(function (data) {
+                $('#hdnFollowupStudentId').val(data.studentInquiryID);
+                $('#followUpDesc1').val(data.followUpDesc1 || '');
+                $('#followUpDate1').val(data.followUpDate1 ? new Date(data.followUpDate1).toISOString().split('T')[0] : '');
+                $('#followUpDesc2').val(data.followUpDesc2 || '');
+                $('#followUpDate2').val(data.followUpDate2 ? new Date(data.followUpDate2).toISOString().split('T')[0] : '');
+                $('#followUpModal').modal('show');
+            })
+            .fail(function () { Swal.fire('Error', 'Failed to load follow-up data.', 'error'); });
+        });
+
+        // ── FOLLOW UP SAVE — instant close, NO page reload ───
+        $(document).on('click', '#saveFollowUp', function () {
+            clearErrors();
+            var isValid = true;
+
+            if (!$('#followUpDesc1').val().trim()) { showError('#followUpDesc1', 'Follow-Up 1 description required'); isValid = false; }
+            if (!$('#followUpDate1').val())         { showError('#followUpDate1', 'Follow-Up 1 date required');       isValid = false; }
+
+            var desc2 = $('#followUpDesc2').val().trim();
+            var date2 = $('#followUpDate2').val();
+            if (desc2 && !date2) { showError('#followUpDate2', 'Select date for Follow-Up 2');      isValid = false; }
+            if (date2 && !desc2) { showError('#followUpDesc2', 'Enter description for Follow-Up 2'); isValid = false; }
+
+            if (!isValid) {
+                Swal.fire({ icon: 'warning', title: 'Validation Error', text: 'Please fix the highlighted fields.', confirmButtonColor: '#f6c23e' });
+                return;
             }
+
+            var studentId = parseInt($('#hdnFollowupStudentId').val());
+            if (!studentId) { Swal.fire('Error', 'Student ID missing', 'error'); return; }
+
+            var followUpData = {
+                StudentInquiryID: studentId,
+                FollowUpDesc1:    $('#followUpDesc1').val().trim(),
+                FollowUpDate1:    $('#followUpDate1').val() || null,
+                FollowUpDesc2:    $('#followUpDesc2').val().trim(),
+                FollowUpDate2:    $('#followUpDate2').val() || null
+            };
+
+            $('#saveFollowUp').prop('disabled', true).text('Saving...');
+
+            $.ajax({
+                url: '@Url.Action("SaveFollowUp", "StudentsList")',
+                method: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify(followUpData),
+                dataType: 'json',
+                success: function (response) {
+                    if (response === "success") {
+                        $('#followUpModal').modal('hide');
+                        flashRow(studentId);
+                        toast('success', 'Saved!', 'Follow-up saved successfully.');
+                    } else {
+                        Swal.fire('Error', response, 'error');
+                    }
+                },
+                error: function (xhr) { Swal.fire('Error', xhr.responseText, 'error'); },
+                complete: function () { $('#saveFollowUp').prop('disabled', false).text('Save Follow Up'); }
+            });
         });
-    });
 
-
-    function showError(input, message) {
-    $(input).addClass('is-invalid');
-
-    if (!$(input).next('.invalid-feedback').length) {
-        $(input).after(`<div class="invalid-feedback">${message}</div>`);
-    }
-}
-
-function clearError(input) {
-    $(input).removeClass('is-invalid');
-    $(input).next('.invalid-feedback').remove();
-}
-
-function isValidEmail(email) {
-    return /^[^\s@@]+@@[^\s@@]+\.[^\s@@]+$/.test(email);
-}
-
-function isValidNumber(num) {
-    return /^[0-9]+$/.test(num);
-}
-    $(document).on('click', '#btnEditStudentSave', function () {
-
-        let isValid = true;
-
-        // Clear old errors
-        $('.form-control').removeClass('is-invalid');
-        $('.invalid-feedback').remove();
-
-        // Name
-        if (!$('#txtEditStudentName').val().trim()) {
-            showError('#txtEditStudentName', 'Name is required');
-            isValid = false;
-        }
-
-        // Contact No
-        let contact = $('#txtEditContactNo').val().trim();
-        if (contact && (!isValidNumber(contact) || contact.length < 10)) {
-            showError('#txtEditContactNo', 'Enter valid 10 digit number');
-            isValid = false;
-        }
-
-        // Email
-        let email = $('#txtEditEmail').val().trim();
-        if (email && !isValidEmail(email)) {
-            showError('#txtEditEmail', 'Invalid email');
-            isValid = false;
-        }
-
-        // Education
-        if (!$('#txtEditEducation').val().trim()) {
-            showError('#txtEditEducation', 'Education required');
-            isValid = false;
-        }
-
-        // Course
-        if (!$('#ddlEditCourseId').val()) {
-            showError('#ddlEditCourseId', 'Select course');
-            isValid = false;
-        }
-
-        // State
-        if (!$('#ddlEditStateId').val()) {
-            showError('#ddlEditStateId', 'Select state');
-            isValid = false;
-        }
-
-        // Country
-        if (!$('#ddlEditCountryId').val()) {
-            showError('#ddlEditCountryId', 'Select country');
-            isValid = false;
-        }
-
-        // City
-        if (!$('#txtEditCity').val().trim()) {
-            showError('#txtEditCity', 'City required');
-            isValid = false;
-        }
-
-        // Pincode
-        let pin = $('#txtEditPincode').val().trim();
-        if (pin && !isValidNumber(pin)) {
-            showError('#txtEditPincode', 'Invalid pincode');
-            isValid = false;
-        }
-
-        if (!isValid) return;
-
-        // 👉 Continue your AJAX save here
-        });$(document).on('click', '#saveFollowUp', function () {
-
-        let isValid = true;
-
-        $('.form-control').removeClass('is-invalid');
-        $('.invalid-feedback').remove();
-
-        // FollowUp 1 (Required)
-        if (!$('#followUpDesc1').val().trim()) {
-            showError('#followUpDesc1', 'Follow-up 1 description required');
-            isValid = false;
-        }
-
-        if (!$('#followUpDate1').val()) {
-            showError('#followUpDate1', 'Date required');
-            isValid = false;
-        }
-
-        // FollowUp 2 (Optional but validate if filled)
-        let desc2 = $('#followUpDesc2').val().trim();
-        let date2 = $('#followUpDate2').val();
-
-        if (desc2 && !date2) {
-            showError('#followUpDate2', 'Select date for Follow-up 2');
-            isValid = false;
-        }
-
-        if (date2 && !desc2) {
-            showError('#followUpDesc2', 'Enter description for Follow-up 2');
-            isValid = false;
-        }
-
-        if (!isValid) return;
-
-        // 👉 Continue AJAX
-        });$(document).on('click', '#btnAdmissionSave', function () {
-
-        let isValid = true;
-
-        $('.form-control').removeClass('is-invalid');
-        $('.invalid-feedback').remove();
-
-        let actual = parseFloat($('#actualAmount').val()) || 0;
-        let discount = parseFloat($('#discountAmount').val()) || 0;
-        let paid = parseFloat($('#paidAmount').val()) || 0;
-        let fine = parseFloat($('#fineAmount').val()) || 0;
-
-        // Admission Date
-        if (!$('#admissionDate').val()) {
-            showError('#admissionDate', 'Select date');
-            isValid = false;
-        }
-
-        // Course
-        if (!$('#ddlCourseId').val()) {
-            showError('#ddlCourseId', 'Select course');
-            isValid = false;
-        }
-
-        // Actual Amount
-        if (actual <= 0) {
-            showError('#actualAmount', 'Enter valid amount');
-            isValid = false;
-        }
-
-        // Discount
-        if (discount < 0) {
-            showError('#discountAmount', 'Invalid discount');
-            isValid = false;
-        }
-
-        // Paid > Net check
-        let net = actual - discount + fine;
-        if (paid > net) {
-            showError('#paidAmount', 'Paid cannot exceed net amount');
-            isValid = false;
-        }
-
-        // Payment Method
-        if (!$('#paymentMethod').val()) {
-            showError('#paymentMethod', 'Select payment method');
-            isValid = false;
-        }
-
-        // Sequence No (optional but validate length)
-        let seq = $('#sequenceNo').val().trim();
-        if (seq && seq.length < 3) {
-            showError('#sequenceNo', 'Too short');
-            isValid = false;
-        }
-
-        if (!isValid) return;
-
-        // 👉 Continue AJAX save
-    });
-        $(document).on('input change', '.form-control', function () {
-        clearError(this);
-    });
-
-
-        // ✅ ADMISSION BUTTON - PERFECTLY WORKING
-    $(document).on('click', '.admission', function() {
-        var studentId = $(this).data('admissionId') || $(this).attr('data-admissionId');
-        console.log('🎓 Admission ID:', studentId);
-
-        $.get('@Url.Action("GetStudentInquiry", "StudentsList")', { studentInquiryID: studentId })
-        .done(function(data) {
-            console.log('🎓 Student Data:', data);
-            $('#hdnAdmissionStudentInquiryID').val(data.studentInquiryID);
-
-            // Auto-fill student info (optional)
-            // $('#studentNameDisplay').text(data.nameOfStudent);
-
-            $('#admissionModal').modal('show');
-        })
-        .fail(function() {
-            alert('Error loading student data');
+        $(document).on('click', '.btnFollowUpReset', function () {
+            clearErrors();
+            $('#followUpForm')[0].reset();
         });
-    });
 
+        // ── ADMISSION — open modal ───────────────────────────
+        $(document).on('click', '.admission', function () {
+            var studentId = $(this).attr('data-admissionId');
 
-        // ✅ AUTO-CALCULATE AMOUNTS (Real-time)
-    $(document).on('input', '#actualAmount, #discountAmount, #paidAmount, #fineAmount', function() {
-        calculateAmounts();
-    });
+            $.get('@Url.Action("GetStudentInquiry", "StudentsList")', { studentInquiryID: studentId })
+            .done(function (data) {
+                $('#hdnAdmissionStudentInquiryID').val(data.studentInquiryID);
+                $('#addAdmissionForm')[0].reset();
+                calculateAmounts();
+                $('#admissionModal').modal('show');
+            })
+            .fail(function () { Swal.fire('Error', 'Failed to load student data.', 'error'); });
+        });
 
-    function calculateAmounts() {
-        var actual = parseFloat($('#actualAmount').val()) || 0;
-        var discount = parseFloat($('#discountAmount').val()) || 0;
-        var fine = parseFloat($('#fineAmount').val()) || 0;
-        var paid = parseFloat($('#paidAmount').val()) || 0;
+        $(document).on('input', '#actualAmount, #discountAmount, #paidAmount, #fineAmount', calculateAmounts);
 
-        var net = actual - discount + fine;
-        var pending = net - paid;
+        function calculateAmounts() {
+            var actual   = parseFloat($('#actualAmount').val())   || 0;
+            var discount = parseFloat($('#discountAmount').val()) || 0;
+            var fine     = parseFloat($('#fineAmount').val())     || 0;
+            var paid     = parseFloat($('#paidAmount').val())     || 0;
+            var net      = actual - discount + fine;
+            $('#netAmount').val(net.toFixed(2));
+            $('#pendingAmount').val((net - paid).toFixed(2));
+        }
 
-        $('#netAmount').val(net.toFixed(2));
-        $('#pendingAmount').val(pending.toFixed(2));
-    }
+        // ── ADMISSION SAVE — instant close, NO page reload ───
+        $(document).on('click', '#btnAdmissionSave', function () {
+            clearErrors();
+            var isValid = true;
 
-    // ✅ ADMISSION BUTTON
-    $(document).on('click', '.admission', function() {
-        var studentId = $(this).attr('data-admissionId');
-        console.log('🎓 Admission Student ID:', studentId);
+            var actual   = parseFloat($('#actualAmount').val())   || 0;
+            var discount = parseFloat($('#discountAmount').val()) || 0;
+            var paid     = parseFloat($('#paidAmount').val())     || 0;
+            var fine     = parseFloat($('#fineAmount').val())     || 0;
+            var net      = actual - discount + fine;
 
-        $.get('@Url.Action("GetStudentInquiry", "StudentsList")', { studentInquiryID: studentId })
-        .done(function(data) {
-            console.log('🎓 Student Data:', data);
-            $('#hdnAdmissionStudentInquiryID').val(data.studentInquiryID);
-            $('#admissionStudentName').text(data.nameOfStudent + ' (' + data.contactNo + ')');
+            if (!$('#admissionDate').val()) { showError('#admissionDate', 'Select admission date'); isValid = false; }
+            if (!$('#ddlCourseId').val())   { showError('#ddlCourseId', 'Select a course');         isValid = false; }
+            if (actual <= 0)                { showError('#actualAmount', 'Enter valid course fee'); isValid = false; }
+            if (discount < 0)               { showError('#discountAmount', 'Invalid discount');     isValid = false; }
+            if (!$('#paymentMethod').val()) { showError('#paymentMethod', 'Select payment method'); isValid = false; }
+            if (paid > net)                 { showError('#paidAmount', 'Paid amount cannot exceed net amount'); isValid = false; }
 
-            // Reset form
+            if (!isValid) {
+                Swal.fire({ icon: 'warning', title: 'Validation Error', text: 'Please fix the highlighted fields.', confirmButtonColor: '#28a745' });
+                return;
+            }
+
+            var studentId = parseInt($('#hdnAdmissionStudentInquiryID').val());
+
+            var payload = {
+                StudentInquiryID: studentId,
+                Admission_Date:   $('#admissionDate').val(),
+                CourseID:         parseInt($('#ddlCourseId').val()),
+                Actual_Amount:    actual,
+                Discount_Amount:  discount,
+                Fine_Amount:      fine,
+                Net_Amount:       net,
+                Pending_Amount:   net - paid,
+                Paid_Amount:      paid,
+                Payment_Method:   $('#paymentMethod').val(),
+                Payment_Remark:   $('#paymentRemark').val().trim(),
+                SequenceNo:       $('#sequenceNo').val().trim(),
+                Created_By:       "StudentsList",
+                Updated_By:       "StudentsList"
+            };
+
+            $('#btnAdmissionSave').prop('disabled', true).text('Saving...');
+
+            $.ajax({
+                url: '@Url.Action("SaveStudentAdmission", "StudentsList")',
+                method: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify(payload),
+                success: function (result) {
+                    if (result.toLowerCase() === "success") {
+                        $('#admissionModal').modal('hide');
+                        flashRow(studentId);
+                        toast('success', 'Admitted!', 'Admission saved successfully.');
+                    } else if (result.toLowerCase() === "duplicate") {
+                        Swal.fire('Duplicate', 'Admission already exists for this student!', 'warning');
+                    } else {
+                        Swal.fire('Error', result, 'error');
+                    }
+                },
+                error: function (xhr) { Swal.fire('Error', xhr.responseText, 'error'); },
+                complete: function () { $('#btnAdmissionSave').prop('disabled', false).text('Save Admission'); }
+            });
+        });
+
+        $(document).on('click', '.btnAdmissionReset', function () {
+            clearErrors();
             $('#addAdmissionForm')[0].reset();
-            $('#actualAmount').val('');
-            calculateAmounts();
-
-            $('#admissionModal').modal('show');
-        })
-        .fail(function(xhr) {
-            alert('Error loading student: ' + xhr.responseText);
+            $('#netAmount, #pendingAmount').val('');
         });
-    });
 
-    // ✅ SAVE ADMISSION
-    $(document).on('click', '#btnAdmissionSave', function() {
-        // Validation
-        if (!$('#admissionDate').val() || !$('#ddlCourseId').val() || !$('#actualAmount').val()) {
-            alert('Please fill mandatory fields: Date, Course, Course Fee');
-            return;
-        }
-
-          var data = {
-        StudentInquiryID: parseInt($('#hdnAdmissionStudentInquiryID').val()),
-        Admission_Date: $('#admissionDate').val(),
-        CourseID: parseInt($('#ddlCourseId').val()),
-        Actual_Amount: parseInt($('#actualAmount').val()),
-        Discount_Amount: parseInt($('#discountAmount').val()) || 0,
-        Fine_Amount: parseInt($('#fineAmount').val()) || 0,
-        Net_Amount: parseFloat($('#netAmount').val()) || 0,
-        Pending_Amount: parseFloat($('#pendingAmount').val()) || 0,
-        Paid_Amount: parseInt($('#paidAmount').val()) || 0,
-        Payment_Method: $('#paymentMethod').val(),
-        Payment_Remark: $('#paymentRemark').val().trim(),
-        SequenceNo: $('#sequenceNo').val().trim(),
-        Created_By: "StudentsList",
-        Updated_By: "StudentsList"
-    };
-        console.log('💰 Saving Admission:', data);
-        $(this).prop('disabled', true).html('<i class="mdi mdi-loading mdi-spin"></i> Saving...');
-
-        $.ajax({
-              url: '@Url.Action("SaveStudentAdmission", "StudentsList")',
-            method: 'POST',
-            contentType: 'application/json',
-            data: JSON.stringify(data),
-            success: function(result) {
-                console.log('✅ Result:', result);
-                if (result.toLowerCase() === "success") {
-                    alert('✅ Admission saved successfully!');
-                    $('#admissionModal').modal('hide');
-                    setTimeout(() => location.reload(), 500);
-                } else if (result.toLowerCase() === "duplicate") {
-                    alert('⚠️ Admission already exists for this student!');
-                } else {
-                    alert('❌ ' + result);
-                }
-            },
-            error: function(xhr) {
-                console.error('❌ Error:', xhr.responseText);
-                alert('❌ Error: ' + xhr.responseText);
-            },
-            complete: function() {
-                $('#btnAdmissionSave').prop('disabled', false).html('<i class="mdi mdi-check"></i> Save Admission');
-            }
-        });
     });
-
-    // ✅ RESET FORM
-    $(document).on('click', '.btnAdmissionReset', function() {
-        $('#addAdmissionForm')[0].reset();
-        $('#netAmount, #pendingAmount').val('');
-        $('#hdnAdmissionStudentInquiryID').val('');
-        $('#admissionStudentName').text('');
-    });
-        // ✅ ENHANCE VIEW MODAL ANIMATION
-    $('#viewStudent').on('shown.bs.modal', function () {
-        $(this).find('.form-control-plaintext').each(function() {
-            $(this).addClass('animate__animated animate__fadeInUp');
-        });
-    });
-    // ✅ ENHANCE ADMISSION MODAL
-    $('#admissionModal').on('shown.bs.modal', function () {
-        $('#admissionDate').focus();
-        $('.form-control').addClass('animate__animated animate__fadeInUp');
-    });
-    
-  
 </script>

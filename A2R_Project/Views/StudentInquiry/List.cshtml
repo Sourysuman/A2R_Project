@@ -207,6 +207,18 @@
         padding-top: 6px;
         padding-bottom: 6px;
     }
+
+    #ddlLeadType {
+        max-width: 70%; /* ✅ Same as #ddlAddCourseId */
+        height: 38px; /* ✅ Same dropdown height */
+        padding-top: 6px; /* ✅ Same padding */
+        padding-bottom: 6px; /* ✅ Same padding */
+    }
+
+    /* Perfect alignment for Row 6 */
+    #ddlAddCourseId, #ddlLeadType {
+        max-width: 90% !important; /* ✅ Override for consistency */
+    }
 </style>
 
 <div class="col-12">
@@ -223,6 +235,7 @@
      color:#0f5132;
      border:1px solid #badbcc;
      font-weight:600;">
+
                     🎉 Student Inquiry submitted successfully!
                 </div>
                 <!-- Row 1: Name, Father, Company -->
@@ -343,7 +356,7 @@
                 <div class="row">
                     <div class="col-md-4">
                         <div class="form-group">
-                            <label>Enrolled Date <span class="mandatoryfield">*</span></label>
+                            <label>Inquiry Date <span class="mandatoryfield">*</span></label>
                             <input type="date" class="form-control" id="addEnrolledDate" name="EnrolledDate" />
                             <span class="validationMessage" id="msgEnrolledDatevalidation"></span>
                         </div>
@@ -366,7 +379,7 @@
 
                 <!-- Row 6: Course + Buttons -->
                 <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                         <div class="form-group">
                             <label>Course <span class="mandatoryfield">*</span></label>
                             <select class="form-control" id="ddlAddCourseId" name="CourseID">
@@ -382,8 +395,38 @@
                             <span class="validationMessage" id="msgCoursevalidation"></span>
                         </div>
                     </div>
-                    <div class="col-md-6 text-right">
-                        <button type="button" class="btn btn-primary mr-2" id="btnAddStudent">Submit</button>
+                       
+<div class="col-md-4">
+    <div class="form-group">
+        <label>Lead Type <span class="mandatoryfield">*</span></label>
+        <select class="form-control" id="ddlLeadType" name="LeadType">
+            <option value="">-- Select Lead Type --</option>
+            <option value="Justdial">Justdial</option>
+            <option value="Sulekha">Sulekha</option>
+            <option value="Referral">Referral</option>
+            <option value="Walkin">Walkin</option>
+            <option value="WebsiteGoogle Search">Website/Google Search</option>
+            <option value="Facebook">Facebook</option>
+            <option value="Instagram">Instagram</option>
+            <option value="LinkedIn">LinkedIn</option>
+        </select>
+        <span class="validationMessage" id="msgLeadTypevalidation"></span>
+    </div>
+</div>
+                    <div class="col-md-4 text-right">
+                        @if (ViewBag.CanInsert == true)
+                        {
+                            <button type="button" class="btn btn-primary mr-2" id="btnAddStudent">
+                                Submit
+                            </button>
+                        }
+                        else
+                        {
+                            <button type="button" class="btn btn-secondary mr-2"
+                                    onclick="noAccess('Insert')">
+                                Submit
+                            </button>
+                        }
                         <button type="button" class="btn btn-secondary mr-2" id="btnInquiryReset">Reset</button>
                         <button type="button" class="btn btn-light" id="btnCancel">Cancel</button>
                     </div>
@@ -404,6 +447,14 @@
 
 
 <script>
+        function noAccess(type) {
+        Swal.fire({
+            icon: 'error',
+            title: 'Access Denied',
+            text: 'You do not have ' + type + ' permission for Student Inquiry module.',
+            confirmButtonColor: '#dc2626'
+        });
+    }
 $(document).ready(function () {
 
     // Submit
@@ -420,6 +471,7 @@ $(document).ready(function () {
         $('#studentInquiryForm')[0].reset();
         clearValidation();
         $('#successMessage').hide();
+         $('#ddlLeadType').val('');
     });
 
     $('#studentInquiryForm').submit(function (e) {
@@ -508,6 +560,10 @@ $(document).ready(function () {
             setError('#ddlAddCourseId', '#msgCoursevalidation', 'Course required!');
             isValid = false;
         }
+if (!$('#ddlLeadType').val()) {
+    setError('#ddlLeadType', '#msgLeadTypevalidation', 'Lead Type required!');
+    isValid = false;
+}
 
         return isValid;
     }
@@ -555,6 +611,9 @@ function submitForm() {
         EnrolledDate: $('#addEnrolledDate').val(),
         CompletionDate: $('#addCompletionDate').val(),
         CourseID: parseInt($('#ddlAddCourseId').val()),
+
+LeadType: $('#ddlLeadType').val(),  
+
         IsActive: 1,
         IsDeleted: 0
     };

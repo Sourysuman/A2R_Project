@@ -53,5 +53,6 @@ namespace A2R_Project.Models
         public DateTime? FollowUpDate1 { get; set; }
         public DateTime? FollowUpDate2 { get; set; }
         public int? student_Inquiry_ind { get; set; }
+        public string? LeadType { get; set; }
     }
 }

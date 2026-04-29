@@ -36,6 +36,7 @@ namespace A2R_Project.Controllers
                     .Skip((page - 1) * pageSize)
                     .Take(pageSize)
                     .ToList();
+                await SetPagePermissions("Country");
 
                 models.AddRange(pagedCountries);
 
@@ -197,5 +198,6 @@ namespace A2R_Project.Controllers
                 return Json("Error: " + ex.Message);
             }
         }
+
     }
 }

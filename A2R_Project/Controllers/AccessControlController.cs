@@ -3,6 +3,7 @@ using A2R_Project.Interfaces;
 using A2R_Project.Models;
 using A2R_Project.Repositories;
 using A2RSystemInterface;
+using Dapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
@@ -17,12 +18,14 @@ namespace A2R_Project.Controllers
         private readonly IAccessControl _accessControl;
         private readonly ILoginRepository _adminLogin;
         private readonly IRoleRepository _role;
+        private readonly AppDbContext _dbContext;
 
-        public AccessControlController(IAccessControl accessControl, ILoginRepository adminLogin, IRoleRepository role)
+        public AccessControlController(IAccessControl accessControl, ILoginRepository adminLogin, IRoleRepository role, AppDbContext dbContext  )
         {
             _accessControl = accessControl;
             _adminLogin = adminLogin;
             _role = role;
+            _dbContext = dbContext;
         }
 
         // ✅ FIXED: List Action - Proper Role Population
@@ -122,17 +125,106 @@ namespace A2R_Project.Controllers
         }
 
         [HttpPost]
+        [HttpPost]
         public async Task<IActionResult> Edit([FromBody] List<AccessControl> accessControls)
         {
             try
             {
                 var result = await _accessControl.UpdateAccessControl(accessControls);
-                return Json(result.Contains("success") || result.Contains("modified") ? "success" : "failed");
+                if (result.Contains("Updated"))
+                    return Json("success");
+                return Json("failed");
             }
             catch (Exception ex)
             {
-                return Json("Error: " + ex.Message);
+                return Json("failed");
             }
+        }
+        [HttpGet]
+        public async Task<IActionResult> GetDynamicSidebar(string username)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(username))
+                    return Json(new { menus = new List<object>() });
+
+                int userId = await GetUserId(username);
+                if (userId == 0) return Json(new { menus = new List<object>() });
+
+                using var connection = _dbContext.CreateConnection();
+
+                var permissions = await connection.QueryAsync(@"
+            SELECT ac.AccessID, ac.Submenu_ID, ac.Module_Flag,
+                   sm.SubMenuName, sm.Controller, sm.Action, sm.IconClass,
+                   sm.Menu_ID
+            FROM AccessControl ac
+            JOIN SubMenu sm ON ac.Submenu_ID = sm.SubMenu_ID
+            WHERE ac.User_ID = @UserId AND ac.Module_Flag = 1
+            ORDER BY sm.Menu_ID, sm.SubMenuName",
+                    new { UserId = userId });
+
+                // 🔥 Group by Menu_ID
+                var sidebarMenus = permissions
+                    .GroupBy(p => p.Menu_ID)
+                    .Select(g => new {
+                        menuName = GetMenuName(g.Key),
+                        icon = GetIconClass(g.Key.ToString()),  // ✅ Fixed
+                        subMenus = g.Select(p => new {
+                            name = p.SubMenuName,
+                            controller = p.Controller ?? "Home",
+                            action = p.Action ?? "Index"
+                        }).ToList()
+                    })
+                    .Where(m => m.subMenus.Any())
+                    .ToList();
+
+                return Json(new { menus = sidebarMenus });
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Sidebar Error: {ex.Message}");
+                return Json(new { menus = new List<object>() });
+            }
+        }
+
+        // 🔥 FIXED Icon method
+        private string GetIconClass(string menuIdOrName)
+        {
+            return menuIdOrName switch
+            {
+                "1" => "tachometer-alt",      // Dashboard
+                "2" => "building-columns",    // Organization
+                "3" => "wallet",              // Account Management  
+                "4" => "users",               // Student Management
+                "5" => "money-bill-wave",     // Fees Collection
+                "6" => "user-shield",         // Users
+                "9" => "key",                 // Roles
+                _ => "layer-group"
+            };
+        }
+
+        private string GetMenuName(int? menuId)
+        {
+            return menuId switch
+            {
+                1 => "Dashboard",
+                2 => "Organization",
+                3 => "Account Management",
+                4 => "Student Management",
+                5 => "Fees Collection",
+                6 => "Users",
+                9 => "Roles",
+                _ => "General"
+            };
+        }
+
+        private async Task<int> GetUserId(string username)
+        {
+            using var connection = _dbContext.CreateConnection();
+            // 🔥 FIXED: Admin_Login (not Logins)
+            return await connection.QueryFirstOrDefaultAsync<int>(
+                "SELECT LoginID FROM Admin_Login WHERE UserName = @Username",
+                new { Username = username });
         }
     }
 }

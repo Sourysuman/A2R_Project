@@ -3,188 +3,244 @@
     ViewBag.Title = "List";
 }
 <style>
-    /* BODY */
-    body {
-        background: linear-gradient(135deg, #eef2f7, #f8f9fc);
-        font-family: 'Poppins', 'Segoe UI', sans-serif;
+    :root {
+        --primary: #2563eb;
+        --primary-dark: #1e40af;
+        --success: #16a34a;
+        --danger: #dc2626;
+        --dark: #111827;
+        --gray: #6b7280;
     }
 
-    /* CARD */
+    body {
+        background: #f3f4f6;
+        font-family: 'Inter', 'Segoe UI', sans-serif;
+    }
+
     .card {
         border: none;
         border-radius: 16px;
         box-shadow: 0 8px 25px rgba(0,0,0,0.08);
-        transition: 0.3s ease;
     }
 
-        .card:hover {
-            transform: translateY(-4px);
-        }
-
     .card-title {
-        font-size: 22px;
+        font-size: 18px;
         font-weight: 600;
         color: #2c2c2c;
     }
 
-    /* TABLE */
     .table {
-        border-radius: 12px;
+        border-radius: 14px;
         overflow: hidden;
+        background: #fff;
+        border-collapse: collapse;
+        border-spacing: 0;
     }
 
-        .table thead th {
-            background: linear-gradient(45deg, #4e73df, #224abe);
-            color: #fff;
-            font-weight: 600;
-            text-align: center;
-            letter-spacing: 0.5px;
+        .table thead {
+            background: #3f454c;
         }
+
+            .table thead th {
+                color: #fff !important;
+                border: none !important;
+                font-size: 13px;
+                font-weight: 700;
+                text-transform: uppercase;
+                letter-spacing: 0.6px;
+                padding: 14px;
+                text-align: center !important;
+            }
 
         .table tbody td {
-            vertical-align: middle;
-            text-align: center;
-            transition: 0.3s;
+            font-size: 14px;
+            font-weight: 600;
+            color: #34495e !important;
+            padding: 13px 14px;
+            vertical-align: middle !important;
+            text-align: center !important;
+            background-color:white  !important;
         }
 
-    /* ROW HOVER */
-    .table-info {
-        transition: all 0.3s ease;
-    }
-
-        .table-info:hover {
-            background: linear-gradient(45deg, #eef3ff, #ffffff) !important;
-            transform: scale(1.01);
-            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        .table tbody tr {
+            transition: all 0.2s ease;
         }
 
-    /* COUNTRY COLUMN - STRONG BLACK STYLISH */
-    .table td:nth-child(3) {
-        color: #000 !important;
-        font-weight: 700;
-        letter-spacing: 0.6px;
-    }
+            
 
-        .table td:nth-child(3):hover {
-            color: #224abe !important;
-            cursor: pointer;
-            text-shadow: 0 1px 5px rgba(0,0,0,0.2);
+        /* ===== TABLE ACTION BUTTONS ===== */
+        .table .btn-sm {
+            width: 34px !important;
+            height: 34px !important;
+            border-radius: 9px !important;
+            padding: 0 !important;
+            margin-right: 3px !important;
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            border: none !important;
+            transition: all 0.2s !important;
         }
 
-    /* BADGES */
-    .badge-success {
-        background: linear-gradient(45deg, #28a745, #20c997);
-        padding: 6px 12px;
-        border-radius: 20px;
-        font-size: 12px;
-    }
+            .table .btn-sm:hover {
+                transform: translateY(-2px) !important;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.2) !important;
+            }
 
-    .badge-danger {
-        background: linear-gradient(45deg, #dc3545, #ff6b6b);
-        padding: 6px 12px;
-        border-radius: 20px;
-        font-size: 12px;
-    }
+            .table .btn-sm i {
+                font-size: 15px !important;
+                line-height: 1 !important;
+            }
 
-    /* BUTTONS */
-    .btn-course-list {
-        margin: 2px;
-        transition: 0.3s;
-        border-radius: 50%;
-        padding: 6px 10px;
-    }
-
-        .btn-course-list:hover {
-            transform: scale(1.2);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-        }
-
-    /* PRIMARY BUTTON */
+    /* EDIT - Blue */
     .btn-gradient-primary {
-        background: linear-gradient(45deg, #4e73df, #224abe);
-        color: #fff;
-        border: none;
+        background: linear-gradient(135deg, #3b82f6, #1d4ed8) !important;
+        color: #fff !important;
+        border: none !important;
     }
 
         .btn-gradient-primary:hover {
-            background: linear-gradient(45deg, #224abe, #4e73df);
+            background: linear-gradient(135deg, #2563eb, #1e40af) !important;
+            color: #fff !important;
         }
 
-    /* PAGINATION */
-    .pagination .page-item .page-link {
-        border-radius: 10px;
-        margin: 0 4px;
-        color: #4e73df;
-        font-weight: 500;
-        border: none;
-        box-shadow: 0 2px 6px rgba(0,0,0,0.08);
-        transition: 0.3s;
+    /* VIEW - Cyan */
+    .btn-gradient-dark {
+        background: linear-gradient(135deg, #06b6d4, #0891b2) !important;
+        color: #fff !important;
+        border: none !important;
     }
 
-    .pagination .page-item.active .page-link {
-        background: linear-gradient(45deg, #4e73df, #224abe);
-        color: white;
-    }
-
-    .pagination .page-item .page-link:hover {
-        background: #dbe4ff;
-        transform: translateY(-2px);
-    }
-
-    /* SHOW ALL BUTTON */
-    #showAllButton {
-        border-radius: 25px;
-        padding: 8px 25px;
-        font-weight: 500;
-        background: linear-gradient(45deg, #36d1dc, #5b86e5);
-        border: none;
-        color: #fff;
-        transition: 0.3s;
-    }
-
-        #showAllButton:hover {
-            transform: scale(1.07);
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        .btn-gradient-dark:hover {
+            background: linear-gradient(135deg, #0891b2, #0e7490) !important;
+            color: #fff !important;
         }
 
-    /* MODAL */
-    .modal-content {
-        border-radius: 16px;
-        box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-        animation: fadeInUp 0.3s ease;
+    /* DELETE - Red */
+    .btn-gradient-warning {
+        background: linear-gradient(135deg, #ef4444, #b91c1c) !important;
+        color: #fff !important;
+        border: none !important;
     }
 
-    .modal-header {
-        background: linear-gradient(45deg, #4e73df, #224abe);
-        color: #fff;
-        border-top-left-radius: 16px;
-        border-top-right-radius: 16px;
-    }
-
-    .modal-title {
-        font-weight: 600;
-    }
-
-    .modal-body {
-        padding: 25px;
-    }
-
-    .modal-footer {
-        border-top: none;
-    }
-
-    /* INPUT FIELDS */
-    .form-control {
-        border-radius: 10px;
-        transition: 0.3s;
-    }
-
-        .form-control:focus {
-            border-color: #4e73df;
-            box-shadow: 0 0 6px rgba(78,115,223,0.3);
+        .btn-gradient-warning:hover {
+            background: linear-gradient(135deg, #dc2626, #991b1b) !important;
+            color: #fff !important;
         }
 
-    /* VALIDATION */
+    /* ADD BUTTON - Green */
+    .btn-add-state {
+        background: linear-gradient(135deg, #10b981, #059669) !important;
+        color: #fff !important;
+        border: none !important;
+        font-weight: 700 !important;
+        padding: 8px 20px !important;
+        border-radius: 10px !important;
+        font-size: 14px !important;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        transition: all 0.2s !important;
+    }
+
+        .btn-add-state:hover {
+            transform: scale(1.04) !important;
+            box-shadow: 0 5px 15px rgba(16,185,129,0.4) !important;
+            color: #fff !important;
+        }
+
+    /* MODAL FOOTER BUTTONS */
+    .btn-modal-close {
+        background: #6b7280 !important;
+        color: #fff !important;
+        border: none !important;
+        border-radius: 8px !important;
+        padding: 7px 16px !important;
+        font-weight: 600 !important;
+        font-size: 13px !important;
+    }
+
+    .btn-modal-reset {
+        background: linear-gradient(135deg, #f59e0b, #d97706) !important;
+        color: #fff !important;
+        border: none !important;
+        border-radius: 8px !important;
+        padding: 7px 16px !important;
+        font-weight: 600 !important;
+        font-size: 13px !important;
+    }
+
+    .btn-modal-submit {
+        background: linear-gradient(135deg, #3b82f6, #1d4ed8) !important;
+        color: #fff !important;
+        border: none !important;
+        border-radius: 8px !important;
+        padding: 7px 16px !important;
+        font-weight: 600 !important;
+        font-size: 13px !important;
+    }
+
+    .btn-modal-cancel {
+        background: #6b7280 !important;
+        color: #fff !important;
+        border: none !important;
+        border-radius: 8px !important;
+        padding: 7px 16px !important;
+        font-weight: 600 !important;
+        font-size: 13px !important;
+    }
+
+    .btn-modal-delete {
+        background: linear-gradient(135deg, #ef4444, #b91c1c) !important;
+        color: #fff !important;
+        border: none !important;
+        border-radius: 8px !important;
+        padding: 7px 16px !important;
+        font-weight: 600 !important;
+        font-size: 13px !important;
+    }
+
+    .btn-modal-close:hover, .btn-modal-cancel:hover {
+        background: #4b5563 !important;
+        color: #fff !important;
+    }
+
+    .btn-modal-reset:hover {
+        background: linear-gradient(135deg, #d97706, #b45309) !important;
+        color: #fff !important;
+    }
+
+    .btn-modal-submit:hover {
+        background: linear-gradient(135deg, #2563eb, #1e40af) !important;
+        color: #fff !important;
+    }
+
+    .btn-modal-delete:hover {
+        background: linear-gradient(135deg, #dc2626, #991b1b) !important;
+        color: #fff !important;
+    }
+
+    /* STATUS BADGE TABLE */
+    .badge-status {
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        padding: 4px 10px;
+        border-radius: 20px;
+        font-size: 12px;
+        font-weight: 700;
+    }
+
+    .badge-active {
+        background: #dcfce7;
+        color: #15803d;
+    }
+
+    .badge-inactive {
+        background: #fee2e2;
+        color: #b91c1c;
+    }
+
     .mandatoryfield {
         color: red;
     }
@@ -192,147 +248,281 @@
     .validationMessage {
         color: red;
         font-size: 12px;
+        display: block;
+        margin-top: 3px;
     }
 
-    /* ANIMATION */
-    @@keyframes fadeInUp {
-        from
+    .form-control {
+        border-radius: 8px;
+        border: 1.5px solid #e5e7eb;
+        padding: 8px 12px;
+        font-size: 14px;
+        transition: 0.2s;
+        width: 100%;
+    }
 
-    {
+        .form-control:focus {
+            border-color: #2563eb;
+            box-shadow: 0 0 0 3px rgba(37,99,235,0.1);
+            outline: none;
+        }
+
+    /* ===== STATUS INLINE ROW ===== */
+    .status-field-wrap {
+        display: flex;
+        flex-direction: column;
+    }
+
+        .status-field-wrap label {
+            font-size: 13px;
+            font-weight: 700;
+            color: #374151;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+    .status-row {
+        display: flex !important;
+        flex-direction: row !important;
+        align-items: center !important;
+        gap: 10px !important;
+        height: 38px;
+    }
+
+        .status-row .status-txt {
+            font-size: 13px;
+            font-weight: 700;
+            color: #374151;
+            white-space: nowrap;
+        }
+
+    /* TOGGLE */
+    .custom-switch {
+        padding-left: 0;
+        display: flex;
+        align-items: center;
+    }
+
+        .custom-switch .custom-control-label {
+            padding-left: 50px;
+            line-height: 24px;
+            font-size: 13px;
+            font-weight: 700;
+            color: #dc2626;
+            cursor: pointer;
+            user-select: none;
+            transition: color 0.25s;
+        }
+
+        .custom-switch .custom-control-input:checked ~ .custom-control-label {
+            color: #10b981;
+        }
+
+        .custom-switch .custom-control-label::before {
+            width: 42px;
+            height: 23px;
+            border-radius: 23px;
+            background: #dc2626;
+            border: none;
+            top: 0;
+            left: 0;
+            transition: background 0.25s;
+        }
+
+        .custom-switch .custom-control-label::after {
+            width: 17px;
+            height: 17px;
+            border-radius: 50%;
+            background: #fff;
+            top: 3px;
+            left: 3px;
+            transition: transform 0.25s;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+        }
+
+        .custom-switch .custom-control-input:checked ~ .custom-control-label::before {
+            background: #10b981;
+        }
+
+        .custom-switch .custom-control-input:checked ~ .custom-control-label::after {
+            transform: translateX(19px);
+        }
+
+    .custom-control-input {
+        position: absolute;
+        left: 0;
+        z-index: -1;
         opacity: 0;
-        transform: translateY(15px);
     }
 
-    to {
-        opacity: 1;
-        transform: translateY(0);
+    /* ===== ALL MODALS SAME SIZE & POSITION ===== */
+    .modal-dialog {
+        margin: 80px auto 0 !important;
+        width: 560px !important;
+        max-width: 92vw !important;
     }
 
-    }
-    /* TABLE DATA STRONG BLACK */
-    .table tbody td {
-        color: #000 !important;
-        font-weight: 600;
-        letter-spacing: 0.4px;
-        transition: all 0.3s ease;
+    .modal-content {
+        border-radius: 16px !important;
+        border: none !important;
+        overflow: hidden !important;
+        box-shadow: 0 10px 40px rgba(0,0,0,0.18) !important;
     }
 
-    /* HOVER EFFECT FOR ALL COLUMNS */
-    .table tbody tr:hover td {
-        color: #224abe !important;
-        background: #f1f5ff !important;
+    .modal-header {
+        background: linear-gradient(135deg, #2563eb, #1e40af) !important;
+        color: #fff !important;
+        padding: 16px 22px !important;
+        height: 60px !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: space-between !important;
+        border-bottom: none !important;
+        box-sizing: border-box !important;
     }
 
-    /* SPECIFIC COLUMN EXTRA STYLE */
-    .table td:nth-child(1),
-    .table td:nth-child(2),
-    .table td:nth-child(3) {
-        font-weight: 700;
-    }
-
-    /* BUTTONS INSIDE TABLE */
-    .btn-course-list {
-        border-radius: 50%;
-        padding: 7px 11px;
-        transition: all 0.3s ease;
-        color: #fff;
-    }
-
-    /* EDIT BUTTON */
-    .btn-gradient-primary {
-        background: linear-gradient(45deg, #4e73df, #224abe);
-        border: none;
-    }
-
-        .btn-gradient-primary:hover {
-            background: linear-gradient(45deg, #224abe, #4e73df);
-            transform: scale(1.15);
+        .modal-header * {
+            color: #fff !important;
         }
 
-    /* VIEW BUTTON */
-    .btn-gradient-dark {
-        background: linear-gradient(45deg, #343a40, #000);
-        border: none;
-    }
-
-        .btn-gradient-dark:hover {
-            background: linear-gradient(45deg, #000, #343a40);
-            transform: scale(1.15);
+        .modal-header .close {
+            color: #fff !important;
+            opacity: 1 !important;
+            font-size: 22px !important;
+            font-weight: 400 !important;
+            text-shadow: none !important;
+            padding: 0 !important;
+            margin: 0 !important;
+            background: none !important;
+            border: none !important;
+            line-height: 1 !important;
         }
 
-    /* DELETE BUTTON */
-    .btn-gradient-warning {
-        background: linear-gradient(45deg, #ffb347, #ffcc33);
-        border: none;
-        color: #000;
-    }
-
-        .btn-gradient-warning:hover {
-            background: linear-gradient(45deg, #ffcc33, #ffb347);
-            transform: scale(1.15);
-        }
-
-    /* MODAL (POPOFF) TEXT SIZE INCREASE */
-    .modal-body {
-        font-size: 16px;
-    }
+            .modal-header .close:hover {
+                opacity: 0.7 !important;
+            }
 
     .modal-title {
-        font-size: 20px;
+        font-size: 16px !important;
+        font-weight: 700 !important;
+        margin: 0 !important;
+    }
+
+    .modal-body {
+        padding: 24px 28px !important;
+        background: #f9fbff;
+    }
+
+    .modal-footer {
+        padding: 14px 28px !important;
+        border-top: 1px solid #e5e7eb !important;
+        background: #fff !important;
+        display: flex !important;
+        justify-content: flex-end !important;
+        align-items: center !important;
+        gap: 8px !important;
+        height: 62px !important;
+        box-sizing: border-box !important;
+    }
+
+    /* VIEW - Purple */
+    #viewState .modal-header {
+        background: linear-gradient(135deg, #6366f1, #4338ca) !important;
+    }
+
+    #viewState .modal-content {
+        border-top: 4px solid #6366f1 !important;
+    }
+
+    #viewState .modal-body {
+        background: #f5f3ff !important;
+    }
+
+    /* DELETE body */
+    #deleteState .modal-body {
+        background: #fff !important;
+        text-align: center !important;
+    }
+
+    /* VIEW ROWS */
+    .view-row {
+        display: flex;
+        align-items: center;
+        padding: 11px 0;
+        border-bottom: 1px solid #ede9fe;
+        gap: 12px;
+    }
+
+        .view-row:last-child {
+            border-bottom: none;
+        }
+
+    .view-label {
+        width: 110px;
+        font-size: 13px;
+        font-weight: 700;
+        color: #4c1d95;
+        flex-shrink: 0;
+    }
+
+    .view-value {
+        font-size: 14px;
+        font-weight: 600;
+        color: #1e1b4b;
+        flex: 1;
+    }
+
+    .view-status-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        padding: 3px 10px;
+        border-radius: 20px;
+        font-size: 12px;
         font-weight: 700;
     }
 
-    /* MODAL LABELS */
-    .modal label {
-        font-size: 15px;
+    .view-status-active {
+        background: #dcfce7;
+        color: #15803d;
+    }
+
+    .view-status-inactive {
+        background: #fee2e2;
+        color: #b91c1c;
+    }
+
+    #prevPage, #nextPage {
+        background: linear-gradient(135deg, #6366f1, #4f46e5) !important;
+        color: #fff !important;
+        border: none !important;
+        border-radius: 8px !important;
+        font-weight: 600 !important;
+        padding: 6px 14px !important;
+    }
+
+    #showAllStatic {
+        background: linear-gradient(135deg, #10b981, #059669) !important;
+        color: #fff !important;
+        border: none !important;
+        border-radius: 8px !important;
+        font-weight: 600 !important;
+        padding: 6px 14px !important;
+    }
+
+    #showAllButton {
+        background: linear-gradient(135deg, #10b981, #059669) !important;
+        color: #fff !important;
+        font-weight: 600 !important;
+        padding: 7px 18px !important;
+        border-radius: 10px !important;
+        border: none !important;
+    }
+
+    #pageInfo {
         font-weight: 600;
-        color: #333;
-    }
-
-    /* MODAL INPUTS */
-    .modal .form-control {
-        font-size: 15px;
-        padding: 10px;
-    }
-
-    /* MODAL BUTTONS */
-    .modal-footer .btn {
+        color: #374151;
         font-size: 14px;
-        padding: 8px 18px;
-        border-radius: 20px;
-        transition: 0.3s;
-    }
-
-    /* SUBMIT BUTTON */
-    .modal-footer .btn-gradient-info {
-        background: linear-gradient(45deg, #36d1dc, #5b86e5);
-        color: #fff;
-    }
-
-        .modal-footer .btn-gradient-info:hover {
-            transform: scale(1.08);
-        }
-
-    /* RESET BUTTON */
-    .modal-footer .btn-gradient-light {
-        background: linear-gradient(45deg, #e0e0e0, #ffffff);
-    }
-
-    /* CLOSE BUTTON */
-    .modal-footer .btn-gradient-warning {
-        background: linear-gradient(45deg, #ff6a6a, #ff3d3d);
-        color: #fff;
-    }
-
-    /* INPUT HOVER EFFECT */
-    .form-control:hover {
-        border-color: #224abe;
-    }
-
-    /* EXTRA SMOOTH TABLE ROW */
-    .table-info:hover {
-        transform: scale(1.01);
-        box-shadow: 0 6px 15px rgba(0,0,0,0.08);
     }
 
     .modal-backdrop {
@@ -346,25 +536,80 @@
     body.modal-open {
         overflow: hidden !important;
     }
+
+    @@media (max-width: 600px) {
+        .modal-dialog {
+            width: 95vw !important;
+            margin-top: 30px !important;
+        }
+
+        .modal-body {
+            padding: 16px !important;
+        }
+
+        .modal-footer {
+            padding: 12px 16px !important;
+        }
+
+        .col-md-6 {
+            width: 100% !important;
+            float: none !important;
+        }
+    }
+
+    .form-group .custom-switch {
+        margin-top: 0 !important;
+        padding-left: 0 !important;
+    }
+
+    .badge-active {
+        background: linear-gradient(135deg, #1cc88a, #17a673) !important;
+        padding: 7px 14px !important;
+        border-radius: 20px !important;
+        font-size: 13px !important;
+        font-weight: 600 !important;
+        color: #fff !important;
+    }
+
+    .badge-inactive {
+        background: linear-gradient(135deg, #e74a3b, #c0392b) !important;
+        padding: 7px 14px !important;
+        border-radius: 20px !important;
+        font-size: 13px !important;
+        font-weight: 600 !important;
+        color: #fff !important;
+    }
 </style>
 
 <div class="col-lg-12 stretch-card">
     <div class="card">
         <div class="card-body">
-            <div class="d-flex justify-content-between align-items-center" style="padding: 10px !important">
+            <div class="d-flex justify-content-between align-items-center" style="padding:10px !important">
                 <strong class="card-title">States List</strong>
-                <button type="button" class="btn btn-gradient-primary btn-rounded btn-fw" data-toggle="modal" data-target="#addState">
-                    <i class="fa fa-plus"></i> Add
-                </button>
+                @if (ViewBag.CanInsert == true)
+                {
+                    <button type="button" class="btn-add-state"
+                            data-toggle="modal" data-target="#addState">
+                        <i class="fa fa-plus"></i> Add State
+                    </button>
+                }
+                else
+                {
+                    <button type="button" class="btn-add-state"
+                            style="background: linear-gradient(135deg,#6b7280,#4b5563) !important;"
+                            onclick="noAccess('Insert')">
+                        <i class="fa fa-plus"></i> Add State
+                    </button>
+                }
             </div>
             <table class="table table-bordered" id="stateTable">
                 <thead>
                     <tr>
-                        <th> State name </th>
-                        <th> State Code </th>
-                        <th> Country </th>
-                        <th> Status </th>
-                        <th> Action </th>
+                        <th>State Name</th>
+                        <th>State Code</th>
+                        <th>Country</th>
+                        <th>Status</th>
+                        <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -382,48 +627,77 @@
                                 <td class="table-warning">
                                     @if (item.IsActive == 1)
                                     {
-                                        <span class="badge badge-success">Active</span>
+                                        <span class="badge-status badge-active">Active</span>
                                     }
                                     else
                                     {
-                                        <span class="badge badge-danger">Inactive</span>
+                                        <span class="badge-status badge-inactive">Inactive</span>
                                     }
                                 </td>
                                 <td>
-                                    <button type="button" class="btn btn-sm btn-gradient-primary btn-rounded btn-course-list editByStateId"
-                                            data-edStateId="@item.StateID" title="Edit"
-                                            data-toggle="modal" data-target="#editState">
-                                        <i class="mdi mdi-pencil"></i>
-                                    </button>
-                                    <button type="button" class="btn btn-sm btn-gradient-dark btn-rounded btn-course-list viewByStateId"
-                                            data-vwStateId="@item.StateID" title="View"
-                                            data-toggle="modal" data-target="#viewState">
+                                    @* EDIT *@
+                                    @if (ViewBag.CanUpdate == true)
+                                    {
+                                        <button type="button" class="btn btn-sm btn-gradient-primary editByStateId"
+                                                data-edStateId="@item.StateID"
+                                                data-toggle="modal" data-target="#editState"
+                                                title="Edit">
+                                            <i class="mdi mdi-pencil"></i>
+                                        </button>
+                                    }
+                                    else
+                                    {
+                                        <button type="button" class="btn btn-sm"
+                                                style="background:linear-gradient(135deg,#6b7280,#4b5563);color:#fff;"
+                                                title="No Edit Permission"
+                                                onclick="noAccess('Update')">
+                                            <i class="mdi mdi-pencil"></i>
+                                        </button>
+                                    }
+
+                                    @* VIEW — always visible *@
+                                    <button type="button" class="btn btn-sm btn-gradient-dark viewByStateId"
+                                            data-vwStateId="@item.StateID"
+                                            data-toggle="modal" data-target="#viewState"
+                                            title="View">
                                         <i class="mdi mdi-eye"></i>
                                     </button>
-                                    <button type="button" class="btn btn-sm btn-gradient-warning btn-rounded btn-course-list deleteStates"
-                                            data-dlStateId="@item.StateID" title="Delete"
-                                            data-toggle="modal" data-target="#deleteState">
-                                        <i class="mdi mdi-delete"></i>
-                                    </button>
+
+                                    @* DELETE *@
+                                    @if (ViewBag.CanDelete == true)
+                                    {
+                                        <button type="button" class="btn btn-sm btn-gradient-warning deleteStates"
+                                                data-dlStateId="@item.StateID"
+                                                data-toggle="modal" data-target="#deleteState"
+                                                title="Delete">
+                                            <i class="mdi mdi-delete"></i>
+                                        </button>
+                                    }
+                                    else
+                                    {
+                                        <button type="button" class="btn btn-sm"
+                                                style="background:linear-gradient(135deg,#6b7280,#4b5563);color:#fff;"
+                                                title="No Delete Permission"
+                                                onclick="noAccess('Delete')">
+                                            <i class="mdi mdi-delete"></i>
+                                        </button>
+                                    }
                                 </td>
                             </tr>
                         }
                     }
                     else
                     {
-                        <tr>
-                            <td colspan="5" class="text-center">No states found</td>
-                        </tr>
+                        <tr><td colspan="5" class="text-center">No states found</td></tr>
                     }
                 </tbody>
             </table>
 
-            <!-- Show All Button Row -->
             @if (ViewBag.ShowAllButton == true)
             {
                 <div class="row mt-3">
                     <div class="col text-right">
-                        <button type="button" id="showAllButton" class="btn btn-primary btn-rounded">
+                        <button type="button" id="showAllButton">
                             <i class="fa fa-list"></i> Show All (@ViewBag.TotalCount records)
                         </button>
                     </div>
@@ -431,566 +705,351 @@
             }
 
             <div class="d-flex justify-content-between align-items-center mt-3">
-
-                <button id="prevPage" class="btn btn-outline-primary btn-sm">◀ Prev</button>
-
-                <span id="pageInfo" class="font-weight-bold"></span>
-
-                <button id="nextPage" class="btn btn-outline-primary btn-sm">Next ▶</button>
-
-                <button id="showAllStatic" class="btn btn-success btn-sm ml-3">
-                    Show All
-                </button>
-
+                <button id="prevPage">◀ Prev</button>
+                <span id="pageInfo"></span>
+                <button id="nextPage">Next ▶</button>
+                <button id="showAllStatic" style="margin-left:8px;">Show All</button>
             </div>
         </div>
     </div>
 </div>
 
-<!-- Add State Modal -->
+<!-- ===== ADD STATE MODAL ===== -->
 <div class="modal fade" id="addState" tabindex="-1">
-    <div class="modal-dialog modal-lg">
+    <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Add State</h5>
-                <button type="button" class="close" data-dismiss="modal">
-                    <span>&times;</span>
-                </button>
+                <h5 class="modal-title"><i class="fas fa-plus-circle mr-2"></i>Add State</h5>
+                <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
             </div>
             <div class="modal-body">
                 <form id="addStateForm" autocomplete="off">
                     <div class="row">
                         <div class="form-group col-md-6">
-                            <label>State Name<span class="mandatoryfield">*</span></label>
+                            <label>State Name <span class="mandatoryfield">*</span></label>
                             <input type="text" class="form-control" id="txtStateName" />
                             <span class="validationMessage" id="msgAddStateValidation"></span>
                         </div>
                         <div class="form-group col-md-6">
-                            <label>Country<span class="mandatoryfield">*</span></label>
+                            <label>Country <span class="mandatoryfield">*</span></label>
                             @Html.DropDownList("CountryID", (SelectList)ViewBag.Countries, "--Select Country Name--", new { @id = "ddlCountryId", @class = "form-control" })
                             <span class="validationMessage" id="msgAddCountryValidation"></span>
                         </div>
                     </div>
                     <div class="row">
                         <div class="form-group col-md-6">
-                            <label>State Code<span class="mandatoryfield">*</span></label>
+                            <label>State Code <span class="mandatoryfield">*</span></label>
                             <input type="text" class="form-control" id="txtStateCode" />
                             <span class="validationMessage" id="msgAddStateCodeValidation"></span>
                         </div>
                         <div class="form-group col-md-6">
-                            <div class="d-flex align-items-center" style="height:38px;">
-                                <label class="mb-0 mr-2" style="min-width:70px;">Status :</label>
-                                <input type="checkbox" id="chkActiveStatus" style="margin-right:5px; transform: translateY(2px);">
-                                <label for="chkActiveStatus" class="mb-0">IsActive</label>
+                            <label>&nbsp;</label>
+                            <div class="d-flex align-items-center" style="height:38px; gap:10px; margin-top:4px;">
+                                <span style="font-size:13px; font-weight:700; color:#374151; white-space:nowrap;">Status :</span>
+                                <div class="custom-control custom-switch">
+                                    <input type="checkbox" class="custom-control-input" id="chkActiveStatus" checked>
+                                    <label class="custom-control-label" for="chkActiveStatus">Active</label>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-gradient-warning btn-rounded btn-fw" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-gradient-light btn-rounded btn-fw btnStateReset">Reset</button>
-                <button type="button" class="btn btn-gradient-info btn-rounded btn-fw" id="btnStateSave">Submit</button>
+                <button type="button" class="btn-modal-close" data-dismiss="modal"><i class="fas fa-times mr-1"></i>Close</button>
+                <button type="button" class="btn-modal-reset btnStateReset"><i class="fas fa-undo mr-1"></i>Reset</button>
+                <button type="button" class="btn-modal-submit" id="btnStateSave"><i class="fas fa-save mr-1"></i>Submit</button>
             </div>
         </div>
     </div>
 </div>
 
-<!-- Edit State Modal -->
-<div class="modal fade" id="editState" tabindex="-1" role="dialog" aria-labelledby="editStateModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+<!-- ===== EDIT STATE MODAL ===== -->
+<div class="modal fade" id="editState" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="editStateModalLabel">Edit State</h5>
-                <button type="button" class="close" data-dismiss="modal">
-                    <span>&times;</span>
-                </button>
+                <h5 class="modal-title"><i class="fas fa-edit mr-2"></i>Edit State</h5>
+                <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
             </div>
             <div class="modal-body">
-                <form id="editStateForm" class="form-sample" autocomplete="off">
+                <form id="editStateForm" autocomplete="off">
+                    <input type="hidden" id="hdnStateId">
                     <div class="row">
                         <div class="form-group col-md-6">
-                            <label>State Name<span class="mandatoryfield">*</span></label>
+                            <label>State Name <span class="mandatoryfield">*</span></label>
                             <input type="text" class="form-control" id="txtEditStateName" />
                             <span class="validationMessage" id="msgEditStateValidation"></span>
-                            <input type="hidden" id="hdnStateId">
                         </div>
                         <div class="form-group col-md-6">
-                            <label>Country<span class="mandatoryfield">*</span></label>
+                            <label>Country <span class="mandatoryfield">*</span></label>
                             @Html.DropDownList("CountryID", (SelectList)ViewBag.Countries, "--Select Country Name--", new { @id = "ddlEditCountryId", @class = "form-control" })
                             <span class="validationMessage" id="msgEditCountryValidation"></span>
                         </div>
                     </div>
                     <div class="row">
                         <div class="form-group col-md-6">
-                            <label>State Code<span class="mandatoryfield">*</span></label>
+                            <label>State Code <span class="mandatoryfield">*</span></label>
                             <input type="text" class="form-control" id="txtEditStateCodeInput" />
                             <span class="validationMessage" id="msgEditStateCodeValidation"></span>
                         </div>
                         <div class="form-group col-md-6">
-                            <div class="d-flex align-items-center" style="height:38px;">
-                                <label class="mb-0 mr-2" style="min-width:70px;">Status :</label>
-                                <input type="checkbox" id="chkActiveStatusEdit" style="margin-right:5px; transform: translateY(2px);">
-                                <label for="chkActiveStatusEdit" class="mb-0">IsActive</label>
+                            <label>&nbsp;</label>
+                            <div class="d-flex align-items-center" style="height:38px; gap:10px; margin-top:4px;">
+                                <span style="font-size:13px; font-weight:700; color:#374151; white-space:nowrap;">Status :</span>
+                                <div class="custom-control custom-switch">
+                                    <input type="checkbox" class="custom-control-input" id="chkActiveStatusEdit">
+                                    <label class="custom-control-label" for="chkActiveStatusEdit">Active</label>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-gradient-warning btn-rounded btn-fw" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-gradient-secondary btn-rounded btn-fw btnStateReset">Reset</button>
-                <button type="button" class="btn btn-gradient-info btn-rounded btn-fw" id="btnEditStateSave">Submit</button>
+                <button type="button" class="btn-modal-close" data-dismiss="modal"><i class="fas fa-times mr-1"></i>Close</button>
+                <button type="button" class="btn-modal-reset btnStateReset"><i class="fas fa-undo mr-1"></i>Reset</button>
+                <button type="button" class="btn-modal-submit" id="btnEditStateSave"><i class="fas fa-save mr-1"></i>Update</button>
             </div>
         </div>
     </div>
 </div>
 
-<!-- View State Modal -->
-<div class="modal fade" id="viewState" tabindex="-1" role="dialog" aria-labelledby="mediumModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
+<!-- ===== VIEW STATE MODAL - PURPLE, NAME + CODE + STATUS ONLY ===== -->
+<div class="modal fade" id="viewState" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="mediumModalLabel">View State</h5>
-                <button type="button" class="close" data-dismiss="modal">
-                    <span>&times;</span>
-                </button>
+                <h5 class="modal-title"><i class="fas fa-eye mr-2"></i>View State</h5>
+                <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
             </div>
             <div class="modal-body">
-                <div class="row" style="margin-top: 20px;">
-                    <div class="col-md-10">
-                        <div class="row">
-                            <div class="col-md-8">
-                                <div class="row form-group">
-                                    <div class="col col-md-4"><label class="form-control-label">State Name :</label></div>
-                                    <div class="col-12 col-md-8">
-                                        <label class="form-control-label" id="lblvwStateName"></label>
-                                        <input type="hidden" id="hdnVwStateId">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                <input type="hidden" id="hdnVwStateId">
+                <div class="view-row">
+                    <span class="view-label">State Name :</span>
+                    <span class="view-value" id="lblvwStateName"></span>
+                </div>
+                <div class="view-row">
+                    <span class="view-label">State Code :</span>
+                    <span class="view-value" id="lblvwStateCode"></span>
+                </div>
+                <div class="view-row">
+                    <span class="view-label">Status :</span>
+                    <span class="view-value" id="lblvwStatus"></span>
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-gradient-warning btn-rounded btn-fw" data-dismiss="modal">Close</button>
+                <button type="button" class="btn-modal-cancel" data-dismiss="modal"><i class="fas fa-times mr-1"></i>Close</button>
             </div>
         </div>
     </div>
 </div>
 
-<!-- Delete State Modal -->
-<div class="modal fade" id="deleteState" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
+<!-- ===== DELETE STATE MODAL ===== -->
+<div class="modal fade" id="deleteState" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="deleteModalLabel" style="color:red">Confirm Delete State</h5>
-                <button type="button" class="close" data-dismiss="modal">
-                    <span>&times;</span>
-                </button>
+                <h5 class="modal-title"><i class="fas fa-exclamation-triangle mr-2"></i>Confirm Delete</h5>
+                <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
             </div>
             <div class="modal-body">
-                <div class="row">
-                    <div class="col-md-10">
-                        <div class="row" style="margin-top: 20px;">
-                            <div class="col-md-8">
-                                <div class="row form-group">
-                                    <div class="col col-md-4"><label class="form-control-label">State Name :</label></div>
-                                    <div class="col-12 col-md-8">
-                                        <label class="form-control-label" id="lblDelStateName"></label>
-                                        <input type="hidden" id="hdnDeStateId">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                <input type="hidden" id="hdnDeStateId" />
+                <div class="text-center" style="padding:10px 0;">
+                    <div style="width:64px;height:64px;border-radius:50%;background:#fee2e2;margin:0 auto 14px;display:flex;align-items:center;justify-content:center;">
+                        <i class="fas fa-trash-alt" style="font-size:1.7rem;color:#dc2626;"></i>
                     </div>
+                    <h6 style="color:#111827;font-weight:700;margin-bottom:8px;font-size:15px;">Delete this state?</h6>
+                    <p style="color:#374151;font-size:14px;margin-bottom:4px;">
+                        State "<strong id="lblDelStateName" style="color:#dc2626;"></strong>" will be permanently deleted.
+                    </p>
+                    <p style="color:#9ca3af;font-size:12px;margin:0;">This action cannot be undone.</p>
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-gradient-warning btn-rounded btn-fw" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-gradient-danger btn-rounded btn-fw" id="btnConfirmStateDelete">Delete</button>
+                <button type="button" class="btn-modal-cancel" data-dismiss="modal"><i class="fas fa-times mr-1"></i>Cancel</button>
+                <button type="button" class="btn-modal-delete" id="btnConfirmStateDelete"><i class="fas fa-trash mr-1"></i>Delete</button>
             </div>
         </div>
     </div>
 </div>
-
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<!-- jQuery + Bootstrap + SweetAlert - ALL INLINE -->
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
-
 <script type="text/javascript">
+    function noAccess(type) {
+        Swal.fire({
+            icon: 'error',
+            title: 'Access Denied',
+            text: 'You do not have ' + type + ' permission for State module.',
+            confirmButtonColor: '#dc2626'
+        });
+    }
     $(document).ready(function () {
 
-        // ========== SHOW ALL BUTTON ==========
+        // ========== SHOW ALL ==========
         $('#showAllButton').click(function () {
-
             $('.pagination').closest('.row').hide();
             $(this).closest('.row').hide();
-
-            $('#stateTable tbody').html(
-                '<tr><td colspan="5" class="text-center">' +
-                '<div class="spinner-border"></div></td></tr>'
-            );
-
+            $('#stateTable tbody').html('<tr><td colspan="5" class="text-center"><div class="spinner-border"></div></td></tr>');
             $.ajax({
-                url: '@Url.Action("ShowAll", "State")',
-                type: 'GET',
+                url: '@Url.Action("ShowAll", "State")', type: 'GET',
                 success: function (data) {
-
                     $('#stateTable tbody').empty();
-
                     if (data && data.length > 0) {
-
-                        $.each(data, function (index, item) {
-
-                            var row = `
-                            <tr class="table-info">
-                                <td class="table-primary">${item.stateName || ''}</td>
-                                <td class="table-warning">${item.stateCode || ''}</td>
-                                <td class="table-primary">${item.countryName || ''}</td>
-                                <td class="table-warning">
-                                    ${item.isActive == 1
-                                        ? '<span class="badge badge-success">Active</span>'
-                                        : '<span class="badge badge-danger">Inactive</span>'}
-                                </td>
-                                <td>
-                                    <button class="btn btn-sm btn-gradient-primary editByStateId"
-                                        data-edStateId="${item.stateID}" data-toggle="modal" data-target="#editState">
-                                        ✏️
-                                    </button>
-
-                                    <button class="btn btn-sm btn-gradient-dark viewByStateId"
-                                        data-vwStateId="${item.stateID}" data-toggle="modal" data-target="#viewState">
-                                        👁️
-                                    </button>
-
-                                    <button class="btn btn-sm btn-gradient-warning deleteStates"
-                                        data-dlStateId="${item.stateID}" data-toggle="modal" data-target="#deleteState">
-                                        🗑️
-                                    </button>
-                                </td>
-                            </tr>`;
-
-                            $('#stateTable tbody').append(row);
+                        $.each(data, function (i, item) {
+                            var statusHtml = item.isActive == 1
+                                ? '<span class="badge-status badge-active"><i class="fas fa-check-circle"></i>Active</span>'
+                                : '<span class="badge-status badge-inactive"><i class="fas fa-times-circle"></i>Inactive</span>';
+                            $('#stateTable tbody').append(
+                                '<tr class="table-info">' +
+                                '<td class="table-primary">' + (item.stateName || '') + '</td>' +
+                                '<td class="table-warning">' + (item.stateCode || '') + '</td>' +
+                                '<td class="table-primary">' + (item.countryName || '') + '</td>' +
+                                '<td class="table-warning">' + statusHtml + '</td>' +
+                                '<td>' +
+                                '<button class="btn btn-sm btn-gradient-primary editByStateId" data-edStateId="' + item.stateID + '" data-toggle="modal" data-target="#editState" title="Edit"><i class="mdi mdi-pencil"></i></button>' +
+                                '<button class="btn btn-sm btn-gradient-dark viewByStateId" data-vwStateId="' + item.stateID + '" data-toggle="modal" data-target="#viewState" title="View"><i class="mdi mdi-eye"></i></button>' +
+                                '<button class="btn btn-sm btn-gradient-warning deleteStates" data-dlStateId="' + item.stateID + '" data-toggle="modal" data-target="#deleteState" title="Delete"><i class="mdi mdi-delete"></i></button>' +
+                                '</td></tr>'
+                            );
                         });
-
-                        Swal.fire({
-                            icon: 'success',
-                            title: 'All records loaded!',
-                            text: data.length + ' states displayed',
-                            timer: 1500,
-                            showConfirmButton: false
-                        });
-
+                        Swal.fire({ icon: 'success', title: data.length + ' records loaded', timer: 1200, showConfirmButton: false });
                     } else {
-                        $('#stateTable tbody').html(
-                            '<tr><td colspan="5" class="text-center">No data found</td></tr>'
-                        );
+                        $('#stateTable tbody').html('<tr><td colspan="5" class="text-center">No data found</td></tr>');
                     }
                 },
-                error: function () {
-                    Swal.fire('Error!', 'Failed to load data', 'error');
-                }
+                error: function () { Swal.fire('Error!', 'Failed to load data', 'error'); }
             });
         });
 
-        // ================= PAGINATION =================
-        var rowsPerPage = 5;
-        var currentPage = 1;
-
-        function getRows() {
-            return $('#stateTable tbody tr');
-        }
-
+        // ========== PAGINATION ==========
+        var rowsPerPage = 5, currentPage = 1;
+        function getRows() { return $('#stateTable tbody tr'); }
         function showPage(page) {
-            var rows = getRows();
-            var totalPages = Math.ceil(rows.length / rowsPerPage);
-
+            var rows = getRows(), total = Math.ceil(rows.length / rowsPerPage);
             rows.hide();
             rows.slice((page - 1) * rowsPerPage, page * rowsPerPage).show();
-
-            $('#pageInfo').text("Page " + page + " of " + totalPages);
+            $('#pageInfo').text("Page " + page + " of " + total);
         }
-
         showPage(currentPage);
+        $('#nextPage').click(function () { if (currentPage < Math.ceil(getRows().length / rowsPerPage)) { currentPage++; showPage(currentPage); } });
+        $('#prevPage').click(function () { if (currentPage > 1) { currentPage--; showPage(currentPage); } });
+        $('#showAllStatic').click(function () { getRows().show(); $('#pageInfo').text("Showing All Records"); });
 
-        $('#nextPage').click(function () {
-            var totalPages = Math.ceil(getRows().length / rowsPerPage);
-            if (currentPage < totalPages) {
-                currentPage++;
-                showPage(currentPage);
-            }
-        });
-
-        $('#prevPage').click(function () {
-            if (currentPage > 1) {
-                currentPage--;
-                showPage(currentPage);
-            }
-        });
-
-        $('#showAllStatic').click(function () {
-            getRows().show();
-            $('#pageInfo').text("Showing All Records");
-        });
-
-            // ========== ADD STATE ==========
+        // ========== ADD ==========
         $('#btnStateSave').on('click', function (e) {
-            var stateName = $('#txtStateName').val().trim();
-            var countryId = $('#ddlCountryId').val();
-            var stateCode = $('#txtStateCode').val().trim();
-            var isActive = $('#chkActiveStatus').is(':checked') ? 1 : 0;
-
-            var isValid = true;
-
-            // Validation
-            if (stateName === "") {
-                $('#txtStateName').css('border-color', 'red');
-                $('#msgAddStateValidation').html("Please enter State Name");
-                isValid = false;
-            } else {
-                $('#txtStateName').css('border-color', '');
-                $('#msgAddStateValidation').html("");
-            }
-
-            if (countryId === "" || countryId === null) {
-                $('#ddlCountryId').css('border-color', 'red');
-                $('#msgAddCountryValidation').html("Please select Country");
-                isValid = false;
-            } else {
-                $('#ddlCountryId').css('border-color', '');
-                $('#msgAddCountryValidation').html("");
-            }
-
-            if (stateCode === "") {
-                $('#txtStateCode').css('border-color', 'red');
-                $('#msgAddStateCodeValidation').html("Please enter State Code");
-                isValid = false;
-            } else {
-                $('#txtStateCode').css('border-color', '');
-                $('#msgAddStateCodeValidation').html("");
-            }
-
-            if (isValid) {
-                var stateData = {
-                    StateName: stateName,
-                    CountryID: parseInt(countryId),
-                    StateCode: stateCode,
-                    IsActive: isActive,
-                    IsDeleted: 0
-                };
-
+            e.preventDefault();
+            var sn = $('#txtStateName').val().trim(), ci = $('#ddlCountryId').val(), sc = $('#txtStateCode').val().trim(), ok = true;
+            if (!sn) { $('#txtStateName').css('border-color', 'red'); $('#msgAddStateValidation').html("Please enter State Name"); ok = false; } else { $('#txtStateName').css('border-color', ''); $('#msgAddStateValidation').html(""); }
+            if (!ci) { $('#ddlCountryId').css('border-color', 'red'); $('#msgAddCountryValidation').html("Please select Country"); ok = false; } else { $('#ddlCountryId').css('border-color', ''); $('#msgAddCountryValidation').html(""); }
+            if (!sc) { $('#txtStateCode').css('border-color', 'red'); $('#msgAddStateCodeValidation').html("Please enter State Code"); ok = false; } else { $('#txtStateCode').css('border-color', ''); $('#msgAddStateCodeValidation').html(""); }
+            if (ok) {
                 $.ajax({
-                    type: "POST",
-                    url: '@Url.Action("Save", "State")',
-                    data: stateData,
+                    type: "POST", url: '@Url.Action("Save", "State")',
+                    data: { StateName: sn, CountryID: parseInt(ci), StateCode: sc, IsActive: $('#chkActiveStatus').is(':checked') ? 1 : 0, IsDeleted: 0 },
                     dataType: "json",
-                    success: function (response) {
-                        var trimmedResponse = response.trim();
-                        if (trimmedResponse.toLowerCase() === "success") {
-                            Swal.fire('Success!', 'State added successfully', 'success').then(() => {
-                                $('#addState').modal('hide');
-                                location.reload();
-                            });
-                        } else if (trimmedResponse.toLowerCase() === "duplicate") {
-                            Swal.fire('Duplicate!', 'State with the same Name already exists.', 'warning');
-                        } else {
-                            Swal.fire('Error!', 'Operation failed: ' + trimmedResponse, 'error');
-                        }
+                    success: function (r) {
+                        var t = r.trim().toLowerCase();
+                        if (t === "success") { Swal.fire('Success!', 'State added successfully', 'success').then(() => { $('#addState').modal('hide'); location.reload(); }); }
+                        else if (t === "duplicate") { Swal.fire('Duplicate!', 'State already exists.', 'warning'); }
+                        else { Swal.fire('Error!', 'Failed: ' + r, 'error'); }
                     },
-                    error: function() {
-                        Swal.fire('Error!', 'Something went wrong while saving', 'error');
-                    }
+                    error: function () { Swal.fire('Error!', 'Something went wrong', 'error'); }
                 });
             }
-            e.preventDefault();
         });
 
-                // ========== EDIT STATE ==========
-        $('#btnEditStateSave').on('click', function (e) {
-            var stateName = $('#txtEditStateName').val().trim();
-            var countryId = $('#ddlEditCountryId').val();
-            var stateCode = $('#txtEditStateCodeInput').val().trim();
-            var isActive = $('#chkActiveStatusEdit').is(':checked') ? 1 : 0;
-            var stateId = $('#hdnStateId').val();
-
-            var isValid = true;
-
-            // Validation
-            if (stateName === "") {
-                $('#txtEditStateName').css('border-color', 'red');
-                $('#msgEditStateValidation').html("Please enter State Name");
-                isValid = false;
-            } else {
-                $('#txtEditStateName').css('border-color', '');
-                $('#msgEditStateValidation').html("");
-            }
-
-            if (countryId === "" || countryId === null) {
-                $('#ddlEditCountryId').css('border-color', 'red');
-                $('#msgEditCountryValidation').html("Please select Country");
-                isValid = false;
-            } else {
-                $('#ddlEditCountryId').css('border-color', '');
-                $('#msgEditCountryValidation').html("");
-            }
-
-            if (stateCode === "") {
-                $('#txtEditStateCodeInput').css('border-color', 'red');
-                $('#msgEditStateCodeValidation').html("Please enter State Code");
-                isValid = false;
-            } else {
-                $('#txtEditStateCodeInput').css('border-color', '');
-                $('#msgEditStateCodeValidation').html("");
-            }
-
-            if (isValid) {
-                var stateData = {
-                    StateID: parseInt(stateId),
-                    StateName: stateName,
-                    CountryID: parseInt(countryId),
-                    StateCode: stateCode,
-                    IsActive: isActive,
-                    IsDeleted: 0
-                };
-
-                $.ajax({
-                    type: "POST",
-                    url: '@Url.Action("Edit", "State")',
-                    data: stateData,
-                    dataType: "json",
-                    success: function (response) {
-                        if (response != "") {
-                            response = "success";
-                        }
-                        if (response == "success") {
-                            Swal.fire('Success!', 'State updated successfully', 'success').then(() => {
-                                $('#editState').modal('hide');
-                                location.reload();
-                            });
-                        } else {
-                            Swal.fire('Error!', 'Operation failed', 'error');
-                        }
-                    },
-                    error: function() {
-                        Swal.fire('Error!', 'Something went wrong while updating', 'error');
-                    }
-                });
-            }
-            e.preventDefault();
-        });
-
-        // ========== EDIT BUTTON CLICK ==========
-        $(document).on('click', '.editByStateId', function (e) {
-            var stateID = $(this).attr('data-edStateId');
+        // ========== EDIT LOAD ==========
+        $(document).on('click', '.editByStateId', function () {
+            var id = $(this).attr('data-edStateId');
             $.ajax({
-                type: "GET",
-                url: '@Url.Action("GetState", "State")',
-                data: { stateID: JSON.stringify(stateID) },
-                dataType: "json",
-                success: function (response) {
-                    if (response != null) {
-                        $('#hdnStateId').val(response.stateID);
-                        $('#txtEditStateName').val(response.stateName);
-                        $('#ddlEditCountryId').val(response.countryID);
-                        $('#txtEditStateCodeInput').val(response.stateCode);
-                        $('#chkActiveStatusEdit').prop('checked', response.isActive == 1);
-                    }
+                type: "GET", url: '@Url.Action("GetState", "State")', data: { stateID: JSON.stringify(id) }, dataType: "json",
+                success: function (r) {
+                    if (r) { $('#hdnStateId').val(r.stateID); $('#txtEditStateName').val(r.stateName); $('#ddlEditCountryId').val(r.countryID); $('#txtEditStateCodeInput').val(r.stateCode); $('#chkActiveStatusEdit').prop('checked', r.isActive == 1); }
                 },
-                error: function() {
-                    Swal.fire('Error!', 'Failed to load state data', 'error');
-                }
+                error: function () { Swal.fire('Error!', 'Failed to load', 'error'); }
             });
         });
-            // ========== RESET BUTTON (ADD + EDIT) ==========
-    $(document).on('click', '.btnStateReset', function () {
 
-        // RESET ADD FORM
-        $('#addStateForm')[0].reset();
+        // ========== EDIT SAVE ==========
+        $('#btnEditStateSave').on('click', function (e) {
+            e.preventDefault();
+            var sn = $('#txtEditStateName').val().trim(), ci = $('#ddlEditCountryId').val(), sc = $('#txtEditStateCodeInput').val().trim(), sid = $('#hdnStateId').val(), ok = true;
+            if (!sn) { $('#txtEditStateName').css('border-color', 'red'); $('#msgEditStateValidation').html("Please enter State Name"); ok = false; } else { $('#txtEditStateName').css('border-color', ''); $('#msgEditStateValidation').html(""); }
+            if (!ci) { $('#ddlEditCountryId').css('border-color', 'red'); $('#msgEditCountryValidation').html("Please select Country"); ok = false; } else { $('#ddlEditCountryId').css('border-color', ''); $('#msgEditCountryValidation').html(""); }
+            if (!sc) { $('#txtEditStateCodeInput').css('border-color', 'red'); $('#msgEditStateCodeValidation').html("Please enter State Code"); ok = false; } else { $('#txtEditStateCodeInput').css('border-color', ''); $('#msgEditStateCodeValidation').html(""); }
+            if (ok) {
+                $.ajax({
+                    type: "POST", url: '@Url.Action("Edit", "State")',
+                    data: { StateID: parseInt(sid), StateName: sn, CountryID: parseInt(ci), StateCode: sc, IsActive: $('#chkActiveStatusEdit').is(':checked') ? 1 : 0, IsDeleted: 0 },
+                    dataType: "json",
+                    success: function (r) {
+                        if (r != "") r = "success";
+                        if (r == "success") { Swal.fire('Success!', 'State updated successfully', 'success').then(() => { $('#editState').modal('hide'); location.reload(); }); }
+                        else { Swal.fire('Error!', 'Operation failed', 'error'); }
+                    },
+                    error: function () { Swal.fire('Error!', 'Something went wrong', 'error'); }
+                });
+            }
+        });
 
-        // RESET EDIT FORM
-        $('#editStateForm')[0].reset();
-
-        // CLEAR VALIDATION MESSAGES
-        $('.validationMessage').html('');
-
-        // REMOVE RED BORDERS
-        $('.form-control').css('border-color', '');
-
-    });
-         // ========== VIEW BUTTON ==========
-        $(document).on('click', '.viewByStateId', function (e) {
-            var stateID = $(this).attr('data-vwStateId');
+        // ========== VIEW ==========
+        $(document).on('click', '.viewByStateId', function () {
+            var id = $(this).attr('data-vwStateId');
             $.ajax({
-                type: "GET",
-                url: '@Url.Action("GetState", "State")',
-                data: { stateID: JSON.stringify(stateID) },
-                dataType: "json",
-                success: function (response) {
-                    if (response != null) {
-                        $('#hdnVwStateId').val(response.stateID);
-                        $('#lblvwStateName').html(response.stateName || '');
+                type: "GET", url: '@Url.Action("GetState", "State")', data: { stateID: JSON.stringify(id) }, dataType: "json",
+                success: function (r) {
+                    if (r) {
+                        $('#hdnVwStateId').val(r.stateID);
+                        $('#lblvwStateName').text(r.stateName || '');
+                        $('#lblvwStateCode').text(r.stateCode || '');
+                        var active = r.isActive == 1;
+                        $('#lblvwStatus').html(active
+                            ? '<span class="view-status-badge view-status-active"><i class="fas fa-check-circle"></i> Active</span>'
+                            : '<span class="view-status-badge view-status-inactive"><i class="fas fa-times-circle"></i> Inactive</span>');
                         $('#viewState').modal('show');
                     }
                 }
             });
         });
 
-        // ========== DELETE ==========
-           // ========== DELETE BUTTON ==========
-        $(document).on('click', '.deleteStates', function (e) {
-            var stateID = $(this).attr('data-dlStateId');
+        // ========== DELETE LOAD ==========
+        $(document).on('click', '.deleteStates', function () {
+            var id = $(this).attr('data-dlStateId');
             $.ajax({
-                type: "GET",
-                url: '@Url.Action("GetState", "State")',
-                data: { stateID: JSON.stringify(stateID) },
-                dataType: "json",
-                success: function (response) {
-                    if (response != null) {
-                        $('#hdnDeStateId').val(response.stateID);
-                        $('#lblDelStateName').html(response.stateName || '');
-                        $('#deleteState').modal('show');
-                    }
-                }
+                type: "GET", url: '@Url.Action("GetState", "State")', data: { stateID: JSON.stringify(id) }, dataType: "json",
+                success: function (r) { if (r) { $('#hdnDeStateId').val(r.stateID); $('#lblDelStateName').text(r.stateName || ''); $('#deleteState').modal('show'); } }
             });
         });
-     
-        // ========== DELETE CONFIRMATION ==========
-        $('#btnConfirmStateDelete').on('click', function (e) {
-            var stateId = $('#hdnDeStateId').val();
-            $.ajax({
-                type: "GET",
-                url: '@Url.Action("DeleteState", "State")',
-                data: { stateId: JSON.stringify(stateId) },
-                dataType: "json",
-                success: function (response) {
-                    if (response == "1") {
-                        Swal.fire('Success!', 'State deleted successfully', 'success').then(() => {
-                            location.reload();
-                        });
-                    } else {
-                        Swal.fire('Error!', 'Something went wrong. Please try again', 'error');
-                    }
-                    $('#deleteState').modal('hide');
-                },
-                error: function() {
-                    Swal.fire('Error!', 'Failed to delete state', 'error');
-                    $('#deleteState').modal('hide');
-                }
-            });
-        });
-            // ========== PERFECT MODAL FIX ==========
-    $(document).on('hidden.bs.modal', '.modal', function () {
-        $('.modal-backdrop').remove();
-        $('body').removeClass('modal-open').css('padding-right', '');
-    });
 
-    $('.close, [data-dismiss="modal"]').click(function() {
-        $(this).closest('.modal').modal('hide');
-    });
+        // ========== DELETE CONFIRM ==========
+        $('#btnConfirmStateDelete').on('click', function () {
+            var sid = $('#hdnDeStateId').val();
+            $.ajax({
+                type: "GET", url: '@Url.Action("DeleteState", "State")', data: { stateId: JSON.stringify(sid) }, dataType: "json",
+                success: function (r) {
+                    $('#deleteState').modal('hide');
+                    if (r == "1") { Swal.fire('Deleted!', 'State deleted successfully', 'success').then(() => { location.reload(); }); }
+                    else { Swal.fire('Error!', 'Something went wrong', 'error'); }
+                },
+                error: function () { $('#deleteState').modal('hide'); Swal.fire('Error!', 'Failed to delete', 'error'); }
+            });
+        });
+
+        // ========== RESET ==========
+        $(document).on('click', '.btnStateReset', function () {
+            $('#addStateForm')[0].reset(); $('#editStateForm')[0].reset();
+            $('.validationMessage').html(''); $('.form-control').css('border-color', '');
+        });
+
+        // ========== MODAL CLEANUP ==========
+        $(document).on('hidden.bs.modal', '.modal', function () {
+            $('.modal-backdrop').remove();
+            $('body').removeClass('modal-open').css('padding-right', '');
+        });
+        $('.close, [data-dismiss="modal"]').click(function () { $(this).closest('.modal').modal('hide'); });
     });
 </script>

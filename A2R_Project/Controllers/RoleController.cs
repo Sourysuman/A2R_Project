@@ -18,6 +18,7 @@ namespace A2R_Project.Controllers
 
         public async Task<IActionResult> List(int page = 1, int pageSize = 10)
         {
+            await SetPagePermissions("Role");
             var roles = await _roleRepository.GetAllRoles();
             var totalCount = roles.Count;
             var pagedRoles = roles.Skip((page - 1) * pageSize).Take(pageSize).ToList();

@@ -99,43 +99,9 @@
                             <h3 class="card-title">
                                 <i class="fas fa-bolt me-2 text-primary"></i>Quick Actions
                             </h3>
-                            <div class="row g-3">
-                                <div class="col-md-3 col-sm-6">
-                                    <a href="@Url.Action("List", "StudentInquiry")" class="action-btn primary">
-                                        <i class="fas fa-plus-circle"></i>
-                                        <span>New Inquiry</span>
-                                    </a>
-                                </div>
-                                <div class="col-md-3 col-sm-6">
-                                    <a  href="@Url.Action("List", "StudentsList")" class="action-btn success">
-                                        <i class="fas fa-user-plus"></i>
-                                        <span>New Admission</span>
-                                    </a>
-                                </div>
-                                <div class="col-md-3 col-sm-6">
-                                    <a href="@Url.Action("List", "FeesCollection")" class="action-btn warning">
-                                        <i class="fas fa-money-bill-wave"></i>
-                                        <span>Fees Collection</span>
-                                    </a>
-                                </div>
-                                <div class="col-md-3 col-sm-6">
-                                    <a href="@Url.Action("List", "ExpenseReport")" class="action-btn info">
-                                        <i class="fas fa-chart-bar"></i>
-                                        <span>Reports</span>
-                                    </a>
-                                </div>
-                                <div class="col-md-3 col-sm-6">
-                                    <a href="@Url.Action("List", "Course")" class="action-btn course">
-                                        <i class="fas fa-book-open"></i>
-                                        <span>Courses</span>
-                                    </a>
-                                </div>
-
-                                <div class="col-md-3 col-sm-6">
-                                    <a href="@Url.Action("List", "ExpenseCategory")" class="action-btn expense">
-                                        <i class="fas fa-wallet"></i>
-                                        <span>Expense</span>
-                                    </a>
+                            <div class="row g-3" id="quickActionsContainer">
+                                <div class="col-12 text-center text-muted py-3">
+                                    <i class="fas fa-spinner fa-spin"></i> Loading...
                                 </div>
                             </div>
                         </div>
@@ -151,11 +117,11 @@
                                 </button>
                             </div>
                             <div class="activity-list" id="activityList">
-                                <div class="activity-item loading">
-                                    <div class="activity-icon skeleton"></div>
-                                    <div class="activity-content">
-                                        <div class="activity-title skeleton"></div>
-                                        <div class="activity-time skeleton"></div>
+                                <div class="activity-item">
+                                    <div class="activity-icon skeleton" style="width:45px;height:45px;border-radius:12px;"></div>
+                                    <div class="activity-content" style="flex:1;">
+                                        <div class="activity-title skeleton" style="height:14px;margin-bottom:8px;border-radius:6px;"></div>
+                                        <div class="activity-time skeleton" style="height:12px;width:60%;border-radius:6px;"></div>
                                     </div>
                                 </div>
                             </div>
@@ -845,6 +811,7 @@
     <script>
         AOS.init({ duration: 1000, once: true });
 
+        // ✅ DASHBOARD DATA - stats + activities
         async function loadDashboardData() {
             try {
                 const response = await axios.get('/Dashboard/GetDashboardData', { timeout: 5000 });
@@ -861,8 +828,8 @@
                 document.getElementById('lastUpdate').textContent = 'Update failed';
             }
         }
-          
 
+        // ✅ COUNTER ANIMATION
         function animateCounter(id, target, isRevenue = false) {
             const el = document.getElementById(id);
             let current = 0;
@@ -880,6 +847,7 @@
             }, duration / 60);
         }
 
+        // ✅ UPDATE ACTIVITIES
         function updateActivities(activities) {
             const list = document.getElementById('activityList');
             if (activities?.length > 0) {
@@ -897,20 +865,98 @@
             } else {
                 list.innerHTML = `
                     <div class="activity-item">
-                        <div class="activity-icon info"><i class="fas fa-info-circle"></i></div>
+                        <div class="activity-icon primary">
+                            <i class="fas fa-info-circle"></i>
+                        </div>
                         <div class="activity-content">
                             <div class="activity-title">No recent activity</div>
                             <div class="activity-time">All caught up!</div>
                         </div>
-                    </div>
-                `;
+                    </div>`;
             }
         }
 
+        // ✅ ACTIVITIES REFRESH - for refresh button onclick
+        async function loadActivities() {
+            try {
+                const response = await axios.get('/Dashboard/GetDashboardData', { timeout: 5000 });
+                updateActivities(response.data.activities);
+            } catch (error) {
+                document.getElementById('activityList').innerHTML = `
+                    <div class="activity-item">
+                        <div class="activity-icon primary">
+                            <i class="fas fa-info-circle"></i>
+                        </div>
+                        <div class="activity-content">
+                            <div class="activity-title">No recent activity</div>
+                            <div class="activity-time">All caught up!</div>
+                        </div>
+                    </div>`;
+            }
+        }
 
+        // ✅ QUICK ACTIONS - based on user access
+        async function loadQuickActions() {
+            try {
+                const username = '@ViewBag.Username';
+                const response = await fetch(`/AccessControl/GetDynamicSidebar?username=${encodeURIComponent(username)}`);
+                const data = await response.json();
+                const menus = data.menus || [];
+
+                const actionMap = {
+                    'StudentInquiry':  { label: 'New Inquiry',     icon: 'fas fa-plus-circle',    css: 'primary', action: 'List' },
+                    'StudentsList':    { label: 'New Admission',   icon: 'fas fa-user-plus',       css: 'success', action: 'List' },
+                    'FeesCollection':  { label: 'Fees Collection', icon: 'fas fa-money-bill-wave', css: 'warning', action: 'List' },
+                    'ExpenseReport':   { label: 'Reports',         icon: 'fas fa-chart-bar',       css: 'info',    action: 'List' },
+                    'Course':          { label: 'Courses',         icon: 'fas fa-book-open',       css: 'course',  action: 'List' },
+                    'ExpenseCategory': { label: 'Expense',         icon: 'fas fa-wallet',          css: 'expense', action: 'List' },
+                };
+
+                const accessibleControllers = new Set();
+                menus.forEach(menu => {
+                    menu.subMenus.forEach(sub => {
+                        accessibleControllers.add(sub.controller);
+                    });
+                });
+
+                let html = '';
+                Object.entries(actionMap).forEach(([controller, config]) => {
+                    if (accessibleControllers.has(controller)) {
+                        html += `
+                            <div class="col-md-3 col-sm-6">
+                                <a href="/${controller}/${config.action}" class="action-btn ${config.css}">
+                                    <i class="${config.icon}"></i>
+                                    <span>${config.label}</span>
+                                </a>
+                            </div>`;
+                    }
+                });
+
+                if (html === '') {
+                    html = `
+                        <div class="col-12 text-center text-muted py-4">
+                            <i class="fas fa-lock fa-2x mb-2"></i>
+                            <p>No quick actions available</p>
+                        </div>`;
+                }
+
+                document.getElementById('quickActionsContainer').innerHTML = html;
+
+            } catch (error) {
+                document.getElementById('quickActionsContainer').innerHTML = `
+                    <div class="col-12 text-center text-muted">
+                        Failed to load actions
+                    </div>`;
+            }
+        }
+
+        
         window.addEventListener('load', () => {
             loadDashboardData();
-            setInterval(loadDashboardData, 30000);
+            loadQuickActions();
+            loadActivities();
+            setInterval(loadDashboardData, 30000);  
+            setInterval(loadActivities, 60000);      
         });
     </script>
 </body>

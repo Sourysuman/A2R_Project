@@ -1,7 +1,6 @@
 ﻿@model A2R_Project.Models.Logins
 @{
     ViewBag.Title = "Users List";
-    // Remove layout if it's causing issues
 }
 
 <!DOCTYPE html>
@@ -11,215 +10,612 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/@@mdi/font@6.5.95/css/materialdesignicons.min.css" rel="stylesheet">
     <style>
-        .btn-gradient-primary {
-            background: linear-gradient(45deg, #007bff, #0056b3);
+        body {
+            background: linear-gradient(135deg, #eef2ff, #f8fbff);
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        .card {
+            border-radius: 18px;
             border: none;
-            color: white;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+        }
+
+        .card-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: #2c3e50;
+            letter-spacing: 0.5px;
+        }
+
+        .table {
+            border-radius: 14px;
+            overflow: hidden;
+            background: #fff;
+        }
+
+            .table thead th {
+                border: none;
+                color: #fff;
+                font-size: 14px;
+                font-weight: 700;
+                text-transform: uppercase;
+                letter-spacing: 0.6px;
+                padding: 14px;
+            }
+
+            .table tbody td {
+                font-size: 15px;
+                font-weight: 600;
+                color: #34495e;
+                padding: 14px;
+                vertical-align: middle;
+                background-color: white !important;
+            }
+
+            .table tbody tr {
+                transition: all 0.25s ease;
+            }
+
+
+        .badge-success {
+            background: linear-gradient(135deg, #1cc88a, #17a673) !important;
+            padding: 7px 12px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+            color: #fff;
+        }
+
+        .badge-danger {
+            background: linear-gradient(135deg, #e74a3b, #c0392b) !important;
+            padding: 7px 12px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+            color: #fff;
+        }
+
+        .btn-gradient-primary {
+            background: linear-gradient(135deg, #28a745, #20c997) !important;
+            border: none !important;
+            color: #fff !important;
+            font-weight: 700;
+            border-radius: 25px !important;
+            padding: 8px 18px !important;
+            transition: all 0.25s ease;
         }
 
             .btn-gradient-primary:hover {
-                background: linear-gradient(45deg, #0056b3, #004085);
-                color: white;
+                background: linear-gradient(135deg, #218838, #17a2b8) !important;
+                color: #fff !important;
+                transform: translateY(-2px);
+                box-shadow: 0 6px 15px rgba(0,0,0,0.15);
             }
 
-        .btn-gradient-warning {
-            background: linear-gradient(45deg, #ffc107, #e0a800);
-            border: none;
-            color: #212529;
+        .table .btn-sm,
+        .btn-group-sm .btn {
+            width: 36px !important;
+            height: 36px !important;
+            border-radius: 10px !important;
+            padding: 0 !important;
+            margin-right: 4px;
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            border: none !important;
+            transition: all 0.25s ease;
         }
 
-        .btn-gradient-dark {
-            background: linear-gradient(45deg, #6c757d, #545b62);
+            .table .btn-sm i,
+            .btn-group-sm .btn i {
+                font-size: 16px !important;
+                line-height: 1;
+            }
+
+            .table .btn-sm:hover,
+            .btn-group-sm .btn:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 6px 15px rgba(0,0,0,0.15);
+            }
+
+            .btn-group-sm .btn.editByLoginId,
+            .table .btn-sm.btn-primary {
+                background: linear-gradient(135deg, #4e73df, #224abe) !important;
+                color: #fff !important;
+            }
+
+            .btn-group-sm .btn.viewByLoginId,
+            .table .btn-sm.btn-info {
+                background: linear-gradient(135deg, #36b9cc, #1f8ea3) !important;
+                color: #fff !important;
+            }
+
+            .btn-group-sm .btn.deleteLogins,
+            .table .btn-sm.btn-danger {
+                background: linear-gradient(135deg, #e74a3b, #c0392b) !important;
+                color: #fff !important;
+            }
+
+        #btnShowPage, #btnShowAll {
+            border-radius: 25px !important;
+            font-weight: 600 !important;
+            padding: 6px 16px !important;
+            transition: all 0.25s ease;
+        }
+
+            #btnShowPage:hover, #btnShowAll:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 6px 15px rgba(0,0,0,0.15);
+            }
+
+        #pageInfo {
+            color: #2c3e50;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .pagination .page-link {
+            border-radius: 10px;
+            margin: 0 4px;
+            font-weight: 600;
+            color: #4e73df;
             border: none;
-            color: white;
+        }
+
+        .pagination .page-item.active .page-link {
+            background: linear-gradient(135deg, #4e73df, #224abe);
+            color: #fff;
+        }
+
+        .pagination .page-link:hover {
+            background: #e8edff;
+        }
+
+        .form-control {
+            border-radius: 10px;
+            border: 1px solid #dce3f0;
+            padding: 8px 12px;
+            font-weight: 600;
+            color: #111 !important;
+            transition: all 0.3s ease;
+        }
+
+            .form-control:focus {
+                border-color: #4e73df;
+                box-shadow: 0 0 0 3px rgba(78,115,223,0.15);
+                outline: none;
+            }
+
+        label {
+            font-weight: 600;
+            color: #2c3e50;
         }
 
         .view-box {
-            padding: 8px;
-            background: #f8f9fa;
-            border-radius: 4px;
-            min-height: 40px;
+            background: #f1f4ff;
+            border-radius: 8px;
+            padding: 8px 12px;
+            font-weight: 600;
+            color: #2c3e50;
+            min-height: 38px;
             display: flex;
             align-items: center;
         }
-        /* ================= ACTION BUTTONS MODERN ================= */
-        .btn-group-sm .btn {
-            border-radius: 10px !important;
-            padding: 6px 10px;
-            margin: 0 3px;
-            transition: all 0.25s ease;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+
+        .error-text {
+            font-size: 12px;
+            margin-top: 3px;
+            display: block;
+            color: red;
         }
 
-        /* EDIT BUTTON */
-        .btn-gradient-primary {
-            background: linear-gradient(135deg, #4facfe, #00c6ff);
-            border: none;
-            color: #fff;
+        .is-invalid {
+            border-color: #ef4444 !important;
         }
 
-            .btn-gradient-primary:hover {
-                transform: translateY(-2px) scale(1.05);
-                box-shadow: 0 8px 18px rgba(0, 123, 255, 0.3);
+        .modal-backdrop {
+            opacity: 0.25 !important;
+            background-color: #000;
+        }
+
+        /* ===== ALL 4 MODALS - SAME SIZE ===== */
+        .modal-dialog {
+            max-width: 700px !important;
+            margin-top: 80px;
+        }
+
+        /* ===== MODAL CONTENT - STANDARD STYLE ===== */
+        .modal-content {
+            border-radius: 14px !important;
+            border: none !important;
+            box-shadow: 0 12px 35px rgba(0,0,0,0.18) !important;
+            overflow: hidden;
+            animation: fadeInScale 0.3s ease;
+        }
+
+        @@keyframes fadeInScale {
+            from {
+                opacity: 0;
+                transform: scale(0.93);
             }
 
-        /* VIEW BUTTON */
-        .btn-gradient-dark {
-            background: linear-gradient(135deg, #434343, #000000);
-            border: none;
-            color: #fff;
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
         }
 
-            .btn-gradient-dark:hover {
-                transform: translateY(-2px) scale(1.05);
-                box-shadow: 0 8px 18px rgba(0, 0, 0, 0.3);
-            }
-
-        /* DELETE BUTTON */
-        .btn-gradient-warning {
-            background: linear-gradient(135deg, #ff758c, #ff7eb3);
-            border: none;
-            color: #fff;
+        /* ===== MODAL HEADER - STANDARD ===== */
+        .modal-header {
+            padding: 16px 22px !important;
+            border-bottom: 1px solid rgba(255,255,255,0.15) !important;
+            border-radius: 14px 14px 0 0 !important;
         }
 
-            .btn-gradient-warning:hover {
-                transform: translateY(-2px) scale(1.05);
-                box-shadow: 0 8px 18px rgba(255, 99, 132, 0.3);
+        .modal-title {
+            font-size: 16px !important;
+            font-weight: 700 !important;
+            letter-spacing: 0.4px !important;
+        }
+
+        /* ===== STANDARD CLOSE BUTTON (×) ===== */
+        .modal-header .close {
+            font-size: 22px !important;
+            font-weight: 700 !important;
+            line-height: 1 !important;
+            opacity: 0.85 !important;
+            text-shadow: none !important;
+            padding: 0 4px !important;
+            margin: 0 !important;
+            background: transparent !important;
+            border: none !important;
+            cursor: pointer;
+            transition: opacity 0.2s ease;
+        }
+
+            .modal-header .close:hover {
+                opacity: 1 !important;
             }
 
-        /* ICON STYLE */
-        .btn i {
+        .modal-body {
+            padding: 24px 26px !important;
+            background: #f9fbff !important;
+            font-size: 15px;
+        }
+
+        .modal-footer {
+            padding: 14px 22px !important;
+            background: #fff !important;
+            border-top: 1px solid #eee !important;
+            border-radius: 0 0 14px 14px !important;
+        }
+
+            .modal-footer .btn {
+                border-radius: 25px !important;
+                padding: 7px 20px !important;
+                font-weight: 600 !important;
+                font-size: 14px !important;
+                transition: all 0.25s ease;
+            }
+
+                .modal-footer .btn:hover {
+                    transform: translateY(-2px);
+                    box-shadow: 0 6px 15px rgba(0,0,0,0.15);
+                }
+
+       
+
+        #deleteAdminLogin .modal-header {
+            background: #fff !important;
+            border-bottom: 1px solid #f5c6cb !important;
+            padding: 18px 24px !important;
+        }
+
+        #deleteAdminLogin .modal-title {
+            color: #c0392b !important;
+            font-size: 18px !important;
+        }
+
+        #deleteAdminLogin .modal-header .close {
+            color: #c0392b !important;
+        }
+
+        #deleteAdminLogin .modal-body {
+            background: #fff !important;
+            padding: 28px 30px !important;
+            text-align: center;
+        }
+
+        #deleteAdminLogin .delete-icon-wrap {
+            width: 70px;
+            height: 70px;
+            background: #fdecea;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 16px auto;
+        }
+
+            #deleteAdminLogin .delete-icon-wrap i {
+                font-size: 32px;
+                color: #e74a3b;
+            }
+
+        #deleteAdminLogin .delete-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: #2c3e50;
+            margin-bottom: 6px;
+        }
+
+        #deleteAdminLogin .delete-subtitle {
             font-size: 14px;
+            color: #7f8c8d;
+            margin-bottom: 0;
         }
 
-        /* CENTER ALIGN ACTION COLUMN */
-        #userTable td:last-child {
+        #deleteAdminLogin .modal-footer {
+           
+            gap: 12px;
+            padding: 18px 22px !important;
+        }
+
+        /* ===== TABLE CENTER ===== */
+        #userTable th,
+        #userTable td {
             text-align: center;
             vertical-align: middle;
         }
 
-        /* OPTIONAL: TABLE ROW HOVER EFFECT */
-        #userTable tbody tr:hover {
-            background: #f4f8ff;
-            transition: 0.3s;
-        }
-
-        #pageInfo {
-            color: #333;
-            font-size: 14px;
-        }
-
-        .btn-light {
-            border-radius: 8px;
-            transition: 0.3s;
-        }
-
-            .btn-light:hover {
-                background: #007bff;
-                color: white;
+            #userTable td:first-child,
+            #userTable th:first-child {
+                text-align: left;
             }
-        /* ================= GLOBAL RESPONSIVE ================= */
-        body {
-            overflow-x: hidden;
+
+        /* ===== VIEW STATUS INLINE ===== */
+        .view-inline-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
 
-        /* Container spacing */
-        .container-fluid {
-            padding-left: 10px;
-            padding-right: 10px;
-        }
+            .view-inline-row label {
+                margin: 0;
+                white-space: nowrap;
+                min-width: 65px;
+            }
 
-        /* ================= TABLE RESPONSIVE ================= */
-        .table-responsive {
-            overflow-x: auto;
-        }
-
-        #userTable {
-            min-width: 600px;
-        }
-
-        /* Make table text smaller on mobile */
         @@media (max-width: 768px) {
-            #userTable th, #userTable td {
-                font-size: 13px;
+            .table th, .table td {
+                font-size: 12px;
                 padding: 8px;
             }
-        }
 
-        /* ================= BUTTON GROUP ================= */
-        .btn-group-sm .btn {
-            margin: 2px;
-            padding: 5px 8px;
-        }
-
-        /* Stack buttons on small screen */
-        @@media (max-width: 576px) {
-            .btn-group {
-                display: flex;
-                flex-direction: column;
-                width: 100%;
-            }
-
-                .btn-group .btn {
-                    width: 100%;
-                }
-        }
-
-        /* ================= HEADER SECTION ================= */
-        @@media (max-width: 576px) {
-            .d-flex.justify-content-between {
-                flex-direction: column;
-                align-items: stretch !important;
-            }
-
-                .d-flex.justify-content-between .btn {
-                    margin-top: 10px;
-                    width: 100%;
-                }
-        }
-
-        /* ================= MODAL RESPONSIVE ================= */
-        .modal-dialog {
-            max-width: 500px;
-        }
-
-        @@media (max-width: 576px) {
             .modal-dialog {
-                max-width: 95%;
+                max-width: 95% !important;
                 margin: 10px auto;
             }
 
-            .modal-content {
-                border-radius: 12px;
+            .btn {
+                font-size: 12px;
             }
         }
+        /* ===== COMMON MODAL THEME (MATCH SECOND PAGE) ===== */
 
-        /* ================= FORM INPUT ================= */
-        .form-control {
-            font-size: 14px;
+        /* Header gradient */
+        .modal-header {
+            background: linear-gradient(135deg, #4e73df, #224abe) !important;
+            color: #fff !important;
+            border-bottom: none !important;
+            border-radius: 18px 18px 0 0 !important;
         }
 
-        @@media (max-width: 576px) {
-            .form-control {
-                font-size: 13px;
-                padding: 8px;
+            .modal-header .modal-title {
+                color: #fff !important;
+                font-size: 18px;
+                font-weight: 700;
             }
+
+            .modal-header .close {
+                color: #fff !important;
+                opacity: 1;
+                font-size: 22px;
+            }
+
+        /* Body */
+        .modal-body {
+            background: #f9fbff !important;
+            padding: 24px !important;
         }
 
-        /* ================= VIEW BOX ================= */
+        /* Footer */
+        .modal-footer {
+            background: #fff !important;
+            border-top: 1px solid #eee !important;
+            padding: 14px 20px !important;
+        }
+
+            /* ===== BUTTON COLORS (MATCH SECOND PAGE) ===== */
+
+            /* PRIMARY (Save / Update) */
+            .modal-footer .btn-primary,
+            .modal-footer .btn-warning,
+            .modal-footer .btn-success {
+                background: linear-gradient(135deg, #4e73df, #224abe) !important;
+                border: none !important;
+                color: #fff !important;
+                font-weight: 600;
+            }
+
+            /* RESET BUTTON */
+            .modal-footer .btn-warning {
+                background: linear-gradient(135deg, #f6c23e, #e0a800) !important;
+                color: #000 !important;
+            }
+
+            /* CANCEL BUTTON */
+            .modal-footer .btn-secondary {
+                background: #6c757d !important;
+                color: #fff !important;
+                border: none !important;
+            }
+
+            /* DELETE BUTTON */
+            .modal-footer .btn-danger {
+                background: linear-gradient(135deg, #e74a3b, #c0392b) !important;
+                border: none !important;
+                color: #fff !important;
+            }
+
+            /* Hover effect */
+            .modal-footer .btn:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 6px 15px rgba(0,0,0,0.15);
+            }
+
+        /* Modal box */
+        .modal-content {
+            border-radius: 18px !important;
+            border: none !important;
+            box-shadow: 0 12px 40px rgba(0,0,0,0.18) !important;
+            overflow: hidden;
+        }
+    
+
+#deleteAdminLogin .modal-body {
+    text-align: center;
+    padding: 30px !important;
+}
+
+#deleteAdminLogin .delete-icon-wrap {
+    width: 80px;
+    height: 80px;
+    background: rgba(231,76,59,0.1);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 15px;
+}
+
+#deleteAdminLogin .delete-icon-wrap i {
+    font-size: 32px;
+    color: #e74a3b;
+}
+
+#deleteAdminLogin .delete-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: #2c3e50;
+}
+
+#deleteAdminLogin .delete-subtitle {
+    font-size: 14px;
+    color: #7f8c8d;
+}
+        /* ===== SAME HEADER FOR ALL MODALS ===== */
+        #addAdminLogin .modal-header,
+        #editAdminLogin .modal-header,
+        #viewAdminLogin .modal-header,
+        #deleteAdminLogin .modal-header {
+            background: linear-gradient(135deg, #4e73df, #224abe) !important;
+            color: #fff !important;
+            border-bottom: none !important;
+        }
+
+        /* TITLE COLOR */
+        #addAdminLogin .modal-title,
+        #editAdminLogin .modal-title,
+        #viewAdminLogin .modal-title,
+        #deleteAdminLogin .modal-title {
+            color: #fff !important;
+            font-weight: 700;
+        }
+
+        /* CLOSE BUTTON COLOR */
+        #addAdminLogin .modal-header .close,
+        #editAdminLogin .modal-header .close,
+        #viewAdminLogin .modal-header .close,
+        #deleteAdminLogin .modal-header .close {
+            color: #fff !important;
+            opacity: 1 !important;
+        }
+        /* ===== ALL MODALS - UNIFORM SIZE ===== */
+        .modal-dialog {
+            max-width: 700px !important;
+            width: 700px !important;
+            margin-top: 80px !important;
+        }
+
+        .modal-content {
+            min-height: 420px !important;
+        }
+
+        .modal-body {
+            min-height: 300px !important;
+            max-height: 300px !important;
+            overflow-y: auto !important;
+        }
+
+        /* Delete modal body override - center content vertically */
+        #deleteAdminLogin .modal-body {
+            min-height: 300px !important;
+            max-height: 300px !important;
+            display: flex !important;
+            flex-direction: column !important;
+            align-items: center !important;
+            justify-content: center !important;
+        }
+
+        /* View modal body override */
+        #viewAdminLogin .modal-body {
+            min-height: 300px !important;
+            max-height: 300px !important;
+        }
+
+        @@media (max-width: 768px) {
+            .modal-dialog
+
+        {
+            max-width: 95% !important;
+            width: 95% !important;
+            margin: 10px auto !important;
+        }
+
+        }
+
+        #btnToggleEditPassword {
+            background: transparent !important;
+            border: none !important;
+            color: #4e73df !important;
+            padding: 0 10px !important;
+        }
+
+            #btnToggleEditPassword:hover {
+                color: #224abe !important;
+            }
+
+            #btnToggleEditPassword i {
+                font-size: 16px;
+            }
+
+            #btnToggleEditPassword i {
+                color: #000 !important;
+            }
+
         .view-box {
-            font-size: 14px;
-        }
-
-        @@media (max-width: 576px) {
-            .view-box {
-                font-size: 13px;
-            }
+            background: none !important;
+            border: none !important;
+            padding: 0 !important;
+            font-weight: 500;
+            color: #111;
         }
     </style>
-
-
 </head>
 <body>
     <div class="container-fluid mt-4">
@@ -227,14 +623,23 @@
             <div class="card">
                 <div class="card-body">
                     <div class="d-flex justify-content-between align-items-center mb-4">
-                        <strong class="card-title h4">👥 Users List (@Model.adminLogin.Count users)</strong>
-                        <button class="btn btn-gradient-primary" data-toggle="modal" data-target="#addAdminLogin">
-                            <i class="fa fa-plus"></i> Add User
-                        </button>
+                        <strong class="card-title h4"> Users List (@Model.adminLogin.Count users)</strong>
+                        @if (ViewBag.CanInsert == true)
+                        {
+                            <button class="btn btn-gradient-primary" data-toggle="modal" data-target="#addAdminLogin">
+                                <i class="fa fa-plus"></i> Add User
+                            </button>
+                        }
+                        else
+                        {
+                            <button class="btn btn-secondary btn-rounded" onclick="noAccess('Insert')">
+                                <i class="fa fa-plus"></i> Add User
+                            </button>
+                        }
                     </div>
 
                     <div class="table-responsive">
-                        <table class="table table-bordered table-hover" id="userTable">
+                        <table class="table table-bordered table-striped" id="userTable">
                             <thead class="thead-dark">
                                 <tr>
                                     <th>User Name</th>
@@ -263,24 +668,53 @@
                                             </td>
                                             <td>
                                                 <div class="btn-group btn-group-sm">
-                                                    <button class="btn btn-gradient-primary editByLoginId"
-                                                            data-edloginid="@item.LoginID"
-                                                            data-toggle="modal" data-target="#editAdminLogin"
-                                                            title="Edit">
-                                                        <i class="fa fa-edit"></i>
-                                                    </button>
-                                                    <button class="btn btn-gradient-dark viewByLoginId"
+
+                                                    @* EDIT *@
+                                                    @if (ViewBag.CanUpdate == true)
+                                                    {
+                                                        <button type="button" class="btn btn-sm editByLoginId"
+                                                                data-edloginid="@item.LoginID"
+                                                                data-toggle="modal" data-target="#editAdminLogin"
+                                                                title="Edit">
+                                                            <i class="mdi mdi-pencil"></i>
+                                                        </button>
+                                                    }
+                                                    else
+                                                    {
+                                                        <button type="button" class="btn btn-sm btn-secondary"
+                                                                title="No Edit Permission"
+                                                                onclick="noAccess('Update')">
+                                                            <i class="mdi mdi-pencil"></i>
+                                                        </button>
+                                                    }
+
+                                                    @* VIEW — always visible *@
+                                                    <button type="button" class="btn btn-sm viewByLoginId"
                                                             data-vwloginid="@item.LoginID"
                                                             data-toggle="modal" data-target="#viewAdminLogin"
                                                             title="View">
-                                                        <i class="fa fa-eye"></i>
+                                                        <i class="mdi mdi-eye"></i>
                                                     </button>
-                                                    <button class="btn btn-gradient-warning deleteLogins"
-                                                            data-dlloginid="@item.LoginID"
-                                                            data-toggle="modal" data-target="#deleteAdminLogin"
-                                                            title="Delete">
-                                                        <i class="fa fa-trash"></i>
-                                                    </button>
+
+                                                    @* DELETE *@
+                                                    @if (ViewBag.CanDelete == true)
+                                                    {
+                                                        <button type="button" class="btn btn-sm deleteLogins"
+                                                                data-dlloginid="@item.LoginID"
+                                                                data-toggle="modal" data-target="#deleteAdminLogin"
+                                                                title="Delete">
+                                                            <i class="mdi mdi-delete"></i>
+                                                        </button>
+                                                    }
+                                                    else
+                                                    {
+                                                        <button type="button" class="btn btn-sm btn-secondary"
+                                                                title="No Delete Permission"
+                                                                onclick="noAccess('Delete')">
+                                                            <i class="mdi mdi-delete"></i>
+                                                        </button>
+                                                    }
+
                                                 </div>
                                             </td>
                                         </tr>
@@ -292,44 +726,46 @@
                                 }
                             </tbody>
                         </table>
-                        <div class="d-flex justify-content-between align-items-center mt-3 flex-wrap">
 
-                            <!-- LEFT SIDE BUTTONS -->
-                            <div>
-                                <button class="btn btn-sm btn-info mr-2" id="btnShowPage">
-                                    Show 10 / Page
+                        <div class="d-flex justify-content-between align-items-center mt-3 flex-wrap">
+                            <div style="display: flex; gap: 8px;">
+                                <button class="btn btn-sm" id="btnShowPage"
+                                        style="background: linear-gradient(135deg, #36b9cc, #1f8ea3) !important; color:#fff; border:none; border-radius:25px; font-weight:700; padding:6px 16px;">
+                                    <i class="fa fa-list"></i> Show 10 / Page
                                 </button>
-                                <button class="btn btn-sm btn-secondary" id="btnShowAll">
-                                    Show All
+                                <button class="btn btn-sm" id="btnShowAll"
+                                        style="background: linear-gradient(135deg, #28a745, #20c997) !important; color:#fff; border:none; border-radius:25px; font-weight:700; padding:6px 16px;">
+                                    <i class="fa fa-th-list"></i> Show All
                                 </button>
                             </div>
-
-                            <!-- RIGHT SIDE PAGINATION -->
-                            <div>
-                                <button class="btn btn-sm btn-light mr-1" onclick="goToPage('prev')">
+                            <div style="display: flex; align-items: center; gap: 6px;">
+                                <button class="btn btn-sm" onclick="goToPage('prev')"
+                                        style="background:#fff; color:#4e73df; border:none; border-radius:10px; font-weight:600; padding:6px 14px; box-shadow:0 2px 8px rgba(0,0,0,0.08);">
                                     ⬅ Prev
                                 </button>
-
-                                <span id="pageInfo" class="mx-2 font-weight-bold"></span>
-
-                                <button class="btn btn-sm btn-light ml-1" onclick="goToPage('next')">
+                                <span id="pageInfo" class="mx-1"
+                                      style="background:#eef2ff; color:#2c3e50; font-weight:700; font-size:14px; padding:5px 14px; border-radius:20px;">
+                                </span>
+                                <button class="btn btn-sm" onclick="goToPage('next')"
+                                        style="background:#fff; color:#4e73df; border:none; border-radius:10px; font-weight:600; padding:6px 14px; box-shadow:0 2px 8px rgba(0,0,0,0.08);">
                                     Next ➡
                                 </button>
                             </div>
-
                         </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- ADD MODAL -->
+        <!-- ===== ADD MODAL ===== -->
         <div class="modal fade" id="addAdminLogin" tabindex="-1">
             <div class="modal-dialog">
                 <div class="modal-content">
-                    <div class="modal-header bg-primary text-white">
-                        <h5 class="modal-title"><i class="fa fa-plus"></i> Add New User</h5>
-                        <button type="button" class="close text-white" data-dismiss="modal">&times;</button>
+                    <div class="modal-header" style="background: linear-gradient(135deg, #2563eb, #1e40af);">
+                        <h5 class="modal-title text-white"><i class="fa fa-user-plus mr-2"></i> Add New User</h5>
+                        <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
                     </div>
                     <div class="modal-body">
                         <form id="addForm">
@@ -364,22 +800,26 @@
                         </form>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                           Cancel
+                        </button>
                         <button type="button" class="btn btn-primary" id="btnAdminLoginSave">
-                            <i class="fa fa-save"></i> Save User
+                           Save User
                         </button>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- EDIT MODAL -->
+        <!-- ===== EDIT MODAL ===== -->
         <div class="modal fade" id="editAdminLogin" tabindex="-1">
             <div class="modal-dialog">
                 <div class="modal-content">
-                    <div class="modal-header bg-warning text-dark">
-                        <h5 class="modal-title"><i class="fa fa-edit"></i> Edit User</h5>
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <div class="modal-header" style="background: linear-gradient(135deg, #f59e0b, #d97706);">
+                        <h5 class="modal-title text-white"><i class="fa fa-edit mr-2"></i> Edit User</h5>
+                        <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
                     </div>
                     <div class="modal-body">
                         <input type="hidden" id="hdnAdminLoginId" />
@@ -401,8 +841,15 @@
                             </select>
                         </div>
                         <div class="form-group">
-                            <label>New Password (leave blank to keep current)</label>
-                            <input type="password" class="form-control" id="txtEditPassword" placeholder="Leave blank to keep current" />
+                            <label> Password <small class="text-muted"></small></label>
+                            <div class="input-group">
+                                <input type="password" class="form-control" id="txtEditPassword" placeholder="Leave blank to keep current" />
+                                <div class="input-group-append">
+                                    <button type="button" class="btn btn-outline-secondary" id="btnToggleEditPassword" tabindex="-1">
+                                        <i class="fa fa-eye" id="iconToggleEditPassword"></i>
+                                    </button>
+                                </div>
+                            </div>
                         </div>
                         <div class="form-check">
                             <input type="checkbox" class="form-check-input" id="chkActiveStatusEdit" checked>
@@ -410,72 +857,103 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                        <button type="button" class="btn btn-warning" id="btnEditAdminLoginSave">
-                            <i class="fa fa-save"></i> Update User
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                        Cancel
+                        </button>
+                        <button type="button" class="btn btn-warning text-white" id="btnEditAdminLoginSave">
+                            Update User
                         </button>
                     </div>
                 </div>
             </div>
         </div>
-        <!-- VIEW MODAL - FIXED -->
+
+        <!-- ===== VIEW MODAL ===== -->
         <div class="modal fade" id="viewAdminLogin" tabindex="-1">
             <div class="modal-dialog">
                 <div class="modal-content">
-                    <div class="modal-header bg-info text-white">
-                        <h5 class="modal-title"><i class="fa fa-eye"></i> User Details</h5>
-                        <button type="button" class="close text-white" data-dismiss="modal">&times;</button>
+                    <div class="modal-header" style="background: linear-gradient(135deg, #0ea5e9, #0284c7);">
+                        <h5 class="modal-title text-white"><i class="fa fa-eye mr-2"></i> User Details</h5>
+                        <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
                     </div>
                     <div class="modal-body">
                         <input type="hidden" id="hdnVwAdminLoginId" />
-                        <div class="row mb-3">
-                            <div class="col-md-6">
-                                <label><strong>User Name:</strong></label>
-                                <div class="view-box p-2 mt-1" id="lblvwUserName">Loading...</div>
-                            </div>
 
-                        </div>
                         <div class="row mb-3">
-                            <div class="col-md-6">
-                                <label><strong>User ID:</strong></label>
-                                <div class="view-box p-2 mt-1" id="lblvwLoginID">-</div>
+                            <div class="col-md-4">
+                                <label>User Name</label>
                             </div>
-                            <div class="col-md-6">
-                                <label><strong>Status:</strong></label>
-                                <div class="view-box p-2 mt-1" id="lblvwStatus">-</div>
+                            <div class="col-md-8">
+                                <div class="view-box" id="lblvwUserName">Loading...</div>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col-md-4">
+                                <label>User ID</label>
+                            </div>
+                            <div class="col-md-8">
+                                <div class="view-box" id="lblvwLoginID">-</div>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col-md-4">
+                                <label>Status</label>
+                            </div>
+                            <div class="col-md-8">
+                                <div class="view-box">
+                                    <span id="lblvwStatus">-</span>
+                                </div>
                             </div>
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- DELETE MODAL -->
-        <div class="modal fade" id="deleteAdminLogin" tabindex="-1">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header bg-danger text-white">
-                        <h5 class="modal-title"><i class="fa fa-trash"></i> Confirm Delete</h5>
-                        <button type="button" class="close text-white" data-dismiss="modal">&times;</button>
-                    </div>
-                    <div class="modal-body">
-                        <input type="hidden" id="hdnDeAdminLoginId" />
-                        <div class="alert alert-warning">
-                            <p>Are you sure you want to delete <strong id="lblDelUserName">this user</strong>?</p>
-                            <p class="mb-0"><small class="text-danger">⚠️ This action cannot be undone!</small></p>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                        <button type="button" class="btn btn-danger" id="btnConfirmAdminLoginDelete">
-                            <i class="fa fa-trash"></i> Delete User
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                             Close
                         </button>
                     </div>
                 </div>
             </div>
         </div>
+
+        <!-- ===== DELETE MODAL - DIFFERENT STYLE ===== -->
+        <div class="modal fade" id="deleteAdminLogin" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">
+                            <i class="fa fa-trash mr-2"></i> Delete User
+                        </h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <input type="hidden" id="hdnDeAdminLoginId" />
+                        <div class="delete-icon-wrap">
+                            <i class="fa fa-trash"></i>
+                        </div>
+                        <p class="delete-title">Are you sure?</p>
+                        <p class="delete-subtitle">
+                            You are about to delete <strong id="lblDelUserName">this user</strong>.<br>
+                            This action <strong>cannot be undone</strong>.
+                        </p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary btn-lg px-4" data-dismiss="modal">
+                             Cancel
+                        </button>
+                        <button type="button" class="btn btn-danger btn-lg px-4" id="btnConfirmAdminLoginDelete">
+                           Delete
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
 
     <!-- Scripts -->
@@ -483,279 +961,138 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
 
     <script>
-        $(document).ready(function() {
+              function noAccess(type) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Access Denied',
+                text: 'You do not have ' + type + ' permission for Users module.',
+                confirmButtonColor: '#dc2626'
+            });
+        }
+        $(document).ready(function () {
             console.log('🚀 === ADMIN LOGIN PAGE LOADED ===');
-            console.log('📊 Table rows found:', $('#userTable tbody tr').length);
-            console.log('🔗 Save URL:', '@Url.Action("Save", "AdminLogin")');
-            console.log('🔗 Get URL:', '@Url.Action("GetAdminLogin", "AdminLogin")');
 
-            // 🔥 GLOBAL AJAX ERROR HANDLER
-            $(document).ajaxError(function(event, xhr, settings, error) {
-                console.error('🌐 AJAX ERROR:', {
-                    url: settings.url,
-                    status: xhr.status,
-                    statusText: xhr.statusText,
-                    response: xhr.responseText,
-                    error: error
-                });
+            $(document).ajaxError(function (event, xhr, settings, error) {
+                console.error('🌐 AJAX ERROR:', { url: settings.url, status: xhr.status, response: xhr.responseText });
             });
 
-            // 🔥 1. ADD USER - FULL DEBUG
-            $('#btnAdminLoginSave').click(function(e) {
-                console.log('➕ === ADD USER CLICKED ===');
-
+            // 1. ADD USER
+            $('#btnAdminLoginSave').click(function (e) {
                 let userName = $('#txtAdminLoginName').val().trim();
                 let roleId = $('#ddlRoleId').val();
                 let password = $('#txtAdminLoginPassword').val();
                 let isActive = $('#chkActiveStatus').is(':checked') ? 1 : 0;
 
-                console.log('📋 ADD FORM DATA:', { userName, roleId, password: password ? '***HIDDEN***' : '', isActive });
-
-                // Validation
-                if (!userName) {
-                    console.log('❌ Validation: Username empty');
-                    showError('#msgAddName', 'User name is required!');
-                    return;
-                }
-                if (!roleId) {
-                    console.log('❌ Validation: Role empty');
-                    showError('#msgAddRole', 'Please select a role!');
-                    return;
-                }
-                if (!password || password.length < 6) {
-                    console.log('❌ Validation: Password invalid');
-                    showError('#msgAddPass', 'Password must be at least 6 characters!');
-                    return;
-                }
-
-                let loginData = {
-                    LoginID: 0,
-                    UserName: userName,
-                    Role_ID: parseInt(roleId),
-                    Password: password,
-                    IsActive: isActive
-                };
-
-                console.log('📤 SENDING ADD DATA:', loginData);
-                console.log('🌐 POST URL:', '@Url.Action("Save", "AdminLogin")');
+                if (!userName) { showError('#msgAddName', 'User name is required!'); return; }
+                if (!roleId)   { showError('#msgAddRole', 'Please select a role!'); return; }
+                if (!password || password.length < 6) { showError('#msgAddPass', 'Password must be at least 6 characters!'); return; }
 
                 $.ajax({
                     url: '@Url.Action("Save", "AdminLogin")',
                     type: 'POST',
-                    data: loginData,
+                    data: { LoginID: 0, UserName: userName, Role_ID: parseInt(roleId), Password: password, IsActive: isActive },
                     dataType: 'json',
-                    beforeSend: function() {
-                        console.log('⏳ Sending ADD request...');
-                        $('#btnAdminLoginSave').prop('disabled', true).text('Saving...');
-                    },
-                    success: function(response) {
-                        console.log('✅ ADD SUCCESS:', response);
+                    beforeSend: function () { $('#btnAdminLoginSave').prop('disabled', true).text('Saving...'); },
+                    success: function (response) {
                         if (response.success) {
                             showSuccess('✅ User added successfully!');
                             $('#addAdminLogin').modal('hide');
                             setTimeout(() => location.reload(), 1500);
                         } else {
-                            console.log('❌ ADD Failed:', response.message);
                             showError(null, response.message || 'Failed to add user!');
                         }
                     },
-                    error: function(xhr, status, error) {
-                        console.error('❌ ADD AJAX ERROR:', {
-                            status: xhr.status,
-                            statusText: xhr.statusText,
-                            response: xhr.responseText
-                        });
-                        showError(null, `Network error! ${xhr.status}: ${xhr.statusText}`);
-                    },
-                    complete: function() {
-                        $('#btnAdminLoginSave').prop('disabled', false).text('Save');
-                    }
+                    error: function (xhr) { showError(null, `Network error! ${xhr.status}: ${xhr.statusText}`); },
+                    complete: function () { $('#btnAdminLoginSave').prop('disabled', false).text('Save'); }
                 });
             });
-        // 🔥 2. EDIT LOAD DATA - FIXED FOR YOUR DB (lowercase properties)
-        $(document).on('click', '.editByLoginId', function() {
-            let loginId = $(this).data('edloginid');
-            console.log('📝 === EDIT LOAD CLICKED === RAW ID:', loginId, 'TYPE:', typeof loginId);
 
+                   // 2. EDIT LOAD
+        $(document).on('click', '.editByLoginId', function () {
+            let loginId = $(this).data('edloginid');
             $.get('@Url.Action("GetAdminLogin", "AdminLogin")', { loginID: loginId })
-            .done(function(response) {
-                console.log('📥 EDIT LOAD RESPONSE:', response);
+            .done(function (response) {
                 if (response && response.success && response.data) {
                     let data = response.data;
-                    console.log('✅ EDIT RAW DATA:', data);
-
-                    // ✅ FIX: Handle BOTH cases (your DB returns lowercase)
-                    let loginID = data.loginID || data.LoginID;
-                    let userName = data.userName || data.UserName;
-                    let roleID = data.role_ID || data.Role_ID;
-                    let isActive = data.isActive || data.IsActive;
-
-                    console.log('🔧 MAPPED DATA:', { loginID, userName, roleID, isActive });
-
-                    // ✅ Set values SAFELY
-                    $('#hdnAdminLoginId').val(loginID);
-                    $('#txtEditAdminLoginName').val(userName || '');
-                    $('#ddlEditRoleId').val(roleID);
-                    $('#chkActiveStatusEdit').prop('checked', isActive == 1);
-
-                    // ✅ DEBUG: Verify fields are set
-                    console.log('✅ FORM AFTER SET:', {
-                        hiddenID: $('#hdnAdminLoginId').val(),
-                        nameField: $('#txtEditAdminLoginName').val(),
-                        roleField: $('#ddlEditRoleId').val(),
-                        checkbox: $('#chkActiveStatusEdit').is(':checked')
-                    });
-
+                    $('#hdnAdminLoginId').val(data.loginID || data.LoginID);
+                    $('#txtEditAdminLoginName').val(data.userName || data.UserName || '');
+                    $('#ddlEditRoleId').val(data.role_ID || data.Role_ID);
+                    $('#chkActiveStatusEdit').prop('checked', (data.isActive || data.IsActive) == 1);
+                    $('#txtEditPassword').val(data.password || data.Password || ''); // ← ADD THIS LINE
                 } else {
-                    console.log('❌ EDIT LOAD FAILED:', response);
                     showError(null, response?.error || 'User data not found!');
                 }
             })
-            .fail(function(xhr, status, error) {
-                console.error('❌ EDIT LOAD AJAX ERROR:', {
-                    status: xhr.status,
-                    response: xhr.responseText,
-                    error: error
+            .fail(function (xhr) { showError(null, `Failed to load user! (${xhr.status})`); });
+        });
+
+            // 3. EDIT SAVE
+            $('#btnEditAdminLoginSave').click(function () {
+                let hiddenId = $('#hdnAdminLoginId').val();
+                let loginId  = parseInt(hiddenId);
+                if (!hiddenId || isNaN(loginId) || loginId <= 0) { showError(null, `Invalid user ID!`); return; }
+
+                let roleId = parseInt($('#ddlEditRoleId').val());
+                if (!roleId || roleId <= 0) { showError(null, 'Please select a valid role!'); return; }
+
+                $.ajax({
+                    url: '@Url.Action("Edit", "AdminLogin")',
+                    type: 'POST',
+                    data: { LoginID: loginId, UserName: $('#txtEditAdminLoginName').val().trim(), Role_ID: roleId, Password: $('#txtEditPassword').val() || '', IsActive: $('#chkActiveStatusEdit').is(':checked') ? 1 : 0 },
+                    dataType: 'json',
+                    beforeSend: function () { $('#btnEditAdminLoginSave').prop('disabled', true).text('Updating...'); },
+                    success: function (response) {
+                        if (response && response.success) {
+                            showSuccess('✅ User updated successfully!');
+                            $('#editAdminLogin').modal('hide');
+                            setTimeout(() => location.reload(), 1500);
+                        } else {
+                            showError(null, response?.message || 'Update failed!');
+                        }
+                    },
+                    error: function (xhr) { showError(null, `Update failed! (${xhr.status})`); },
+                    complete: function () { $('#btnEditAdminLoginSave').prop('disabled', false).text('Update'); }
                 });
-                showError(null, `Failed to load user! (${xhr.status})`);
             });
-        });
 
-        // 🔥 3. EDIT SAVE - FIXED ID VALIDATION
-        $('#btnEditAdminLoginSave').click(function() {
-            let hiddenId = $('#hdnAdminLoginId').val();
-            let loginId = parseInt(hiddenId);
-
-            console.log('✏️ === EDIT SAVE CLICKED ===');
-            console.log('🔍 RAW HIDDEN ID:', hiddenId);
-            console.log('🔍 PARSED ID:', loginId, 'IS NAN?', isNaN(loginId));
-
-            // ✅ BETTER ID CHECK
-            if (!hiddenId || hiddenId === '' || isNaN(loginId) || loginId <= 0) {
-                console.error('❌ EDIT SAVE: INVALID ID', { hiddenId, loginId });
-                showError(null, `Invalid user ID! (${hiddenId} -> ${loginId})`);
-                return;
-            }
-
-            let roleIdRaw = $('#ddlEditRoleId').val();
-            let roleId = parseInt(roleIdRaw);
-
-            if (!roleId || roleId <= 0) {
-                showError(null, 'Please select a valid role!');
-                return;
-            }
-
-            let data = {
-                LoginID: loginId,
-                UserName: $('#txtEditAdminLoginName').val().trim(),
-                Role_ID: roleId,
-                Password: $('#txtEditPassword').val() || '',
-                IsActive: $('#chkActiveStatusEdit').is(':checked') ? 1 : 0
-            };
-
-            console.log('📤 SENDING EDIT DATA:', data);
-            console.log('🌐 POST URL:', '@Url.Action("Edit", "AdminLogin")');
-
-            $.ajax({
-                url: '@Url.Action("Edit", "AdminLogin")',
-                type: 'POST',
-                data: data,
-                dataType: 'json',
-                beforeSend: function() {
-                    console.log('⏳ Sending EDIT request...');
-                    $('#btnEditAdminLoginSave').prop('disabled', true).text('Updating...');
-                },
-                success: function(response) {
-                    console.log('✅ EDIT SAVE RESPONSE:', response);
-                    if (response && response.success) {
-                        showSuccess('✅ User updated successfully!');
-                        $('#editAdminLogin').modal('hide');
-                        setTimeout(() => location.reload(), 1500);
-                    } else {
-                        console.log('❌ EDIT SAVE FAILED:', response);
-                        showError(null, response?.message || 'Update failed!');
-                    }
-                },
-                error: function(xhr, status, error) {
-                    console.error('❌ EDIT SAVE AJAX ERROR:', {
-                        status: xhr.status,
-                        response: xhr.responseText,
-                        error: error
-                    });
-                    showError(null, `Update failed! (${xhr.status})`);
-                },
-                complete: function() {
-                    $('#btnEditAdminLoginSave').prop('disabled', false).text('Update');
-                }
-            });
-        });
-                  // 🔥 4. VIEW USER - FIXED DISPLAY
-        $(document).on('click', '.viewByLoginId', function() {
-            let loginId = $(this).data('vwloginid');
-            console.log('👁️ === VIEW CLICKED === ID:', loginId);
-
-            $.get('@Url.Action("GetAdminLogin", "AdminLogin")', { loginID: loginId })
-            .done(function(response) {
-                console.log('👁️ VIEW RESPONSE:', response);
-                if (response && response.success && response.data) {
-                    let data = response.data;
-                    console.log('✅ VIEW RAW DATA:', data);
-
-                    // ✅ USE lowercase properties from your DB
-                    $('#lblvwUserName').text(data.userName || data.UserName || 'N/A');
-                    $('#lblvwRoleName').text(data.role_Name || data.Role_Name || 'No Role');
-                    $('#lblvwLoginID').text(data.loginID || data.LoginID || 'N/A');
-
-                    let status = (data.isActive || data.IsActive) == 1 ? 'Active' : 'Inactive';
-                    $('#lblvwStatus').html(
-                        `<span class="badge ${status === 'Active' ? 'badge-success' : 'badge-danger'}">${status}</span>`
-                    );
-
-                    console.log('✅ VIEW FIELDS SET:', {
-                        name: $('#lblvwUserName').text(),
-                        role: $('#lblvwRoleName').text(),
-                        id: $('#lblvwLoginID').text(),
-                        status: status
-                    });
-                } else {
-                    console.log('❌ VIEW FAILED:', response);
-                    $('#lblvwUserName').text('Error loading...');
-                }
-            })
-            .fail(function(xhr) {
-                console.error('❌ VIEW ERROR:', xhr.status, xhr.responseText);
-                $('#lblvwUserName').text('Load failed');
-            });
-        });
-            // 🔥 5. DELETE LOAD
-            $(document).on('click', '.deleteLogins', function() {
-                let loginId = $(this).data('dlloginid');
-                console.log('🗑️ === DELETE LOAD === ID:', loginId);
-
+            // 4. VIEW
+            $(document).on('click', '.viewByLoginId', function () {
+                let loginId = $(this).data('vwloginid');
                 $.get('@Url.Action("GetAdminLogin", "AdminLogin")', { loginID: loginId })
-                .done(function(response) {
-                    console.log('🗑️ DELETE LOAD RESPONSE:', response);
+                .done(function (response) {
                     if (response && response.success && response.data) {
-                        $('#lblDelUserName').text(response.data.UserName);
+                        let data = response.data;
+                        $('#lblvwUserName').text(data.userName || data.UserName || 'N/A');
+                        $('#lblvwLoginID').text(data.loginID || data.LoginID || 'N/A');
+                        let isActive = (data.isActive || data.IsActive) == 1;
+                        $('#lblvwStatus').html(
+                            `<span class="badge ${isActive ? 'badge-success' : 'badge-danger'}">${isActive ? 'Active' : 'Inactive'}</span>`
+                        );
+                    } else {
+                        $('#lblvwUserName').text('Error loading...');
+                    }
+                })
+                .fail(function () { $('#lblvwUserName').text('Load failed'); });
+            });
+
+            // 5. DELETE LOAD
+            $(document).on('click', '.deleteLogins', function () {
+                let loginId = $(this).data('dlloginid');
+                $.get('@Url.Action("GetAdminLogin", "AdminLogin")', { loginID: loginId })
+                .done(function (response) {
+                    if (response && response.success && response.data) {
+                        $('#lblDelUserName').text(response.data.UserName || response.data.userName);
                         $('#hdnDeAdminLoginId').val(loginId);
                     }
                 });
             });
 
-            // 🔥 6. DELETE CONFIRM
-            $('#btnConfirmAdminLoginDelete').click(function() {
+            // 6. DELETE CONFIRM
+            $('#btnConfirmAdminLoginDelete').click(function () {
                 let loginId = $('#hdnDeAdminLoginId').val();
-                console.log('🗑️ === DELETE CONFIRM === ID:', loginId);
-
-                if (!loginId) {
-                    console.log('❌ DELETE: No ID');
-                    showError(null, 'Invalid user ID!');
-                    return;
-                }
-
+                if (!loginId) { showError(null, 'Invalid user ID!'); return; }
                 $.get('@Url.Action("DeleteAdminLogin", "AdminLogin")', { loginID: loginId })
-                .done(function(response) {
-                    console.log('🗑️ DELETE RESPONSE:', response);
+                .done(function (response) {
                     if (response.success) {
                         showSuccess('✅ User deleted successfully!');
                         $('#deleteAdminLogin').modal('hide');
@@ -764,40 +1101,49 @@
                         showError(null, response.message || 'Delete failed!');
                     }
                 })
-                .fail(function(xhr) {
-                    console.error('❌ DELETE AJAX ERROR:', xhr.status, xhr.responseText);
-                    showError(null, 'Delete failed!');
-                });
+                .fail(function () { showError(null, 'Delete failed!'); });
             });
-
-            // 🔥 UTILITY FUNCTIONS
-            $('.form-control').on('input', function() {
-                $(this).siblings('.text-danger').text('');
-            });
-
-            $('#addAdminLogin, #editAdminLogin, #viewAdminLogin, #deleteAdminLogin').on('hidden.bs.modal', function() {
+                    // TOGGLE PASSWORD VISIBILITY
+        $('#btnToggleEditPassword').click(function () {
+            let input = $('#txtEditPassword');
+            let icon = $('#iconToggleEditPassword');
+            if (input.attr('type') === 'password') {
+                input.attr('type', 'text');
+                icon.removeClass('fa-eye').addClass('fa-eye-slash');
+            } else {
+                input.attr('type', 'password');
+                icon.removeClass('fa-eye-slash').addClass('fa-eye');
+            }
+        });
+            // CLEAR ON MODAL CLOSE
+            $('#addAdminLogin, #editAdminLogin, #viewAdminLogin, #deleteAdminLogin').on('hidden.bs.modal', function () {
                 $(this).find('input[type="text"], input[type="password"], select').val('');
                 $('.text-danger').text('');
                 $('#lblvwUserName').text('Loading...');
             });
 
-            console.log('✅ All event handlers attached!');
+            // CLEAR ERRORS ON INPUT
+            $('.form-control').on('input', function () {
+                $(this).siblings('.text-danger').text('');
+            });
+
+            // PAGINATION DEFAULT
+            showPage(1);
+
+            $('#btnShowPage').click(function () { rowsPerPage = 10; showPage(1); });
+            $('#btnShowAll').click(function () {
+                getRows().show();
+                $('#pageInfo').text(`Showing All (${getRows().length})`);
+            });
         });
 
-        // 🔥 HELPER FUNCTIONS (GLOBAL)
         function showError(selector, message) {
-            console.log('⚠️ SHOW ERROR:', message);
-            if (selector) {
-                $(selector).text(message).show();
-            } else {
-                alert('❌ ' + message);
-            }
+            if (selector) $(selector).text(message).show();
+            else alert('❌ ' + message);
         }
 
-        function showSuccess(message) {
-            console.log('✅ SHOW SUCCESS:', message);
-            alert('✅ ' + message);
-        }
+        function showSuccess(message) { alert('✅ ' + message); }
+
         let rowsPerPage = 10;
         let currentPage = 1;
 
@@ -811,53 +1157,21 @@
 
         function showPage(pageNum) {
             let rows = getRows();
-            let totalRows = rows.length;
-            let totalPages = Math.ceil(totalRows / rowsPerPage);
-
+            let totalPages = Math.ceil(rows.length / rowsPerPage);
             if (pageNum < 1) pageNum = 1;
             if (pageNum > totalPages) pageNum = totalPages;
-
             rows.hide();
-
-            let start = (pageNum - 1) * rowsPerPage;
-            let end = start + rowsPerPage;
-
-            rows.slice(start, end).show();
-
+            rows.slice((pageNum - 1) * rowsPerPage, pageNum * rowsPerPage).show();
             currentPage = pageNum;
             updatePageInfo(totalPages);
         }
 
         function goToPage(direction) {
-            let rows = getRows();
-            let totalPages = Math.ceil(rows.length / rowsPerPage);
-
+            let totalPages = Math.ceil(getRows().length / rowsPerPage);
             if (direction === 'prev' && currentPage > 1) currentPage--;
             else if (direction === 'next' && currentPage < totalPages) currentPage++;
-
             showPage(currentPage);
         }
-
-        $(document).ready(function () {
-
-            // Default load
-            showPage(1);
-
-            // Show 10 per page
-            $('#btnShowPage').click(function () {
-                rowsPerPage = 10;
-                showPage(1);
-            });
-
-            // Show all
-            $('#btnShowAll').click(function () {
-                let rows = getRows();
-                rows.show();
-                $('#pageInfo').text(`Showing All (${rows.length})`);
-            });
-
-        });
-
     </script>
 </body>
 </html>

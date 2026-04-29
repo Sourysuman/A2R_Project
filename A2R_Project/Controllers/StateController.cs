@@ -18,11 +18,11 @@ namespace A2R_Project.Controllers
         {
             try
             {
-                // Get ALL states for pagination calculation
+            
                 var allStates = await _stateRepository.GetAllStates();
                 var totalCount = allStates?.Count ?? 0;
 
-                // Apply pagination
+                await SetPagePermissions("State");
                 var pagedStates = allStates
                     ?.Skip((page - 1) * pageSize)
                     .Take(pageSize)
@@ -35,14 +35,13 @@ namespace A2R_Project.Controllers
                 var countries = await _stateRepository.GetAllCountries();
                 ViewBag.Countries = new SelectList(countries, "CountryID", "CountryName");
 
-                // **CRITICAL: SET ALL ViewBag VALUES FOR PAGINATION - WITH DEFAULTS**
+          
                 ViewBag.PageSize = pageSize;
                 ViewBag.TotalCount = totalCount;
                 ViewBag.CurrentPage = page;
                 ViewBag.TotalPages = totalCount > 0 ? (int)Math.Ceiling((double)totalCount / pageSize) : 0;
-                ViewBag.ShowAllButton = totalCount > pageSize; // Only show if more than pageSize records
-                ViewBag.HasPagination = totalCount > pageSize; // Additional flag for pagination visibility
-
+                ViewBag.ShowAllButton = totalCount > pageSize; 
+                ViewBag.HasPagination = totalCount > pageSize; 
                 return View(new State());
             }
             catch (Exception ex)
