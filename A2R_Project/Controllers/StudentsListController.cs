@@ -38,8 +38,9 @@ namespace A2R_Project.Controllers
 
         public async Task<IActionResult> List(int page = 1, int pageSize = 10)
         {
+            await SetPagePermissions("StudentsList");
             var models = new StudentInquiries();
-            await SetPagePermissions("StudentList");
+ 
             var allStudentInquiries = await _studentInquiryRepository.GetAllStudentInquiries();
 
             // 🔥 ONLY THIS LINE CHANGED - NEWEST FIRST!
@@ -65,6 +66,7 @@ namespace A2R_Project.Controllers
         {
             try
             {
+                await SetPagePermissions("StudentsList");
                 if (studentInquiryData == null || studentInquiryData.StudentInquiryID <= 0)
                     return Json("Error: Invalid data");
 
@@ -127,7 +129,7 @@ namespace A2R_Project.Controllers
         {
             try
             {
-                await SetPagePermissions("StudentInquiry");
+                await SetPagePermissions("StudentsList");
 
                 if (admissionData.StudentInquiryID <= 0)
                     return Json("Invalid student ID");

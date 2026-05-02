@@ -27,6 +27,7 @@ namespace A2R_Project.Controllers
 
         public async Task<IActionResult> List()
         {
+            await SetPagePermissions("StudentInquiry");
             var models = new StudentInquiries();
             models.StudentInquiry = await _studentInquiryService.GetAllStudentInquiries();
             models.state = await _state.GetAllStates();
@@ -40,6 +41,7 @@ namespace A2R_Project.Controllers
         {
             try
             {
+                await SetPagePermissions("StudentInquiry");
                 if (studentInquiryData == null)
                     return Json("Error: No data");
 

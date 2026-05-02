@@ -27,7 +27,7 @@ namespace A2R_Project.Controllers
         [HttpPost]
         public async Task<IActionResult> Login(AdminLogin adminLogin)
         {
-            if (!string.IsNullOrEmpty(adminLogin.UserName) && !string.IsNullOrEmpty(adminLogin.Password))
+            if (adminLogin != null && !string.IsNullOrEmpty(adminLogin.UserName) && !string.IsNullOrEmpty(adminLogin.Password))
             {
                 var result = await _loginRepository.GetLoginUser(adminLogin.UserName, adminLogin.Password);
 

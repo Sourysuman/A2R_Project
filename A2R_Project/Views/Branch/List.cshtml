@@ -1194,51 +1194,53 @@
                                     }
                                 </td>
                                 <td>
-                                    @* EDIT *@
-                                    @if (ViewBag.CanUpdate == true)
-                                    {
-                                        <button type="button" class="btn btn-sm editByBranchId"
-                                                data-edbranchId="@branch.BranchId"
-                                                data-toggle="modal" data-target="#editBranch"
-                                                title="Edit">
-                                            <i class="mdi mdi-pencil"></i>
-                                        </button>
-                                    }
-                                    else
-                                    {
-                                        <button type="button" class="btn btn-sm btn-secondary"
-                                                title="No Edit Permission"
-                                                onclick="noAccess('Update')">
-                                            <i class="mdi mdi-pencil"></i>
-                                        </button>
-                                    }
+                                    <div class="btn-group" style="display:inline-flex; align-items:center; gap:5px; flex-wrap:nowrap;">
+                                        @* EDIT *@
+                                        @if (ViewBag.CanUpdate == true)
+                                        {
+                                            <button type="button" class="btn btn-sm editByBranchId"
+                                                    data-edbranchId="@branch.BranchId"
+                                                    data-toggle="modal" data-target="#editBranch"
+                                                    title="Edit">
+                                                <i class="mdi mdi-pencil"></i>
+                                            </button>
+                                        }
+                                        else
+                                        {
+                                            <button type="button" class="btn btn-sm btn-secondary"
+                                                    title="No Edit Permission"
+                                                    onclick="noAccess('Update')">
+                                                <i class="mdi mdi-pencil"></i>
+                                            </button>
+                                        }
 
-                                    @* VIEW — always visible *@
-                                    <button type="button" class="btn btn-sm viewByBranchId"
-                                            data-vwBranchId="@branch.BranchId"
-                                            data-toggle="modal" data-target="#viewBranch"
-                                            title="View">
-                                        <i class="mdi mdi-eye"></i>
-                                    </button>
+                                        @* VIEW *@
+                                        <button type="button" class="btn btn-sm viewByBranchId"
+                                                data-vwBranchId="@branch.BranchId"
+                                                data-toggle="modal" data-target="#viewBranch"
+                                                title="View">
+                                            <i class="mdi mdi-eye"></i>
+                                        </button>
 
-                                    @* DELETE *@
-                                    @if (ViewBag.CanDelete == true)
-                                    {
-                                        <button type="button" class="btn btn-sm deleteBranches"
-                                                data-dlbranchId="@branch.BranchId"
-                                                data-toggle="modal" data-target="#deleteBranch"
-                                                title="Delete">
-                                            <i class="mdi mdi-delete"></i>
-                                        </button>
-                                    }
-                                    else
-                                    {
-                                        <button type="button" class="btn btn-sm btn-secondary"
-                                                title="No Delete Permission"
-                                                onclick="noAccess('Delete')">
-                                            <i class="mdi mdi-delete"></i>
-                                        </button>
-                                    }
+                                        @* DELETE *@
+                                        @if (ViewBag.CanDelete == true)
+                                        {
+                                            <button type="button" class="btn btn-sm deleteBranches"
+                                                    data-dlbranchId="@branch.BranchId"
+                                                    data-toggle="modal" data-target="#deleteBranch"
+                                                    title="Delete">
+                                                <i class="mdi mdi-delete"></i>
+                                            </button>
+                                        }
+                                        else
+                                        {
+                                            <button type="button" class="btn btn-sm btn-secondary"
+                                                    title="No Delete Permission"
+                                                    onclick="noAccess('Delete')">
+                                                <i class="mdi mdi-delete"></i>
+                                            </button>
+                                        }
+                                    </div>
                                 </td>
                             </tr>
                         }

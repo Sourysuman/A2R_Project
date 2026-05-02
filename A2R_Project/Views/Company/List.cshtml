@@ -49,6 +49,7 @@
                 letter-spacing: 0.6px;
                 padding: 14px;
                 text-align: center !important;
+                white-space: nowrap;
             }
 
         #companyTable tbody td {
@@ -72,15 +73,13 @@
             transition: all 0.25s ease;
         }
 
-
-
         /* ===== TABLE ACTION BUTTONS ===== */
         #companyTable .btn-sm {
             width: 36px !important;
             height: 36px !important;
             border-radius: 10px !important;
             padding: 0 !important;
-            margin: 0 !important;
+            margin: 0 2px !important;
             display: inline-flex !important;
             align-items: center !important;
             justify-content: center !important;
@@ -122,6 +121,7 @@
             text-align: center !important;
             vertical-align: middle !important;
             display: table-cell !important;
+            white-space: nowrap;
         }
 
             #companyTable tbody td:last-child .btn-group {
@@ -129,6 +129,7 @@
                 align-items: center !important;
                 justify-content: center !important;
                 gap: 5px;
+                flex-wrap: nowrap;
             }
 
     /* ================= BADGES ================= */
@@ -139,6 +140,7 @@
         border-radius: 20px;
         font-size: 13px;
         font-weight: 600;
+        white-space: nowrap;
     }
 
     .badge-danger {
@@ -148,6 +150,7 @@
         border-radius: 20px;
         font-size: 13px;
         font-weight: 600;
+        white-space: nowrap;
     }
 
     /* ================= BUTTONS ================= */
@@ -193,7 +196,7 @@
     }
 
     td .btn {
-        margin: 3px;
+        margin: 2px;
     }
 
     /* ================= SHOW ALL BUTTON ================= */
@@ -234,6 +237,7 @@
         font-size: 14px;
         font-weight: 600;
         color: #000;
+        width: 100%;
     }
 
         .form-control:focus {
@@ -258,12 +262,37 @@
     }
 
     /* ================= IMAGE ================= */
-    #logoPreview,
-    #editLogoPreview,
-    #image_upload_previewEmployeeView,
+    #logoPreview, #editLogoPreview {
+        width: 100%;
+        max-width: 130px;
+        height: 100px;
+        object-fit: cover;
+        border-radius: 12px;
+        border: 2px dashed #00c6ff;
+        background: #fff;
+        padding: 4px;
+        transition: 0.3s;
+    }
+
+        #logoPreview:hover, #editLogoPreview:hover {
+            border-color: #4facfe;
+            transform: scale(1.05);
+        }
+
+    #image_upload_previewEmployeeView {
+        max-width: 100px !important;
+        max-height: 64px !important;
+        height: auto !important;
+        border: 2px dashed #00c6ff !important;
+        border-radius: 12px !important;
+        padding: 4px;
+        object-fit: cover;
+        transition: 0.3s;
+    }
+
     #image_upload_previewCompanyDel {
         width: 100%;
-        height: 140px;
+        height: 180px;
         object-fit: cover;
         border-radius: 12px;
         border: 2px solid #e0e0e0;
@@ -271,50 +300,73 @@
         transition: 0.3s;
     }
 
-    #logoPreview,
-    #editLogoPreview {
-        height: 130px;
-        border: 2px dashed #00c6ff;
-        padding: 4px;
-    }
-
-        #logoPreview:hover,
-        #editLogoPreview:hover {
-            border-color: #4facfe;
-            transform: scale(1.05);
-        }
-
-    #image_upload_previewEmployeeView,
-    #image_upload_previewCompanyDel {
-        height: 180px;
-    }
-
-        #image_upload_previewEmployeeView:hover,
-        #image_upload_previewCompanyDel:hover {
-            transform: scale(1.04);
-            border-color: #00c6ff;
-            box-shadow: 0 10px 25px rgba(0,198,255,0.4);
-        }
-
     /* ================= CHECKBOX ================= */
     .rounded-checkbox {
         transform: scale(1.2);
         margin-right: 5px;
     }
 
-    /* ================= ADD & EDIT MODAL ================= */
-    #addCompany .modal-content,
-    #editCompany .modal-content {
-        border-radius: 20px;
-        border: none;
-        box-shadow: 0 25px 70px rgba(0,0,0,0.35);
-        overflow: hidden;
-        animation: smoothPopup 0.35s ease;
+    /* ================= MODAL BACKDROP ================= */
+    .modal-backdrop {
+        opacity: 0.25 !important;
     }
 
+    /* ================= CLEAN FIELD (DELETE MODAL) ================= */
+    .clean-field {
+        display: flex;
+        align-items: center;
+        margin-bottom: 14px;
+        padding: 6px 0;
+        border-bottom: 1px solid #eaeaea;
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+
+        .clean-field .label {
+            min-width: 140px;
+            font-weight: 700;
+            color: #333;
+            font-size: 14px;
+        }
+
+            .clean-field .label::after {
+                content: " :";
+                margin-left: 5px;
+                color: #777;
+            }
+
+        .clean-field .value {
+            margin-left: 10px;
+            padding: 6px 12px;
+            background: #ffffff;
+            border-radius: 8px;
+            border: 1px solid #e0e6f0;
+            font-weight: 600;
+            color: #000;
+            min-width: 120px;
+            word-break: break-word;
+        }
+
+        .clean-field:hover .value {
+            background: #e6f0ff;
+            transition: 0.3s;
+        }
+
+    #lblDelCompanyName {
+        display: block;
+        text-align: center;
+        font-size: 22px;
+        font-weight: 800;
+        color: #0072ff;
+        margin-bottom: 15px;
+        letter-spacing: 1px;
+        word-break: break-word;
+    }
+
+    /* ================= MODAL ANIMATION ================= */
     @@keyframes smoothPopup {
         from {
-            transform: translateY(-30px) scale(0.95);
+            transform: translateY(-20px) scale(0.97);
             opacity: 0;
         }
 
@@ -324,62 +376,145 @@
         }
     }
 
-    #addCompany .modal-body,
-    #editCompany .modal-body {
-        background: #f8fbff;
-        padding: 25px;
-        max-height: unset !important;
-        overflow: visible !important;
+    /* =================================================================
+           BASE MODAL — ADD / EDIT / VIEW
+           ✅ ALL 3 SAME FIXED SIZE + SCROLLBAR ALWAYS WORKS
+        ================================================================= */
+    #addCompany .modal-dialog,
+    #editCompany .modal-dialog,
+    #viewCompany .modal-dialog {
+        margin: auto !important;
+        display: flex !important;
+        align-items: center !important;
+        width: 94vw !important;
+        max-width: 1100px !important;
+        min-height: calc(100vh - 40px) !important;
     }
 
+    /* ✅ KEY FIX — fixed height same for all 3, no auto */
+    #addCompany .modal-content,
+    #editCompany .modal-content,
+    #viewCompany .modal-content {
+        display: flex !important;
+        flex-direction: column !important;
+        width: 100% !important;
+        height: 82vh !important; /* ✅ ALL 3 SAME FIXED HEIGHT */
+        min-height: 82vh !important; /* ✅ ALL 3 SAME MIN */
+        max-height: 82vh !important; /* ✅ ALL 3 SAME MAX */
+        border-radius: 20px !important;
+        border: none !important;
+        box-shadow: 0 25px 70px rgba(0,0,0,0.35) !important;
+        overflow: hidden !important;
+        animation: smoothPopup 0.35s ease;
+    }
+
+    /* ================= ALL MODAL HEADERS ================= */
+    #addCompany .modal-header,
+    #editCompany .modal-header,
+    #viewCompany .modal-header,
+    #deleteCompany .modal-header {
+        background: linear-gradient(135deg, #2563eb, #1e40af) !important;
+        color: #fff !important;
+        border: none !important;
+        flex-shrink: 0 !important; /* ✅ header never shrinks */
+        padding: 16px 22px !important;
+        height: 60px !important; /* ✅ fixed header height */
+        box-sizing: border-box !important;
+    }
+
+        #addCompany .modal-header .modal-title,
+        #addCompany .modal-header .close,
+        #editCompany .modal-header .modal-title,
+        #editCompany .modal-header .close,
+        #viewCompany .modal-header .modal-title,
+        #viewCompany .modal-header .close,
+        #deleteCompany .modal-header .modal-title,
+        #deleteCompany .modal-header .close {
+            color: #fff !important;
+        }
+
+    .modal-title {
+        font-weight: 700;
+        font-size: 18px;
+    }
+
+    /* ================= ALL MODAL BODIES — SCROLLABLE ================= */
+    #addCompany .modal-body,
+    #editCompany .modal-body,
+    #viewCompany .modal-body {
+        background: #f8fbff !important;
+        padding: 20px 25px !important;
+        flex: 1 1 auto !important; /* ✅ takes all remaining space */
+        overflow-y: auto !important; /* ✅ SCROLLBAR ALWAYS ON */
+        overflow-x: hidden !important;
+        min-height: 0 !important; /* ✅ CRITICAL for flex scroll */
+        box-sizing: border-box !important;
+    }
+
+        /* ✅ Scrollbar — styled and always visible */
+        #addCompany .modal-body::-webkit-scrollbar,
+        #editCompany .modal-body::-webkit-scrollbar,
+        #viewCompany .modal-body::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        #addCompany .modal-body::-webkit-scrollbar-track,
+        #editCompany .modal-body::-webkit-scrollbar-track,
+        #viewCompany .modal-body::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+
+        #addCompany .modal-body::-webkit-scrollbar-thumb,
+        #editCompany .modal-body::-webkit-scrollbar-thumb,
+        #viewCompany .modal-body::-webkit-scrollbar-thumb {
+            background: #2563eb;
+            border-radius: 10px;
+        }
+
+            #addCompany .modal-body::-webkit-scrollbar-thumb:hover,
+            #editCompany .modal-body::-webkit-scrollbar-thumb:hover,
+            #viewCompany .modal-body::-webkit-scrollbar-thumb:hover {
+                background: #1e40af;
+            }
+
     #addCompany .row,
-    #editCompany .row {
+    #editCompany .row,
+    #viewCompany .row {
         margin-bottom: 8px;
     }
 
+    /* ================= ALL MODAL FOOTERS ================= */
+    #addCompany .modal-footer,
+    #editCompany .modal-footer,
+    #viewCompany .modal-footer {
+        flex-shrink: 0 !important; /* ✅ footer never shrinks */
+        background: #fff !important;
+        border-top: 1px solid #eee !important;
+        padding: 12px 20px !important;
+        display: flex !important;
+        justify-content: flex-end !important;
+        gap: 10px !important;
+        flex-wrap: wrap !important;
+        height: 60px !important; /* ✅ fixed footer height */
+        box-sizing: border-box !important;
+    }
+
+    /* ================= ADD & EDIT FORM CONTROLS ================= */
     #addCompany .form-control,
     #editCompany .form-control {
         border-radius: 12px;
         border: 1px solid #ddd;
-        font-weight: 600;
+        font-weight: 300;
         transition: 0.3s;
+        width: 100%;
     }
 
         #addCompany .form-control:focus,
         #editCompany .form-control:focus {
             border-color: #00c6ff;
             box-shadow: 0 0 10px rgba(0,198,255,0.4);
-            transform: scale(1.02);
         }
-
-    #addCompany .modal-footer,
-    #editCompany .modal-footer {
-        border-top: none;
-        background: #fff;
-    }
-
-    #addCompany .btn-success {
-        background: linear-gradient(45deg, #00c853, #64dd17);
-        border: none;
-    }
-
-    #editCompany .btn-primary {
-        background: linear-gradient(45deg, #0072ff, #00c6ff);
-        border: none;
-    }
-
-    #addCompany .btn-warning,
-    #editCompany .btn-warning {
-        background: linear-gradient(45deg, #f7971e, #ffd200);
-        border: none;
-        color: #000;
-    }
-
-    #addCompany .btn:hover,
-    #editCompany .btn:hover {
-        transform: scale(1.05);
-        box-shadow: 0 8px 20px rgba(0,0,0,0.25);
-    }
 
     /* ================= DROPDOWN ================= */
     #addCompany select,
@@ -390,22 +525,13 @@
         background: #fff url("data:image/svg+xml;utf8,<svg fill='%230072ff' height='22' viewBox='0 0 24 24' width='22' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/></svg>") no-repeat right 14px center;
         border-radius: 12px;
         border: 1px solid #ddd;
-        padding: 12px 40px 12px 12px;
-        font-size: 15px;
-        font-weight: 600;
-        line-height: 1.5;
-        height: 45px;
+        padding: 10px 36px 10px 12px;
+        font-size: 14px;
+        font-weight: 500;
+        height: 44px;
         cursor: pointer;
+        width: 100%;
     }
-
-        #addCompany select:hover, #editCompany select:hover {
-            border-color: #00c6ff;
-        }
-
-        #addCompany select:focus, #editCompany select:focus {
-            border-color: #0072ff;
-            box-shadow: 0 0 10px rgba(0,114,255,0.3);
-        }
 
     .input-group-append {
         display: none !important;
@@ -413,26 +539,43 @@
 
     /* ================= ISACTIVE SWITCH ================= */
     #addCompany .form-check,
-    #editCompany .form-check {
+    #editCompany .form-check,
+    #viewCompany .form-check {
         display: flex;
         align-items: center;
         gap: 10px;
+        margin-top: 8px;
     }
 
     #addCompany .form-check-input,
-    #editCompany .form-check-input {
+    #editCompany .form-check-input,
+    #viewCompany .form-check-input {
         appearance: none;
+        -webkit-appearance: none;
         width: 45px;
         height: 22px;
         background: #ccc;
         border-radius: 50px;
         position: relative;
-        cursor: pointer;
         transition: 0.3s;
+        flex-shrink: 0;
+    }
+
+    #addCompany .form-check-input {
+        cursor: pointer;
+    }
+
+    #editCompany .form-check-input {
+        cursor: pointer;
+    }
+
+    #viewCompany .form-check-input {
+        cursor: default;
     }
 
         #addCompany .form-check-input::before,
-        #editCompany .form-check-input::before {
+        #editCompany .form-check-input::before,
+        #viewCompany .form-check-input::before {
             content: "";
             width: 18px;
             height: 18px;
@@ -445,17 +588,20 @@
         }
 
         #addCompany .form-check-input:checked,
-        #editCompany .form-check-input:checked {
+        #editCompany .form-check-input:checked,
+        #viewCompany .form-check-input:checked {
             background: linear-gradient(45deg, #00c853, #64dd17);
         }
 
             #addCompany .form-check-input:checked::before,
-            #editCompany .form-check-input:checked::before {
+            #editCompany .form-check-input:checked::before,
+            #viewCompany .form-check-input:checked::before {
                 transform: translateX(22px);
             }
 
     #addCompany .form-check-label,
-    #editCompany .form-check-label {
+    #editCompany .form-check-label,
+    #viewCompany .form-check-label {
         font-weight: 600;
     }
 
@@ -472,66 +618,44 @@
         font-weight: 600;
     }
 
-        #addCompany .form-control-file:hover,
-        #editCompany .form-control-file:hover {
-            background: #e6f7ff;
-            border-color: #0072ff;
-            transform: scale(1.02);
-        }
-
     #addCompany input[type="file"]::file-selector-button,
     #editCompany input[type="file"]::file-selector-button {
         border: none;
-        padding: 8px 15px;
+        padding: 6px 12px;
         border-radius: 8px;
         background: linear-gradient(45deg, #0072ff, #00c6ff);
         color: #fff;
         font-weight: 600;
         cursor: pointer;
-        margin-right: 10px;
+        margin-right: 8px;
+        font-size: 13px;
     }
 
-        #addCompany input[type="file"]::file-selector-button:hover,
-        #editCompany input[type="file"]::file-selector-button:hover {
-            background: linear-gradient(45deg, #005bea, #00c6ff);
-        }
-
-    @@media (min-width: 576px) {
-        .modal-dialog {
-            max-width: 1000px;
-            margin: 1.75rem auto;
-        }
+    /* ================= VIEW MODAL READONLY ================= */
+    #viewCompany .form-control[readonly] {
+        background-color: #ffffff !important;
+        border: 1px solid #ddd !important;
+        border-radius: 12px !important;
+        font-weight: 300 !important;
+        color: #000 !important;
+        cursor: default;
+        opacity: 1 !important;
     }
 
-    /* ================= VIEW & DELETE MODAL ================= */
-    #viewCompany .modal-content,
+    /* ================= DELETE MODAL ================= */
     #deleteCompany .modal-content {
         border-radius: 20px;
         border: none;
         box-shadow: 0 25px 70px rgba(0,0,0,0.3);
         overflow: hidden;
-        animation: popupSmooth 0.4s ease;
+        animation: smoothPopup 0.35s ease;
     }
 
-    @@keyframes popupSmooth {
-        from {
-            transform: translateY(-25px) scale(0.95);
-            opacity: 0;
-        }
-
-        to {
-            transform: translateY(0) scale(1);
-            opacity: 1;
-        }
-    }
-
-    #viewCompany .modal-body,
     #deleteCompany .modal-body {
-        padding: 25px;
+        padding: 20px;
         background: #ffffff;
     }
 
-    #viewCompany .card,
     #deleteCompany .card {
         border-radius: 18px;
         border: none;
@@ -540,151 +664,226 @@
         padding: 10px;
     }
 
-    /* ================= CLEAN FIELD ================= */
-    .clean-field {
-        display: flex;
-        align-items: center;
-        margin-bottom: 14px;
-        padding: 6px 0;
-        border-bottom: 1px solid #eaeaea;
-    }
+    /* =================================================================
+           RESPONSIVE BREAKPOINTS
+        ================================================================= */
 
-        .clean-field .label {
-            min-width: 170px;
-            font-weight: 700;
-            color: #333;
-            font-size: 14px;
+    /* LARGE DESKTOP 1200px+ */
+    @@media (min-width: 1200px) {
+        #addCompany .modal-dialog,
+        #editCompany .modal-dialog,
+        #viewCompany .modal-dialog {
+            width: 90vw !important;
+            max-width: 1100px !important;
         }
 
-            .clean-field .label::after {
-                content: " :";
-                margin-left: 5px;
-                color: #777;
+        #addCompany .modal-content,
+        #editCompany .modal-content,
+        #viewCompany .modal-content {
+            height: 82vh !important;
+            min-height: 82vh !important;
+            max-height: 82vh !important;
+        }
+    }
+
+    /* ✅ LAPTOP TOUCH 950px - 1199px — YOUR EXACT PROBLEM SIZE */
+    @@media (min-width: 950px) and (max-width: 1199px) {
+        #addCompany .modal-dialog,
+        #editCompany .modal-dialog,
+        #viewCompany .modal-dialog {
+            width: 96vw !important;
+            max-width: 96vw !important;
+        }
+
+        #addCompany .modal-content,
+        #editCompany .modal-content,
+        #viewCompany .modal-content {
+            height: 86vh !important; /* ✅ same all 3 */
+            min-height: 86vh !important; /* ✅ same all 3 */
+            max-height: 86vh !important; /* ✅ same all 3 */
+        }
+
+        #addCompany .modal-body,
+        #editCompany .modal-body,
+        #viewCompany .modal-body {
+            overflow-y: auto !important; /* ✅ scrollbar shows */
+            padding: 16px 18px !important;
+        }
+    }
+
+    /* TABLET LANDSCAPE 768px - 949px */
+    @@media (min-width: 768px) and (max-width: 949px) {
+        #addCompany .modal-dialog,
+        #editCompany .modal-dialog,
+        #viewCompany .modal-dialog {
+            width: 97vw !important;
+            max-width: 97vw !important;
+        }
+
+        #addCompany .modal-content,
+        #editCompany .modal-content,
+        #viewCompany .modal-content {
+            height: 88vh !important;
+            min-height: 88vh !important;
+            max-height: 88vh !important;
+        }
+
+        #addCompany .modal-body .col-md-3,
+        #editCompany .modal-body .col-md-3,
+        #viewCompany .modal-body .col-md-3 {
+            flex: 0 0 50% !important;
+            max-width: 50% !important;
+        }
+
+        #companyTable thead th,
+        #companyTable tbody td {
+            padding: 10px 8px !important;
+            font-size: 13px !important;
+        }
+    }
+
+    /* SMALL 576px - 767px */
+    @@media (min-width: 576px) and (max-width: 767px) {
+        #addCompany .modal-dialog,
+        #editCompany .modal-dialog,
+        #viewCompany .modal-dialog {
+            width: 98vw !important;
+            max-width: 98vw !important;
+            margin: 8px auto !important;
+            min-height: calc(100vh - 16px) !important;
+        }
+
+        #addCompany .modal-content,
+        #editCompany .modal-content,
+        #viewCompany .modal-content {
+            height: 92vh !important;
+            min-height: 92vh !important;
+            max-height: 92vh !important;
+            border-radius: 16px !important;
+        }
+
+        #addCompany .modal-body .col-md-3,
+        #editCompany .modal-body .col-md-3,
+        #viewCompany .modal-body .col-md-3 {
+            flex: 0 0 100% !important;
+            max-width: 100% !important;
+        }
+
+        #addCompany .modal-body,
+        #editCompany .modal-body,
+        #viewCompany .modal-body {
+            padding: 15px !important;
+        }
+
+        .card-body {
+            overflow-x: auto;
+        }
+
+        #companyTable {
+            min-width: 600px;
+        }
+
+        .pagination .page-link {
+            padding: 4px 8px;
+            font-size: 13px;
+        }
+    }
+
+    /* MOBILE max 575px */
+    @@media (max-width: 575px) {
+        #addCompany .modal-dialog,
+        #editCompany .modal-dialog,
+        #viewCompany .modal-dialog {
+            width: 100vw !important;
+            max-width: 100vw !important;
+            margin: 0 !important;
+            min-height: 100vh !important;
+            align-items: flex-end !important;
+        }
+
+        #addCompany .modal-content,
+        #editCompany .modal-content,
+        #viewCompany .modal-content {
+            height: 95vh !important;
+            min-height: 95vh !important;
+            max-height: 95vh !important;
+            border-radius: 18px 18px 0 0 !important;
+        }
+
+        #addCompany .modal-body .col-md-3,
+        #editCompany .modal-body .col-md-3,
+        #viewCompany .modal-body .col-md-3 {
+            flex: 0 0 100% !important;
+            max-width: 100% !important;
+        }
+
+        #addCompany .modal-body,
+        #editCompany .modal-body,
+        #viewCompany .modal-body {
+            padding: 12px !important;
+        }
+
+        #addCompany .modal-footer,
+        #editCompany .modal-footer,
+        #viewCompany .modal-footer {
+            justify-content: center !important;
+        }
+
+            #addCompany .modal-footer .btn,
+            #editCompany .modal-footer .btn,
+            #viewCompany .modal-footer .btn {
+                flex: 1 1 auto !important;
+                min-width: 80px !important;
             }
 
-        .clean-field .value {
-            margin-left: 15px;
-            padding: 6px 12px;
-            background: #ffffff;
-            border-radius: 8px;
-            border: 1px solid #e0e6f0;
-            font-weight: 600;
-            color: #000;
-            min-width: 140px;
+        .modal-title {
+            font-size: 16px !important;
         }
 
-        .clean-field:hover .value {
-            background: #e6f0ff;
-            transition: 0.3s;
+        .card-body {
+            overflow-x: auto;
         }
 
-    /* ================= COMPANY NAME ================= */
-    #lblvwCompanyName,
-    #lblDelCompanyName {
-        display: block;
-        text-align: center;
-        font-size: 26px;
-        font-weight: 800;
-        color: #0072ff;
-        margin-bottom: 15px;
-        letter-spacing: 1px;
-    }
-
-    /* ================= VIEW TITLE ================= */
-    .view-section-title {
-        text-align: center;
-        font-size: 18px;
-        font-weight: 700;
-        color: #1e293b;
-        position: relative;
-        margin: 10px 0 20px;
-        letter-spacing: 0.5px;
-    }
-
-        .view-section-title::before,
-        .view-section-title::after {
-            content: "";
-            position: absolute;
-            top: 50%;
-            width: 30%;
-            height: 2px;
-            background: linear-gradient(45deg, #facc15, #f59e0b);
+        #companyTable {
+            min-width: 550px;
         }
 
-        .view-section-title::before {
-            left: 0;
+        .row.mt-3 {
+            flex-direction: column;
+            gap: 10px;
         }
 
-        .view-section-title::after {
-            right: 0;
+            .row.mt-3 .col-md-6 {
+                width: 100% !important;
+            }
+
+        #pagination.justify-content-end {
+            justify-content: center !important;
         }
 
-    .view-subtitle {
-        text-align: center;
-        font-size: 13px;
-        color: #64748b;
-        margin-top: -10px;
-        margin-bottom: 15px;
-    }
-
-    /* ================= VIEW/DELETE BUTTONS ================= */
-    #viewCompany .btnClose,
-    #deleteCompany .btn {
-        border-radius: 25px;
-        padding: 6px 18px;
-        font-weight: 600;
-    }
-
-
-        #viewCompany .btn:hover,
-        #deleteCompany .btn:hover {
-            transform: scale(1.05);
-            transition: 0.3s;
+        #deleteCompany .col-md-4 {
+            flex: 0 0 100% !important;
+            max-width: 95% !important;
+            margin-bottom: 12px;
         }
 
-    @@media (max-width: 768px) {
-        #viewCompany .form-group,
-        #deleteCompany .form-group {
+        .clean-field {
             flex-direction: column;
             align-items: flex-start;
         }
+
+            .clean-field .value {
+                margin-left: 0;
+                width: 100%;
+            }
     }
 
-    /* ================= ALL MODAL HEADERS ================= */
-    #addCompany .modal-header,
-    #editCompany .modal-header,
-    #viewCompany .modal-header,
-    #deleteCompany .modal-header {
-        background: linear-gradient(135deg, #2563eb, #1e40af) !important;
-        color: #fff !important;
-        border: none !important;
-    }
-
-    .modal-title {
-        font-weight: 700;
-        font-size: 20px;
-    }
-    /* ===== ALL MODAL HEADER TEXT WHITE ===== */
-    #addCompany .modal-header .modal-title,
-    #addCompany .modal-header .close,
-    #editCompany .modal-header .modal-title,
-    #editCompany .modal-header .close,
-    #viewCompany .modal-header .modal-title,
-    #viewCompany .modal-header .close,
-    #deleteCompany .modal-header .modal-title,
-    #deleteCompany .modal-header .close {
-        color: #fff !important;
-    }
-
-    .modal-backdrop {
-        opacity: 0.25 !important;
-    }
-
-    #addCompany .form-control, #editCompany .form-control {
-        border-radius: 12px;
-        border: 1px solid #ddd;
-        font-weight: 300;
-        transition: 0.3s;
+    /* ================= BOOTSTRAP MODAL MAX-WIDTH OVERRIDE ================= */
+    @@media (min-width: 576px) {
+        .modal-dialog {
+            max-width: 1100px;
+            margin: 1.75rem auto;
+        }
     }
 </style>
 <div class="col-lg-12 stretch-card">
@@ -857,7 +1056,7 @@
                             <div class="form-group">
                                 <label for="ddlState">State<span class="mandatoryfield">*</span></label>
                                 <div class="input-group">
-                                    @Html.DropDownList("ddlStateId", new SelectList(Model.states, "StateID", "StateName"), "--Select State l--", new { @class = "form-control form-control-sm", @id = "ddlStateId" })
+                                    @Html.DropDownList("ddlStateId", new SelectList(Model.states, "StateID", "StateName"), "--Select State --", new { @class = "form-control form-control-sm", @id = "ddlStateId" })
                                     <div class="input-group-append">
                                         <span class="input-group-text" style="height: 35px;"><i class="mdi mdi-menu-down"></i></span>
                                     </div><span class="validationMessage" id="msgAddStateValidation"></span>
@@ -1175,72 +1374,174 @@
 </div>
 
 <!-- View Company Modal -->
-<div class="modal fade" id="viewCompany" tabindex="-1" role="dialog" aria-labelledby="mediumModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
+<div class="modal fade" id="viewCompany" tabindex="-1" role="dialog" aria-labelledby="viewCompanyModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="mediumModalLabel">View Company Details</h5>
+                <h5 class="modal-title" id="viewCompanyModalLabel">View Company</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                <div class="row">
-                    <div class="col-md-4">
-                    </div>
-                    <div class="col-md-8">
-                        <div class="view-section-title">
-                            Individual Company Details
+                <div style="padding: 0 10px;">
+                    <!-- Row 1: Company Name | Address1 | Address2 | Area -->
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Company Name</label>
+                                <input type="text" class="form-control" id="vw_CompanyName" readonly />
+                            </div>
                         </div>
-                        <div class="view-subtitle">
-                            Complete information about the selected company
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Company Address1</label>
+                                <input type="text" class="form-control" id="vw_Address1" readonly />
+                            </div>
                         </div>
-                        <span id="lblvwCompanyName" style="color:black; font-size: larger !important"></span><br />
-                        <input type="hidden" id="hdnViewCompanyId" name="companyID">
-                        <input type="hidden" id="hdnViewCompanyImageId" name="imageID">
-                        <br />
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-4">
-                        <div class="card">
-                            <div class="card-body">
-                                <img id="image_upload_previewEmployeeView" class="card-img-top col-md-8" src="~/Companys/Images/default.jpg" alt="Company Logo" style="min-width:100%; min-height:100% !important">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Company Address2</label>
+                                <input type="text" class="form-control" id="vw_Address2" readonly />
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Area</label>
+                                <input type="text" class="form-control" id="vw_Area" readonly />
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-4">
-                        <div class="form-group clean-field">
-                            <span class="label">Company Email</span>
-                            <span class="value" id="lblvwCompanyEmail"></span>
+                    <!-- Row 2: City | State | Country | Pincode -->
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>City</label>
+                                <input type="text" class="form-control" id="vw_City" readonly />
+                            </div>
                         </div>
-
-                        <div class="form-group clean-field">
-                            <span class="label">Company Address1</span>
-                            <span class="value" id="lblvwCompanyAddress1"></span>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>State</label>
+                                <input type="text" class="form-control" id="vw_State" readonly />
+                            </div>
                         </div>
-
-                        <div class="form-group clean-field">
-                            <span class="label">Company City</span>
-                            <span class="value" id="lblvwCompanyCity"></span>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Country</label>
+                                <input type="text" class="form-control" id="vw_Country" readonly />
+                            </div>
                         </div>
-
-                        <div class="form-group clean-field">
-                            <span class="label">Company State</span>
-                            <span class="value" id="lblvwCompanyState"></span>
-                        </div>
-
-                        <div class="form-group clean-field">
-                            <span class="label">Company Country</span>
-                            <span class="value" id="lblvwCompanyCountry"></span>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Pin Code</label>
+                                <input type="text" class="form-control" id="vw_Pincode" readonly />
+                            </div>
                         </div>
                     </div>
-                    <div class="col-md-4">
+                    <!-- Row 3: Contact No | Email | PAN | TAN -->
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Contact No.</label>
+                                <input type="text" class="form-control" id="vw_ContactNo" readonly />
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Email</label>
+                                <input type="text" class="form-control" id="vw_Email" readonly />
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>PAN</label>
+                                <input type="text" class="form-control" id="vw_PAN" readonly />
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>TAN</label>
+                                <input type="text" class="form-control" id="vw_TAN" readonly />
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Row 4: VAT | GST | TIN | PT -->
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>VAT</label>
+                                <input type="text" class="form-control" id="vw_VAT" readonly />
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>GST</label>
+                                <input type="text" class="form-control" id="vw_GST" readonly />
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>TIN</label>
+                                <input type="text" class="form-control" id="vw_TIN" readonly />
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>PT</label>
+                                <input type="text" class="form-control" id="vw_PT" readonly />
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Row 5: SMTP Server | SMTP Port | SMTP Username | SMTP Password -->
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>SMTP Server Name</label>
+                                <input type="text" class="form-control" id="vw_SMTPServer" readonly />
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>SMTP Port No.</label>
+                                <input type="text" class="form-control" id="vw_SMTPPort" readonly />
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>SMTP User Name</label>
+                                <input type="text" class="form-control" id="vw_SMTPUserName" readonly />
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>SMTP Password</label>
+                                <input type="text" class="form-control" id="vw_SMTPPassword" readonly />
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Row 6: Logo Preview | empty | IsActive -->
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Company Logo</label>
+                                <br />
+                                <img id="image_upload_previewEmployeeView" src="~/Companys/Images/default.jpg" alt="Preview" style="max-width: 100px; max-height: 64px;" />
+                            </div>
+                        </div>
+                        <div class="col-md-3"></div>
+                        <div class="col-md-3">
+                            <div class="form-check" style="margin-top: 35px;">
+                                <input type="checkbox" class="form-check-input rounded-checkbox" id="vw_IsActive" disabled>
+                                <label class="form-check-label" for="vw_IsActive">IsActive</label>
+                            </div>
+                        </div>
+                        <div class="col-md-3"></div>
                     </div>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
             </div>
         </div>
     </div>
@@ -1438,38 +1739,53 @@
         });
 
         // =================================================================
-        // 🔥 VIEW BUTTON - FIXED (SP aliases: CompanyName, Address1, Email, StateName, CountryName)
-        // =================================================================
-        document.querySelectorAll('.viewByCompanyId').forEach(btn => {
-            btn.addEventListener('click', function() {
-                const id = this.dataset.companyId;
-                fetch(`@Url.Action("GetCompany", "Company")?companyID=${id}`)
-                    .then(r => r.json())
-                    .then(data => {
-                        console.log("👁️ VIEW DATA:", data);
+           document.querySelectorAll('.viewByCompanyId').forEach(btn => {
+        btn.addEventListener('click', function () {
+            const id = this.dataset.companyId;
+            fetch(`@Url.Action("GetCompany", "Company")?companyID=${id}`)
+                .then(r => r.json())
+                .then(data => {
+                    console.log("👁️ VIEW DATA:", data);
 
-                        document.getElementById('lblvwCompanyName').textContent     = data.companyName || 'N/A';
-    document.getElementById('lblvwCompanyEmail').textContent    = data.email       || 'N/A';
-    document.getElementById('lblvwCompanyAddress1').textContent = data.address1    || 'N/A';
-    document.getElementById('lblvwCompanyCity').textContent     = data.city        || 'N/A';
-    document.getElementById('lblvwCompanyState').textContent    = data.stateName   || 'N/A';
-    document.getElementById('lblvwCompanyCountry').textContent  = data.countryName || 'N/A';
+                    document.getElementById('vw_CompanyName').value  = data.companyName     || '';
+                    document.getElementById('vw_Address1').value     = data.address1        || '';
+                    document.getElementById('vw_Address2').value     = data.address2        || '';
+                    document.getElementById('vw_Area').value         = data.area            || '';
+                    document.getElementById('vw_City').value         = data.city            || '';
+                    document.getElementById('vw_State').value        = data.stateName       || '';
+                    document.getElementById('vw_Country').value      = data.countryName     || '';
+                    document.getElementById('vw_Pincode').value      = data.pincode         || '';
+                    document.getElementById('vw_ContactNo').value    = data.contactNo       || '';
+                    document.getElementById('vw_Email').value        = data.email           || '';
+                    document.getElementById('vw_PAN').value          = data.panNo           || '';
+                    document.getElementById('vw_TAN').value          = data.tanNo           || '';
+                    document.getElementById('vw_VAT').value          = data.vatNo           || '';
+                    document.getElementById('vw_GST').value          = data.gstNo           || '';
+                    document.getElementById('vw_TIN').value          = data.tinNo           || '';
+                    document.getElementById('vw_PT').value           = data.ptTaxNo         || '';
+                    document.getElementById('vw_SMTPServer').value   = data.smtpServerName  || '';
+                    document.getElementById('vw_SMTPPort').value     = data.smtpPortNo      || '';
+                    document.getElementById('vw_SMTPUserName').value = data.smtpUserName    || '';
+                    document.getElementById('vw_SMTPPassword').value = data.smtpUserPassword|| '';
 
-                           const viewImg = document.getElementById('image_upload_previewEmployeeView');
-    const imagePath = data.picturePath;
-    if (imagePath && imagePath.trim() !== '') {
-        viewImg.src = imagePath;
-        viewImg.onerror = () => { viewImg.src = '/Companys/Images/default.jpg'; };
-    } else {
-        viewImg.src = '/Companys/Images/default.jpg';
-    }
-                    })
-                    .catch(err => {
-                        console.error("❌ VIEW ERROR:", err);
-                        alert('Failed to load company details');
-                    });
-            });
+                    const vwActive = document.getElementById('vw_IsActive');
+                    if (vwActive) vwActive.checked = (data.isActive == 1);
+
+                    const viewImg = document.getElementById('image_upload_previewEmployeeView');
+                    const imagePath = data.picturePath;
+                    if (imagePath && imagePath.trim() !== '') {
+                        viewImg.src = imagePath;
+                        viewImg.onerror = () => { viewImg.src = '/Companys/Images/default.jpg'; };
+                    } else {
+                        viewImg.src = '/Companys/Images/default.jpg';
+                    }
+                })
+                .catch(err => {
+                    console.error("❌ VIEW ERROR:", err);
+                    alert('Failed to load company details');
+                });
         });
+    });
 
         // =================================================================
         // 🔥 DELETE BUTTON - FIXED (same SP aliases)

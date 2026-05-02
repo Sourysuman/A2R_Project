@@ -79,23 +79,27 @@
         }
 
         @@keyframes morph {
-            0%, 100%
+            0%, 100% {
+                transform: scale(1) rotate(0deg);
+            }
 
-        {
-            transform: scale(1) rotate(0deg);
-        }
-
-        50% {
-            transform: scale(1.15) rotate(180deg);
-        }
-
+            50% {
+                transform: scale(1.15) rotate(180deg);
+            }
         }
 
         .login-container {
+            display: -webkit-box;
+            display: -ms-flexbox;
             display: flex;
+            -webkit-box-align: center;
+            -ms-flex-align: center;
             align-items: center;
+            -webkit-box-pack: center;
+            -ms-flex-pack: center;
             justify-content: center;
             min-height: 100vh;
+            min-height: -webkit-fill-available; /* ✅ iOS Safari fix */
             padding: 20px;
             position: relative;
             z-index: 10;
@@ -103,43 +107,35 @@
 
         .login-card {
             background: rgba(15, 15, 25, 0.97);
+            -webkit-backdrop-filter: blur(20px); /* ✅ Safari fix */
             backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
             border-radius: 20px;
             padding: 40px 30px;
             width: 100%;
             max-width: 360px;
-            box-shadow: 0 24px 48px rgba(0, 0, 0, 0.6);
+            min-width: 300px; /* ✅ never shrinks too small */
+            min-height: 500px; /* ✅ consistent height all browsers */
+            height: auto; /* ✅ grows if content needs more */
+            box-sizing: border-box; /* ✅ padding included in size */
             position: relative;
             animation: cardFloat 4s ease-in-out infinite;
-        }
-
-        @@keyframes cardFloat {
-            0%, 100%
-
-        {
-            transform: translateY(0);
-        }
-
-        50% {
-            transform: translateY(-6px);
-        }
-
-        }
-
-        .card-glow {
-            display: none !important;
-        }
-
-        /* ===== GOLDEN BORDER - CONSTANT NO SPIN ===== */
-        .login-card {
+            /* ✅ Golden border */
             border: 2px solid #f5c518 !important;
             box-shadow: 0 0 10px rgba(245, 197, 24, 0.6), 0 0 30px rgba(245, 197, 24, 0.3), 0 0 60px rgba(245, 197, 24, 0.15), 0 24px 48px rgba(0, 0, 0, 0.6) !important;
         }
 
-        /* ===== REMOVE SPINNING GLOW - NOT NEEDED ===== */
         .card-glow {
             display: none !important;
+        }
+
+        @@keyframes cardFloat {
+            0%, 100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-6px);
+            }
         }
 
         .logo-section {
@@ -170,8 +166,14 @@
                 font-size: 2.2rem;
                 font-weight: 800;
                 color: white;
+                display: -webkit-box;
+                display: -ms-flexbox;
                 display: flex;
+                -webkit-box-align: center;
+                -ms-flex-align: center;
                 align-items: center;
+                -webkit-box-pack: center;
+                -ms-flex-pack: center;
                 justify-content: center;
             }
 
@@ -215,18 +217,15 @@
         }
 
         @@keyframes slideDown {
-            from
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
 
-        {
-            opacity: 0;
-            transform: translateY(-10px);
-        }
-
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .input-group {
@@ -244,10 +243,14 @@
             font-size: 0.95rem;
             font-weight: 500;
             transition: all 0.3s ease;
+            -webkit-appearance: none; /* ✅ removes Safari default styling */
+            -moz-appearance: none;
+            appearance: none;
         }
 
             .input-field::placeholder {
                 color: #777;
+                opacity: 1; /* ✅ Firefox fix — Firefox makes placeholder transparent by default */
             }
 
             .input-field:focus {
@@ -263,21 +266,19 @@
                 box-shadow: 0 0 0 3px rgba(255,107,107,0.2);
                 animation: shake 0.5s ease-in-out;
             }
+
         @@keyframes shake {
-            0%,100%
+            0%, 100% {
+                transform: translateX(0);
+            }
 
-        {
-            transform: translateX(0);
-        }
+            25% {
+                transform: translateX(-5px);
+            }
 
-        25% {
-            transform: translateX(-5px);
-        }
-
-        75% {
-            transform: translateX(5px);
-        }
-
+            75% {
+                transform: translateX(5px);
+            }
         }
 
         .error-message {
@@ -291,6 +292,7 @@
             position: absolute;
             right: 16px;
             top: 50%;
+            -webkit-transform: translateY(-50%);
             transform: translateY(-50%);
             color: #888;
             font-size: 1rem;
@@ -302,15 +304,25 @@
         }
 
         .checkbox-row {
+            display: -webkit-box;
+            display: -ms-flexbox;
             display: flex;
+            -webkit-box-align: center;
+            -ms-flex-align: center;
             align-items: center;
+            -webkit-box-pack: justify;
+            -ms-flex-pack: justify;
             justify-content: space-between;
             margin-bottom: 20px;
             font-size: 0.88rem;
         }
 
         .checkbox-container {
+            display: -webkit-box;
+            display: -ms-flexbox;
             display: flex;
+            -webkit-box-align: center;
+            -ms-flex-align: center;
             align-items: center;
         }
 
@@ -327,6 +339,10 @@
             .custom-checkbox input {
                 opacity: 0;
                 position: absolute;
+                width: 100%; /* ✅ clickable area fix */
+                height: 100%;
+                cursor: pointer;
+                margin: 0;
             }
 
         .checkmark {
@@ -344,6 +360,9 @@
         .checkbox-container label {
             color: #b0b0b0;
             cursor: pointer;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
             user-select: none;
         }
 
@@ -373,6 +392,8 @@
             box-shadow: 0 8px 24px rgba(102,126,234,0.3);
             position: relative;
             overflow: hidden;
+            -webkit-appearance: none; /* ✅ Safari button fix */
+            appearance: none;
         }
 
             .login-button:hover:not(:disabled) {
@@ -400,14 +421,35 @@
                 left: 100%;
             }
 
-        @@media (max-width: 480px) {
-            .login-card
-
-        {
-            padding: 35px 25px;
-            max-width: 340px;
+        /* ✅ Tablet */
+        @@media (max-width: 768px) {
+            .login-card {
+                max-width: 380px;
+                min-height: 490px;
+            }
         }
 
+        /* ✅ Mobile */
+        @@media (max-width: 480px) {
+            .login-card {
+                padding: 35px 25px;
+                max-width: 340px;
+                min-height: 480px;
+                width: 92vw;
+            }
+        }
+
+        /* ✅ Very small screens */
+        @@media (max-width: 320px) {
+            .login-card {
+                padding: 25px 18px;
+                min-height: 460px;
+                width: 95vw;
+            }
+
+            .welcome h1 {
+                font-size: 1.2rem;
+            }
         }
     </style>
 </head>
@@ -486,7 +528,7 @@
       
     </div>
 
- 
+
     <script>
         $(document).ready(function () {
             const usernameInput = $('#username');
@@ -498,7 +540,7 @@
 
             // Client-side validation
             function validateField(input, errorId, minLength, message) {
-                input.on('input blur', function() {
+                input.on('input blur', function () {
                     const value = $(this).val().trim();
                     const errorEl = $(`#${errorId}`);
                     if (value.length < minLength) {
@@ -514,50 +556,50 @@
             validateField(usernameInput, 'username-error', 3, 'Username must be 3+ characters');
             validateField(passwordInput, 'password-error', 4, 'Password must be 4+ characters');
 
-                    loginForm.on('submit', function (e) {
-
-            let isValid = true;
-
-            if (usernameInput.val().trim().length < 3) {
-                usernameInput.addClass('error');
-                $('#username-error').show();
-                isValid = false;
-            }
-
-            if ($('#password').val().trim().length < 4) {   // ✅ direct check
-                $('#password').addClass('error');
-                $('#password-error').show();
-                isValid = false;
-            }
-
-            if (!isValid) {
-                e.preventDefault();
-                return;
-            }
-
-            // ✅ FORCE browser to render spinner BEFORE submit
-            loginBtn.prop('disabled', true);
-            loginText.hide();
-            loginSpinner.show();
-
-            // 🔥 CRITICAL LINE (forces UI update)
-            setTimeout(function () {
-                loginForm.submit();
-            }, 50); // very small delay
-        });
-
-            // Clear errors on focus
-            usernameInput.addEventListener('focus', function() {
+            // ✅ FIX 1: Clear errors on focus — OUTSIDE submit, using .on() not addEventListener
+            usernameInput.on('focus', function () {
                 $(this).removeClass('error');
                 $('#username-error').hide();
                 $('.alert-danger').fadeOut(300);
             });
-            passwordInput.addEventListener('focus', function() {
+
+            passwordInput.on('focus', function () {
                 $(this).removeClass('error');
                 $('#password-error').hide();
                 $('.alert-danger').fadeOut(300);
             });
 
+            // ✅ FIX 2: Submit handler — properly closed with }); at end
+            loginForm.on('submit', function (e) {
+                let isValid = true;
+
+                if (usernameInput.val().trim().length < 3) {
+                    usernameInput.addClass('error');
+                    $('#username-error').show();
+                    isValid = false;
+                }
+
+                if ($('#password').val().trim().length < 4) {
+                    $('#password').addClass('error');
+                    $('#password-error').show();
+                    isValid = false;
+                }
+
+                if (!isValid) {
+                    e.preventDefault();
+                    return;
+                }
+
+                // ✅ FIX 3: Show spinner, then submit after small delay
+                e.preventDefault();
+                loginBtn.prop('disabled', true);
+                loginText.hide();
+                loginSpinner.show();
+
+                setTimeout(function () {
+                    loginForm[0].submit(); // native submit — bypasses jQuery to avoid loop
+                }, 50);
+            });
 
             // Remember me
             var rememberMeUsername = getCookie("rememberMeUsername");
@@ -573,6 +615,20 @@
                     setCookie("rememberMeUsername", "", -1);
                 }
             });
+
+        }); // ✅ end of $(document).ready
+
+        // Password toggle
+        var passwordVisible = false;
+        $('#togglePassword').on('click', function () {
+            passwordVisible = !passwordVisible;
+            if (passwordVisible) {
+                $('#password').attr('type', 'text');
+                $(this).removeClass('fa-eye').addClass('fa-eye-slash').css('color', '#667eea');
+            } else {
+                $('#password').attr('type', 'password');
+                $(this).removeClass('fa-eye-slash').addClass('fa-eye').css('color', '#888');
+            }
         });
 
         function setCookie(name, value, days) {
@@ -584,25 +640,11 @@
             }
             document.cookie = name + "=" + (value || "") + expires + "; path=/";
         }
-          var passwordVisible = false;
 
-        $('#togglePassword').on('click', function () {
-            passwordVisible = !passwordVisible;
-
-            if (passwordVisible) {
-                $('#password').attr('type', 'text');
-                $(this).removeClass('fa-eye').addClass('fa-eye-slash');
-                $(this).css('color', '#667eea');
-            } else {
-                $('#password').attr('type', 'password');
-                $(this).removeClass('fa-eye-slash').addClass('fa-eye');
-                $(this).css('color', '#888');
-            }
-        });
         function getCookie(name) {
             var nameEQ = name + "=";
             var ca = document.cookie.split(';');
-            for(var i = 0; i < ca.length; i++) {
+            for (var i = 0; i < ca.length; i++) {
                 var c = ca[i];
                 while (c.charAt(0) == ' ') c = c.substring(1, c.length);
                 if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
@@ -610,8 +652,8 @@
             return null;
         }
 
-                // ✅ FORGOT PASSWORD - Click "Forgot Password?" link
-        $('#forgotPasswordLink').click(async function(e) {
+        // Forgot Password
+        $('#forgotPasswordLink').click(async function (e) {
             e.preventDefault();
 
             var username = prompt('Enter your username (e.g. Admin):');
@@ -620,7 +662,6 @@
                 return;
             }
 
-            // Show loading
             $(this).html('<i class="fas fa-spinner fa-spin me-1"></i>Processing...');
 
             try {
@@ -632,33 +673,22 @@
                 var data = await response.json();
 
                 if (data.success) {
-                    // Show token in beautiful alert
                     var token = data.token;
                     var newPass = prompt(
-                        '🔑 TOKEN GENERATED!\n\n' +
-                        'Token: `' + token + '`\n\n' +
-                        'Copy token above 👆\n\n' +
-                        'Enter NEW PASSWORD below:',
-                        ''
+                        '🔑 TOKEN GENERATED!\n\nToken: `' + token + '`\n\nEnter NEW PASSWORD below:', ''
                     );
 
                     if (newPass && newPass.length >= 6) {
-                        // Reset password
                         var resetResponse = await fetch('/AdminLogin/ResetPassword', {
                             method: 'POST',
                             headers: { 'Content-Type': 'application/json' },
-                            body: JSON.stringify({
-                                NewPassword: newPass,
-                                ConfirmPassword: newPass
-                            })
+                            body: JSON.stringify({ NewPassword: newPass, ConfirmPassword: newPass })
                         });
                         var resetData = await resetResponse.json();
 
                         if (resetData.success) {
-                            alert('🎉 SUCCESS!\n\n' +
-                                  '✅ Password reset complete!\n' +
-                                  'Login: ' + username + ' / ' + newPass);
-                            location.reload(); // Refresh to login
+                            alert('🎉 Password reset complete!\nLogin: ' + username + ' / ' + newPass);
+                            location.reload();
                         } else {
                             alert('❌ Reset failed: ' + resetData.message);
                         }
@@ -675,7 +705,6 @@
             }
         });
     </script>
-   
 
 
 </body>
